@@ -96,7 +96,7 @@ int GInteractor::getColorInt() const {
     return GColor::convertQColorToRGB(color);
 }
 
-GContainer* GInteractor::getContainer() const {
+GContainer *GInteractor::getContainer() const {
     return _container;
 }
 
@@ -134,8 +134,8 @@ GPoint GInteractor::getLocation() const {
     return GPoint(getX(), getY());
 }
 
-/* static */ QWidget* GInteractor::getInternalParent(QWidget* parent) {
-    return parent ? parent : (QWidget*) GWindow::getLastWindow();
+/* static */ QWidget *GInteractor::getInternalParent(QWidget *parent) {
+    return parent ? parent : (QWidget *) GWindow::getLastWindow();
 }
 
 double GInteractor::getMinimumHeight() const {
@@ -219,7 +219,7 @@ void GInteractor::lockForRead() {
 }
 
 void GInteractor::lockForReadConst() const {
-    GInteractor* that = const_cast<GInteractor*>(this);
+    GInteractor *that = const_cast<GInteractor *>(this);
     that->lockForRead();
 }
 
@@ -228,11 +228,11 @@ void GInteractor::lockForWrite() {
 }
 
 void GInteractor::lockForWriteConst() const {
-    GInteractor* that = const_cast<GInteractor*>(this);
+    GInteractor *that = const_cast<GInteractor *>(this);
     that->lockForWrite();
 }
 
-std::string GInteractor::normalizeAccelerator(const std::string& accelerator) {
+std::string GInteractor::normalizeAccelerator(const std::string &accelerator) {
     std::string acceleratorStr = stringReplace(accelerator, "Alt-", "Alt+");
     acceleratorStr = stringReplace(acceleratorStr, "Command-", "Command+");
     acceleratorStr = stringReplace(acceleratorStr, "Ctrl-", "Ctrl+");
@@ -255,20 +255,20 @@ void GInteractor::removeDoubleClickListener() {
 
 void GInteractor::removeKeyListener() {
     removeEventListeners({"keypress",
-                         "keyrelease",
-                         "keytype"});
+                          "keyrelease",
+                          "keytype"});
 }
 
 void GInteractor::removeMouseListener() {
     removeEventListeners({"click",
-                         "mousedrag",
-                         "mouseenter",
-                         "mouseexit",
-                         "mousemove",
-                         "mousepress",
-                         "mouserelease",
-                         "mousewheeldown",
-                         "mousewheelup"});
+                          "mousedrag",
+                          "mouseenter",
+                          "mouseexit",
+                          "mousemove",
+                          "mousepress",
+                          "mouserelease",
+                          "mousewheeldown",
+                          "mousewheelup"});
 }
 
 void GInteractor::requestFocus() {
@@ -277,11 +277,11 @@ void GInteractor::requestFocus() {
     });
 }
 
-void GInteractor::setActionCommand(const std::string& actionCommand) {
+void GInteractor::setActionCommand(const std::string &actionCommand) {
     _actionCommand = actionCommand;
 }
 
-void GInteractor::setAccelerator(const std::string& /* accelerator */) {
+void GInteractor::setAccelerator(const std::string & /* accelerator */) {
     // override in subclasses
 }
 
@@ -314,7 +314,7 @@ void GInteractor::setBackground(int rgb) {
     });
 }
 
-void GInteractor::setBackground(const std::string& color) {
+void GInteractor::setBackground(const std::string &color) {
     if (GColor::hasAlpha(color)) {
         int argb = GColor::convertColorToARGB(color);
         GThread::runOnQtGuiThread([this, argb]() {
@@ -349,7 +349,7 @@ void GInteractor::setBounds(double x, double y, double width, double height) {
     });
 }
 
-void GInteractor::setBounds(const GRectangle& size) {
+void GInteractor::setBounds(const GRectangle &size) {
     setBounds(size.getX(), size.getY(), size.getWidth(), size.getHeight());
 }
 
@@ -365,16 +365,16 @@ void GInteractor::setColor(int rgb) {
     setForeground(rgb);
 }
 
-void GInteractor::setColor(const std::string& color) {
+void GInteractor::setColor(const std::string &color) {
     setForeground(color);
 }
 
-void GInteractor::setContainer(GContainer* container) {
+void GInteractor::setContainer(GContainer *container) {
     _container = container;
     if (!container) {
         // widgets that are not in any container should not be shown on screen
         // (they will awkwardly hover at (0, 0) if they are shown)
-        QWidget* widget = getWidget();
+        QWidget *widget = getWidget();
         GThread::runOnQtGuiThread([widget]() {
             widget->setParent(nullptr);
         });
@@ -405,7 +405,7 @@ void GInteractor::setForeground(int rgb) {
     });
 }
 
-void GInteractor::setForeground(const std::string& color) {
+void GInteractor::setForeground(const std::string &color) {
     if (GColor::hasAlpha(color)) {
         int argb = GColor::convertColorToARGB(color);
         GThread::runOnQtGuiThread([this, argb]() {
@@ -420,13 +420,13 @@ void GInteractor::setForeground(const std::string& color) {
     }
 }
 
-void GInteractor::setFont(const QFont& font) {
+void GInteractor::setFont(const QFont &font) {
     GThread::runOnQtGuiThread([this, font]() {
         getWidget()->setFont(font);
     });
 }
 
-void GInteractor::setFont(const std::string& font) {
+void GInteractor::setFont(const std::string &font) {
     setFont(GFont::toQFont(font));
 }
 
@@ -437,15 +437,15 @@ void GInteractor::setHeight(double height) {
     });
 }
 
-void GInteractor::setIcon(const QIcon& /*icon*/) {
+void GInteractor::setIcon(const QIcon & /*icon*/) {
     // override in subclasses as appropriate
 }
 
-void GInteractor::setIcon(const QPixmap& /*icon*/) {
+void GInteractor::setIcon(const QPixmap & /*icon*/) {
     // override in subclasses as appropriate
 }
 
-void GInteractor::setIcon(const std::string& filename, bool /* retainIconSize */) {
+void GInteractor::setIcon(const std::string &filename, bool /* retainIconSize */) {
     _icon = filename;
 
     // override in subclasses as appropriate; make sure to call super
@@ -477,7 +477,7 @@ void GInteractor::setMinimumSize(double width, double height) {
     });
 }
 
-void GInteractor::setMinimumSize(const GDimension& size) {
+void GInteractor::setMinimumSize(const GDimension &size) {
     setMinimumSize(size.getWidth(), size.getHeight());
 }
 
@@ -509,7 +509,7 @@ void GInteractor::setMouseListener(GEventListenerVoid func) {
                        "mousewheelup"}, func);
 }
 
-void GInteractor::setName(const std::string& name) {
+void GInteractor::setName(const std::string &name) {
     _name = name;
     // TODO: getWidget()->setObjectName() ?
 }
@@ -526,7 +526,7 @@ void GInteractor::setPreferredSize(double width, double height) {
     });
 }
 
-void GInteractor::setPreferredSize(const GDimension& size) {
+void GInteractor::setPreferredSize(const GDimension &size) {
     GThread::runOnQtGuiThread([this, size]() {
         getInternalWidget()->setPreferredSize(size.getWidth(), size.getHeight());
     });
@@ -547,11 +547,11 @@ void GInteractor::setSize(double width, double height) {
     });
 }
 
-void GInteractor::setSize(const GDimension& size) {
+void GInteractor::setSize(const GDimension &size) {
     setSize(size.getWidth(), size.getHeight());
 }
 
-void GInteractor::setTooltip(const std::string& tooltipText) {
+void GInteractor::setTooltip(const std::string &tooltipText) {
     GThread::runOnQtGuiThread([this, tooltipText]() {
         getWidget()->setToolTip(QString::fromStdString(tooltipText));
     });
@@ -585,7 +585,7 @@ void GInteractor::unlock() {
 }
 
 void GInteractor::unlockConst() const {
-    GInteractor* that = const_cast<GInteractor*>(this);
+    GInteractor *that = const_cast<GInteractor *>(this);
     that->unlock();
 }
 
@@ -624,7 +624,7 @@ void _Internal_QWidget::setMinimumSize(double width, double height) {
     _minimumSize = GDimension(width, height);
 }
 
-void _Internal_QWidget::setMinimumSize(const QSize& size) {
+void _Internal_QWidget::setMinimumSize(const QSize &size) {
     setMinimumSize(size.width(), size.height());
 }
 
@@ -632,6 +632,6 @@ void _Internal_QWidget::setPreferredSize(double width, double height) {
     _preferredSize = GDimension(width, height);
 }
 
-void _Internal_QWidget::setPreferredSize(const QSize& size) {
+void _Internal_QWidget::setPreferredSize(const QSize &size) {
     setPreferredSize(size.width(), size.height());
 }

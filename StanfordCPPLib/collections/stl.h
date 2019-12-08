@@ -47,8 +47,8 @@
  * Writes the given list of values to the given output stream
  * in a "{10, 20, 30}" format.
  */
-template <typename T>
-std::ostream& operator <<(std::ostream& out, const std::initializer_list<T>& list) {
+template<typename T>
+std::ostream &operator<<(std::ostream &out, const std::initializer_list<T> &list) {
     return stanfordcpplib::collections::writeCollection(out, list);
 }
 
@@ -56,16 +56,16 @@ std::ostream& operator <<(std::ostream& out, const std::initializer_list<T>& lis
  * Writes the given vector of values to the given output stream
  * in a "{10, 20, 30}" format.
  */
-template <typename T>
-std::ostream& operator <<(std::ostream& out, const std::vector<T>& vec) {
+template<typename T>
+std::ostream &operator<<(std::ostream &out, const std::vector<T> &vec) {
     return stanfordcpplib::collections::writeCollection(out, vec);
 }
 
 /**
  * Returns an STL queue object with the same elements as this Queue.
  */
-template <typename ValueType>
-std::deque<ValueType> toStlDeque(const Queue<ValueType>& q) {
+template<typename ValueType>
+std::deque<ValueType> toStlDeque(const Queue<ValueType> &q) {
     Queue<ValueType> copy = q;
     std::deque<ValueType> result;
     while (!copy.isEmpty()) {
@@ -77,10 +77,10 @@ std::deque<ValueType> toStlDeque(const Queue<ValueType>& q) {
 /**
  * Returns an STL list object with the same elements as this LinkedList.
  */
-template <typename ValueType>
-std::list<ValueType> toStlList(const LinkedList<ValueType>& l) {
+template<typename ValueType>
+std::list<ValueType> toStlList(const LinkedList<ValueType> &l) {
     std::list<ValueType> result;
-    for (const ValueType& value : l) {
+    for (const ValueType &value : l) {
         result.push_back(value);
     }
     return result;
@@ -89,10 +89,10 @@ std::list<ValueType> toStlList(const LinkedList<ValueType>& l) {
 /**
  * Returns an STL map object with the same elements as this map.
  */
-template <typename KeyType, typename ValueType>
-std::map<KeyType, ValueType> toStlMap(const Map<KeyType, ValueType>& m) {
+template<typename KeyType, typename ValueType>
+std::map<KeyType, ValueType> toStlMap(const Map<KeyType, ValueType> &m) {
     std::map<KeyType, ValueType> result;
-    for (const KeyType& key : m) {
+    for (const KeyType &key : m) {
         result[key] = m[key];
     }
     return result;
@@ -101,8 +101,8 @@ std::map<KeyType, ValueType> toStlMap(const Map<KeyType, ValueType>& m) {
 /**
  * Returns an STL queue object with the same elements as this Queue.
  */
-template <typename ValueType>
-std::queue<ValueType> toStlQueue(const Queue<ValueType>& q) {
+template<typename ValueType>
+std::queue<ValueType> toStlQueue(const Queue<ValueType> &q) {
     Queue<ValueType> copy = q;
     std::queue<ValueType> result;
     while (!copy.isEmpty()) {
@@ -114,20 +114,20 @@ std::queue<ValueType> toStlQueue(const Queue<ValueType>& q) {
 /**
  * Returns an STL set object with the same elements as this DawgLexicon.
  */
-std::set<std::string> toStlSet(const DawgLexicon& lex);
+std::set<std::string> toStlSet(const DawgLexicon &lex);
 
 /**
  * Returns an STL set object with the same elements as this Lexicon.
  */
-std::set<std::string> toStlSet(const Lexicon& lex);
+std::set<std::string> toStlSet(const Lexicon &lex);
 
 /**
  * Returns an STL set object with the same elements as this Set.
  */
-template <typename ValueType>
-std::set<ValueType> toStlSet(const Set<ValueType>& s) {
+template<typename ValueType>
+std::set<ValueType> toStlSet(const Set<ValueType> &s) {
     std::set<ValueType> result;
-    for (ValueType& value : s) {
+    for (ValueType &value : s) {
         result.insert(value);
     }
     return result;
@@ -136,8 +136,8 @@ std::set<ValueType> toStlSet(const Set<ValueType>& s) {
 /**
  * Returns an STL stack object with the same elements as this Stack.
  */
-template <typename ValueType>
-std::stack<ValueType> toStlStack(const Stack<ValueType>& s) {
+template<typename ValueType>
+std::stack<ValueType> toStlStack(const Stack<ValueType> &s) {
     Stack<ValueType> copy = s;
     std::stack<ValueType> result;
     while (!copy.isEmpty()) {
@@ -149,8 +149,8 @@ std::stack<ValueType> toStlStack(const Stack<ValueType>& s) {
 /**
  * Returns an STL vector object with the same elements as this Vector.
  */
-template <typename ValueType>
-std::vector<ValueType> toStlVector(const Vector<ValueType>& v) {
+template<typename ValueType>
+std::vector<ValueType> toStlVector(const Vector<ValueType> &v) {
     std::vector<ValueType> result;
     for (int i = 0; i < v.size(); i++) {
         result.push_back(v[i]);
@@ -161,8 +161,8 @@ std::vector<ValueType> toStlVector(const Vector<ValueType>& v) {
 /**
  * Converts the given list of values to a string such as "{1, 2, 3}".
  */
-template <typename T>
-std::string toString(const std::initializer_list<T>& list) {
+template<typename T>
+std::string toString(const std::initializer_list<T> &list) {
     std::ostringstream out;
     out << list;
     return out.str();
@@ -171,8 +171,8 @@ std::string toString(const std::initializer_list<T>& list) {
 /**
  * Converts the given vector of values to a string such as "{1, 2, 3}".
  */
-template <typename T>
-std::string toString(const std::vector<T>& vec) {
+template<typename T>
+std::string toString(const std::vector<T> &vec) {
     std::ostringstream out;
     out << vec;
     return out.str();

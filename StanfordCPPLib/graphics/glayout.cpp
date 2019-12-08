@@ -17,27 +17,27 @@ GLayout::GLayout() {
     // empty
 }
 
-void GLayout::clearLayout(QLayout* layout) {
+void GLayout::clearLayout(QLayout *layout) {
     if (!layout) {
         return;
     }
 
     // http://doc.qt.io/qt-5/qlayout.html#takeAt
-    QLayoutItem* child;
+    QLayoutItem *child;
     while ((child = layout->takeAt(0))) {
         // TODO: delete child;
     }
     layout->update();
 }
 
-bool GLayout::contains(QLayout* layout, QWidget* widget) {
+bool GLayout::contains(QLayout *layout, QWidget *widget) {
     if (!layout || !widget) {
         return false;
     }
 
     for (int i = 0; i < layout->count(); i++) {
-        QLayoutItem* child = layout->itemAt(i);
-        QWidget* childWidget = child->widget();
+        QLayoutItem *child = layout->itemAt(i);
+        QWidget *childWidget = child->widget();
         if (childWidget == widget) {
             return true;
         }
@@ -46,7 +46,7 @@ bool GLayout::contains(QLayout* layout, QWidget* widget) {
     return false;
 }
 
-void GLayout::forceUpdate(GInteractor* interactor) {
+void GLayout::forceUpdate(GInteractor *interactor) {
     if (interactor) {
         forceUpdate(interactor->getWidget());
     }
@@ -56,16 +56,16 @@ void GLayout::forceUpdate(GInteractor* interactor) {
  * Forces the given widget to update, even if it's hidden.
  * from https://stackoverflow.com/questions/2427103/qt-how-to-force-a-hidden-widget-to-calculate-its-layout
  */
-void GLayout::forceUpdate(QWidget* widget) {
+void GLayout::forceUpdate(QWidget *widget) {
     if (!widget) {
         return;
     }
 
     // Update all child widgets.
     for (int i = 0; i < widget->children().size(); i++) {
-        QObject* child = widget->children()[i];
+        QObject *child = widget->children()[i];
         if (child->isWidgetType()) {
-            forceUpdate((QWidget*) child);
+            forceUpdate((QWidget *) child);
         }
     }
 
@@ -82,7 +82,7 @@ void GLayout::forceUpdate(QWidget* widget) {
     widget->show();
 }
 
-QSize GLayout::getPreferredSize(QWidget* widget) {
+QSize GLayout::getPreferredSize(QWidget *widget) {
     require::nonNull(widget, "GLayout::getPreferredSize", "widget");
     QRect geom = widget->geometry();
     QSize hint = widget->sizeHint();
@@ -91,7 +91,7 @@ QSize GLayout::getPreferredSize(QWidget* widget) {
     return QSize(width, height);
 }
 
-QSize GLayout::getProperSize(QLayout* layout) {
+QSize GLayout::getProperSize(QLayout *layout) {
     require::nonNull(layout, "GLayout::getProperSize", "layout");
     QRect geom = layout->geometry();
     QSize hint = layout->sizeHint();
@@ -100,7 +100,7 @@ QSize GLayout::getProperSize(QLayout* layout) {
     return QSize(width, height);
 }
 
-QSize GLayout::getProperSize(QWidget* widget) {
+QSize GLayout::getProperSize(QWidget *widget) {
     require::nonNull(widget, "GLayout::getProperSize", "widget");
     QRect geom = widget->geometry();
     QSize hint = widget->sizeHint();
@@ -113,14 +113,14 @@ QSize GLayout::getProperSize(QWidget* widget) {
  * Helper function for forceUpdate(). Not self-sufficient!
  * from https://stackoverflow.com/questions/2427103/qt-how-to-force-a-hidden-widget-to-calculate-its-layout
  */
-void GLayout::invalidateLayout(QLayout* layout) {
+void GLayout::invalidateLayout(QLayout *layout) {
     if (!layout) {
         return;
     }
 
     // Recompute the given layout and all its child layouts.
     for (int i = 0; i < layout->count(); i++) {
-        QLayoutItem* item = layout->itemAt(i);
+        QLayoutItem *item = layout->itemAt(i);
         if (item->layout()) {
             invalidateLayout(item->layout());
         } else {
@@ -131,7 +131,7 @@ void GLayout::invalidateLayout(QLayout* layout) {
     layout->activate();
 }
 
-GLayout::Position GLayout::toPosition(const std::string& positionName) {
+GLayout::Position GLayout::toPosition(const std::string &positionName) {
     std::string regionU = toUpperCase(positionName);
     if (regionU == "NORTH" || regionU == "TOP") {
         return GLayout::North;
@@ -147,7 +147,7 @@ GLayout::Position GLayout::toPosition(const std::string& positionName) {
     }
 }
 
-GBorderLayout::GBorderLayout(QWidget* parent, int margin, int spacing)
+GBorderLayout::GBorderLayout(QWidget *parent, int margin, int spacing)
         : QLayout(parent) {
     setMargin(margin);
     setSpacing(spacing);
@@ -158,22 +158,22 @@ GBorderLayout::GBorderLayout(int spacing) {
 }
 
 GBorderLayout::~GBorderLayout() {
-    QLayoutItem* l;
+    QLayoutItem *l;
     while ((l = takeAt(0))) {
         delete l;
     }
 }
 
-void GBorderLayout::addItem(QLayoutItem* item) {
+void GBorderLayout::addItem(QLayoutItem *item) {
     require::nonNull(item, "GBorderLayout::addItem");
     add(item, GLayout::North);
 }
 
-void GBorderLayout::addWidget(QWidget* widget) {
+void GBorderLayout::addWidget(QWidget *widget) {
     addWidget(widget, GLayout::Center);
 }
 
-void GBorderLayout::addWidget(QWidget* widget, GLayout::Position position) {
+void GBorderLayout::addWidget(QWidget *widget, GLayout::Position position) {
     require::nonNull(widget, "GBorderLayout::addWidget", "widget");
     add(new QWidgetItem(widget), position);
 }
@@ -190,8 +190,8 @@ int GBorderLayout::count() const {
     return list.size();
 }
 
-QLayoutItem* GBorderLayout::itemAt(int index) const {
-    ItemWrapper* wrapper = list.value(index);
+QLayoutItem *GBorderLayout::itemAt(int index) const {
+    ItemWrapper *wrapper = list.value(index);
     if (wrapper) {
         return wrapper->item;
     } else {
@@ -203,8 +203,8 @@ QSize GBorderLayout::minimumSize() const {
     return calculateSize(MinimumSize);
 }
 
-void GBorderLayout::setGeometry(const QRect& rect) {
-    ItemWrapper* center = nullptr;
+void GBorderLayout::setGeometry(const QRect &rect) {
+    ItemWrapper *center = nullptr;
     int eastWidth = 0;
     int westWidth = 0;
     int northHeight = 0;
@@ -215,8 +215,8 @@ void GBorderLayout::setGeometry(const QRect& rect) {
 
     // size/place north/south widgets first
     for (int i = 0; i < list.size(); ++i) {
-        ItemWrapper* wrapper = list.at(i);
-        QLayoutItem* item = wrapper->item;
+        ItemWrapper *wrapper = list.at(i);
+        QLayoutItem *item = wrapper->item;
         GLayout::Position position = wrapper->position;
 
         if (position == GLayout::North) {
@@ -248,8 +248,8 @@ void GBorderLayout::setGeometry(const QRect& rect) {
 
     // size/place west/east widgets second
     for (int i = 0; i < list.size(); ++i) {
-        ItemWrapper* wrapper = list.at(i);
-        QLayoutItem* item = wrapper->item;
+        ItemWrapper *wrapper = list.at(i);
+        QLayoutItem *item = wrapper->item;
         GLayout::Position position = wrapper->position;
 
         if (position == GLayout::West) {
@@ -268,9 +268,9 @@ void GBorderLayout::setGeometry(const QRect& rect) {
 
             eastWidth += item->geometry().width() + spacing();
             geom = QRect(rect.x() + rect.width() - eastWidth + spacing(),
-                       northHeight,
-                       item->geometry().width(),
-                       item->geometry().height());
+                         northHeight,
+                         item->geometry().width(),
+                         item->geometry().height());
             item->setGeometry(geom);
         }
     }
@@ -289,16 +289,16 @@ QSize GBorderLayout::sizeHint() const {
     return calculateSize(SizeHint);
 }
 
-QLayoutItem* GBorderLayout::takeAt(int index) {
+QLayoutItem *GBorderLayout::takeAt(int index) {
     if (index >= 0 && index < list.size()) {
-        ItemWrapper* layoutStruct = list.takeAt(index);
+        ItemWrapper *layoutStruct = list.takeAt(index);
         return layoutStruct->item;
     } else {
         return nullptr;
     }
 }
 
-void GBorderLayout::add(QLayoutItem* item, GLayout::Position position) {
+void GBorderLayout::add(QLayoutItem *item, GLayout::Position position) {
     require::nonNull(item, "GBorderLayout::add");
     list.append(new ItemWrapper(item, position));
 }
@@ -306,7 +306,7 @@ void GBorderLayout::add(QLayoutItem* item, GLayout::Position position) {
 QSize GBorderLayout::calculateSize(SizeType sizeType) const {
     QSize totalSize;
     for (int i = 0; i < list.size(); ++i) {
-        ItemWrapper* wrapper = list.at(i);
+        ItemWrapper *wrapper = list.at(i);
         GLayout::Position position = wrapper->position;
         QSize itemSize;
 

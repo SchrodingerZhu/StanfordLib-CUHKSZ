@@ -13,7 +13,9 @@
 #include <graphics/gwindow.h> // for GWindow
 #include <collections/vector.h>  // for Vector
 #include <macro.h>
+
 using namespace std;
+
 int start() {
     cout << "This sample project helps you check and make sure that" << endl;
     cout << "you have successfully installed Qt Creator, C++ compiler/libs," << endl;
@@ -27,26 +29,26 @@ int start() {
     cout << "installation instructions linked from the class web site." << endl;
     cout << endl;
 
-    GWindow* window = new GWindow(400, 250);
+    GWindow *window = new GWindow(400, 250);
     window->setTitle("Sample Project");
     window->setLocation(50, 50);
     window->setExitOnClose(true);
     window->setBackground("White");
     window->clear();
     window->setColor("Black");
-    window->drawOval( 10, 10, 180, 180);   // head
+    window->drawOval(10, 10, 180, 180);   // head
     window->setColor("blue");
-    window->fillOval( 50, 50,  20,  20);   // eye
-    window->fillOval(130, 50,  20,  20);   // eye
+    window->fillOval(50, 50, 20, 20);   // eye
+    window->fillOval(130, 50, 20, 20);   // eye
     window->setColor("red");
-    window->fillOval( 95, 95,  10,  10);   // nose
+    window->fillOval(95, 95, 10, 10);   // nose
     window->setColor("black");
     window->drawString("Go CUHK(SZ)!", 180, 30);
 
     // draw the mouth using a Vector to make sure the Stanford collections work
     Vector<GPoint> mouth;
-    mouth.add(GPoint( 40, 120));
-    mouth.add(GPoint( 70, 150));
+    mouth.add(GPoint(40, 120));
+    mouth.add(GPoint(70, 150));
     mouth.add(GPoint(130, 150));
     mouth.add(GPoint(160, 120));
     for (int i = 0; i < mouth.size() - 1; i++) {

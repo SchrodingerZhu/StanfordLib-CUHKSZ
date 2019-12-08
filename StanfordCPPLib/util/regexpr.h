@@ -34,14 +34,14 @@
  * as a substring.
  * For an exact match instead, put "^" and "$" in your regex as start/end anchors.
  */
-bool regexMatch(const std::string& s, const std::string& regexp);
+bool regexMatch(const std::string &s, const std::string &regexp);
 
 /**
  * Returns the number of times the given regular expression is found inside
  * the given string s.
  * Returns 0 if there are no matches for the regexp.
  */
-int regexMatchCount(const std::string& s, const std::string& regexp);
+int regexMatchCount(const std::string &s, const std::string &regexp);
 
 /**
  * Finds all matches of the given regular expression in the given string s
@@ -51,8 +51,8 @@ int regexMatchCount(const std::string& s, const std::string& regexp);
  * Returns the number of times the given regular expression is found inside
  * the given string s.  Returns 0 if there are no matches for the regexp.
  */
-int regexMatchCountWithLines(const std::string& s, const std::string& regexp,
-                             std::string& linesOut);
+int regexMatchCountWithLines(const std::string &s, const std::string &regexp,
+                             std::string &linesOut);
 
 /**
  * Finds all matches of the given regular expression in the given string s
@@ -62,8 +62,8 @@ int regexMatchCountWithLines(const std::string& s, const std::string& regexp,
  * Returns the number of times the given regular expression is found inside
  * the given string s.  Returns 0 if there are no matches for the regexp.
  */
-void regexMatchCountWithLines(const std::string& s, const std::string& regexp,
-                              Vector<int>& linesOut);
+void regexMatchCountWithLines(const std::string &s, const std::string &regexp,
+                              Vector<int> &linesOut);
 
 /**
  * Replaces occurrences of the given regular expression in s with the given
@@ -71,7 +71,7 @@ void regexMatchCountWithLines(const std::string& s, const std::string& regexp,
  * If limit >  0 is passed, replaces that many occurrences of the regex.
  * If limit <= 0 is passed (or omitted), all occurrences are replaced.
  */
-std::string regexReplace(const std::string& s, const std::string& regexp,
-                         const std::string& replacement, int limit = -1);
+std::string regexReplace(const std::string &s, const std::string &regexp,
+                         const std::string &replacement, int limit = -1);
 
 #endif // _regexpr_h

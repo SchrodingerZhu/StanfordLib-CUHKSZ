@@ -12,7 +12,7 @@
 #include <graphics/gthread.h>
 #include <util/require.h>
 
-GScrollPane::GScrollPane(GInteractor* interactor, QWidget* parent)
+GScrollPane::GScrollPane(GInteractor *interactor, QWidget *parent)
         : _iqscrollarea(nullptr),
           _interactor(interactor),
           _horizontalScrollBarPolicy(GScrollPane::SCROLLBAR_AS_NEEDED),
@@ -36,11 +36,11 @@ GScrollPane::ScrollBarPolicy GScrollPane::getHorizontalScrollBarPolicy() const {
     return _horizontalScrollBarPolicy;
 }
 
-GInteractor* GScrollPane::getInteractor() const {
+GInteractor *GScrollPane::getInteractor() const {
     return _interactor;
 }
 
-_Internal_QWidget* GScrollPane::getInternalWidget() const {
+_Internal_QWidget *GScrollPane::getInternalWidget() const {
     return _iqscrollarea;
 }
 
@@ -52,8 +52,8 @@ GScrollPane::ScrollBarPolicy GScrollPane::getVerticalScrollBarPolicy() const {
     return _verticalScrollBarPolicy;
 }
 
-QWidget* GScrollPane::getWidget() const {
-    return static_cast<QWidget*>(_iqscrollarea);
+QWidget *GScrollPane::getWidget() const {
+    return static_cast<QWidget *>(_iqscrollarea);
 }
 
 bool GScrollPane::isInteractorStretch() const {
@@ -99,9 +99,9 @@ Qt::ScrollBarPolicy GScrollPane::toQtScrollBarPolicy(ScrollBarPolicy policy) {
 }
 
 
-_Internal_QScrollArea::_Internal_QScrollArea(GScrollPane* gscrollpane, QWidget* parent)
+_Internal_QScrollArea::_Internal_QScrollArea(GScrollPane *gscrollpane, QWidget *parent)
         : QScrollArea(parent)
-          /*_gscrollpane(gscrollpane)*/ {
+/*_gscrollpane(gscrollpane)*/ {
     require::nonNull(gscrollpane, "_Internal_QScrollArea::constructor");
     setObjectName(QString::fromStdString("_Internal_QScrollArea_" + std::to_string(gscrollpane->getID())));
 }

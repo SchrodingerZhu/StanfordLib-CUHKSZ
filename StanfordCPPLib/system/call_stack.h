@@ -17,76 +17,82 @@
 
 #ifndef _call_stack_h
 #define _call_stack_h
+
 #include <string>
 #include <sstream>
 #include <collections/vector.h>
 
 namespace stacktrace {
 
-int execAndCapture(std::string cmd, std::string& output);
-int addr2line(void* addr, std::string& line);
-int addr2line_all(Vector<void*> addrsVector, std::string& output);
-int addr2line_all(void** addrs, int length, std::string& output);
-std::string addr2line_clean(std::string line);
-std::string addr2line_functionName(std::string line);
+    int execAndCapture(std::string cmd, std::string &output);
+
+    int addr2line(void *addr, std::string &line);
+
+    int addr2line_all(Vector<void *> addrsVector, std::string &output);
+
+    int addr2line_all(void **addrs, int length, std::string &output);
+
+    std::string addr2line_clean(std::string line);
+
+    std::string addr2line_functionName(std::string line);
 
 /*
  * Function to get/set a fake call stack pointer for use in printing a stack trace.
  * Called on Windows only after a signal / SEH handler is invoked to get a stack pointer.
  */
-void*& fakeCallStackPointer();
+    void *&fakeCallStackPointer();
 
 /** Call-stack entry datastructure. */
-struct entry {
-public:
-    /** Default constructor that clears all fields. */
-    entry() : line(0), address(nullptr) {
-        // empty
-    }
-
-    std::string file;       // filename
-    size_t      line;       // line number
-    std::string lineStr;    // line number string (not always set)
-    std::string function;   // name of function or method
-    void* address;          // memory address of stack pointer (raw)
-    void* address2;         // memory address of stack pointer (from dladdr; data segment offset subtracted)
-
-    /** Serialize entry into a text string. */
-    std::string toString() const {
-        std::ostringstream os;
-        os << "file=\"" << file << "\"";
-        if (line > 0) {
-            os << " (line=" << line << ")";
-        } else if (!lineStr.empty()) {
-            os << " (lineStr=\"" << lineStr << "\")";
+    struct entry {
+    public:
+        /** Default constructor that clears all fields. */
+        entry() : line(0), address(nullptr) {
+            // empty
         }
-        os << " function=\"" << function << "\"";
-        return os.str();
-    }
-};
 
-std::ostream& operator <<(std::ostream& out, const entry& ent);
+        std::string file;       // filename
+        size_t line;       // line number
+        std::string lineStr;    // line number string (not always set)
+        std::string function;   // name of function or method
+        void *address;          // memory address of stack pointer (raw)
+        void *address2;         // memory address of stack pointer (from dladdr; data segment offset subtracted)
+
+        /** Serialize entry into a text string. */
+        std::string toString() const {
+            std::ostringstream os;
+            os << "file=\"" << file << "\"";
+            if (line > 0) {
+                os << " (line=" << line << ")";
+            } else if (!lineStr.empty()) {
+                os << " (lineStr=\"" << lineStr << "\")";
+            }
+            os << " function=\"" << function << "\"";
+            return os.str();
+        }
+    };
+
+    std::ostream &operator<<(std::ostream &out, const entry &ent);
 
 /** Stack-trace base class, for retrieving the current call-stack. */
-class call_stack {
-public:
-    /** Stack-trace consructor.
-     \param num_discard - number of stack entries to discard at the top. */
-    call_stack(const size_t num_discard = 0);
+    class call_stack {
+    public:
+        /** Stack-trace consructor.
+         \param num_discard - number of stack entries to discard at the top. */
+        call_stack(const size_t num_discard = 0);
 
-    virtual ~call_stack() throw();
+        virtual ~call_stack() throw();
 
-    /** Serializes the entire call-stack into a text string. */
-    std::string to_string() const {
-        std::ostringstream os;
-        for (int i = 0; i < stack.size(); i++)
-            os << stack[i].toString() << std::endl;
-        return os.str();
-    }
+        /** Serializes the entire call-stack into a text string. */
+        std::string to_string() const {
+            std::ostringstream os;
+            for (int i = 0; i < stack.size(); i++)
+                os << stack[i].toString() << std::endl;
+            return os.str();
+        }
 
-    /** Call stack. */
-    Vector<entry> stack;
-};
+        /** Call stack. */
+        Vector<entry> stack;
+    };
 
 } // namespace stacktrace
 

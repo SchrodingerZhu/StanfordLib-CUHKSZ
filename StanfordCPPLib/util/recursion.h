@@ -37,6 +37,6 @@ int getRecursionIndentLevel();
  * are not exported or revealed to the internal stack trace grabber.
  * So if you want to use this function, make your function non-static.
  */
-std::string recursionIndent(const std::string& indenter = "    ");
+std::string recursionIndent(const std::string &indenter = "    ");
 
 #endif // _recursion_h

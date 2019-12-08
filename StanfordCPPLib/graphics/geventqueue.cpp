@@ -20,7 +20,7 @@
 #include <graphics/gtypes.h>
 #include <util/strlib.h>
 
-GEventQueue* GEventQueue::_instance = nullptr;
+GEventQueue *GEventQueue::_instance = nullptr;
 
 GEventQueue::GEventQueue()
         : _eventMask(0) {
@@ -34,7 +34,7 @@ GThunk GEventQueue::dequeue() {
     return thunk;
 }
 
-void GEventQueue::enqueueEvent(const GEvent& event) {
+void GEventQueue::enqueueEvent(const GEvent &event) {
     if (isAcceptingEvent(event.getEventClass())) {
         _eventQueueMutex.lockForWrite();
         _eventQueue.enqueue(event);
@@ -71,14 +71,14 @@ GEvent GEventQueue::getNextEvent(int mask) {
     return bogusEvent;
 }
 
-GEventQueue* GEventQueue::instance() {
+GEventQueue *GEventQueue::instance() {
     if (!_instance) {
         _instance = new GEventQueue();
     }
     return _instance;
 }
 
-bool GEventQueue::isAcceptingEvent(const GEvent& event) const {
+bool GEventQueue::isAcceptingEvent(const GEvent &event) const {
     return isAcceptingEvent(event.getEventClass());
 }
 

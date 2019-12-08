@@ -16,13 +16,14 @@
 #include <util/require.h>
 
 GScrollBar::GScrollBar(GScrollBar::Orientation orientation,
-                         int value,
-                         int extent,
-                         int min,
-                         int max,
-                         QWidget* parent) {
+                       int value,
+                       int extent,
+                       int min,
+                       int max,
+                       QWidget *parent) {
     GThread::runOnQtGuiThread([this, orientation, parent]() {
-        _iqscrollbar = new _Internal_QScrollBar(this, orientation == VERTICAL ? Qt::Vertical : Qt::Horizontal, getInternalParent(parent));
+        _iqscrollbar = new _Internal_QScrollBar(this, orientation == VERTICAL ? Qt::Vertical : Qt::Horizontal,
+                                                getInternalParent(parent));
     });
     setState(value, extent, min, max);
     setVisible(false);   // all widgets are not shown until added to a window
@@ -42,7 +43,7 @@ int GScrollBar::getExtent() const {
     return _iqscrollbar->pageStep();
 }
 
-_Internal_QWidget* GScrollBar::getInternalWidget() const {
+_Internal_QWidget *GScrollBar::getInternalWidget() const {
     return _iqscrollbar;
 }
 
@@ -66,8 +67,8 @@ int GScrollBar::getValue() const {
     return _iqscrollbar->value();
 }
 
-QWidget* GScrollBar::getWidget() const {
-    return static_cast<QWidget*>(_iqscrollbar);
+QWidget *GScrollBar::getWidget() const {
+    return static_cast<QWidget *>(_iqscrollbar);
 }
 
 void GScrollBar::setExtent(int extent) {
@@ -78,7 +79,8 @@ void GScrollBar::setExtent(int extent) {
 
 void GScrollBar::setMax(int max) {
     int min = getMin();
-    require::require(min <= max, "GScrollBar::setMax", "max (" + std::to_string(max) + ") cannot be less than min (" + std::to_string(min) + ")");
+    require::require(min <= max, "GScrollBar::setMax",
+                     "max (" + std::to_string(max) + ") cannot be less than min (" + std::to_string(min) + ")");
     GThread::runOnQtGuiThread([this, max]() {
         _iqscrollbar->setMaximum(max);
     });
@@ -87,7 +89,8 @@ void GScrollBar::setMax(int max) {
 
 void GScrollBar::setMin(int min) {
     int max = getMax();
-    require::require(min <= max, "GScrollBar::setMin", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+    require::require(min <= max, "GScrollBar::setMin",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     GThread::runOnQtGuiThread([this, min]() {
         _iqscrollbar->setMinimum(min);
     });
@@ -95,7 +98,8 @@ void GScrollBar::setMin(int min) {
 }
 
 void GScrollBar::setState(int value, int extent, int min, int max) {
-    require::require(min <= max, "GScrollBar::setState", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+    require::require(min <= max, "GScrollBar::setState",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     require::inRange(value, min, max, "GScrollBar::setState", "value");
     GThread::runOnQtGuiThread([this, value, extent, min, max]() {
         _iqscrollbar->setRange(min, max);
@@ -125,7 +129,7 @@ void GScrollBar::updateSize() {
 }
 
 
-_Internal_QScrollBar::_Internal_QScrollBar(GScrollBar* gscrollbar, Qt::Orientation orientation, QWidget* parent)
+_Internal_QScrollBar::_Internal_QScrollBar(GScrollBar *gscrollbar, Qt::Orientation orientation, QWidget *parent)
         : QScrollBar(orientation, parent),
           _gscrollbar(gscrollbar) {
     require::nonNull(gscrollbar, "_Internal_QScrollBar::constructor");
@@ -142,10 +146,10 @@ void _Internal_QScrollBar::handleValueChange(int /* value */) {
         return;
     }
     GEvent changeEvent(
-                /* class  */ CHANGE_EVENT,
-                /* type   */ STATE_CHANGED,
-                /* name   */ "change",
-                /* source */ _gscrollbar);
+            /* class  */ CHANGE_EVENT,
+            /* type   */ STATE_CHANGED,
+            /* name   */ "change",
+            /* source */ _gscrollbar);
     changeEvent.setActionCommand(_gscrollbar->getActionCommand());
     _gscrollbar->fireEvent(changeEvent);
 }

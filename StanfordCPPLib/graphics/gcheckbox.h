@@ -42,7 +42,7 @@ public:
      * Creates a checkbox with the given text.
      * You can pass an optional second parameter to initially check the box.
      */
-    GCheckBox(const std::string& text = "", bool checked = false, QWidget* parent = nullptr);
+    GCheckBox(const std::string &text = "", bool checked = false, QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the checkbox.
@@ -53,7 +53,7 @@ public:
     std::string getActionCommand() const override;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the text next to the checkbox.
@@ -64,7 +64,7 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns true if the checkbox is currently checked.
@@ -93,7 +93,7 @@ public:
     /**
      * Sets the text that will appear next to the checkbox.
      */
-    virtual void setText(const std::string& text);
+    virtual void setText(const std::string &text);
 
     /**
      * Reverses the checked state of the box, setting it to be checked if it was
@@ -110,7 +110,7 @@ protected:
 private:
     Q_DISABLE_COPY(GCheckBox)
 
-    _Internal_QCheckBox* _iqcheckBox;
+    _Internal_QCheckBox *_iqcheckBox;
 
     friend class _Internal_QCheckBox;
 };
@@ -120,26 +120,32 @@ private:
  * @private
  */
 class _Internal_QCheckBox : public QCheckBox, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QCheckBox(GCheckBox* gcheckBox, bool checked = false, QWidget* parent = nullptr);
+    _Internal_QCheckBox(GCheckBox *gcheckBox, bool checked = false, QWidget *parent = nullptr);
+
     void detach() override;
-    void keyPressEvent(QKeyEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+    void keyReleaseEvent(QKeyEvent *event) override;
+
     QSize sizeHint() const override;
 
 signals:
+
     void doubleClicked();
 
 public slots:
+
     void handleStateChange(int);
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent* e) override;
+    void mouseDoubleClickEvent(QMouseEvent *e) override;
 
 private:
-    GCheckBox* _gcheckBox;
+    GCheckBox *_gcheckBox;
 
     friend class GCheckBox;
 };

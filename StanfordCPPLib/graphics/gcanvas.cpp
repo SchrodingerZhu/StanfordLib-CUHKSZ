@@ -67,27 +67,27 @@ int GCanvas::getRed(int rgb) {
     return (rgb & 0xff0000) >> 16;
 }
 
-void GCanvas::getRedGreenBlue(int rgb, int& red, int& green, int& blue) {
+void GCanvas::getRedGreenBlue(int rgb, int &red, int &green, int &blue) {
     red = getRed(rgb);
     green = getGreen(rgb);
     blue = getBlue(rgb);
 }
 
 
-GCanvas::GCanvas(QWidget* parent)
+GCanvas::GCanvas(QWidget *parent)
         : _backgroundImage(nullptr),
           _filename("") {
     init(/* width */ -1, /* height */ -1, /* background */ 0xffffff, parent);
 }
 
-GCanvas::GCanvas(const std::string& filename, QWidget* parent)
+GCanvas::GCanvas(const std::string &filename, QWidget *parent)
         : _backgroundImage(nullptr),
           _filename(filename) {
     init(/* width */ -1, /* height */ -1, /* background */ 0xffffff, parent);
     load(filename);
 }
 
-GCanvas::GCanvas(std::istream& source, QWidget* parent)
+GCanvas::GCanvas(std::istream &source, QWidget *parent)
         : _backgroundImage(nullptr),
           _filename("std::istream data") {
     init(/* width */ -1, /* height */ -1, /* background */ 0xffffff, parent);
@@ -96,24 +96,24 @@ GCanvas::GCanvas(std::istream& source, QWidget* parent)
     }
 }
 
-GCanvas::GCanvas(double width, double height, int rgbBackground, QWidget* parent)
+GCanvas::GCanvas(double width, double height, int rgbBackground, QWidget *parent)
         : _backgroundImage(nullptr),
           _filename("") {
     init(width, height, rgbBackground, parent);
 }
 
-GCanvas::GCanvas(double width, double height, const std::string& rgbBackground, QWidget* parent)
+GCanvas::GCanvas(double width, double height, const std::string &rgbBackground, QWidget *parent)
         : _backgroundImage(nullptr),
           _filename("") {
     _backgroundColor = rgbBackground;
     init(width, height,
          GColor::hasAlpha(rgbBackground)
-                ? GColor::convertColorToARGB(rgbBackground)
-                : GColor::convertColorToRGB(rgbBackground),
+         ? GColor::convertColorToARGB(rgbBackground)
+         : GColor::convertColorToRGB(rgbBackground),
          parent);
 }
 
-void GCanvas::init(double width, double height, int rgbBackground, QWidget* parent) {
+void GCanvas::init(double width, double height, int rgbBackground, QWidget *parent) {
     checkSize("GCanvas::constructor", width, height);
     checkColor("GCanvas::constructor", rgbBackground);
 
@@ -147,7 +147,7 @@ GCanvas::~GCanvas() {
     _iqcanvas = nullptr;
 }
 
-void GCanvas::add(GObject* gobj) {
+void GCanvas::add(GObject *gobj) {
     GThread::runOnQtGuiThread([this, gobj]() {
         lockForWrite();
         _gcompound.add(gobj);   // calls conditionalRepaint
@@ -155,7 +155,7 @@ void GCanvas::add(GObject* gobj) {
     });
 }
 
-void GCanvas::add(GObject* gobj, double x, double y) {
+void GCanvas::add(GObject *gobj, double x, double y) {
     GThread::runOnQtGuiThread([this, gobj, x, y]() {
         lockForWrite();
         _gcompound.add(gobj, x, y);   // calls conditionalRepaint
@@ -163,7 +163,7 @@ void GCanvas::add(GObject* gobj, double x, double y) {
     });
 }
 
-void GCanvas::add(GObject& gobj) {
+void GCanvas::add(GObject &gobj) {
     GThread::runOnQtGuiThread([this, &gobj]() {
         lockForWrite();
         _gcompound.add(gobj);   // calls conditionalRepaint
@@ -171,7 +171,7 @@ void GCanvas::add(GObject& gobj) {
     });
 }
 
-void GCanvas::add(GObject& gobj, double x, double y) {
+void GCanvas::add(GObject &gobj, double x, double y) {
     GThread::runOnQtGuiThread([this, &gobj, x, y]() {
         lockForWrite();
         _gcompound.add(gobj, x, y);   // calls conditionalRepaint
@@ -219,7 +219,7 @@ bool GCanvas::contains(double x, double y) const {
     return result;
 }
 
-int GCanvas::countDiffPixels(const GCanvas& image) const {
+int GCanvas::countDiffPixels(const GCanvas &image) const {
     lockForReadConst();
     int w1 = static_cast<int>(getWidth());
     int h1 = static_cast<int>(getHeight());
@@ -246,7 +246,7 @@ int GCanvas::countDiffPixels(const GCanvas& image) const {
     return diffPxCount;
 }
 
-int GCanvas::countDiffPixels(const GCanvas& image, int xmin, int ymin, int xmax, int ymax) const {
+int GCanvas::countDiffPixels(const GCanvas &image, int xmin, int ymin, int xmax, int ymax) const {
     lockForReadConst();
     int w1 = static_cast<int>(getWidth());
     int h1 = static_cast<int>(getHeight());
@@ -256,8 +256,11 @@ int GCanvas::countDiffPixels(const GCanvas& image, int xmin, int ymin, int xmax,
 
     for (int y = ymin; y < ymax; y++) {
         for (int x = xmin; x < xmax; x++) {
-            int px1 = x < w1 && y < h1 ? (_backgroundImage->pixel(static_cast<int>(x), static_cast<int>(y)) & 0x00ffffff) : -1;
-            int px2 = x < w2 && y < h2 ? (image._backgroundImage->pixel(static_cast<int>(x), static_cast<int>(y)) & 0x00ffffff) : -1;
+            int px1 =
+                    x < w1 && y < h1 ? (_backgroundImage->pixel(static_cast<int>(x), static_cast<int>(y)) & 0x00ffffff)
+                                     : -1;
+            int px2 = x < w2 && y < h2 ? (image._backgroundImage->pixel(static_cast<int>(x), static_cast<int>(y)) &
+                                          0x00ffffff) : -1;
             if (px1 != px2) {
                 diffPxCount++;
             }
@@ -268,17 +271,17 @@ int GCanvas::countDiffPixels(const GCanvas& image, int xmin, int ymin, int xmax,
     return diffPxCount;
 }
 
-int GCanvas::countDiffPixels(const GCanvas* image) const {
+int GCanvas::countDiffPixels(const GCanvas *image) const {
     require::nonNull(image, "GCanvas::countDiffPixels");
     return countDiffPixels(*image);
 }
 
-int GCanvas::countDiffPixels(const GCanvas* image, int xmin, int ymin, int xmax, int ymax) const {
+int GCanvas::countDiffPixels(const GCanvas *image, int xmin, int ymin, int xmax, int ymax) const {
     require::nonNull(image, "GCanvas::countDiffPixels");
     return countDiffPixels(*image, xmin, ymin, xmax, ymax);
 }
 
-GCanvas* GCanvas::diff(const GCanvas& image, int diffPixelColor) const {
+GCanvas *GCanvas::diff(const GCanvas &image, int diffPixelColor) const {
     lockForReadConst();
     int w1 = static_cast<int>(getWidth());
     int h1 = static_cast<int>(getHeight());
@@ -306,18 +309,18 @@ GCanvas* GCanvas::diff(const GCanvas& image, int diffPixelColor) const {
             }
         }
     }
-    GCanvas* result = new GCanvas(wmax, hmax);
+    GCanvas *result = new GCanvas(wmax, hmax);
     result->fromGrid(resultGrid);
     unlockConst();
     return result;
 }
 
-GCanvas* GCanvas::diff(const GCanvas* image, int diffPixelColor) const {
+GCanvas *GCanvas::diff(const GCanvas *image, int diffPixelColor) const {
     require::nonNull(image, "GCanvas::diff");
     return diff(*image, diffPixelColor);
 }
 
-void GCanvas::draw(QPainter* painter) {
+void GCanvas::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -329,7 +332,7 @@ void GCanvas::draw(QPainter* painter) {
     // unlock();
 }
 
-void GCanvas::draw(GObject* gobj) {
+void GCanvas::draw(GObject *gobj) {
     require::nonNull(gobj, "GCanvas::draw");
     ensureBackgroundImage();
     if (_backgroundImage && _backgroundImage->paintEngine()) {
@@ -353,9 +356,9 @@ void GCanvas::ensureBackgroundImage() {
         GThread::runOnQtGuiThread([this]() {
             lockForWrite();
             _backgroundImage = new QImage(
-                        static_cast<int>(getWidth()),
-                        static_cast<int>(getHeight()),
-                        QImage::Format_ARGB32);
+                    static_cast<int>(getWidth()),
+                    static_cast<int>(getHeight()),
+                    QImage::Format_ARGB32);
             if (!_backgroundColor.empty()) {
                 if (GColor::hasAlpha(_backgroundColor)) {
                     _backgroundImage->fill(static_cast<unsigned int>(_backgroundColorInt));
@@ -372,12 +375,12 @@ void GCanvas::ensureBackgroundImageConstHack() const {
     if (!_backgroundImage) {
         // Your whole life has been a lie.
         // Also, this code is bad and I should feel bad.
-        GCanvas* hack = const_cast<GCanvas*>(this);
+        GCanvas *hack = const_cast<GCanvas *>(this);
         hack->ensureBackgroundImage();
     }
 }
 
-bool GCanvas::equals(const GCanvas& other) const {
+bool GCanvas::equals(const GCanvas &other) const {
     if (getSize() != other.getSize()) {
         return false;
     }
@@ -388,13 +391,13 @@ bool GCanvas::equals(const GCanvas& other) const {
 void GCanvas::fill(int rgb) {
     checkColor("GCanvas::fill", rgb);
     fillRegion(/* x */ 0,
-               /* y */ 0,
-               /* width */ getWidth(),
-               /* height */ getHeight(),
-               rgb);
+            /* y */ 0,
+            /* width */ getWidth(),
+            /* height */ getHeight(),
+                       rgb);
 }
 
-void GCanvas::fill(const std::string& rgb) {
+void GCanvas::fill(const std::string &rgb) {
     fill(GColor::convertColorToRGB(rgb));
 }
 
@@ -419,7 +422,7 @@ void GCanvas::fillRegion(double x, double y, double width, double height, int rg
     conditionalRepaint();
 }
 
-void GCanvas::fillRegion(double x, double y, double width, double height, const std::string& rgb) {
+void GCanvas::fillRegion(double x, double y, double width, double height, const std::string &rgb) {
     fillRegion(x, y, width, height, GColor::convertColorToRGB(rgb));
 }
 
@@ -437,7 +440,7 @@ void GCanvas::flatten() {
     });
 }
 
-void GCanvas::fromGrid(const Grid<int>& grid) {
+void GCanvas::fromGrid(const Grid<int> &grid) {
     checkSize("GCanvas::fromGrid", grid.width(), grid.height());
     setSize(grid.width(), grid.height());
 
@@ -470,16 +473,16 @@ int GCanvas::getBackgroundInt() const {
     return GDrawingSurface::getBackgroundInt();
 }
 
-GObject* GCanvas::getElement(int index) const {
+GObject *GCanvas::getElement(int index) const {
     lockForReadConst();
-    GObject* result = _gcompound.getElement(index);
+    GObject *result = _gcompound.getElement(index);
     unlockConst();
     return result;
 }
 
-GObject* GCanvas::getElementAt(double x, double y) const {
+GObject *GCanvas::getElementAt(double x, double y) const {
     lockForReadConst();
-    GObject* result = _gcompound.getElementAt(x, y);
+    GObject *result = _gcompound.getElementAt(x, y);
     unlockConst();
     return result;
 }
@@ -499,7 +502,7 @@ std::string GCanvas::getFont() const {
     return GDrawingSurface::getFont();
 }
 
-_Internal_QWidget* GCanvas::getInternalWidget() const {
+_Internal_QWidget *GCanvas::getInternalWidget() const {
     return _iqcanvas;
 }
 
@@ -553,15 +556,15 @@ std::string GCanvas::getType() const {
     return "GCanvas";
 }
 
-QWidget* GCanvas::getWidget() const {
-    return static_cast<QWidget*>(_iqcanvas);
+QWidget *GCanvas::getWidget() const {
+    return static_cast<QWidget *>(_iqcanvas);
 }
 
 bool GCanvas::isAutoRepaint() const {
     return _gcompound.isAutoRepaint();
 }
 
-void GCanvas::load(const std::string& filename) {
+void GCanvas::load(const std::string &filename) {
     // for efficiency, let's at least check whether the file exists
     // and throw error immediately rather than contacting the back-end
     if (!fileExists(filename)) {
@@ -590,7 +593,7 @@ void GCanvas::load(const std::string& filename) {
     }
 }
 
-bool GCanvas::loadFromStream(std::istream& input) {
+bool GCanvas::loadFromStream(std::istream &input) {
     // buffer bytes into a std::string
     std::ostringstream byteStream;
     byteStream << input.rdbuf();
@@ -620,9 +623,9 @@ void GCanvas::notifyOfResize(double width, double height) {
         GThread::runOnQtGuiThread([this, width, height]() {
             // make new image buffer of the new size
             lockForWrite();
-            QImage* newImage = new QImage(
-                        static_cast<int>(width),
-                        static_cast<int>(height), QImage::Format_ARGB32);
+            QImage *newImage = new QImage(
+                    static_cast<int>(width),
+                    static_cast<int>(height), QImage::Format_ARGB32);
             if (!_backgroundColor.empty()) {
                 if (GColor::hasAlpha(_backgroundColor)) {
                     newImage->fill(static_cast<unsigned int>(_backgroundColorInt));
@@ -645,7 +648,7 @@ void GCanvas::notifyOfResize(double width, double height) {
     }
 }
 
-void GCanvas::remove(GObject* gobj) {
+void GCanvas::remove(GObject *gobj) {
     GThread::runOnQtGuiThread([this, gobj]() {
         lockForWrite();
         _gcompound.remove(gobj);
@@ -653,7 +656,7 @@ void GCanvas::remove(GObject* gobj) {
     });
 }
 
-void GCanvas::remove(GObject& gobj) {
+void GCanvas::remove(GObject &gobj) {
     GThread::runOnQtGuiThread([this, &gobj]() {
         lockForWrite();
         _gcompound.remove(gobj);
@@ -695,15 +698,15 @@ void GCanvas::resize(double width, double height, bool /* retain */) {
     conditionalRepaint();
 }
 
-void GCanvas::save(const std::string& filename) {
+void GCanvas::save(const std::string &filename) {
     GThread::runOnQtGuiThread([this, filename]() {
         ensureBackgroundImage();
         lockForRead();
         if (!_gcompound.isEmpty()) {
             // flatten image in a copy object, then save
             QImage imageCopy = this->_backgroundImage->copy(
-                        0, 0,
-                        static_cast<int>(getWidth()), static_cast<int>(getHeight()));
+                    0, 0,
+                    static_cast<int>(getWidth()), static_cast<int>(getHeight()));
             QPainter painter(&imageCopy);
             painter.setRenderHint(QPainter::Antialiasing, GObject::isAntiAliasing());
             painter.setRenderHint(QPainter::TextAntialiasing, GObject::isAntiAliasing());
@@ -752,7 +755,7 @@ void GCanvas::setBackground(int color) {
     }
 }
 
-void GCanvas::setBackground(const std::string& color) {
+void GCanvas::setBackground(const std::string &color) {
     setBackground(GColor::convertColorToRGB(color));
 }
 
@@ -760,15 +763,15 @@ void GCanvas::setColor(int color) {
     GDrawingSurface::setColor(color);
 }
 
-void GCanvas::setColor(const std::string& color) {
+void GCanvas::setColor(const std::string &color) {
     setColor(GColor::convertColorToRGB(color));
 }
 
-void GCanvas::setFont(const QFont& font) {
+void GCanvas::setFont(const QFont &font) {
     GDrawingSurface::setFont(font);
 }
 
-void GCanvas::setFont(const std::string& font) {
+void GCanvas::setFont(const std::string &font) {
     GDrawingSurface::setFont(font);
 }
 
@@ -776,7 +779,7 @@ void GCanvas::setForeground(int color) {
     GDrawingSurface::setForeground(color);
 }
 
-void GCanvas::setForeground(const std::string& color) {
+void GCanvas::setForeground(const std::string &color) {
     setForeground(GColor::convertColorToRGB(color));
 }
 
@@ -840,7 +843,7 @@ void GCanvas::setPixelARGB(double x, double y, int a, int r, int g, int b) {
     setPixelARGB(x, y, GColor::convertARGBToARGB(a, r, g, b));
 }
 
-void GCanvas::setPixels(const Grid<int>& pixels) {
+void GCanvas::setPixels(const Grid<int> &pixels) {
     // TODO: is this redundant with fromGrid?
     ensureBackgroundImage();
     if (pixels.width() != (int) getWidth() || pixels.height() != (int) getHeight()) {
@@ -861,7 +864,7 @@ void GCanvas::setPixels(const Grid<int>& pixels) {
     });
 }
 
-void GCanvas::setPixelsARGB(const Grid<int>& pixels) {
+void GCanvas::setPixelsARGB(const Grid<int> &pixels) {
     ensureBackgroundImage();
     if (pixels.width() != (int) getWidth() || pixels.height() != (int) getHeight()) {
         // TODO
@@ -881,10 +884,10 @@ void GCanvas::setPixelsARGB(const Grid<int>& pixels) {
     });
 }
 
-GImage* GCanvas::toGImage() const {
+GImage *GCanvas::toGImage() const {
     ensureBackgroundImageConstHack();
     lockForReadConst();
-    GImage* image = new GImage(_backgroundImage);
+    GImage *image = new GImage(_backgroundImage);
     unlockConst();
     return image;
 
@@ -911,7 +914,7 @@ Grid<int> GCanvas::toGrid() const {
     return grid;
 }
 
-void GCanvas::toGrid(Grid<int>& grid) const {
+void GCanvas::toGrid(Grid<int> &grid) const {
     grid.resize(getHeight(), getWidth());
     lockForReadConst();
     for (int row = 0, width = (int) getWidth(), height = (int) getHeight(); row < height; row++) {
@@ -923,7 +926,7 @@ void GCanvas::toGrid(Grid<int>& grid) const {
 }
 
 
-_Internal_QCanvas::_Internal_QCanvas(GCanvas* gcanvas, QWidget* parent)
+_Internal_QCanvas::_Internal_QCanvas(GCanvas *gcanvas, QWidget *parent)
         : QWidget(parent),
           _gcanvas(gcanvas) {
     require::nonNull(gcanvas, "_Internal_QCanvas::constructor");
@@ -941,7 +944,7 @@ void _Internal_QCanvas::detach() {
     _gcanvas = nullptr;
 }
 
-void _Internal_QCanvas::enterEvent(QEvent* event) {
+void _Internal_QCanvas::enterEvent(QEvent *event) {
     QWidget::enterEvent(event);   // call super
     if (!_gcanvas || !_gcanvas->isAcceptingEvent("mouseenter")) {
         return;
@@ -949,7 +952,7 @@ void _Internal_QCanvas::enterEvent(QEvent* event) {
     _gcanvas->fireGEvent(event, MOUSE_ENTERED, "mouseenter");
 }
 
-void _Internal_QCanvas::keyPressEvent(QKeyEvent* event) {
+void _Internal_QCanvas::keyPressEvent(QKeyEvent *event) {
     QWidget::keyPressEvent(event);   // call super
     if (!_gcanvas || !_gcanvas->isAcceptingEvent("keypress")) {
         return;
@@ -957,7 +960,7 @@ void _Internal_QCanvas::keyPressEvent(QKeyEvent* event) {
     _gcanvas->fireGEvent(event, KEY_PRESSED, "keypress");
 }
 
-void _Internal_QCanvas::keyReleaseEvent(QKeyEvent* event) {
+void _Internal_QCanvas::keyReleaseEvent(QKeyEvent *event) {
     QWidget::keyReleaseEvent(event);   // call super
     if (!_gcanvas) {
         return;
@@ -971,7 +974,7 @@ void _Internal_QCanvas::keyReleaseEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QCanvas::leaveEvent(QEvent* event) {
+void _Internal_QCanvas::leaveEvent(QEvent *event) {
     QWidget::leaveEvent(event);   // call super
     if (!_gcanvas || !_gcanvas->isAcceptingEvent("mouseexit")) {
         return;
@@ -979,17 +982,17 @@ void _Internal_QCanvas::leaveEvent(QEvent* event) {
     _gcanvas->fireGEvent(event, MOUSE_EXITED, "mouseexit");
 }
 
-void _Internal_QCanvas::mouseDoubleClickEvent(QMouseEvent* event) {
+void _Internal_QCanvas::mouseDoubleClickEvent(QMouseEvent *event) {
     QWidget::mouseDoubleClickEvent(event);   // call super
     emit doubleClicked();
     if (!_gcanvas || !_gcanvas->isAcceptingEvent("doubleclick")) {
         return;
     }
     GEvent mouseEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ MOUSE_DOUBLE_CLICKED,
-                /* name   */ "doubleclick",
-                /* source */ _gcanvas);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ MOUSE_DOUBLE_CLICKED,
+            /* name   */ "doubleclick",
+            /* source */ _gcanvas);
     mouseEvent.setActionCommand(_gcanvas->getActionCommand());
     mouseEvent.setButton((int) event->button());
     mouseEvent.setX(event->x());
@@ -997,13 +1000,13 @@ void _Internal_QCanvas::mouseDoubleClickEvent(QMouseEvent* event) {
     _gcanvas->fireEvent(mouseEvent);
 }
 
-void _Internal_QCanvas::mouseMoveEvent(QMouseEvent* event) {
+void _Internal_QCanvas::mouseMoveEvent(QMouseEvent *event) {
     QWidget::mouseMoveEvent(event);   // call super
     if (!_gcanvas) {
         return;
     }
     if (!_gcanvas->isAcceptingEvent("mousemove")
-            && !_gcanvas->isAcceptingEvent("mousedrag")) {
+        && !_gcanvas->isAcceptingEvent("mousedrag")) {
         return;
     }
     _gcanvas->fireGEvent(event, MOUSE_MOVED, "mousemove");
@@ -1013,7 +1016,7 @@ void _Internal_QCanvas::mouseMoveEvent(QMouseEvent* event) {
     }
 }
 
-void _Internal_QCanvas::mousePressEvent(QMouseEvent* event) {
+void _Internal_QCanvas::mousePressEvent(QMouseEvent *event) {
     QWidget::mousePressEvent(event);   // call super
     if (!_gcanvas || !_gcanvas->isAcceptingEvent("mousepress")) {
         return;
@@ -1021,7 +1024,7 @@ void _Internal_QCanvas::mousePressEvent(QMouseEvent* event) {
     _gcanvas->fireGEvent(event, MOUSE_PRESSED, "mousepress");
 }
 
-void _Internal_QCanvas::mouseReleaseEvent(QMouseEvent* event) {
+void _Internal_QCanvas::mouseReleaseEvent(QMouseEvent *event) {
     QWidget::mouseReleaseEvent(event);   // call super
     if (!_gcanvas) {
         return;
@@ -1035,7 +1038,7 @@ void _Internal_QCanvas::mouseReleaseEvent(QMouseEvent* event) {
     }
 }
 
-void _Internal_QCanvas::paintEvent(QPaintEvent* event) {
+void _Internal_QCanvas::paintEvent(QPaintEvent *event) {
     QWidget::paintEvent(event);   // call super
     if (!_gcanvas) {
         return;
@@ -1050,7 +1053,7 @@ void _Internal_QCanvas::paintEvent(QPaintEvent* event) {
     painter.end();
 }
 
-void _Internal_QCanvas::resizeEvent(QResizeEvent* event) {
+void _Internal_QCanvas::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);   // call super
     if (!_gcanvas) {
         return;
@@ -1071,7 +1074,7 @@ QSize _Internal_QCanvas::sizeHint() const {
     }
 }
 
-void _Internal_QCanvas::wheelEvent(QWheelEvent* event) {
+void _Internal_QCanvas::wheelEvent(QWheelEvent *event) {
     QWidget::wheelEvent(event);   // call super
     if (!_gcanvas) {
         return;

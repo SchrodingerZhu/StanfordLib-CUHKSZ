@@ -22,8 +22,8 @@
  * Precondition: The array pointer points to a valid non-null array in memory,
  * and that array contains at least 'length' elements.
  */
-template <typename T>
-void shuffle(T* array, int length) {
+template<typename T>
+void shuffle(T *array, int length) {
     for (int i = 0; i < length; i++) {
         int j = randomInteger(i, length - 1);
         if (i != j) std::swap(array[i], array[j]);
@@ -36,8 +36,8 @@ void shuffle(T* array, int length) {
  * Precondition: The array pointer points to a valid non-null 2-D array in
  * memory, and that array contains at least the given number of rows/columns.
  */
-template <typename T>
-void shuffle(T** array2d, int rows, int cols) {
+template<typename T>
+void shuffle(T **array2d, int rows, int cols) {
     int length = rows * cols;
     for (int i = 0; i < length; i++) {
         int j = randomInteger(i, length - 1);

@@ -26,8 +26,9 @@ class GWindow;
 
 class QSPLApplication : public QApplication {
 public:
-    QSPLApplication(int& argc, char *argv[]);
-    bool notify(QObject* receiver, QEvent* e) override;
+    QSPLApplication(int &argc, char *argv[]);
+
+    bool notify(QObject *receiver, QEvent *e) override;
 };
 
 
@@ -39,7 +40,7 @@ public:
  * @private
  */
 class QtGui : public QObject {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     /**
@@ -52,7 +53,7 @@ public:
      * Returns the display name of the application (used as
      * title for window and menu). If name not (yet) available,
      * returns empty string.
-     */    
+     */
     std::string getApplicationDisplayName() const;
 
     /**
@@ -65,7 +66,7 @@ public:
      * Returns the string arguments passed to the main() function.
      * The number of arguments is found using getArgc.
      */
-    char** getArgv() const;
+    char **getArgv() const;
 
     /**
      * Initializes the Qt graphics subsystem if it is not initialized already.
@@ -77,12 +78,12 @@ public:
     /**
      * Returns a pointer to the QtGui object for the graphical library.
      */
-    static QtGui* instance();
+    static QtGui *instance();
 
     /**
      * Sets the argc and argv values before main is run.
      */
-    void setArgs(int argc, char** argv);
+    void setArgs(int argc, char **argv);
 
     /**
      * Runs an event loop that calls the given function that returns an int.
@@ -96,6 +97,7 @@ public:
 
 
 public slots:
+
     /**
      * A slot used by the Qt event queue.
      */
@@ -110,19 +112,21 @@ private:
      * Returns a pointer to the overall Qt application.
      * This will be null if the application has not yet been initialized.
      */
-    QSPLApplication* getApplication();
+    QSPLApplication *getApplication();
 
     bool _initialized;
     int _argc;
-    char** _argv;
+    char **_argv;
 
-    static QSPLApplication* _app;
-    static QThread* _qtMainThread;
-    static GThread* _studentThread;
-    static QtGui* _instance;
+    static QSPLApplication *_app;
+    static QThread *_qtMainThread;
+    static GThread *_studentThread;
+    static QtGui *_instance;
 
     friend class GEventQueue;
+
     friend class GThread;
+
     friend class GWindow;
 };
 
@@ -131,7 +135,7 @@ namespace stanfordcpplib {
  * Code that runs when student thread shuts down.
  * @private
  */
-void endOfLibraryStudentThread();
+    void endOfLibraryStudentThread();
 } // namespace stanfordcpplib
 
 #endif // _qtgui_h

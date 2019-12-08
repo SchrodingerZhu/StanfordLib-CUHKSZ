@@ -39,14 +39,15 @@ public:
      */
     enum Orientation {
         HORIZONTAL = 0,
-        VERTICAL   = 1
+        VERTICAL = 1
     };
 
     /**
      * Creates a new scroll bar with the given orientation and value range.
      * @throw ErrorException if min > max or value is not between min and max
      */
-    GScrollBar(Orientation orientation = VERTICAL, int value = 0, int extent = 10, int min = 0, int max = 100, QWidget* parent = nullptr);
+    GScrollBar(Orientation orientation = VERTICAL, int value = 0, int extent = 10, int min = 0, int max = 100,
+               QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the scroll bar.
@@ -60,7 +61,7 @@ public:
     virtual int getExtent() const;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the maximum allowed value of the scroll bar.
@@ -86,7 +87,7 @@ public:
     virtual int getValue() const;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Sets the scroll bar's extent, meaning the amount of its range that is
@@ -127,7 +128,7 @@ protected:
 private:
     Q_DISABLE_COPY(GScrollBar)
 
-    _Internal_QScrollBar* _iqscrollbar;
+    _Internal_QScrollBar *_iqscrollbar;
 
     friend class _Internal_QScrollBar;
 
@@ -139,18 +140,21 @@ private:
  * @private
  */
 class _Internal_QScrollBar : public QScrollBar, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QScrollBar(GScrollBar* qgscrollbar, Qt::Orientation orientation, QWidget* parent = nullptr);
+    _Internal_QScrollBar(GScrollBar *qgscrollbar, Qt::Orientation orientation, QWidget *parent = nullptr);
+
     void detach() override;
+
     QSize sizeHint() const override;
 
 public slots:
+
     void handleValueChange(int value);
 
 private:
-    GScrollBar* _gscrollbar;
+    GScrollBar *_gscrollbar;
 
     friend class GScrollBar;
 };

@@ -79,7 +79,7 @@ public:
      * DawgLexicon english("English.dat");
      *</pre>
      */
-    DawgLexicon(std::istream& input);
+    DawgLexicon(std::istream &input);
 
     /**
      * Initializes a new lexicon, reading in the contents of the lexicon from
@@ -91,7 +91,7 @@ public:
      *
      * @example DawgLexicon english("English.dat");
      */
-    DawgLexicon(const std::string& filename);
+    DawgLexicon(const std::string &filename);
 
     /**
      * This constructor uses an initializer list to set up the lexicon.
@@ -103,52 +103,52 @@ public:
      * The destructor deallocates any storage associated with the lexicon.
      */
     virtual ~DawgLexicon();
-    
+
     /**
      * Adds the specified word to the lexicon.
      */
-    void add(const std::string& word);
+    void add(const std::string &word);
 
     /**
      * Adds all elements of the given other lexicon to this lexicon.
      * Identical in behavior to the += operator.
      */
-    DawgLexicon& addAll(const DawgLexicon& lex);
+    DawgLexicon &addAll(const DawgLexicon &lex);
 
     /**
      * Adds all elements of the given list to this lexicon.
      * Identical in behavior to the += operator.
      */
-    DawgLexicon& addAll(std::initializer_list<std::string> list);
+    DawgLexicon &addAll(std::initializer_list<std::string> list);
 
     /**
      * Reads the input stream and adds all of its words to the lexicon.
      */
-    void addWordsFromFile(std::istream& input);
-    
+    void addWordsFromFile(std::istream &input);
+
     /**
      * Reads the file and adds all of its words to the lexicon.
      */
-    void addWordsFromFile(const std::string& filename);
-    
+    void addWordsFromFile(const std::string &filename);
+
     /**
      * Removes all words from the lexicon.
      */
     void clear();
-    
+
     /**
      * Returns <code>true</code> if <code>word</code> is contained in the
      * lexicon.  In the <code>DawgLexicon</code> class, the case of letters is
      * ignored, so "Zoo" is the same as "ZOO" or "zoo".
      */
-    bool contains(const std::string& word) const;
+    bool contains(const std::string &word) const;
 
     /**
      * Returns <code>true</code> if every value from the given other lexicon
      * is also found in this lexicon.
      * Equivalent in behavior to isSupersetOf.
      */
-    bool containsAll(const DawgLexicon& set2) const;
+    bool containsAll(const DawgLexicon &set2) const;
 
     /**
      * Returns <code>true</code> if every value from the given list
@@ -162,15 +162,15 @@ public:
      * Like <code>containsWord</code>, this method ignores the case of letters
      * so that "MO" is a prefix of "monkey" or "Monday".
      */
-    bool containsPrefix(const std::string& prefix) const;
-    
+    bool containsPrefix(const std::string &prefix) const;
+
     /**
      * Compares two lexicons for equality.
      * Returns <code>true</code> if this lexicon contains exactly the same
      * values as the given other lexicon.
      * Identical in behavior to the == operator.
      */
-    bool equals(const DawgLexicon& lex2) const;
+    bool equals(const DawgLexicon &lex2) const;
 
     /**
      * Returns the first element in alphabetical order from this lexicon (without removing it).
@@ -182,7 +182,7 @@ public:
      * Adds an element to this lexicon, if it was not already there.  This
      * method is exported for compatibility with the STL <code>set</code> class.
      */
-    void insert(const std::string& word);
+    void insert(const std::string &word);
 
     /**
      * Returns <code>true</code> if the lexicon contains no words.
@@ -193,7 +193,7 @@ public:
      * Returns <code>true</code> if every word of this lexicon is contained in
      * the given other lexicon.
      */
-    bool isSubsetOf(const DawgLexicon& lex2) const;
+    bool isSubsetOf(const DawgLexicon &lex2) const;
 
     /**
      * Returns <code>true</code> if every word of this lexicon is contained in
@@ -206,7 +206,7 @@ public:
      * the given other lexicon.
      * Equivalent in behavior to containsAll.
      */
-    bool isSupersetOf(const DawgLexicon& lex2) const;
+    bool isSupersetOf(const DawgLexicon &lex2) const;
 
     /**
      * Returns <code>true</code> if every word of this lexicon is contained in
@@ -223,12 +223,12 @@ public:
     /**
      * Calls the specified function on each word in the lexicon.
      */
-    void mapAll(void (*fn)(const std::string&)) const;
+    void mapAll(void (*fn)(const std::string &)) const;
 
     /**
      * Calls the specified function on each word in the lexicon.
      */
-    template <typename FunctorType>
+    template<typename FunctorType>
     void mapAll(FunctorType fn) const;
 
     // implementation note: DawgLexicon does not support removal,
@@ -247,74 +247,74 @@ public:
      * a large number of words.
      */
     std::string toString() const;
-    
+
     /**
      * Returns true if the two lexicons have the same elements.
      */
-    bool operator ==(const DawgLexicon& lex2) const;
+    bool operator==(const DawgLexicon &lex2) const;
 
     /**
      * Returns true if the two lexicons do not have the same elements.
      */
-    bool operator !=(const DawgLexicon& lex2) const;
+    bool operator!=(const DawgLexicon &lex2) const;
 
     /**
      * Relational operators to compare two lexicons for ordering.
      */
-    bool operator <(const DawgLexicon& lex2) const;
+    bool operator<(const DawgLexicon &lex2) const;
 
     /**
      * Relational operators to compare two lexicons for ordering.
      */
-    bool operator <=(const DawgLexicon& lex2) const;
+    bool operator<=(const DawgLexicon &lex2) const;
 
     /**
      * Relational operators to compare two lexicons for ordering.
      */
-    bool operator >(const DawgLexicon& lex2) const;
+    bool operator>(const DawgLexicon &lex2) const;
 
     /**
      * Relational operators to compare two lexicons for ordering.
      */
-    bool operator >=(const DawgLexicon& lex2) const;
+    bool operator>=(const DawgLexicon &lex2) const;
 
     /**
      * Returns the union of this lexicon and the given other lexicon,
      * which is the set of words that appear in at least one of the two.
      */
-    DawgLexicon operator +(const DawgLexicon& lex2) const;
+    DawgLexicon operator+(const DawgLexicon &lex2) const;
 
     /**
      * Returns the union of this lexicon and the given list,
      * which is the set of words that appear in at least one of the two.
      */
-    DawgLexicon operator +(std::initializer_list<std::string> list) const;
+    DawgLexicon operator+(std::initializer_list<std::string> list) const;
 
     /**
      * Returns the union of this lexicon and the given word.
      */
-    DawgLexicon operator +(const std::string& word) const;
+    DawgLexicon operator+(const std::string &word) const;
 
     /**
      * Adds all of the words from the given lexicon to this one.
      */
-    DawgLexicon& operator +=(const DawgLexicon& lex2);
+    DawgLexicon &operator+=(const DawgLexicon &lex2);
 
     /**
      * Adds all of the words from the given list to this lexicon.
      */
-    DawgLexicon& operator +=(std::initializer_list<std::string> list);
+    DawgLexicon &operator+=(std::initializer_list<std::string> list);
 
     /**
      * Adds the given word to this lexicon.
      */
-    DawgLexicon& operator +=(const std::string& word);
+    DawgLexicon &operator+=(const std::string &word);
 
     /**
      * Allows you to add multiple elements to a lexicon.
      * @example lex += "she", "sells", "sea", "shells";
      */
-    DawgLexicon& operator ,(const std::string& word);
+    DawgLexicon &operator,(const std::string &word);
 
     // Implementation note: DawgLexicon does not support -, -=, *, and *=
     // operators like the standard Lexicon.  Because of its binary internal
@@ -363,8 +363,8 @@ private:
 #endif
     };
 #pragma pack()
-    Edge* _edges;
-    Edge* _start;
+    Edge *_edges;
+    Edge *_start;
     int _edgeCount;
     int _dawgWordsCount;
     Set<std::string> _otherWords;
@@ -381,8 +381,9 @@ public:
      * typically passed by reference.  When a copy is needed, these
      * operations are supported.
      */
-    DawgLexicon(const DawgLexicon& src);
-    DawgLexicon& operator =(const DawgLexicon& src);
+    DawgLexicon(const DawgLexicon &src);
+
+    DawgLexicon &operator=(const DawgLexicon &src);
 
     /*
      * Iterator support
@@ -393,18 +394,20 @@ public:
      */
     class iterator : public std::iterator<std::input_iterator_tag, std::string> {
     private:
-        const DawgLexicon* lp;
+        const DawgLexicon *lp;
         int index;
         std::string currentDawgPrefix;
         std::string currentSetWord;
         std::string tmpWord;
-        Edge* edgePtr;
-        Stack<Edge*> stack;
+        Edge *edgePtr;
+        Stack<Edge *> stack;
         Set<std::string>::iterator setIterator;
         Set<std::string>::iterator setEnd;
 
         void advanceToNextWordInDawg();
+
         void advanceToNextWordInSet();
+
         void advanceToNextEdge();
 
     public:
@@ -412,7 +415,7 @@ public:
             /* empty */
         }
 
-        iterator(const DawgLexicon* theLP, bool endFlag) {
+        iterator(const DawgLexicon *theLP, bool endFlag) {
             this->lp = theLP;
             if (endFlag) {
                 index = lp->size();
@@ -428,7 +431,7 @@ public:
             }
         }
 
-        iterator(const iterator& it) {
+        iterator(const iterator &it) {
             lp = it.lp;
             index = it.index;
             currentDawgPrefix = it.currentDawgPrefix;
@@ -438,7 +441,7 @@ public:
             setIterator = it.setIterator;
         }
 
-        iterator& operator ++() {
+        iterator &operator++() {
             if (!edgePtr) {
                 advanceToNextWordInSet();
             } else {
@@ -452,21 +455,21 @@ public:
             return *this;
         }
 
-        iterator operator ++(int) {
+        iterator operator++(int) {
             iterator copy(*this);
             operator++();
             return copy;
         }
 
-        bool operator ==(const iterator& rhs) {
+        bool operator==(const iterator &rhs) {
             return lp == rhs.lp && index == rhs.index;
         }
 
-        bool operator !=(const iterator& rhs) {
+        bool operator!=(const iterator &rhs) {
             return !(*this == rhs);
         }
 
-        std::string operator *() {
+        std::string operator*() {
             if (!edgePtr) {
                 return currentSetWord;
             }
@@ -477,7 +480,7 @@ public:
             }
         }
 
-        std::string* operator ->() {
+        std::string *operator->() {
             if (!edgePtr) {
                 return &currentSetWord;
             }
@@ -505,23 +508,28 @@ public:
     }
 
 private:
-    Edge* findEdgeForChar(Edge* children, char ch) const;
-    Edge* traceToLastEdge(const std::string& s) const;
-    void readBinaryFile(std::istream& input);
-    void readBinaryFile(const std::string& filename);
-    void deepCopy(const DawgLexicon& src);
-    int countDawgWords(Edge* _start) const;
+    Edge *findEdgeForChar(Edge *children, char ch) const;
+
+    Edge *traceToLastEdge(const std::string &s) const;
+
+    void readBinaryFile(std::istream &input);
+
+    void readBinaryFile(const std::string &filename);
+
+    void deepCopy(const DawgLexicon &src);
+
+    int countDawgWords(Edge *_start) const;
 
     unsigned int charToOrd(char ch) const {
-        return ((unsigned int)(tolower(ch) - 'a' + 1));
+        return ((unsigned int) (tolower(ch) - 'a' + 1));
     }
 
     char ordToChar(unsigned int ord) const {
-        return ((char)(ord - 1 + 'a'));
+        return ((char) (ord - 1 + 'a'));
     }
 };
 
-template <typename FunctorType>
+template<typename FunctorType>
 void DawgLexicon::mapAll(FunctorType fn) const {
     for (std::string word : *this) {
         fn(word);
@@ -531,16 +539,16 @@ void DawgLexicon::mapAll(FunctorType fn) const {
 /**
  * Hashing function for lexicons.
  */
-int hashCode(const DawgLexicon& lex);
+int hashCode(const DawgLexicon &lex);
 
 /**
  * Prints the lexicon to the given output stream.
  */
-std::ostream& operator <<(std::ostream& os, const DawgLexicon& lex);
+std::ostream &operator<<(std::ostream &os, const DawgLexicon &lex);
 
 /**
  * Reads the contents of a lexicon from the given input stream.
  */
-std::istream& operator >>(std::istream& is, DawgLexicon& lex);
+std::istream &operator>>(std::istream &is, DawgLexicon &lex);
 
 #endif // _dawglexicon_h

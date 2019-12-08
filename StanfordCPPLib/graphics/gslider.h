@@ -35,7 +35,7 @@ public:
      */
     enum Orientation {
         HORIZONTAL = 0,
-        VERTICAL   = 1
+        VERTICAL = 1
     };
 
     /**
@@ -57,13 +57,13 @@ public:
      * Creates a new horizontal slider with the given value range.
      * @throw ErrorException if min > max or value is not between min and max
      */
-    GSlider(int min = 0, int max = 100, int value = 50, QWidget* parent = nullptr);
+    GSlider(int min = 0, int max = 100, int value = 50, QWidget *parent = nullptr);
 
     /**
      * Creates a new horizontal or vertical slider with the given value range.
      * @throw ErrorException if min > max or value is not between min and max
      */
-    GSlider(Orientation orientation, int min = 0, int max = 100, int value = 50, QWidget* parent = nullptr);
+    GSlider(Orientation orientation, int min = 0, int max = 100, int value = 50, QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the slider.
@@ -71,7 +71,7 @@ public:
     ~GSlider() override;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the number of pixels of spacing between ticks on the slider.
@@ -129,7 +129,7 @@ public:
     virtual int getValue() const;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Sets the number of pixels of spacing between ticks on the slider.
@@ -202,7 +202,7 @@ protected:
 private:
     Q_DISABLE_COPY(GSlider)
 
-    _Internal_QSlider* _iqslider;
+    _Internal_QSlider *_iqslider;
 
     friend class _Internal_QSlider;
 };
@@ -212,20 +212,25 @@ private:
  * @private
  */
 class _Internal_QSlider : public QSlider, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QSlider(GSlider* qgslider, Qt::Orientation orientation = Qt::Horizontal, QWidget* parent = nullptr);
+    _Internal_QSlider(GSlider *qgslider, Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
+
     void detach() override;
-    void keyPressEvent(QKeyEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+    void keyReleaseEvent(QKeyEvent *event) override;
+
     QSize sizeHint() const override;
 
 public slots:
+
     void handleChange(int value);
 
 private:
-    GSlider* _gslider;
+    GSlider *_gslider;
 
     friend class GSlider;
 };

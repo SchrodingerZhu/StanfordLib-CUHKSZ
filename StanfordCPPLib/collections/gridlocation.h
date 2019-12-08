@@ -60,23 +60,29 @@ public:
 /*
  * Returns an integer hash code for this grid location.
  */
-int hashCode(const GridLocation& loc);
+int hashCode(const GridLocation &loc);
 
 /*
  * Relational operators for comparing grid locations.
  */
-bool operator <(const GridLocation& loc1, const GridLocation& loc2);
-bool operator <=(const GridLocation& loc1, const GridLocation& loc2);
-bool operator ==(const GridLocation& loc1, const GridLocation& loc2);
-bool operator !=(const GridLocation& loc1, const GridLocation& loc2);
-bool operator >(const GridLocation& loc1, const GridLocation& loc2);
-bool operator >=(const GridLocation& loc1, const GridLocation& loc2);
+bool operator<(const GridLocation &loc1, const GridLocation &loc2);
+
+bool operator<=(const GridLocation &loc1, const GridLocation &loc2);
+
+bool operator==(const GridLocation &loc1, const GridLocation &loc2);
+
+bool operator!=(const GridLocation &loc1, const GridLocation &loc2);
+
+bool operator>(const GridLocation &loc1, const GridLocation &loc2);
+
+bool operator>=(const GridLocation &loc1, const GridLocation &loc2);
 
 /*
  * I/O stream operators for reading or writing locations in their toString format.
  */
-std::ostream& operator <<(std::ostream& out, const GridLocation& loc);
-std::istream& operator >>(std::istream& input, GridLocation& loc);
+std::ostream &operator<<(std::ostream &out, const GridLocation &loc);
+
+std::istream &operator>>(std::istream &input, GridLocation &loc);
 
 
 /*
@@ -102,11 +108,11 @@ private:
      */
     class GridLocationRangeIterator : public std::iterator<std::input_iterator_tag, GridLocation> {
     private:
-        const GridLocationRange* glr;
+        const GridLocationRange *glr;
         GridLocation loc;
 
     public:
-        GridLocationRangeIterator(const GridLocationRange* glr, bool end)
+        GridLocationRangeIterator(const GridLocationRange *glr, bool end)
                 : glr(glr) {
             if (end) {
                 loc.row = glr->endRow() + 1;
@@ -116,13 +122,13 @@ private:
             }
         }
 
-        GridLocationRangeIterator(const GridLocationRangeIterator& itr)
+        GridLocationRangeIterator(const GridLocationRangeIterator &itr)
                 : glr(itr.glr),
                   loc(itr.loc) {
             // empty
         }
 
-        GridLocationRangeIterator& operator ++() {
+        GridLocationRangeIterator &operator++() {
             if (glr->isRowMajor()) {
                 loc.col++;
                 if (loc.col > glr->endCol()) {
@@ -143,13 +149,13 @@ private:
             return *this;
         }
 
-        GridLocationRangeIterator operator ++(int) {
+        GridLocationRangeIterator operator++(int) {
             GridLocationRangeIterator copy(*this);
             operator++();
             return copy;
         }
 
-        GridLocationRangeIterator& operator --() {
+        GridLocationRangeIterator &operator--() {
             if (glr->isRowMajor()) {
                 loc.col--;
                 if (loc.col < glr->startCol()) {
@@ -166,53 +172,53 @@ private:
             return *this;
         }
 
-        GridLocationRangeIterator operator --(int) {
+        GridLocationRangeIterator operator--(int) {
             GridLocationRangeIterator copy(*this);
             operator--();
             return copy;
         }
 
-        bool operator ==(const GridLocationRangeIterator& rhs) const {
+        bool operator==(const GridLocationRangeIterator &rhs) const {
             return loc == rhs.loc;
         }
 
-        bool operator !=(const GridLocationRangeIterator& rhs) const {
+        bool operator!=(const GridLocationRangeIterator &rhs) const {
             return !(*this == rhs);
         }
 
-        bool operator <(const GridLocationRangeIterator& rhs) const {
+        bool operator<(const GridLocationRangeIterator &rhs) const {
             if (glr != rhs.glr) {
                 error("GridLocationRange Iterator::operator <: Iterators are in different ranges");
             }
             return loc < rhs.loc;
         }
 
-        bool operator <=(const GridLocationRangeIterator& rhs) const {
+        bool operator<=(const GridLocationRangeIterator &rhs) const {
             if (glr != rhs.glr) {
                 error("GridLocationRange Iterator::operator <=: Iterators are in different ranges");
             }
             return loc <= rhs.loc;
         }
 
-        bool operator >(const GridLocationRangeIterator& rhs) const {
+        bool operator>(const GridLocationRangeIterator &rhs) const {
             if (glr != rhs.glr) {
                 error("GridLocationRange Iterator::operator >: Iterators are in different ranges");
             }
             return loc > rhs.loc;
         }
 
-        bool operator >=(const GridLocationRangeIterator& rhs) const {
+        bool operator>=(const GridLocationRangeIterator &rhs) const {
             if (glr != rhs.glr) {
                 error("GridLocationRange Iterator::operator >=: Iterators are in different ranges");
             }
             return loc >= rhs.loc;
         }
 
-        const GridLocation& operator *() const {
+        const GridLocation &operator*() const {
             return loc;
         }
 
-        const GridLocation* operator ->() const {
+        const GridLocation *operator->() const {
             return &loc;
         }
     };
@@ -234,7 +240,7 @@ public:
      * The isRowMajor flag indicates whether we will loop over the range in
      * row-major order (true, default) or column-major order (false).
      */
-    GridLocationRange(const GridLocation& startLoc, const GridLocation& endLoc, bool isRowMajor = true);
+    GridLocationRange(const GridLocation &startLoc, const GridLocation &endLoc, bool isRowMajor = true);
 
     /*
      * Returns an iterator over the range.
@@ -244,7 +250,7 @@ public:
     /*
      * Returns true if this range entirely contains the given other range.
      */
-    bool contains(const GridLocation& loc) const;
+    bool contains(const GridLocation &loc) const;
 
     /*
      * Returns an iterator at the end of the range.
@@ -259,7 +265,7 @@ public:
     /*
      * Returns the last row/column location in this range, inclusive.
      */
-    const GridLocation& endLocation() const;
+    const GridLocation &endLocation() const;
 
     /*
      * Returns the last row in this range, inclusive.
@@ -285,7 +291,7 @@ public:
     /*
      * Returns the first row/column location in this range.
      */
-    const GridLocation& startLocation() const;
+    const GridLocation &startLocation() const;
 
     /*
      * Returns the first row in this range.
@@ -302,6 +308,6 @@ public:
 /*
  * I/O stream operators for writing location ranges in their toString format.
  */
-std::ostream& operator <<(std::ostream& out, const GridLocationRange& range);
+std::ostream &operator<<(std::ostream &out, const GridLocationRange &range);
 
 #endif // _gridlocation_h

@@ -68,7 +68,7 @@
  * constant time, the iterator for <code>HashMap</code> returns the
  * values in a seemingly random order.
  */
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 class HashMap {
 public:
     /*
@@ -114,7 +114,7 @@ public:
      * Associates <code>key</code> with <code>value</code> in this map.
      * A synonym for the put method.
      */
-    void add(const KeyType& key, const ValueType& value);
+    void add(const KeyType &key, const ValueType &value);
 
     /*
      * Method: addAll
@@ -127,7 +127,7 @@ public:
      * Returns a reference to this map.
      * Identical in behavior to putAll.
      */
-    HashMap& addAll(const HashMap& map2);
+    HashMap &addAll(const HashMap &map2);
 
     /*
      * Method: back
@@ -158,7 +158,7 @@ public:
      * Returns <code>true</code> if there is an entry for <code>key</code>
      * in this map.
      */
-    bool containsKey(const KeyType& key) const;
+    bool containsKey(const KeyType &key) const;
 
     /*
      * Method: equals
@@ -167,7 +167,7 @@ public:
      * Returns <code>true</code> if the two maps contain exactly the same
      * key/value pairs, and <code>false</code> otherwise.
      */
-    bool equals(const HashMap& map2) const;
+    bool equals(const HashMap &map2) const;
 
     /*
      * Method: front
@@ -191,7 +191,7 @@ public:
      * If <code>key</code> is not found, <code>get</code> returns the
      * default value for <code>ValueType</code>.
      */
-    ValueType get(const KeyType& key) const;
+    ValueType get(const KeyType &key) const;
 
     /*
      * Method: isEmpty
@@ -200,7 +200,7 @@ public:
      * Returns <code>true</code> if this map contains no entries.
      */
     bool isEmpty() const;
-    
+
     /*
      * Method: keys
      * Usage: Vector<KeyType> keys = map.keys();
@@ -218,7 +218,7 @@ public:
      * Iterates through the map entries and calls <code>fn(key, value)</code>
      * for each one.  The keys are processed in an undetermined order.
      */
-    void mapAll(std::function<void(const KeyType&, const ValueType&)> fn) const;
+    void mapAll(std::function<void(const KeyType &, const ValueType &)> fn) const;
 
     /*
      * Method: put
@@ -228,7 +228,7 @@ public:
      * Any previous value associated with <code>key</code> is replaced
      * by the new value.
      */
-    void put(const KeyType& key, const ValueType& value);
+    void put(const KeyType &key, const ValueType &value);
 
     /*
      * Method: putAll
@@ -240,7 +240,7 @@ public:
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      * Returns a reference to this map.
      */
-    HashMap& putAll(const HashMap& map2);
+    HashMap &putAll(const HashMap &map2);
 
     /*
      * Method: remove
@@ -249,7 +249,7 @@ public:
      * Removes any entry for <code>key</code> from this map.
      * If the given key is not found, has no effect.
      */
-    void remove(const KeyType& key);
+    void remove(const KeyType &key);
 
     /*
      * Method: removeAll
@@ -261,7 +261,7 @@ public:
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      * Returns a reference to this map.
      */
-    HashMap& removeAll(const HashMap& map2);
+    HashMap &removeAll(const HashMap &map2);
 
     /*
      * Method: retainAll
@@ -273,7 +273,7 @@ public:
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      * Returns a reference to this map.
      */
-    HashMap& retainAll(const HashMap& map2);
+    HashMap &retainAll(const HashMap &map2);
 
     /*
      * Method: size
@@ -312,8 +312,9 @@ public:
      * value.  If key is not present in the map, a new entry is created
      * whose value is set to the default for the value type.
      */
-    ValueType& operator [](const KeyType& key);
-    ValueType operator [](const KeyType& key) const;
+    ValueType &operator[](const KeyType &key);
+
+    ValueType operator[](const KeyType &key) const;
 
     /*
      * Operator: +
@@ -325,7 +326,7 @@ public:
      * from the second map is favored.
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    HashMap operator +(const HashMap& map2) const;
+    HashMap operator+(const HashMap &map2) const;
 
     /*
      * Operator: +=
@@ -335,7 +336,7 @@ public:
      * Equivalent to calling addAll(map2).
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    HashMap& operator +=(const HashMap& map2);
+    HashMap &operator+=(const HashMap &map2);
 
     /*
      * Operator: -
@@ -345,7 +346,7 @@ public:
      * with removeAll called on it passing the second map as a parameter.
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    HashMap operator -(const HashMap& map2) const;
+    HashMap operator-(const HashMap &map2) const;
 
     /*
      * Operator: -=
@@ -355,7 +356,7 @@ public:
      * Equivalent to calling removeAll(map2).
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    HashMap& operator -=(const HashMap& map2);
+    HashMap &operator-=(const HashMap &map2);
 
     /*
      * Operator: *
@@ -365,7 +366,7 @@ public:
      * with retainAll called on it passing the second map as a parameter.
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    HashMap operator *(const HashMap& map2) const;
+    HashMap operator*(const HashMap &map2) const;
 
     /*
      * Operator: *=
@@ -375,7 +376,7 @@ public:
      * Equivalent to calling retainAll(map2).
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    HashMap& operator *=(const HashMap& map2);
+    HashMap &operator*=(const HashMap &map2);
 
     /*
      * Additional HashMap operations
@@ -400,6 +401,7 @@ public:
 private:
     static_assert(stanfordcpplib::collections::IsHashable<KeyType>::value,
                   "Oops! You tried using a type as a key in our HashMap without making it hashable. Click this error for more details.");
+
     /*
      * Hello CS106 students! If you got directed to this line of code in a compiler error,
      * it probably means that you tried making a HashMap with a custom struct or class type
@@ -454,7 +456,7 @@ private:
      */
 
     struct Hasher {
-        std::size_t operator()(const KeyType& key) const {
+        std::size_t operator()(const KeyType &key) const {
             return hashCode(key);
         }
     };
@@ -482,34 +484,36 @@ public:
     using iterator = const_iterator;
 
     iterator begin() const;
+
     iterator end() const;
 
     /*
      * Hashing support.
      */
-    bool operator== (const HashMap& rhs) const;
-    bool operator!= (const HashMap& rhs) const;
+    bool operator==(const HashMap &rhs) const;
 
-    template <typename K, typename V>
-    friend int hashCode(const HashMap<K, V>& map);
+    bool operator!=(const HashMap &rhs) const;
+
+    template<typename K, typename V>
+    friend int hashCode(const HashMap<K, V> &map);
 };
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 HashMap<KeyType, ValueType>::HashMap(std::initializer_list<std::pair<const KeyType, ValueType>> list)
         : _elements(list) {
 }
 
-template <typename KeyType, typename ValueType>
-void HashMap<KeyType, ValueType>::add(const KeyType& key, const ValueType& value) {
+template<typename KeyType, typename ValueType>
+void HashMap<KeyType, ValueType>::add(const KeyType &key, const ValueType &value) {
     put(key, value);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::addAll(const HashMap& map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::addAll(const HashMap &map2) {
     return putAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 KeyType HashMap<KeyType, ValueType>::back() const {
     if (isEmpty()) {
         error("HashMap::back: map is empty");
@@ -518,23 +522,23 @@ KeyType HashMap<KeyType, ValueType>::back() const {
     return std::next(_elements.begin(), _elements.size() - 1)->first;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 void HashMap<KeyType, ValueType>::clear() {
     _elements.clear();
     _version.update();
 }
 
-template <typename KeyType, typename ValueType>
-bool HashMap<KeyType, ValueType>::containsKey(const KeyType& key) const {
+template<typename KeyType, typename ValueType>
+bool HashMap<KeyType, ValueType>::containsKey(const KeyType &key) const {
     return !!_elements.count(key);
 }
 
-template <typename KeyType, typename ValueType>
-bool HashMap<KeyType, ValueType>::equals(const HashMap<KeyType, ValueType>& map2) const {
+template<typename KeyType, typename ValueType>
+bool HashMap<KeyType, ValueType>::equals(const HashMap<KeyType, ValueType> &map2) const {
     return stanfordcpplib::collections::equalsMap(*this, map2);
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 KeyType HashMap<KeyType, ValueType>::front() const {
     if (isEmpty()) {
         error("HashMap::front: map is empty");
@@ -542,51 +546,51 @@ KeyType HashMap<KeyType, ValueType>::front() const {
     return *begin();
 }
 
-template <typename KeyType, typename ValueType>
-ValueType HashMap<KeyType, ValueType>::get(const KeyType& key) const {
+template<typename KeyType, typename ValueType>
+ValueType HashMap<KeyType, ValueType>::get(const KeyType &key) const {
     auto itr = _elements.find(key);
-    return itr == _elements.end()? ValueType() : itr->second;
+    return itr == _elements.end() ? ValueType() : itr->second;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 bool HashMap<KeyType, ValueType>::isEmpty() const {
     return _elements.empty();
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 Vector<KeyType> HashMap<KeyType, ValueType>::keys() const {
     Vector<KeyType> keyset;
-    for (const auto& entry: _elements) {
+    for (const auto &entry: _elements) {
         keyset.add(entry.first);
     }
     return keyset;
 }
 
-template <typename KeyType, typename ValueType>
-void HashMap<KeyType, ValueType>::mapAll(std::function<void (const KeyType&, const ValueType&)> fn) const {
-    for (const auto& entry: _elements) {
+template<typename KeyType, typename ValueType>
+void HashMap<KeyType, ValueType>::mapAll(std::function<void(const KeyType &, const ValueType &)> fn) const {
+    for (const auto &entry: _elements) {
         fn(entry.first, entry.second);
     }
 }
 
-template <typename KeyType, typename ValueType>
-void HashMap<KeyType, ValueType>::put(const KeyType& key, const ValueType& value) {
+template<typename KeyType, typename ValueType>
+void HashMap<KeyType, ValueType>::put(const KeyType &key, const ValueType &value) {
     int presize = size();
     _elements[key] = value;
 
     if (presize != size()) _version.update();
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::putAll(const HashMap& map2) {
-    for (const KeyType& key : map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::putAll(const HashMap &map2) {
+    for (const KeyType &key : map2) {
         put(key, map2.get(key));
     }
     return *this;
 }
 
-template <typename KeyType, typename ValueType>
-void HashMap<KeyType, ValueType>::remove(const KeyType& key) {
+template<typename KeyType, typename ValueType>
+void HashMap<KeyType, ValueType>::remove(const KeyType &key) {
     auto itr = _elements.find(key);
     if (itr != _elements.end()) {
         _elements.erase(itr);
@@ -594,9 +598,9 @@ void HashMap<KeyType, ValueType>::remove(const KeyType& key) {
     }
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::removeAll(const HashMap& map2) {
-    for (const KeyType& key : map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::removeAll(const HashMap &map2) {
+    for (const KeyType &key : map2) {
         if (containsKey(key) && get(key) == map2.get(key)) {
             remove(key);
         }
@@ -604,110 +608,110 @@ HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::removeAll(const HashMa
     return *this;
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::retainAll(const HashMap& map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::retainAll(const HashMap &map2) {
     Vector<KeyType> toRemove;
-    for (const KeyType& key : *this) {
+    for (const KeyType &key : *this) {
         if (!map2.containsKey(key) || get(key) != map2.get(key)) {
             toRemove.add(key);
         }
     }
-    for (const KeyType& key : toRemove) {
+    for (const KeyType &key : toRemove) {
         remove(key);
     }
     return *this;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 int HashMap<KeyType, ValueType>::size() const {
     return _elements.size();
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 std::string HashMap<KeyType, ValueType>::toString() const {
     std::ostringstream os;
     os << *this;
     return os.str();
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 Vector<ValueType> HashMap<KeyType, ValueType>::values() const {
     Vector<ValueType> values;
-    for (const auto& entry: _elements) {
+    for (const auto &entry: _elements) {
         values.add(entry.second);
     }
     return values;
 }
 
-template <typename KeyType, typename ValueType>
-ValueType& HashMap<KeyType, ValueType>::operator [](const KeyType& key) {
+template<typename KeyType, typename ValueType>
+ValueType &HashMap<KeyType, ValueType>::operator[](const KeyType &key) {
     int presize = size();
-    ValueType& result = _elements[key];
+    ValueType &result = _elements[key];
 
     if (presize != size()) _version.update();
     return result;
 }
 
-template <typename KeyType, typename ValueType>
-ValueType HashMap<KeyType, ValueType>::operator [](const KeyType& key) const {
+template<typename KeyType, typename ValueType>
+ValueType HashMap<KeyType, ValueType>::operator[](const KeyType &key) const {
     return get(key);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType> HashMap<KeyType, ValueType>::operator +(const HashMap& map2) const {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> HashMap<KeyType, ValueType>::operator+(const HashMap &map2) const {
     HashMap<KeyType, ValueType> result = *this;
     return result.putAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::operator +=(const HashMap& map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::operator+=(const HashMap &map2) {
     return putAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType> HashMap<KeyType, ValueType>::operator -(const HashMap& map2) const {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> HashMap<KeyType, ValueType>::operator-(const HashMap &map2) const {
     HashMap<KeyType, ValueType> result = *this;
     return result.removeAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::operator -=(const HashMap& map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::operator-=(const HashMap &map2) {
     return removeAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType> HashMap<KeyType, ValueType>::operator *(const HashMap& map2) const {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> HashMap<KeyType, ValueType>::operator*(const HashMap &map2) const {
     HashMap<KeyType, ValueType> result = *this;
     return result.retainAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-HashMap<KeyType, ValueType>& HashMap<KeyType, ValueType>::operator *=(const HashMap& map2) {
+template<typename KeyType, typename ValueType>
+HashMap<KeyType, ValueType> &HashMap<KeyType, ValueType>::operator*=(const HashMap &map2) {
     return retainAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 typename HashMap<KeyType, ValueType>::iterator HashMap<KeyType, ValueType>::begin() const {
-    return iterator({ &_version, _elements.begin(), _elements });
+    return iterator({&_version, _elements.begin(), _elements});
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 typename HashMap<KeyType, ValueType>::iterator HashMap<KeyType, ValueType>::end() const {
-    return iterator({ &_version, _elements.end(), _elements });
+    return iterator({&_version, _elements.end(), _elements});
 }
 
-template <typename KeyType, typename ValueType>
-bool HashMap<KeyType, ValueType>::operator == (const HashMap<KeyType, ValueType>& rhs) const {
+template<typename KeyType, typename ValueType>
+bool HashMap<KeyType, ValueType>::operator==(const HashMap<KeyType, ValueType> &rhs) const {
     return stanfordcpplib::collections::equalsMap(*this, rhs);
 }
 
-template <typename KeyType, typename ValueType>
-bool HashMap<KeyType, ValueType>::operator != (const HashMap<KeyType, ValueType>& rhs) const {
+template<typename KeyType, typename ValueType>
+bool HashMap<KeyType, ValueType>::operator!=(const HashMap<KeyType, ValueType> &rhs) const {
     return !(*this == rhs);
 }
 
-template <typename KeyType, typename ValueType>
-int hashCode(const HashMap<KeyType, ValueType>& map) {
+template<typename KeyType, typename ValueType>
+int hashCode(const HashMap<KeyType, ValueType> &map) {
     return stanfordcpplib::collections::hashCodeMap(map, false);
 }
 
@@ -718,18 +722,19 @@ int hashCode(const HashMap<KeyType, ValueType>& map) {
  * strlib.h to read and write generic values in a way that treats strings
  * specially.
  */
-template <typename KeyType, typename ValueType>
-std::ostream& operator <<(std::ostream& os,
-                          const HashMap<KeyType, ValueType>& map) {
+template<typename KeyType, typename ValueType>
+std::ostream &operator<<(std::ostream &os,
+                         const HashMap<KeyType, ValueType> &map) {
     return stanfordcpplib::collections::writeMap(os, map);
 }
 
-template <typename KeyType, typename ValueType>
-std::istream& operator >>(std::istream& is,
-                          HashMap<KeyType, ValueType>& map) {
+template<typename KeyType, typename ValueType>
+std::istream &operator>>(std::istream &is,
+                         HashMap<KeyType, ValueType> &map) {
     KeyType key;
     ValueType value;
-    return stanfordcpplib::collections::readMap(is, map, key, value, /* descriptor */ std::string("HashMap::operator >>"));
+    return stanfordcpplib::collections::readMap(is, map, key, value, /* descriptor */
+                                                std::string("HashMap::operator >>"));
 }
 
 /*
@@ -739,8 +744,8 @@ std::istream& operator >>(std::istream& is,
  * Returns a randomly chosen key of the given map.
  * Throws an error if the map is empty.
  */
-template <typename K, typename V>
-const K& randomKey(const HashMap<K, V>& map) {
+template<typename K, typename V>
+const K &randomKey(const HashMap<K, V> &map) {
     return stanfordcpplib::collections::randomElement(map);
 }
 

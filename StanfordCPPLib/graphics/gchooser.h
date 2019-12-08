@@ -38,17 +38,17 @@ public:
     /**
      * Creates a chooser that initially contains no items.
      */
-    GChooser(QWidget* parent = nullptr);
+    GChooser(QWidget *parent = nullptr);
 
     /**
      * Creates a chooser that initially contains the given items.
      */
-    GChooser(const std::initializer_list<std::string>& items, QWidget* parent = nullptr);
+    GChooser(const std::initializer_list<std::string> &items, QWidget *parent = nullptr);
 
     /**
      * Creates a chooser that initially contains the given items.
      */
-    GChooser(const Vector<std::string>& items, QWidget* parent = nullptr);
+    GChooser(const Vector<std::string> &items, QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the chooser.
@@ -58,17 +58,17 @@ public:
     /**
      * Adds a new item consisting of the specified string to the end of the list.
      */
-    virtual void addItem(const std::string& item);
+    virtual void addItem(const std::string &item);
 
     /**
      * Adds each item from the given list to the end of the chooser's list.
      */
-    virtual void addItems(const std::initializer_list<std::string>& items);
+    virtual void addItems(const std::initializer_list<std::string> &items);
 
     /**
      * Adds each item from the given vector to the end of the chooser's list.
      */
-    virtual void addItems(const Vector<std::string>& items);
+    virtual void addItems(const Vector<std::string> &items);
 
     /**
      * Removes all items from the chooser.
@@ -79,7 +79,7 @@ public:
     std::string getActionCommand() const override;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the item in the chooser at the given 0-based index.
@@ -109,7 +109,7 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns true if the chooser has an editable area for typing new items.
@@ -132,7 +132,7 @@ public:
      * Sets the item at the given index in the chooser to the given value.
      * @throw ErrorException if the index is out of range
      */
-    virtual void setItem(int index, const std::string& item);
+    virtual void setItem(int index, const std::string &item);
 
     /**
      * Sets the item at the given index in the chooser to be selected.
@@ -144,7 +144,7 @@ public:
      * Sets the given item in the chooser to be selected.
      * @throw ErrorException if the index is out of range
      */
-    virtual void setSelectedItem(const std::string& item);
+    virtual void setSelectedItem(const std::string &item);
 
     /**
      * Returns the number of items in the chooser.
@@ -160,9 +160,9 @@ protected:
 private:
     Q_DISABLE_COPY(GChooser)
 
-    _Internal_QComboBox* _iqcomboBox;
+    _Internal_QComboBox *_iqcomboBox;
 
-    void checkIndex(const std::string& member, int index, int min = 0, int max = -1) const;
+    void checkIndex(const std::string &member, int index, int min = 0, int max = -1) const;
 
     friend class _Internal_QComboBox;
 };
@@ -172,20 +172,25 @@ private:
  * @private
  */
 class _Internal_QComboBox : public QComboBox, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QComboBox(GChooser* gchooser, QWidget* parent = nullptr);
+    _Internal_QComboBox(GChooser *gchooser, QWidget *parent = nullptr);
+
     void detach() override;
-    void keyPressEvent(QKeyEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+    void keyReleaseEvent(QKeyEvent *event) override;
+
     QSize sizeHint() const override;
 
 public slots:
+
     void handleChange();
 
 private:
-    GChooser* _gchooser;
+    GChooser *_gchooser;
 
     friend class GChooser;
 };

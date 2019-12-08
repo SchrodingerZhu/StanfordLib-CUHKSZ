@@ -37,7 +37,7 @@
 
 GTable::TableStyle GTable::_defaultCellStyle = GTable::TableStyle::unset();
 
-GTable::GTable(int rows, int columns, double width, double height, QWidget* parent)
+GTable::GTable(int rows, int columns, double width, double height, QWidget *parent)
         : _iqtableview(nullptr),
           _columnHeaderStyle(GTable::COLUMN_HEADER_NONE) {
     GThread::runOnQtGuiThread([this, rows, columns, parent]() {
@@ -56,7 +56,7 @@ GTable::~GTable() {
     _iqtableview = nullptr;
 }
 
-void GTable::applyStyleToCell(int row, int column, const TableStyle& style) {
+void GTable::applyStyleToCell(int row, int column, const TableStyle &style) {
     setCellAlignmentInternal(row, column, style.alignment);
     setCellBackgroundInternal(row, column, style.background);
     setCellFontInternal(row, column, style.font);
@@ -69,15 +69,15 @@ void GTable::autofitColumnWidths() {
     });
 }
 
-void GTable::checkColumn(const std::string& member, int column) const {
+void GTable::checkColumn(const std::string &member, int column) const {
     require::inRange(column, 0, numCols(), "GTable::" + member, "column");
 }
 
-void GTable::checkIndex(const std::string& member, int row, int column) const {
+void GTable::checkIndex(const std::string &member, int row, int column) const {
     require::inRange2D(row, column, 0, 0, numRows(), numCols(), "GTable::" + member, "row", "column");
 }
 
-void GTable::checkRow(const std::string& member, int row) const {
+void GTable::checkRow(const std::string &member, int row) const {
     require::inRange(row, 0, numRows(), "GTable::" + member, "row");
 }
 
@@ -144,13 +144,13 @@ void GTable::ensureColumnStyle(int column) {
 }
 
 void GTable::ensureDefaultFormatting() const {
-    GTable* thisHack = (GTable*) this;
+    GTable *thisHack = (GTable *) this;
     if (!_defaultCellStyle.isSet()) {
         QPalette palette = thisHack->_iqtableview->palette();
         _defaultCellStyle.background = palette.base().color().rgb() & 0x00ffffff;
         _defaultCellStyle.foreground = palette.text().color().rgb() & 0x00ffffff;
-        _defaultCellStyle.font       = GFont::toFontString(thisHack->_iqtableview->font());
-        _defaultCellStyle.alignment  = ALIGN_LEFT;   // TODO: ask cell for its alignment
+        _defaultCellStyle.font = GFont::toFontString(thisHack->_iqtableview->font());
+        _defaultCellStyle.alignment = ALIGN_LEFT;   // TODO: ask cell for its alignment
     }
 }
 
@@ -161,7 +161,7 @@ void GTable::ensureRowStyle(int row) {
     }
 }
 
-void GTable::fill(const std::string& text) {
+void GTable::fill(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         int nr = numRows();
         int nc = numCols();
@@ -187,7 +187,7 @@ double GTable::getColumnWidth(int column) const {
     return _iqtableview->columnWidth(column);
 }
 
-_Internal_QWidget* GTable::getInternalWidget() const {
+_Internal_QWidget *GTable::getInternalWidget() const {
     return _iqtableview;
 }
 
@@ -220,7 +220,7 @@ GridLocation GTable::getSelectedCell() const {
     }
 }
 
-void GTable::getSelectedCell(int& row, int& column) const {
+void GTable::getSelectedCell(int &row, int &column) const {
     GridLocation loc = getSelectedCell();
     row = loc.row;
     column = loc.col;
@@ -247,8 +247,8 @@ std::string GTable::getType() const {
     return "GTable";
 }
 
-QWidget* GTable::getWidget() const {
-    return static_cast<QWidget*>(_iqtableview);
+QWidget *GTable::getWidget() const {
+    return static_cast<QWidget *>(_iqtableview);
 }
 
 bool GTable::hasSelectedCell() const {
@@ -328,7 +328,7 @@ void GTable::resize(int newNumRows, int newNumCols) {
 
 bool GTable::rowColumnHeadersVisible() const {
     return _iqtableview->horizontalHeader()->isVisible()
-            && _iqtableview->verticalHeader()->isVisible();
+           && _iqtableview->verticalHeader()->isVisible();
 }
 
 void GTable::select(int row, int column) {
@@ -339,7 +339,7 @@ void GTable::select(int row, int column) {
     });
 }
 
-void GTable::set(int row, int column, const std::string& text) {
+void GTable::set(int row, int column, const std::string &text) {
     checkIndex("set", row, column);
     GThread::runOnQtGuiThread([this, row, column, text]() {
         QModelIndex index = _iqtableview->model()->index(row, column);
@@ -375,7 +375,7 @@ void GTable::setBackground(int rgb) {
     });
 }
 
-void GTable::setBackground(const std::string& color) {
+void GTable::setBackground(const std::string &color) {
     setBackground(GColor::convertColorToRGB(color));
 }
 
@@ -399,7 +399,7 @@ void GTable::setCellBackground(int row, int column, int rgb) {
     });
 }
 
-void GTable::setCellBackground(int row, int column, const std::string& color) {
+void GTable::setCellBackground(int row, int column, const std::string &color) {
     setCellBackground(row, column, GColor::convertColorToRGB(color));
 }
 
@@ -407,14 +407,14 @@ void GTable::setCellBackgroundInternal(int row, int column, int rgb) {
     _iqtableview->item(row, column)->setBackground(QBrush(QColor(rgb)));
 }
 
-void GTable::setCellFont(int row, int column, const std::string& font) {
+void GTable::setCellFont(int row, int column, const std::string &font) {
     checkIndex("setCellFont", row, column);
     GThread::runOnQtGuiThread([this, row, column, font]() {
         setCellFontInternal(row, column, font);   // do the actual work
     });
 }
 
-void GTable::setCellFontInternal(int row, int column, const std::string& font) {
+void GTable::setCellFontInternal(int row, int column, const std::string &font) {
     _iqtableview->item(row, column)->setFont(GFont::toQFont(_iqtableview->font(), font));
 }
 
@@ -430,7 +430,7 @@ void GTable::setCellForegroundInternal(int row, int column, int rgb) {
     _iqtableview->item(row, column)->setForeground(QBrush(QColor(rgb)));
 }
 
-void GTable::setCellForeground(int row, int column, const std::string& color) {
+void GTable::setCellForeground(int row, int column, const std::string &color) {
     checkIndex("setCellForeground", row, column);
     setCellForeground(row, column, GColor::convertColorToRGB(color));
 }
@@ -439,7 +439,7 @@ void GTable::setColor(int rgb) {
     setForeground(rgb);
 }
 
-void GTable::setColor(const std::string& color) {
+void GTable::setColor(const std::string &color) {
     setForeground(color);
 }
 
@@ -473,11 +473,11 @@ void GTable::setColumnBackground(int column, int rgb) {
     });
 }
 
-void GTable::setColumnBackground(int column, const std::string& color) {
+void GTable::setColumnBackground(int column, const std::string &color) {
     setColumnBackground(column, GColor::convertColorToRGB(color));
 }
 
-void GTable::setColumnFont(int column, const std::string& font) {
+void GTable::setColumnFont(int column, const std::string &font) {
     checkColumn("setColumnFont", column);
 
     GThread::runOnQtGuiThread([this, column, font]() {
@@ -507,7 +507,7 @@ void GTable::setColumnForeground(int column, int rgb) {
     });
 }
 
-void GTable::setColumnForeground(int column, const std::string& color) {
+void GTable::setColumnForeground(int column, const std::string &color) {
     setColumnForeground(column, GColor::convertColorToRGB(color));
 }
 
@@ -541,34 +541,34 @@ void GTable::setEditable(bool editable) {
     GThread::runOnQtGuiThread([this, editable]() {
         if (editable) {
             _iqtableview->setEditTriggers(
-                        QAbstractItemView::CurrentChanged
-                        | QAbstractItemView::DoubleClicked
-                        | QAbstractItemView::EditKeyPressed
-                        | QAbstractItemView::AnyKeyPressed);
+                    QAbstractItemView::CurrentChanged
+                    | QAbstractItemView::DoubleClicked
+                    | QAbstractItemView::EditKeyPressed
+                    | QAbstractItemView::AnyKeyPressed);
         } else {
             _iqtableview->setEditTriggers(QAbstractItemView::NoEditTriggers);
         }
     });
 }
 
-void GTable::setEditorValue(int row, int column, const std::string& text) {
+void GTable::setEditorValue(int row, int column, const std::string &text) {
     checkIndex("setEditorValue", row, column);
     GThread::runOnQtGuiThread([this, text]() {
-        _Internal_QItemDelegate* delegate = _iqtableview->getItemDelegate();
+        _Internal_QItemDelegate *delegate = _iqtableview->getItemDelegate();
         if (delegate != nullptr) {
-            QWidget* editor = delegate->getEditor();
-            if (QLineEdit* lineEdit = qobject_cast<QLineEdit*>(editor)) {
+            QWidget *editor = delegate->getEditor();
+            if (QLineEdit *lineEdit = qobject_cast<QLineEdit *>(editor)) {
                 lineEdit->setText(QString::fromStdString(text));
             }
         }
     });
 }
 
-void GTable::setFont(const QFont& font) {
+void GTable::setFont(const QFont &font) {
     setFont(GFont::toFontString(font));
 }
 
-void GTable::setFont(const std::string& font) {
+void GTable::setFont(const std::string &font) {
     GInteractor::setFont(font);   // call super
 
     GThread::runOnQtGuiThread([this, font]() {
@@ -623,7 +623,7 @@ void GTable::setForeground(int rgb) {
     });
 }
 
-void GTable::setForeground(const std::string& color) {
+void GTable::setForeground(const std::string &color) {
     setForeground(GColor::convertColorToRGB(color));
 }
 
@@ -683,11 +683,11 @@ void GTable::setRowBackground(int row, int rgb) {
     });
 }
 
-void GTable::setRowBackground(int row, const std::string& color) {
+void GTable::setRowBackground(int row, const std::string &color) {
     setRowBackground(row, GColor::convertColorToRGB(color));
 }
 
-void GTable::setRowFont(int row, const std::string& font) {
+void GTable::setRowFont(int row, const std::string &font) {
     checkRow("setRowFont", row);
 
     // save this font in the row style (for later cells on resize() etc)
@@ -717,7 +717,7 @@ void GTable::setRowForeground(int row, int rgb) {
     });
 }
 
-void GTable::setRowForeground(int row, const std::string& color) {
+void GTable::setRowForeground(int row, const std::string &color) {
     checkRow("setRowForeground", row);
     setRowForeground(row, GColor::convertColorToRGB(color));
 }
@@ -739,7 +739,7 @@ void GTable::setRowHeight(int row, double height) {
     });
 }
 
-void GTable::setSelectedCellValue(const std::string& text) {
+void GTable::setSelectedCellValue(const std::string &text) {
     if (hasSelectedCell()) {
         GridLocation loc = getSelectedCell();
         set(loc.row, loc.col, text);
@@ -806,31 +806,32 @@ int GTable::width() const {
 }
 
 
-_Internal_QItemDelegate::_Internal_QItemDelegate(QObject* parent)
+_Internal_QItemDelegate::_Internal_QItemDelegate(QObject *parent)
         : QStyledItemDelegate(parent),
           _editor(nullptr) {
     // empty
 }
 
-QWidget* _Internal_QItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
-    QWidget* editor = QStyledItemDelegate::createEditor(parent, option, index);
-    _Internal_QItemDelegate* hack = (_Internal_QItemDelegate*) this;
+QWidget *_Internal_QItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+                                               const QModelIndex &index) const {
+    QWidget *editor = QStyledItemDelegate::createEditor(parent, option, index);
+    _Internal_QItemDelegate *hack = (_Internal_QItemDelegate *) this;
     hack->_editor = editor;
     return editor;
 }
 
-void _Internal_QItemDelegate::destroyEditor(QWidget* editor, const QModelIndex& index) const {
-    _Internal_QItemDelegate* hack = (_Internal_QItemDelegate*) this;
+void _Internal_QItemDelegate::destroyEditor(QWidget *editor, const QModelIndex &index) const {
+    _Internal_QItemDelegate *hack = (_Internal_QItemDelegate *) this;
     hack->_editor = nullptr;
     QStyledItemDelegate::destroyEditor(editor, index);
 }
 
-QWidget* _Internal_QItemDelegate::getEditor() const {
+QWidget *_Internal_QItemDelegate::getEditor() const {
     return _editor;
 }
 
 
-_Internal_QTableWidget::_Internal_QTableWidget(GTable* gtable, int rows, int columns, QWidget* parent)
+_Internal_QTableWidget::_Internal_QTableWidget(GTable *gtable, int rows, int columns, QWidget *parent)
         : QTableWidget(rows, columns, parent),
           _gtable(gtable),
           _delegate(nullptr) {
@@ -841,14 +842,17 @@ _Internal_QTableWidget::_Internal_QTableWidget(GTable* gtable, int rows, int col
     horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     connect(this, SIGNAL(cellChanged(int, int)), this, SLOT(handleCellChange(int, int)));
     connect(this, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(handleCellDoubleClick(int, int)));
-    connect(this->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT(handleSelectionChange(const QItemSelection&, const QItemSelection&)));
+    connect(this->selectionModel(), SIGNAL(selectionChanged(
+                                                   const QItemSelection&, const QItemSelection&)), this,
+            SLOT(handleSelectionChange(
+                         const QItemSelection&, const QItemSelection&)));
 }
 
 void _Internal_QTableWidget::detach() {
     _gtable = nullptr;
 }
 
-bool _Internal_QTableWidget::edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) {
+bool _Internal_QTableWidget::edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger, QEvent *event) {
     bool result = QAbstractItemView::edit(index, trigger, event);   // call super
     if (!_gtable) {
         return result;
@@ -865,15 +869,15 @@ bool _Internal_QTableWidget::edit(const QModelIndex& index, QAbstractItemView::E
     return result;
 }
 
-void _Internal_QTableWidget::fireTableEvent(EventType eventType, const std::string& eventName, int row, int col) {
+void _Internal_QTableWidget::fireTableEvent(EventType eventType, const std::string &eventName, int row, int col) {
     if (!_gtable) {
         return;
     }
     GEvent tableEvent(
-                /* class  */ TABLE_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ _gtable);
+            /* class  */ TABLE_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ _gtable);
     if (row < 0 && col < 0) {
         tableEvent.setRowAndColumn(_gtable->getSelectedRow(), _gtable->getSelectedColumn());
     } else {
@@ -883,11 +887,11 @@ void _Internal_QTableWidget::fireTableEvent(EventType eventType, const std::stri
     _gtable->fireEvent(tableEvent);
 }
 
-QWidget* _Internal_QTableWidget::getEditor() const {
+QWidget *_Internal_QTableWidget::getEditor() const {
     return _delegate->getEditor();
 }
 
-_Internal_QItemDelegate* _Internal_QTableWidget::getItemDelegate() const {
+_Internal_QItemDelegate *_Internal_QTableWidget::getItemDelegate() const {
     return _delegate;
 }
 
@@ -895,7 +899,7 @@ bool _Internal_QTableWidget::isEditing() const {
     return getEditor() != nullptr;
 }
 
-void _Internal_QTableWidget::closeEditor(QWidget* editor, QAbstractItemDelegate::EndEditHint hint) {
+void _Internal_QTableWidget::closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint) {
     QTableWidget::closeEditor(editor, hint);
     if (!_gtable) {
         return;
@@ -920,7 +924,8 @@ void _Internal_QTableWidget::handleCellDoubleClick(int /*row*/, int /*column*/) 
     // fireTableEvent(GEvent::TABLE_EDIT_BEGIN, "tableeditbegin", row, column);
 }
 
-void _Internal_QTableWidget::handleSelectionChange(const QItemSelection& selected, const QItemSelection& /*deselected*/) {
+void
+_Internal_QTableWidget::handleSelectionChange(const QItemSelection &selected, const QItemSelection & /*deselected*/) {
     if (!_gtable) {
         return;
     }
@@ -932,7 +937,7 @@ void _Internal_QTableWidget::handleSelectionChange(const QItemSelection& selecte
     }
 }
 
-void _Internal_QTableWidget::keyPressEvent(QKeyEvent* event) {
+void _Internal_QTableWidget::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QTableWidget::keyPressEvent", "event");
     if (!_gtable) {
         QTableWidget::keyPressEvent(event);   // call super

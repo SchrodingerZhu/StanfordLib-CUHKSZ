@@ -22,7 +22,7 @@
 
 STATIC_CONST_VARIABLE_DECLARE(std::string, STRING_DELIMITERS, ",:)}]\n")
 
-bool stringNeedsQuoting(const std::string& str) {
+bool stringNeedsQuoting(const std::string &str) {
     int n = str.length();
     for (int i = 0; i < n; i++) {
         char ch = str[i];
@@ -32,7 +32,7 @@ bool stringNeedsQuoting(const std::string& str) {
     return false;
 }
 
-bool readQuotedChar(std::istream& is, char& ch, bool throwOnError) {
+bool readQuotedChar(std::istream &is, char &ch, bool throwOnError) {
     // skip whitespace
     char temp;
     while (is.get(temp) && isspace(temp)) {
@@ -61,18 +61,42 @@ bool readQuotedChar(std::istream& is, char& ch, bool throwOnError) {
             char temp2;
             if (is.get(temp2)) {
                 switch (temp2) {
-                    case 'a':  ch = '\a'; break;
-                    case 'b':  ch = '\b'; break;
-                    case 'f':  ch = '\f'; break;
-                    case 'n':  ch = '\n'; break;
-                    case 'r':  ch = '\r'; break;
-                    case 't':  ch = '\t'; break;
-                    case 'v':  ch = '\v'; break;
-                    case '0':  ch = '\0'; break;
-                    case '\\': ch = '\\'; break;
-                    case '\'': ch = '\''; break;
-                    case '"':  ch = '"'; break;
-                    default:   ch = '\0'; break;
+                    case 'a':
+                        ch = '\a';
+                        break;
+                    case 'b':
+                        ch = '\b';
+                        break;
+                    case 'f':
+                        ch = '\f';
+                        break;
+                    case 'n':
+                        ch = '\n';
+                        break;
+                    case 'r':
+                        ch = '\r';
+                        break;
+                    case 't':
+                        ch = '\t';
+                        break;
+                    case 'v':
+                        ch = '\v';
+                        break;
+                    case '0':
+                        ch = '\0';
+                        break;
+                    case '\\':
+                        ch = '\\';
+                        break;
+                    case '\'':
+                        ch = '\'';
+                        break;
+                    case '"':
+                        ch = '"';
+                        break;
+                    default:
+                        ch = '\0';
+                        break;
                 }
             }
         } else {
@@ -82,7 +106,7 @@ bool readQuotedChar(std::istream& is, char& ch, bool throwOnError) {
     }
 }
 
-bool readQuotedString(std::istream& is, std::string& str, bool throwOnError) {
+bool readQuotedString(std::istream &is, std::string &str, bool throwOnError) {
     str = "";
     char ch;
     while (is.get(ch) && isspace(ch)) {
@@ -138,16 +162,36 @@ bool readQuotedString(std::istream& is, std::string& str, bool throwOnError) {
                     is.unget();
                 } else {
                     switch (ch) {
-                    case 'a': ch = '\a'; break;
-                    case 'b': ch = '\b'; break;
-                    case 'f': ch = '\f'; break;
-                    case 'n': ch = '\n'; break;
-                    case 'r': ch = '\r'; break;
-                    case 't': ch = '\t'; break;
-                    case 'v': ch = '\v'; break;
-                    case '"': ch = '"'; break;
-                    case '\'': ch = '\''; break;
-                    case '\\': ch = '\\'; break;
+                        case 'a':
+                            ch = '\a';
+                            break;
+                        case 'b':
+                            ch = '\b';
+                            break;
+                        case 'f':
+                            ch = '\f';
+                            break;
+                        case 'n':
+                            ch = '\n';
+                            break;
+                        case 'r':
+                            ch = '\r';
+                            break;
+                        case 't':
+                            ch = '\t';
+                            break;
+                        case 'v':
+                            ch = '\v';
+                            break;
+                        case '"':
+                            ch = '"';
+                            break;
+                        case '\'':
+                            ch = '\'';
+                            break;
+                        case '\\':
+                            ch = '\\';
+                            break;
                     }
                 }
             }
@@ -168,27 +212,43 @@ bool readQuotedString(std::istream& is, std::string& str, bool throwOnError) {
     return true;   // read successfully
 }
 
-std::ostream& writeQuotedChar(std::ostream& os, char ch, bool forceQuotes) {
+std::ostream &writeQuotedChar(std::ostream &os, char ch, bool forceQuotes) {
     if (forceQuotes) {
         os << '\'';
     }
     switch (ch) {
-    case '\a': os << "\\a"; break;
-    case '\b': os << "\\b"; break;
-    case '\f': os << "\\f"; break;
-    case '\n': os << "\\n"; break;
-    case '\r': os << "\\r"; break;
-    case '\t': os << "\\t"; break;
-    case '\v': os << "\\v"; break;
-    case '\\': os << "\\\\"; break;
-    default:
-        if (isprint(ch) && ch != '\'') {
-            os << ch;
-        } else {
-            std::ostringstream oss;
-            oss << std::oct << std::setw(3) << std::setfill('0') << (int(ch) & 0xFF);
-            os << "\\" << oss.str();
-        }
+        case '\a':
+            os << "\\a";
+            break;
+        case '\b':
+            os << "\\b";
+            break;
+        case '\f':
+            os << "\\f";
+            break;
+        case '\n':
+            os << "\\n";
+            break;
+        case '\r':
+            os << "\\r";
+            break;
+        case '\t':
+            os << "\\t";
+            break;
+        case '\v':
+            os << "\\v";
+            break;
+        case '\\':
+            os << "\\\\";
+            break;
+        default:
+            if (isprint(ch) && ch != '\'') {
+                os << ch;
+            } else {
+                std::ostringstream oss;
+                oss << std::oct << std::setw(3) << std::setfill('0') << (int(ch) & 0xFF);
+                os << "\\" << oss.str();
+            }
     }
     if (forceQuotes) {
         os << '\'';
@@ -196,7 +256,7 @@ std::ostream& writeQuotedChar(std::ostream& os, char ch, bool forceQuotes) {
     return os;
 }
 
-std::ostream& writeQuotedString(std::ostream& os, const std::string& str, bool forceQuotes) {
+std::ostream &writeQuotedString(std::ostream &os, const std::string &str, bool forceQuotes) {
     if (!forceQuotes && stringNeedsQuoting(str)) {
         forceQuotes = true;
     }
@@ -207,22 +267,38 @@ std::ostream& writeQuotedString(std::ostream& os, const std::string& str, bool f
     for (int i = 0; i < len; i++) {
         char ch = str.at(i);
         switch (ch) {
-        case '\a': os << "\\a"; break;
-        case '\b': os << "\\b"; break;
-        case '\f': os << "\\f"; break;
-        case '\n': os << "\\n"; break;
-        case '\r': os << "\\r"; break;
-        case '\t': os << "\\t"; break;
-        case '\v': os << "\\v"; break;
-        case '\\': os << "\\\\"; break;
-        default:
-            if (isprint(ch) && ch != '"') {
-                os << ch;
-            } else {
-                std::ostringstream oss;
-                oss << std::oct << std::setw(3) << std::setfill('0') << (int(ch) & 0xFF);
-                os << "\\" << oss.str();
-            }
+            case '\a':
+                os << "\\a";
+                break;
+            case '\b':
+                os << "\\b";
+                break;
+            case '\f':
+                os << "\\f";
+                break;
+            case '\n':
+                os << "\\n";
+                break;
+            case '\r':
+                os << "\\r";
+                break;
+            case '\t':
+                os << "\\t";
+                break;
+            case '\v':
+                os << "\\v";
+                break;
+            case '\\':
+                os << "\\\\";
+                break;
+            default:
+                if (isprint(ch) && ch != '"') {
+                    os << ch;
+                } else {
+                    std::ostringstream oss;
+                    oss << std::oct << std::setw(3) << std::setfill('0') << (int(ch) & 0xFF);
+                    os << "\\" << oss.str();
+                }
         }
     }
     if (forceQuotes) {

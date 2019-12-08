@@ -38,17 +38,17 @@ public:
     /**
      * Creates a button with the specified text label and optional icon.
      */
-    GButton(const std::string& text = "", const std::string& iconFileName = "", QWidget* parent = nullptr);
+    GButton(const std::string &text = "", const std::string &iconFileName = "", QWidget *parent = nullptr);
 
     /**
      * Creates a button with the specified text label and icon.
      */
-    GButton(const std::string& text, const QIcon& icon, QWidget* parent = nullptr);
+    GButton(const std::string &text, const QIcon &icon, QWidget *parent = nullptr);
 
     /**
      * Creates a button with the specified text label and icon.
      */
-    GButton(const std::string& text, const QPixmap& icon, QWidget* parent = nullptr);
+    GButton(const std::string &text, const QPixmap &icon, QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the button.
@@ -62,7 +62,7 @@ public:
     std::string getActionCommand() const override;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the button's text.
@@ -81,24 +81,24 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /* @inherit */
-    void setAccelerator(const std::string& accelerator) override;
+    void setAccelerator(const std::string &accelerator) override;
 
     /* @inherit */
-    void setIcon(const QIcon& icon) override;
+    void setIcon(const QIcon &icon) override;
 
     /* @inherit */
-    void setIcon(const QPixmap& icon) override;
+    void setIcon(const QPixmap &icon) override;
 
     /* @inherit */
-    void setIcon(const std::string& filename, bool retainIconSize = true) override;
+    void setIcon(const std::string &filename, bool retainIconSize = true) override;
 
     /**
      * Sets the text on the button to be the given text.
      */
-    virtual void setText(const std::string& text);
+    virtual void setText(const std::string &text);
 
     /**
      * Sets the button's text position relative to its icon.
@@ -116,7 +116,8 @@ public:
 
 private:
     Q_DISABLE_COPY(GButton)
-    _Internal_QPushButton* _iqpushbutton;
+
+    _Internal_QPushButton *_iqpushbutton;
 
     friend class _Internal_QPushButton;
 };
@@ -126,24 +127,28 @@ private:
  * @private
  */
 class _Internal_QPushButton : public QToolButton, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QPushButton(GButton* button, QWidget* parent = nullptr);
+    _Internal_QPushButton(GButton *button, QWidget *parent = nullptr);
+
     void detach() override;
+
     QSize sizeHint() const override;
 
 signals:
+
     void doubleClicked();
 
 public slots:
+
     void handleClick();
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent* e) override;
+    void mouseDoubleClickEvent(QMouseEvent *e) override;
 
 private:
-    GButton* _gbutton;
+    GButton *_gbutton;
 
     friend class GButton;
 };

@@ -46,9 +46,13 @@ const std::string GText::DEFAULT_FONT = "Dialog-13";
 
 // static constants
 STATIC_CONST_VARIABLE_DECLARE(double, LINE_TOLERANCE, 1.5)
+
 STATIC_CONST_VARIABLE_DECLARE(double, ARC_TOLERANCE, 2.5)
+
 STATIC_VARIABLE_DECLARE_BLANK(QBrush, DEFAULT_BRUSH)
+
 STATIC_VARIABLE_DECLARE_BLANK(QFont, DEFAULT_QFONT)
+
 STATIC_VARIABLE_DECLARE(bool, DEFAULT_QFONT_SET, false)
 
 /**
@@ -100,7 +104,7 @@ bool GObject::contains(double x, double y) const {
     }
 }
 
-bool GObject::contains(const GPoint& pt) const {
+bool GObject::contains(const GPoint &pt) const {
     return contains(pt.getX(), pt.getY());
 }
 
@@ -161,7 +165,7 @@ double GObject::getOpacity() const {
     return _opacity;
 }
 
-GCompound* GObject::getParent() const {
+GCompound *GObject::getParent() const {
     return _parent;
 }
 
@@ -186,7 +190,7 @@ double GObject::getY() const {
     return _y;
 }
 
-void GObject::initializeBrushAndPen(QPainter* painter) {
+void GObject::initializeBrushAndPen(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -258,7 +262,7 @@ void GObject::move(double dx, double dy) {
 
 void GObject::repaint() {
     // really instructs the GCompound parent to redraw itself
-    GCompound* parent = getParent();
+    GCompound *parent = getParent();
     while (parent && parent->getParent()) {
         parent = parent->getParent();
     }
@@ -290,28 +294,28 @@ void GObject::scale(double sx, double sy) {
 }
 
 void GObject::sendBackward() {
-    GCompound* parent = getParent();
+    GCompound *parent = getParent();
     if (parent) {
         parent->sendBackward(this);
     }
 }
 
 void GObject::sendForward() {
-    GCompound* parent = getParent();
+    GCompound *parent = getParent();
     if (parent) {
         parent->sendForward(this);
     }
 }
 
 void GObject::sendToBack() {
-    GCompound* parent = getParent();
+    GCompound *parent = getParent();
     if (parent) {
         parent->sendToBack(this);
     }
 }
 
 void GObject::sendToFront() {
-    GCompound* parent = getParent();
+    GCompound *parent = getParent();
     if (parent) {
         parent->sendToFront(this);
     }
@@ -333,7 +337,7 @@ void GObject::setBottomRightLocation(double x, double y) {
     setLocation(x - getWidth(), y - getHeight());   // calls repaint
 }
 
-void GObject::setBottomRightLocation(const GPoint& pt) {
+void GObject::setBottomRightLocation(const GPoint &pt) {
     setBottomRightLocation(pt.getX(), pt.getY());   // calls repaint
 }
 
@@ -345,7 +349,7 @@ void GObject::setBounds(double x, double y, double width, double height) {
     repaint();
 }
 
-void GObject::setBounds(const GRectangle& bounds) {
+void GObject::setBounds(const GRectangle &bounds) {
     setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 }
 
@@ -361,7 +365,7 @@ void GObject::setCenterLocation(double x, double y) {
     setLocation(x - getWidth() / 2, y - getHeight() / 2);   // calls repaint
 }
 
-void GObject::setCenterLocation(const GPoint& pt) {
+void GObject::setCenterLocation(const GPoint &pt) {
     setCenterLocation(pt.getX(), pt.getY());   // calls repaint
 }
 
@@ -377,7 +381,7 @@ void GObject::setColor(int rgb) {
     repaint();
 }
 
-void GObject::setColor(const std::string& color) {
+void GObject::setColor(const std::string &color) {
     if (GColor::hasAlpha(color)) {
         _color = color;
         _colorInt = GColor::convertColorToRGB(color);
@@ -399,7 +403,7 @@ void GObject::setFillColor(int rgb) {
     repaint();
 }
 
-void GObject::setFillColor(const std::string& color) {
+void GObject::setFillColor(const std::string &color) {
     _fillColor = color;
     _fillColorInt = GColor::convertColorToRGB(color);
     if (_fillColor == "") {
@@ -418,11 +422,11 @@ void GObject::setFilled(bool flag) {
     repaint();
 }
 
-void GObject::setFont(const QFont& font) {
+void GObject::setFont(const QFont &font) {
     setFont(GFont::toFontString(font));
 }
 
-void GObject::setFont(const std::string& font) {
+void GObject::setFont(const std::string &font) {
     _font = font;
     repaint();
 }
@@ -435,7 +439,7 @@ void GObject::setForeground(int rgb) {
     setColor(rgb);
 }
 
-void GObject::setForeground(const std::string& color) {
+void GObject::setForeground(const std::string &color) {
     setColor(color);
 }
 
@@ -459,7 +463,7 @@ void GObject::setLocation(double x, double y) {
     repaint();
 }
 
-void GObject::setLocation(const GPoint& pt) {
+void GObject::setLocation(const GPoint &pt) {
     setLocation(pt.getX(), pt.getY());   // calls repaint
 }
 
@@ -478,7 +482,7 @@ void GObject::setSize(double width, double height) {
     repaint();
 }
 
-void GObject::setSize(const GDimension& size) {
+void GObject::setSize(const GDimension &size) {
     setSize(size.getWidth(), size.getHeight());   // calls repaint
 }
 
@@ -502,35 +506,35 @@ void GObject::setY(double y) {
 std::string GObject::toString() const {
     std::string extra = toStringExtra();
     return getType()
-            + "("
-            + "x=" + std::to_string(_x)
-            + ",y=" + std::to_string(_y)
-            + ",w=" + std::to_string(_width)
-            + ",h=" + std::to_string(_height)
-            + (_lineWidth <= 1 ? "" : (",lineWidth=" + std::to_string(_lineWidth)))
-            + (_color.empty() ? "" : (",color=" + _color))
-            + (_fillColor.empty() ? "" : (",fillColor=" + _fillColor))
-            + (_font.empty() ? "" : (",font=" + _font))
-            + (_visible ? "" : (",visible=" + boolToString(_visible)))
-            + (extra.empty() ? "" : ("," + extra))
-            + ")";
+           + "("
+           + "x=" + std::to_string(_x)
+           + ",y=" + std::to_string(_y)
+           + ",w=" + std::to_string(_width)
+           + ",h=" + std::to_string(_height)
+           + (_lineWidth <= 1 ? "" : (",lineWidth=" + std::to_string(_lineWidth)))
+           + (_color.empty() ? "" : (",color=" + _color))
+           + (_fillColor.empty() ? "" : (",fillColor=" + _fillColor))
+           + (_font.empty() ? "" : (",font=" + _font))
+           + (_visible ? "" : (",visible=" + boolToString(_visible)))
+           + (extra.empty() ? "" : ("," + extra))
+           + ")";
 }
 
 Qt::PenStyle GObject::toQtPenStyle(GObject::LineStyle lineStyle) {
     switch (lineStyle) {
-    case GObject::LINE_DASH:
-        return Qt::DashLine;
-    case GObject::LINE_DASH_DOT:
-        return Qt::DashDotLine;
-    case GObject::LINE_DASH_DOT_DOT:
-        return Qt::DashDotDotLine;
-    case GObject::LINE_DOT:
-        return Qt::DotLine;
-    case GObject::LINE_NONE:
-        return Qt::NoPen;
-    case GObject::LINE_SOLID:
-    default:
-        return Qt::SolidLine;
+        case GObject::LINE_DASH:
+            return Qt::DashLine;
+        case GObject::LINE_DASH_DOT:
+            return Qt::DashDotLine;
+        case GObject::LINE_DASH_DOT_DOT:
+            return Qt::DashDotDotLine;
+        case GObject::LINE_DOT:
+            return Qt::DotLine;
+        case GObject::LINE_NONE:
+            return Qt::NoPen;
+        case GObject::LINE_SOLID:
+        default:
+            return Qt::SolidLine;
     }
 }
 
@@ -578,7 +582,7 @@ bool GArc::contains(double x, double y) const {
     }
 
     // JL BUGFIX: must scale by ry, rx.
-    return containsAngle(atan2(-dy/ry, dx/rx) * 180 / PI);
+    return containsAngle(atan2(-dy / ry, dx / rx) * 180 / PI);
 }
 
 bool GArc::containsAngle(double theta) const {
@@ -596,7 +600,7 @@ bool GArc::containsAngle(double theta) const {
     }
 }
 
-void GArc::draw(QPainter* painter) {
+void GArc::draw(QPainter *painter) {
     // for some reason, Qt's arc-drawing functionality asks for angles in
     // 1/16ths of a degree. okay sure whatever
     static const int QT_ANGLE_SCALE_FACTOR = 16;
@@ -676,7 +680,7 @@ void GArc::setFrameRectangle(double x, double y, double width, double height) {
     setBounds(x, y, width, height);   // calls repaint
 }
 
-void GArc::setFrameRectangle(const GRectangle& rect) {
+void GArc::setFrameRectangle(const GRectangle &rect) {
     setFrameRectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());   // calls repaint
 }
 
@@ -702,7 +706,7 @@ GCompound::GCompound()
     // empty
 }
 
-void GCompound::add(GObject* gobj) {
+void GCompound::add(GObject *gobj) {
     require::nonNull(gobj, "GCompound::add");
     for (int i = _contents.size() - 1; i >= 0; i--) {   // avoid duplicates
         if (_contents[i] == gobj) {
@@ -718,17 +722,17 @@ void GCompound::add(GObject* gobj) {
     }
 }
 
-void GCompound::add(GObject* gobj, double x, double y) {
+void GCompound::add(GObject *gobj, double x, double y) {
     require::nonNull(gobj, "GCompound::add");
     gobj->setLocation(x, y);
     add(gobj);   // calls conditionalRepaint
 }
 
-void GCompound::add(GObject& gobj) {
+void GCompound::add(GObject &gobj) {
     add(&gobj);
 }
 
-void GCompound::add(GObject& gobj, double x, double y) {
+void GCompound::add(GObject &gobj, double x, double y) {
     add(&gobj, x, y);
 }
 
@@ -748,7 +752,7 @@ void GCompound::conditionalRepaintRegion(int x, int y, int width, int height) {
     }
 }
 
-void GCompound::conditionalRepaintRegion(const GRectangle& bounds) {
+void GCompound::conditionalRepaintRegion(const GRectangle &bounds) {
     if (_autoRepaint) {
         repaintRegion(bounds);
     }
@@ -767,20 +771,20 @@ bool GCompound::contains(double x, double y) const {
     return false;
 }
 
-void GCompound::draw(QPainter* painter) {
+void GCompound::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
     // TODO: uncomment this? need settings to apply to every shape
     // initializeBrushAndPen(painter);   //
-    for (GObject* obj : _contents) {
+    for (GObject *obj : _contents) {
         if (obj->isVisible()) {
             obj->draw(painter);
         }
     }
 }
 
-int GCompound::findGObject(GObject* gobj) const {
+int GCompound::findGObject(GObject *gobj) const {
     int n = _contents.size();
     for (int i = 0; i < n; i++) {
         if (_contents.get(i) == gobj) {
@@ -810,12 +814,12 @@ GRectangle GCompound::getBounds() const {
     return GRectangle(xMin + getX(), yMin + getY(), xMax - xMin, yMax - yMin);
 }
 
-GObject* GCompound::getElement(int index) const {
+GObject *GCompound::getElement(int index) const {
     return _contents.get(index);
 }
 
-GObject* GCompound::getElementAt(double x, double y) const {
-    for (GObject* gobj : _contents) {
+GObject *GCompound::getElementAt(double x, double y) const {
+    for (GObject *gobj : _contents) {
         if (gobj && gobj->contains(x, y)) {
             return gobj;
         }
@@ -831,7 +835,7 @@ std::string GCompound::getType() const {
     return "GCompound";
 }
 
-QWidget* GCompound::getWidget() const {
+QWidget *GCompound::getWidget() const {
     return _widget;
 }
 
@@ -843,7 +847,7 @@ bool GCompound::isEmpty() const {
     return _contents.size() == 0;
 }
 
-void GCompound::remove(GObject* gobj) {
+void GCompound::remove(GObject *gobj) {
     require::nonNull(gobj, "GCompound::remove");
     int index = findGObject(gobj);
     if (index != -1) {
@@ -851,15 +855,15 @@ void GCompound::remove(GObject* gobj) {
     }
 }
 
-void GCompound::remove(GObject& gobj) {
+void GCompound::remove(GObject &gobj) {
     remove(&gobj);
 }
 
 void GCompound::removeAll() {
     bool wasEmpty = _contents.isEmpty();
-    Vector<GObject*> contentsCopy = _contents;
+    Vector<GObject *> contentsCopy = _contents;
     _contents.clear();
-    for (GObject* obj : contentsCopy) {
+    for (GObject *obj : contentsCopy) {
         obj->_parent = nullptr;
         // TODO: delete obj;
     }
@@ -869,7 +873,7 @@ void GCompound::removeAll() {
 }
 
 void GCompound::removeAt(int index) {
-    GObject* gobj = _contents[index];
+    GObject *gobj = _contents[index];
     _contents.remove(index);
     gobj->_parent = nullptr;
     if (gobj->isTransformed()) {
@@ -909,12 +913,12 @@ void GCompound::repaintRegion(int x, int y, int width, int height) {
     }
 }
 
-void GCompound::repaintRegion(const GRectangle& bounds) {
+void GCompound::repaintRegion(const GRectangle &bounds) {
     repaintRegion((int) bounds.getX(), (int) bounds.getY(),
                   (int) bounds.getWidth(), (int) bounds.getHeight());
 }
 
-void GCompound::sendBackward(GObject* gobj) {
+void GCompound::sendBackward(GObject *gobj) {
     require::nonNull(gobj, "GCompound::sendBackward");
     int index = findGObject(gobj);
     if (index == -1) {
@@ -928,7 +932,7 @@ void GCompound::sendBackward(GObject* gobj) {
     }
 }
 
-void GCompound::sendForward(GObject* gobj) {
+void GCompound::sendForward(GObject *gobj) {
     require::nonNull(gobj, "GCompound::sendForward");
     int index = findGObject(gobj);
     if (index == -1) {
@@ -942,7 +946,7 @@ void GCompound::sendForward(GObject* gobj) {
     }
 }
 
-void GCompound::sendToBack(GObject* gobj) {
+void GCompound::sendToBack(GObject *gobj) {
     require::nonNull(gobj, "GCompound::sendToBack");
     int index = findGObject(gobj);
     if (index == -1) {
@@ -956,7 +960,7 @@ void GCompound::sendToBack(GObject* gobj) {
     }
 }
 
-void GCompound::sendToFront(GObject* gobj) {
+void GCompound::sendToFront(GObject *gobj) {
     require::nonNull(gobj, "GCompound::sendToFront");
     int index = findGObject(gobj);
     if (index == -1) {
@@ -973,7 +977,7 @@ void GCompound::setAutoRepaint(bool autoRepaint) {
     _autoRepaint = autoRepaint;
 }
 
-void GCompound::setWidget(QWidget* widget) {
+void GCompound::setWidget(QWidget *widget) {
     _widget = widget;
 }
 
@@ -982,7 +986,7 @@ std::string GCompound::toString() const {
 }
 
 
-GImage::GImage(const std::string& filename, double x, double y)
+GImage::GImage(const std::string &filename, double x, double y)
         : GObject(x, y),
           _filename(filename),
           _qimage(nullptr) {
@@ -991,7 +995,7 @@ GImage::GImage(const std::string& filename, double x, double y)
     }
 }
 
-GImage::GImage(std::istream& source, double x, double y)
+GImage::GImage(std::istream &source, double x, double y)
         : GObject(x, y),
           _filename("std::istream source"),
           _qimage(nullptr) {
@@ -1009,7 +1013,7 @@ GImage::GImage(double width, double height) {
     });
 }
 
-GImage::GImage(QImage* qimage) {
+GImage::GImage(QImage *qimage) {
     require::nonNull(qimage, "GImage::constructor");
     _qimage = qimage;
     _width = _qimage->width();
@@ -1021,7 +1025,7 @@ GImage::~GImage() {
     _qimage = nullptr;
 }
 
-bool GImage::load(const std::string& filename) {
+bool GImage::load(const std::string &filename) {
     if (filename.empty() || !fileExists(filename)) {
         return false;
     }
@@ -1038,7 +1042,7 @@ bool GImage::load(const std::string& filename) {
     return !hasError;   // *** BUGFIX thanks to Tyler Conklin
 }
 
-bool GImage::loadFromStream(std::istream& input) {
+bool GImage::loadFromStream(std::istream &input) {
     // transfer bytes to a string through std::stringstream
     std::ostringstream byteStream;
     byteStream << input.rdbuf();
@@ -1059,7 +1063,7 @@ bool GImage::loadFromStream(std::istream& input) {
     return !hasError;
 }
 
-void GImage::draw(QPainter* painter) {
+void GImage::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -1090,7 +1094,7 @@ int GImage::getPixel(int x, int y) const {
     return (int) _qimage->pixel(x, y);
 }
 
-QImage* GImage::getQImage() const {
+QImage *GImage::getQImage() const {
     return _qimage;
 }
 
@@ -1115,7 +1119,7 @@ GLine::GLine(double x0, double y0, double x1, double y1, GObject::LineStyle line
     setLineStyle(lineStyle);
 }
 
-GLine::GLine(const GPoint& p0, const GPoint& p1)
+GLine::GLine(const GPoint &p0, const GPoint &p1)
         : GObject(p0.getX(), p0.getY()),
           _dx(p1.getX() - p0.getX()),
           _dy(p1.getY() - p0.getY()) {
@@ -1154,11 +1158,11 @@ bool GLine::contains(double x, double y) const {
         return false;
     }
     double u = ((x - x0) * (x1 - x0) + (y - y0) * (y1 - y0))
-            / dsq(x0, y0, x1, y1);
+               / dsq(x0, y0, x1, y1);
     return dsq(x, y, x0 + u * (x1 - x0), y0 + u * (y1 - y0)) < tSquared;
 }
 
-void GLine::draw(QPainter* painter) {
+void GLine::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -1219,7 +1223,7 @@ void GLine::setEndPoint(double x1, double y1) {
     setPoints(getStartX(), getStartY(), x1, y1);
 }
 
-void GLine::setEndPoint(const GPoint& p) {
+void GLine::setEndPoint(const GPoint &p) {
     setEndPoint(p.getX(), p.getY());
 }
 
@@ -1236,7 +1240,7 @@ void GLine::setPoints(double x0, double y0, double x1, double y1) {
     repaint();
 }
 
-void GLine::setPoints(const GPoint& p0, const GPoint& p1) {
+void GLine::setPoints(const GPoint &p0, const GPoint &p1) {
     setPoints(p0.getX(), p0.getY(), p1.getX(), p1.getY());
 }
 
@@ -1244,7 +1248,7 @@ void GLine::setStartPoint(double x0, double y0) {
     setPoints(x0, y0, getEndX(), getEndY());
 }
 
-void GLine::setStartPoint(const GPoint& p) {
+void GLine::setStartPoint(const GPoint &p) {
     setStartPoint(p.getX(), p.getY());
 }
 
@@ -1275,7 +1279,7 @@ bool GOval::contains(double x, double y) const {
     return (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) <= 1.0;
 }
 
-void GOval::draw(QPainter* painter) {
+void GOval::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -1304,7 +1308,7 @@ void GPolygon::addEdge(double dx, double dy) {
     addVertex(_cx + dx, _cy + dy);
 }
 
-void GPolygon::addEdge(const GPoint& pt) {
+void GPolygon::addEdge(const GPoint &pt) {
     addEdge(pt.getX(), pt.getY());
 }
 
@@ -1340,7 +1344,7 @@ void GPolygon::addVertex(double x, double y) {
     repaint();
 }
 
-void GPolygon::addVertex(const GPoint& pt) {
+void GPolygon::addVertex(const GPoint &pt) {
     addVertex(pt.getX(), pt.getY());
 }
 
@@ -1397,7 +1401,7 @@ bool GPolygon::contains(double x, double y) const {
     return (crossings % 2 == 1);
 }
 
-void GPolygon::draw(QPainter* painter) {
+void GPolygon::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -1444,7 +1448,7 @@ int GPolygon::getVertexCount() const {
 
 Vector<GPoint> GPolygon::getVertices() const {
     Vector<GPoint> vec;
-    for (const QPointF& point : _vertices) {
+    for (const QPointF &point : _vertices) {
         vec.add(GPoint(point.x(), point.y()));
     }
     return vec;
@@ -1472,7 +1476,7 @@ GRect::GRect(double x, double y, double width, double height)
     // empty
 }
 
-void GRect::draw(QPainter* painter) {
+void GRect::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -1532,15 +1536,15 @@ bool GRoundRect::contains(double x, double y) const {
     return (dx - a) * (dx - a) / (a * a) + (dy - b) * (dy - b) / (b * b) <= 1;
 }
 
-void GRoundRect::draw(QPainter* painter) {
+void GRoundRect::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
     initializeBrushAndPen(painter);
     // QPainter takes corner as radius, GRoundRect stores as diameter, thus convert
     painter->drawRoundedRect((int) getX(), (int) getY(),
-                           (int) getWidth(), (int) getHeight(),
-                           (int) (_corner/2), (int) (_corner/2));
+                             (int) getWidth(), (int) getHeight(),
+                             (int) (_corner / 2), (int) (_corner / 2));
 }
 
 double GRoundRect::getCorner() const {
@@ -1562,14 +1566,14 @@ std::string GRoundRect::toStringExtra() const {
 }
 
 
-GText::GText(const std::string& str, double x, double y)
+GText::GText(const std::string &str, double x, double y)
         : GObject(x, y),
           _text(str) {
     _font = DEFAULT_FONT;
     updateSize();
 }
 
-void GText::draw(QPainter* painter) {
+void GText::draw(QPainter *painter) {
     if (!painter) {
         return;
     }
@@ -1611,23 +1615,23 @@ std::string GText::getType() const {
     return "GText";
 }
 
-void GText::setFont(const QFont& font) {
+void GText::setFont(const QFont &font) {
     setFont(GFont::toFontString(font));
 }
 
-void GText::setFont(const std::string& font) {
+void GText::setFont(const std::string &font) {
     _font = font;
     updateSize();
     repaint();
 }
 
-void GText::setLabel(const std::string& str) {
+void GText::setLabel(const std::string &str) {
     _text = str;
     updateSize();
     repaint();
 }
 
-void GText::setText(const std::string& str) {
+void GText::setText(const std::string &str) {
     setLabel(str);
 }
 
@@ -1641,7 +1645,7 @@ void GText::updateSize() {
     _height = metrics.height();
 }
 
-std::ostream& operator <<(std::ostream& out, const GObject& obj) {
+std::ostream &operator<<(std::ostream &out, const GObject &obj) {
     return out << obj.toString();
 }
 

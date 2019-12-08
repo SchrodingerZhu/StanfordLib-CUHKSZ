@@ -37,26 +37,26 @@ GOptionPane::GOptionPane() {
     // empty
 }
 
-GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(const std::string& message,
-                                                          const std::string& title,
+GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(const std::string &message,
+                                                          const std::string &title,
                                                           ConfirmType type) {
-    return showConfirmDialog(/* parent */ static_cast<QWidget*>(nullptr), message, title, type);
+    return showConfirmDialog(/* parent */ static_cast<QWidget *>(nullptr), message, title, type);
 }
 
-GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(GWindow* parent,
-                                                          const std::string& message,
-                                                          const std::string& title,
+GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(GWindow *parent,
+                                                          const std::string &message,
+                                                          const std::string &title,
                                                           ConfirmType type) {
     return showConfirmDialog(parent ? parent->getWidget() : nullptr, message, title, type);
 }
 
-GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(QWidget* parent,
-                                                          const std::string& message,
-                                                          const std::string& title,
+GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(QWidget *parent,
+                                                          const std::string &message,
+                                                          const std::string &title,
                                                           ConfirmType type) {
     if (type != GOptionPane::ConfirmType::CONFIRM_YES_NO
-            && type != GOptionPane::ConfirmType::CONFIRM_YES_NO_CANCEL
-            && type != GOptionPane::ConfirmType::CONFIRM_OK_CANCEL) {
+        && type != GOptionPane::ConfirmType::CONFIRM_YES_NO_CANCEL
+        && type != GOptionPane::ConfirmType::CONFIRM_OK_CANCEL) {
         error("GOptionPane::showConfirmDialog: Illegal dialog type");
     }
     std::string titleToUse = title.empty() ? std::string("Select an option") : title;
@@ -76,10 +76,10 @@ GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(QWidget* parent,
     GOptionPane::ConfirmResult confirmResult = GOptionPane::CONFIRM_CANCEL;
     GThread::runOnQtGuiThread([parent, titleToUse, message, buttons, defaultButton, &confirmResult]() {
         int dialogResult = QMessageBox::question(parent,
-                QString::fromStdString(titleToUse),
-                QString::fromStdString(message),
-                buttons,
-                defaultButton);
+                                                 QString::fromStdString(titleToUse),
+                                                 QString::fromStdString(message),
+                                                 buttons,
+                                                 defaultButton);
         switch (dialogResult) {
             case QMessageBox::Yes:
                 confirmResult = GOptionPane::ConfirmResult::CONFIRM_YES;
@@ -96,66 +96,66 @@ GOptionPane::ConfirmResult GOptionPane::showConfirmDialog(QWidget* parent,
     return confirmResult;
 }
 
-std::string GOptionPane::showInputDialog(const std::string& message,
-                                         const std::string& title,
-                                         const std::string& initialValue) {
-    return showInputDialog(/* parent */ static_cast<QWidget*>(nullptr), message, title, initialValue);
+std::string GOptionPane::showInputDialog(const std::string &message,
+                                         const std::string &title,
+                                         const std::string &initialValue) {
+    return showInputDialog(/* parent */ static_cast<QWidget *>(nullptr), message, title, initialValue);
 }
 
-std::string GOptionPane::showInputDialog(GWindow* parent,
-                                         const std::string& message,
-                                         const std::string& title,
-                                         const std::string& initialValue) {
+std::string GOptionPane::showInputDialog(GWindow *parent,
+                                         const std::string &message,
+                                         const std::string &title,
+                                         const std::string &initialValue) {
     return showInputDialog(parent ? parent->getWidget() : nullptr, message, title, initialValue);
 }
 
-std::string GOptionPane::showInputDialog(QWidget* parent,
-                                         const std::string& message,
-                                         const std::string& title,
-                                         const std::string& initialValue) {
+std::string GOptionPane::showInputDialog(QWidget *parent,
+                                         const std::string &message,
+                                         const std::string &title,
+                                         const std::string &initialValue) {
     std::string titleToUse = title.empty() ? std::string("Type a value") : title;
     std::string result = "";
     GThread::runOnQtGuiThread([parent, titleToUse, message, initialValue, &result]() {
         result = QInputDialog::getText(parent,
-                QString::fromStdString(titleToUse),
-                QString::fromStdString(message),
-                QLineEdit::Normal,
-                QString::fromStdString(initialValue)).toStdString();
+                                       QString::fromStdString(titleToUse),
+                                       QString::fromStdString(message),
+                                       QLineEdit::Normal,
+                                       QString::fromStdString(initialValue)).toStdString();
     });
     return result;
 }
 
-void GOptionPane::showMessageDialog(const std::string& message,
-                                    const std::string& title,
+void GOptionPane::showMessageDialog(const std::string &message,
+                                    const std::string &title,
                                     MessageType type) {
-    showMessageDialog(/* parent */ static_cast<QWidget*>(nullptr), message, title, type);
+    showMessageDialog(/* parent */ static_cast<QWidget *>(nullptr), message, title, type);
 }
 
-void GOptionPane::showMessageDialog(GWindow* parent,
-                                    const std::string& message,
-                                    const std::string& title,
+void GOptionPane::showMessageDialog(GWindow *parent,
+                                    const std::string &message,
+                                    const std::string &title,
                                     MessageType type) {
     showMessageDialog(parent ? parent->getWidget() : nullptr, message, title, type);
 }
 
-void GOptionPane::showMessageDialog(QWidget* parent,
-                                    const std::string& message,
-                                    const std::string& title,
+void GOptionPane::showMessageDialog(QWidget *parent,
+                                    const std::string &message,
+                                    const std::string &title,
                                     MessageType type) {
     if (type != GOptionPane::MessageType::MESSAGE_PLAIN
-            && type != GOptionPane::MessageType::MESSAGE_INFORMATION
-            && type != GOptionPane::MessageType::MESSAGE_ERROR
-            && type != GOptionPane::MessageType::MESSAGE_WARNING
-            && type != GOptionPane::MessageType::MESSAGE_QUESTION
-            && type != GOptionPane::MessageType::MESSAGE_ABOUT) {
+        && type != GOptionPane::MessageType::MESSAGE_INFORMATION
+        && type != GOptionPane::MessageType::MESSAGE_ERROR
+        && type != GOptionPane::MessageType::MESSAGE_WARNING
+        && type != GOptionPane::MessageType::MESSAGE_QUESTION
+        && type != GOptionPane::MessageType::MESSAGE_ABOUT) {
         error("GOptionPane::showMessageDialog: Illegal dialog type");
     }
     std::string titleToUse = title.empty() ? std::string("Message") : title;
 
     GThread::runOnQtGuiThread([parent, message, titleToUse, type]() {
         if (type == GOptionPane::MessageType::MESSAGE_PLAIN
-                || type == GOptionPane::MessageType::MESSAGE_INFORMATION
-                || type == GOptionPane::MessageType::MESSAGE_QUESTION) {
+            || type == GOptionPane::MessageType::MESSAGE_INFORMATION
+            || type == GOptionPane::MessageType::MESSAGE_QUESTION) {
             QMessageBox::information(parent, QString::fromStdString(titleToUse), QString::fromStdString(message));
         } else if (type == GOptionPane::MessageType::MESSAGE_WARNING) {
             QMessageBox::warning(parent, QString::fromStdString(titleToUse), QString::fromStdString(message));
@@ -167,26 +167,26 @@ void GOptionPane::showMessageDialog(QWidget* parent,
     });
 }
 
-std::string GOptionPane::showOptionDialog(const std::string& message,
-                                          const Vector<std::string>& options,
-                                          const std::string& title,
-                                          const std::string& initiallySelected) {
-    return showOptionDialog(/* parent */ static_cast<QWidget*>(nullptr), message, options, title, initiallySelected);
+std::string GOptionPane::showOptionDialog(const std::string &message,
+                                          const Vector<std::string> &options,
+                                          const std::string &title,
+                                          const std::string &initiallySelected) {
+    return showOptionDialog(/* parent */ static_cast<QWidget *>(nullptr), message, options, title, initiallySelected);
 }
 
-std::string GOptionPane::showOptionDialog(GWindow* parent,
-                                          const std::string& message,
-                                          const Vector<std::string>& options,
-                                          const std::string& title,
-                                          const std::string& initiallySelected) {
+std::string GOptionPane::showOptionDialog(GWindow *parent,
+                                          const std::string &message,
+                                          const Vector<std::string> &options,
+                                          const std::string &title,
+                                          const std::string &initiallySelected) {
     return showOptionDialog(parent ? parent->getWidget() : nullptr, message, options, title, initiallySelected);
 }
 
-std::string GOptionPane::showOptionDialog(QWidget* parent,
-                                          const std::string& message,
-                                          const Vector<std::string>& options,
-                                          const std::string& title,
-                                          const std::string& initiallySelected) {
+std::string GOptionPane::showOptionDialog(QWidget *parent,
+                                          const std::string &message,
+                                          const Vector<std::string> &options,
+                                          const std::string &title,
+                                          const std::string &initiallySelected) {
     std::string titleToUse = title.empty() ? std::string("Select an option") : title;
     std::string result = "";
     GThread::runOnQtGuiThread([parent, message, &options, titleToUse, initiallySelected, &result]() {
@@ -209,14 +209,14 @@ std::string GOptionPane::showOptionDialog(QWidget* parent,
 
         // give each button a unique hotkey; listen to key presses on buttons
         // (try to set char at index 0, 1, 2 as the mnemonic)
-        Set<QAbstractButton*> buttonsUsed;
+        Set<QAbstractButton *> buttonsUsed;
         Set<std::string> charsUsed;
-        QAbstractButton* escapeButton = nullptr;
+        QAbstractButton *escapeButton = nullptr;
         int escapeButtonIndex = -1;
 
         for (int i = 0; i <= 2; i++) {
             int buttonIndex = 0;
-            for (QAbstractButton* button : box.buttons()) {
+            for (QAbstractButton *button : box.buttons()) {
                 if (buttonsUsed.contains(button)) {
                     buttonIndex++;
                     continue;
@@ -252,8 +252,8 @@ std::string GOptionPane::showOptionDialog(QWidget* parent,
 
         int index = box.exec();
         if (index == GOptionPane::InternalResult::INTERNAL_CLOSED_OPTION
-                || index < 0 || index >= options.size()
-                || (escapeButtonIndex >= 0 && index == escapeButtonIndex)) {
+            || index < 0 || index >= options.size()
+            || (escapeButtonIndex >= 0 && index == escapeButtonIndex)) {
             result = "";
         } else {
             result = options[index];
@@ -262,28 +262,28 @@ std::string GOptionPane::showOptionDialog(QWidget* parent,
     return result;
 }
 
-void GOptionPane::showTextFileDialog(const std::string& fileText,
-                                     const std::string& title,
+void GOptionPane::showTextFileDialog(const std::string &fileText,
+                                     const std::string &title,
                                      int rows,
                                      int cols) {
-    showTextFileDialog(static_cast<QWidget*>(nullptr), fileText, title, rows, cols);
+    showTextFileDialog(static_cast<QWidget *>(nullptr), fileText, title, rows, cols);
 }
 
-void GOptionPane::showTextFileDialog(GWindow* parent,
-                                     const std::string& fileText,
-                                     const std::string& title,
+void GOptionPane::showTextFileDialog(GWindow *parent,
+                                     const std::string &fileText,
+                                     const std::string &title,
                                      int rows,
                                      int cols) {
     showTextFileDialog(parent ? parent->getWidget() : nullptr, fileText, title, rows, cols);
 }
 
-void GOptionPane::showTextFileDialog(QWidget* /*parent*/,
-                                     const std::string& fileText,
-                                     const std::string& title,
+void GOptionPane::showTextFileDialog(QWidget * /*parent*/,
+                                     const std::string &fileText,
+                                     const std::string &title,
                                      int rows,
                                      int cols) {
     static const std::string DEFAULT_FONT = "Monospaced-*-*";
-    static const int DEFAULT_ROWS    = 20;
+    static const int DEFAULT_ROWS = 20;
     static const int DEFAULT_COLUMNS = 80;
     if (rows <= 0) {
         rows = DEFAULT_ROWS;
@@ -293,15 +293,15 @@ void GOptionPane::showTextFileDialog(QWidget* /*parent*/,
     }
 
     std::string titleToUse = title.empty() ? std::string("Text file contents") : title;
-    GWindow* window = new GWindow;
+    GWindow *window = new GWindow;
     window->setTitle(title);
 
-    GTextArea* textArea = new GTextArea(fileText);
+    GTextArea *textArea = new GTextArea(fileText);
     textArea->setFont(DEFAULT_FONT);
     textArea->setRowsColumns(DEFAULT_ROWS, DEFAULT_COLUMNS);
     window->addToRegion(textArea, GWindow::REGION_CENTER);
 
-    GButton* button = new GButton("&OK");
+    GButton *button = new GButton("&OK");
     button->setActionListener([window]() {
         window->close();
     });

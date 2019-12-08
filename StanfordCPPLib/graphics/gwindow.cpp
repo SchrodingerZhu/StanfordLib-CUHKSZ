@@ -60,7 +60,7 @@
 #include <util/require.h>
 #include <util/strlib.h>
 
-_Internal_QMainWindow* GWindow::_lastWindow = nullptr;
+_Internal_QMainWindow *GWindow::_lastWindow = nullptr;
 /*static*/ const int GWindow::DEFAULT_WIDTH = 500;
 /*static*/ const int GWindow::DEFAULT_HEIGHT = 300;
 /*static*/ const int GWindow::HIGH_DPI_SCREEN_THRESHOLD = 200;
@@ -145,56 +145,56 @@ void GWindow::_autograder_setPauseEnabled(bool /*enabled*/) {
     // TODO
 }
 
-void GWindow::add(GInteractor* interactor) {
+void GWindow::add(GInteractor *interactor) {
     require::nonNull(interactor, "GWindow::add");
     addToRegion(interactor, REGION_CENTER);
 }
 
-void GWindow::add(GInteractor* interactor, double x, double y) {
+void GWindow::add(GInteractor *interactor, double x, double y) {
     require::nonNull(interactor, "GWindow::add");
     interactor->setLocation(x, y);
     addToRegion(interactor, REGION_CENTER);
 }
 
-void GWindow::add(GInteractor& interactor) {
+void GWindow::add(GInteractor &interactor) {
     addToRegion(&interactor, REGION_CENTER);
 }
 
-void GWindow::add(GInteractor& interactor, double x, double y) {
+void GWindow::add(GInteractor &interactor, double x, double y) {
     interactor.setLocation(x, y);
     addToRegion(&interactor, REGION_CENTER);
 }
 
-void GWindow::add(GObject* obj) {
+void GWindow::add(GObject *obj) {
     require::nonNull(obj, "GWindow::add");
     ensureForwardTarget();
     _canvas->add(obj);
 }
 
-void GWindow::add(GObject* obj, double x, double y) {
+void GWindow::add(GObject *obj, double x, double y) {
     require::nonNull(obj, "GWindow::add");
     ensureForwardTarget();
     _canvas->add(obj, x, y);
 }
 
-void GWindow::add(GObject& obj) {
+void GWindow::add(GObject &obj) {
     ensureForwardTarget();
     _canvas->add(obj);
 }
 
-void GWindow::add(GObject& obj, double x, double y) {
+void GWindow::add(GObject &obj, double x, double y) {
     ensureForwardTarget();
     _canvas->add(obj, x, y);
 }
 
-QMenu* GWindow::addMenu(const std::string& menu) {
+QMenu *GWindow::addMenu(const std::string &menu) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (_menuMap.containsKey(menuKey)) {
         // duplicate; do not create again
         return _menuMap[menuKey];
     }
 
-    QMenu* qmenu = nullptr;
+    QMenu *qmenu = nullptr;
     GThread::runOnQtGuiThread([this, menu, &qmenu]() {
         qmenu = _iqmainwindow->menuBar()->addMenu(QString::fromStdString(menu));
         std::string menuKey = toLowerCase(stringReplace(stringReplace(menu, "/", ""), "&", ""));
@@ -203,14 +203,15 @@ QMenu* GWindow::addMenu(const std::string& menu) {
     return qmenu;
 }
 
-QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, const std::string& icon) {
+QAction *GWindow::addMenuItem(const std::string &menu, const std::string &item, const std::string &icon) {
     GEventListenerVoid func = [this, menu, item]() {
         this->_iqmainwindow->handleMenuAction(menu, item);
     };
     return addMenuItem(menu, item, icon, func);
 }
 
-QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, const std::string& icon, GEventListenerVoid func) {
+QAction *GWindow::addMenuItem(const std::string &menu, const std::string &item, const std::string &icon,
+                              GEventListenerVoid func) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (!_menuMap.containsKey(menuKey)) {
         error("GWindow::addMenuItem: menu \"" + menu + "\" does not exist");
@@ -224,9 +225,9 @@ QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, 
         return _menuActionMap[menuItemKey];
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, menu, item, icon, func, menuKey, menuItemKey, &action]() {
-        QMenu* qmenu = _menuMap[menuKey];
+        QMenu *qmenu = _menuMap[menuKey];
         action = qmenu->addAction(QString::fromStdString(item));
         if (!icon.empty() && fileExists(icon)) {
             QIcon qicon(QString::fromStdString(icon));
@@ -242,7 +243,8 @@ QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, 
     return action;
 }
 
-QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, const QIcon& icon, GEventListenerVoid func) {
+QAction *
+GWindow::addMenuItem(const std::string &menu, const std::string &item, const QIcon &icon, GEventListenerVoid func) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (!_menuMap.containsKey(menuKey)) {
         error("GWindow::addMenuItem: menu \"" + menu + "\" does not exist");
@@ -256,9 +258,9 @@ QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, 
         return _menuActionMap[menuItemKey];
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, menu, item, &icon, func, menuKey, menuItemKey, &action]() {
-        QMenu* qmenu = _menuMap[menuKey];
+        QMenu *qmenu = _menuMap[menuKey];
         action = qmenu->addAction(QString::fromStdString(item));
         action->setIcon(icon);
 
@@ -271,7 +273,8 @@ QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, 
     return action;
 }
 
-QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, const QPixmap& icon, GEventListenerVoid func) {
+QAction *
+GWindow::addMenuItem(const std::string &menu, const std::string &item, const QPixmap &icon, GEventListenerVoid func) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (!_menuMap.containsKey(menuKey)) {
         error("GWindow::addMenuItem: menu \"" + menu + "\" does not exist");
@@ -285,9 +288,9 @@ QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, 
         return _menuActionMap[menuItemKey];
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, menu, item, &icon, func, menuKey, menuItemKey, &action]() {
-        QMenu* qmenu = _menuMap[menuKey];
+        QMenu *qmenu = _menuMap[menuKey];
         action = qmenu->addAction(QString::fromStdString(item));
         action->setIcon(icon);
 
@@ -300,22 +303,22 @@ QAction* GWindow::addMenuItem(const std::string& menu, const std::string& item, 
     return action;
 }
 
-QAction* GWindow::addMenuItemCheckBox(const std::string& menu,
-                                      const std::string& item,
+QAction *GWindow::addMenuItemCheckBox(const std::string &menu,
+                                      const std::string &item,
                                       bool checked,
-                                      const std::string& icon) {
+                                      const std::string &icon) {
     GEventListenerVoid func = [this, menu, item]() {
         this->_iqmainwindow->handleMenuAction(menu, item);
     };
     return addMenuItemCheckBox(menu, item, checked, icon, func);
 }
 
-QAction* GWindow::addMenuItemCheckBox(const std::string& menu,
-                                      const std::string& item,
+QAction *GWindow::addMenuItemCheckBox(const std::string &menu,
+                                      const std::string &item,
                                       bool checked,
-                                      const std::string& icon,
+                                      const std::string &icon,
                                       GEventListenerVoid func) {
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (!_menuMap.containsKey(menuKey)) {
         error("GWindow::addMenuItem: menu \"" + menu + "\" does not exist");
@@ -323,7 +326,7 @@ QAction* GWindow::addMenuItemCheckBox(const std::string& menu,
     }
 
     GThread::runOnQtGuiThread([this, menu, item, icon, checked, func, menuKey, &action]() {
-        QMenu* qmenu = _menuMap[menuKey];
+        QMenu *qmenu = _menuMap[menuKey];
         action = qmenu->addAction(QString::fromStdString(item));
         action->setCheckable(true);
         action->setChecked(checked);
@@ -344,45 +347,45 @@ QAction* GWindow::addMenuItemCheckBox(const std::string& menu,
 }
 
 
-QAction* GWindow::addMenuSeparator(const std::string& menu) {
+QAction *GWindow::addMenuSeparator(const std::string &menu) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (!_menuMap.containsKey(menuKey)) {
         error("GWindow::addMenuItem: menu \"" + menu + "\" does not exist");
         return nullptr;
     }
 
-    QAction* separator = nullptr;
+    QAction *separator = nullptr;
     GThread::runOnQtGuiThread([this, menuKey, &separator]() {
-        QMenu* qmenu = _menuMap[menuKey];
+        QMenu *qmenu = _menuMap[menuKey];
         separator = qmenu->addSeparator();
     });
     return separator;
 }
 
-QMenu* GWindow::addSubMenu(const std::string& menu, const std::string& submenu) {
+QMenu *GWindow::addSubMenu(const std::string &menu, const std::string &submenu) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     if (!_menuMap.containsKey(menuKey)) {
         error("GWindow::addMenuItem: menu \"" + menu + "\" does not exist");
         return nullptr;
     }
 
-    QMenu* qsubmenu = nullptr;
+    QMenu *qsubmenu = nullptr;
     GThread::runOnQtGuiThread([this, menu, menuKey, submenu, &qsubmenu]() {
-        QMenu* qmenu = _menuMap[menuKey];
+        QMenu *qmenu = _menuMap[menuKey];
         qsubmenu = qmenu->addMenu(QString::fromStdString(submenu));
         std::string subMenuKey = menuKey + "/"
-                + toLowerCase(stringReplace(submenu, "&", ""));
+                                 + toLowerCase(stringReplace(submenu, "&", ""));
         _menuMap[subMenuKey] = qsubmenu;
     });
     return qsubmenu;
 }
 
-void GWindow::addToRegion(GInteractor* interactor, Region region) {
+void GWindow::addToRegion(GInteractor *interactor, Region region) {
     require::nonNull(interactor, "GWindow::addToRegion");
     if (region == REGION_CENTER) {
         // labels in "GText mode" are added as GText objects to canvas
         if (interactor->getType() == "GLabel") {
-            GLabel* label = static_cast<GLabel*>(interactor);
+            GLabel *label = static_cast<GLabel *>(interactor);
             if (label->hasGText()) {
                 add(label->getGText());
                 return;
@@ -392,19 +395,19 @@ void GWindow::addToRegion(GInteractor* interactor, Region region) {
     _contentPane->addToRegion(interactor, static_cast<GContainer::Region>(region));
 }
 
-void GWindow::addToRegion(GInteractor* interactor, const std::string& region) {
+void GWindow::addToRegion(GInteractor *interactor, const std::string &region) {
     addToRegion(interactor, stringToRegion(region));
 }
 
-void GWindow::addToRegion(GInteractor& interactor, Region region) {
+void GWindow::addToRegion(GInteractor &interactor, Region region) {
     addToRegion(&interactor, region);
 }
 
-void GWindow::addToRegion(GInteractor& interactor, const std::string& region) {
+void GWindow::addToRegion(GInteractor &interactor, const std::string &region) {
     addToRegion(&interactor, region);
 }
 
-void GWindow::addToolbar(const std::string& title) {
+void GWindow::addToolbar(const std::string &title) {
     if (_toolbar) {
         return;
     }
@@ -416,16 +419,16 @@ void GWindow::addToolbar(const std::string& title) {
     });
 }
 
-QAction* GWindow::addToolbarItem(const std::string& item,
-                                 const std::string& icon) {
+QAction *GWindow::addToolbarItem(const std::string &item,
+                                 const std::string &icon) {
     GEventListenerVoid func = [this, item]() {
         this->_iqmainwindow->handleMenuAction(/* menu */ "toolbar", item);
     };
     return addToolbarItem(item, icon, func);
 }
 
-QAction* GWindow::addToolbarItem(const std::string& item,
-                                 const std::string& icon,
+QAction *GWindow::addToolbarItem(const std::string &item,
+                                 const std::string &icon,
                                  GEventListenerVoid func) {
     if (!_toolbar) {
         addToolbar();
@@ -438,7 +441,7 @@ QAction* GWindow::addToolbarItem(const std::string& item,
         return _menuActionMap[menuItemKey];
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, item, icon, func, menuItemKey, &action]() {
         if (icon.empty()) {
             action = _toolbar->addAction(QString::fromStdString(item));
@@ -459,8 +462,8 @@ QAction* GWindow::addToolbarItem(const std::string& item,
     return action;
 }
 
-QAction* GWindow::addToolbarItem(const std::string& item,
-                                 const QIcon& icon,
+QAction *GWindow::addToolbarItem(const std::string &item,
+                                 const QIcon &icon,
                                  GEventListenerVoid func) {
     if (!_toolbar) {
         addToolbar();
@@ -473,7 +476,7 @@ QAction* GWindow::addToolbarItem(const std::string& item,
         return _menuActionMap[menuItemKey];
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, item, &icon, func, menuItemKey, &action]() {
         // toolbar item with icon doesn't show text
         action = _toolbar->addAction(icon, QString::fromStdString(""));
@@ -489,8 +492,8 @@ QAction* GWindow::addToolbarItem(const std::string& item,
     return action;
 }
 
-QAction* GWindow::addToolbarItem(const std::string& item,
-                                 const QPixmap& icon,
+QAction *GWindow::addToolbarItem(const std::string &item,
+                                 const QPixmap &icon,
                                  GEventListenerVoid func) {
     if (!_toolbar) {
         addToolbar();
@@ -503,7 +506,7 @@ QAction* GWindow::addToolbarItem(const std::string& item,
         return _menuActionMap[menuItemKey];
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, item, &icon, func, menuItemKey, &action]() {
         // toolbar item with icon doesn't show text
         action = _toolbar->addAction(icon, QString::fromStdString(""));
@@ -519,12 +522,12 @@ QAction* GWindow::addToolbarItem(const std::string& item,
     return action;
 }
 
-QAction* GWindow::addToolbarSeparator() {
+QAction *GWindow::addToolbarSeparator() {
     if (!_toolbar) {
         addToolbar();
     }
 
-    QAction* action = nullptr;
+    QAction *action = nullptr;
     GThread::runOnQtGuiThread([this, &action]() {
         action = _toolbar->addSeparator();
     });
@@ -571,7 +574,7 @@ void GWindow::clearRegion(Region region) {
     _contentPane->clearRegion(static_cast<GContainer::Region>(region));
 }
 
-void GWindow::clearRegion(const std::string& region) {
+void GWindow::clearRegion(const std::string &region) {
     clearRegion(stringToRegion(region));
 }
 
@@ -587,12 +590,12 @@ void GWindow::clearToolbarItems() {
 void GWindow::center() {
     GDimension screenSize = getScreenSize();
     GDimension windowSize = getSize();
-    setLocation(screenSize.getWidth()  / 2 - windowSize.getWidth()  / 2,
+    setLocation(screenSize.getWidth() / 2 - windowSize.getWidth() / 2,
                 screenSize.getHeight() / 2 - windowSize.getHeight() / 2);
 }
 
 /*static*/ std::string GWindow::chooseLightDarkModeColor(
-        const std::string& lightColor, const std::string& darkColor) {
+        const std::string &lightColor, const std::string &darkColor) {
     return isDarkMode() ? darkColor : lightColor;
 }
 
@@ -606,9 +609,9 @@ void GWindow::close() {
     });
 }
 
-void GWindow::compareToImage(const std::string& filename, bool /*ignoreWindowSize*/) const {
+void GWindow::compareToImage(const std::string &filename, bool /*ignoreWindowSize*/) const {
     ensureForwardTargetConstHack();
-    GCanvas* fileCanvas = new GCanvas(filename);
+    GCanvas *fileCanvas = new GCanvas(filename);
     GDiffImage::showDialog("expected output", fileCanvas,
                            "your output", _canvas);
 
@@ -643,7 +646,7 @@ bool GWindow::eventsEnabled() const {
     return getWidget() != nullptr && isVisible();
 }
 
-GCanvas* GWindow::getCanvas() const {
+GCanvas *GWindow::getCanvas() const {
     ensureForwardTargetConstHack();
     return _canvas;
 }
@@ -675,7 +678,7 @@ GWindow::CloseOperation GWindow::getCloseOperation() const {
     static bool everCheckedBefore = false;
     static int previousBg = 0;
     if (!everCheckedBefore) {
-        GTextField* tempTextField = new GTextField();
+        GTextField *tempTextField = new GTextField();
         previousBg = tempTextField->getBackgroundInt();
         everCheckedBefore = true;
     }
@@ -690,14 +693,14 @@ GWindow::CloseOperation GWindow::getCloseOperation() const {
     static bool everCheckedBefore = false;
     static int previousFg = 0;
     if (!everCheckedBefore) {
-        GTextField* tempTextField = new GTextField();
+        GTextField *tempTextField = new GTextField();
         previousFg = tempTextField->getForegroundInt();
         everCheckedBefore = true;
     }
     return previousFg;
 }
 
-GObject* GWindow::getGObject(int index) const {
+GObject *GWindow::getGObject(int index) const {
     if (_canvas) {
         return _canvas->getElement(index);
     } else {
@@ -705,7 +708,7 @@ GObject* GWindow::getGObject(int index) const {
     }
 }
 
-GObject* GWindow::getGObjectAt(double x, double y) const {
+GObject *GWindow::getGObjectAt(double x, double y) const {
     if (_canvas) {
         return _canvas->getElementAt(x, y);
     } else {
@@ -721,7 +724,7 @@ int GWindow::getGObjectCount() const {
     }
 }
 
-/* static */ QMainWindow* GWindow::getLastWindow() {
+/* static */ QMainWindow *GWindow::getLastWindow() {
     return _lastWindow;
 }
 
@@ -741,7 +744,7 @@ double GWindow::getRegionHeight(Region region) const {
     return _contentPane->getRegionHeight(static_cast<GContainer::Region>(region));
 }
 
-double GWindow::getRegionHeight(const std::string& region) const {
+double GWindow::getRegionHeight(const std::string &region) const {
     return _contentPane->getRegionHeight(region);
 }
 
@@ -749,7 +752,7 @@ GDimension GWindow::getRegionSize(Region region) const {
     return _contentPane->getRegionSize(static_cast<GContainer::Region>(region));
 }
 
-GDimension GWindow::getRegionSize(const std::string& region) const {
+GDimension GWindow::getRegionSize(const std::string &region) const {
     return _contentPane->getRegionSize(region);
 }
 
@@ -757,7 +760,7 @@ double GWindow::getRegionWidth(Region region) const {
     return _contentPane->getRegionWidth(static_cast<GContainer::Region>(region));
 }
 
-double GWindow::getRegionWidth(const std::string& region) const {
+double GWindow::getRegionWidth(const std::string &region) const {
     return _contentPane->getRegionWidth(region);
 }
 
@@ -798,8 +801,8 @@ std::string GWindow::getType() const {
     return "GWindow";
 }
 
-QWidget* GWindow::getWidget() const {
-    return static_cast<QWidget*>(_iqmainwindow);
+QWidget *GWindow::getWidget() const {
+    return static_cast<QWidget *>(_iqmainwindow);
 }
 
 double GWindow::getWidth() const {
@@ -859,7 +862,7 @@ bool GWindow::inCanvasBounds(double x, double y) const {
 
 bool GWindow::isMaximized() const {
     return (_iqmainwindow->windowState() & Qt::WindowMaximized) != 0
-            || (_iqmainwindow->windowState() & Qt::WindowFullScreen) != 0;
+           || (_iqmainwindow->windowState() & Qt::WindowFullScreen) != 0;
 }
 
 bool GWindow::isMinimized() const {
@@ -882,7 +885,7 @@ bool GWindow::isVisible() const {
     return _iqmainwindow->isVisible();
 }
 
-void GWindow::loadCanvasPixels(const std::string& filename) {
+void GWindow::loadCanvasPixels(const std::string &filename) {
     ensureForwardTarget();
     _canvas->load(filename);   // runs on Qt GUI thread
 }
@@ -908,7 +911,7 @@ void GWindow::pause(double ms) {
     GThread::getCurrentThread()->sleep(ms);
 }
 
-void GWindow::processKeyPressEventInternal(QKeyEvent* /* event */) {
+void GWindow::processKeyPressEventInternal(QKeyEvent * /* event */) {
     // empty; override me
 }
 
@@ -916,25 +919,25 @@ void GWindow::rememberPosition() {
     // TODO
 }
 
-void GWindow::remove(GObject* obj) {
+void GWindow::remove(GObject *obj) {
     require::nonNull(obj, "GWindow::remove");
     if (_canvas) {
         _canvas->remove(obj);
     }
 }
 
-void GWindow::remove(GObject& obj) {
+void GWindow::remove(GObject &obj) {
     if (_canvas) {
         _canvas->remove(&obj);   // runs on Qt GUI thread
     }
 }
 
-void GWindow::remove(GInteractor* interactor) {
+void GWindow::remove(GInteractor *interactor) {
     require::nonNull(interactor, "GWindow::remove");
     _contentPane->remove(interactor);
 }
 
-void GWindow::remove(GInteractor& interactor) {
+void GWindow::remove(GInteractor &interactor) {
     remove(&interactor);
 }
 
@@ -944,12 +947,12 @@ void GWindow::removeClickListener() {
     }
 }
 
-void GWindow::removeFromRegion(GInteractor* interactor, Region region) {
+void GWindow::removeFromRegion(GInteractor *interactor, Region region) {
     require::nonNull(interactor, "GWindow::removeFromRegion");
 
     // special case: labels in "GText mode" are added to canvas
     if (region == REGION_CENTER && interactor->getType() == "GLabel") {
-        GLabel* label = static_cast<GLabel*>(interactor);
+        GLabel *label = static_cast<GLabel *>(interactor);
         if (label->hasGText()) {
             remove(label->getGText());
             return;
@@ -959,15 +962,15 @@ void GWindow::removeFromRegion(GInteractor* interactor, Region region) {
     _contentPane->removeFromRegion(interactor, static_cast<GContainer::Region>(region));
 }
 
-void GWindow::removeFromRegion(GInteractor* interactor, const std::string& region) {
+void GWindow::removeFromRegion(GInteractor *interactor, const std::string &region) {
     removeFromRegion(interactor, stringToRegion(region));
 }
 
-void GWindow::removeFromRegion(GInteractor& interactor, Region region) {
+void GWindow::removeFromRegion(GInteractor &interactor, Region region) {
     removeFromRegion(&interactor, region);
 }
 
-void GWindow::removeFromRegion(GInteractor& interactor, const std::string& region) {
+void GWindow::removeFromRegion(GInteractor &interactor, const std::string &region) {
     removeFromRegion(&interactor, region);
 }
 
@@ -1003,12 +1006,12 @@ void GWindow::removeToolbar() {
 
 void GWindow::removeWindowListener() {
     removeEventListeners({"close",
-                         "closing",
-                         "maximize",
-                         "minimize",
-                         "open",
-                         "resize",
-                         "restore"});
+                          "closing",
+                          "maximize",
+                          "minimize",
+                          "open",
+                          "resize",
+                          "restore"});
 }
 
 void GWindow::requestFocus() {
@@ -1024,7 +1027,7 @@ void GWindow::restore() {
     });
 }
 
-void GWindow::saveCanvasPixels(const std::string& filename) {
+void GWindow::saveCanvasPixels(const std::string &filename) {
     ensureForwardTarget();
     _canvas->save(filename);   // runs on Qt GUI thread
 }
@@ -1036,7 +1039,7 @@ void GWindow::setBackground(int color) {
     });
 }
 
-void GWindow::setBackground(const std::string& color) {
+void GWindow::setBackground(const std::string &color) {
     _contentPane->setBackground(color);
     GThread::runOnQtGuiThread([this, color]() {
         GForwardDrawingSurface::setBackground(color);
@@ -1057,7 +1060,7 @@ void GWindow::setCanvasSize(double width, double height) {
     pack();
 }
 
-void GWindow::setCanvasSize(const GDimension& size) {
+void GWindow::setCanvasSize(const GDimension &size) {
     setCanvasSize(size.getWidth(), size.getHeight());
 }
 
@@ -1091,15 +1094,15 @@ void GWindow::setLocation(double x, double y) {
     });
 }
 
-void GWindow::setLocation(const GPoint& p) {
+void GWindow::setLocation(const GPoint &p) {
     setLocation(p.getX(), p.getY());
 }
 
-void GWindow::setLocation(const Point& p) {
+void GWindow::setLocation(const Point &p) {
     setLocation(p.getX(), p.getY());
 }
 
-void GWindow::setMenuItemEnabled(const std::string& menu, const std::string& item, bool enabled) {
+void GWindow::setMenuItemEnabled(const std::string &menu, const std::string &item, bool enabled) {
     std::string menuKey = toLowerCase(stringReplace(menu, "&", ""));
     std::string itemKey = toLowerCase(stringReplace(item, "&", ""));
     std::string menuItemKey = menuKey + "/" + itemKey;
@@ -1109,7 +1112,7 @@ void GWindow::setMenuItemEnabled(const std::string& menu, const std::string& ite
         error("GWindow::setMenuItemEnabled: menu item \"" + item + "\" does not exist");
     }
 
-    QAction* action = _menuActionMap[menuItemKey];
+    QAction *action = _menuActionMap[menuItemKey];
     GThread::runOnQtGuiThread([action, enabled]() {
         action->setEnabled(enabled);
     });
@@ -1159,11 +1162,11 @@ void GWindow::setRegionAlignment(Region region, HorizontalAlignment halign, Vert
     _contentPane->setRegionAlignment(static_cast<GContainer::Region>(region), halign, valign);
 }
 
-void GWindow::setRegionAlignment(const std::string& region, const std::string& align) {
+void GWindow::setRegionAlignment(const std::string &region, const std::string &align) {
     _contentPane->setRegionAlignment(region, align);
 }
 
-void GWindow::setRegionAlignment(const std::string& region, const std::string& halign, const std::string& valign) {
+void GWindow::setRegionAlignment(const std::string &region, const std::string &halign, const std::string &valign) {
     _contentPane->setRegionAlignment(region, halign, valign);
 }
 
@@ -1171,7 +1174,7 @@ void GWindow::setRegionHorizontalAlignment(Region region, HorizontalAlignment ha
     _contentPane->setRegionHorizontalAlignment(static_cast<GContainer::Region>(region), halign);
 }
 
-void GWindow::setRegionHorizontalAlignment(const std::string& region, const std::string& halign) {
+void GWindow::setRegionHorizontalAlignment(const std::string &region, const std::string &halign) {
     _contentPane->setRegionHorizontalAlignment(region, halign);
 }
 
@@ -1179,7 +1182,7 @@ void GWindow::setRegionVerticalAlignment(Region region, VerticalAlignment valign
     _contentPane->setRegionVerticalAlignment(static_cast<GContainer::Region>(region), valign);
 }
 
-void GWindow::setRegionVerticalAlignment(const std::string& region, const std::string& valign) {
+void GWindow::setRegionVerticalAlignment(const std::string &region, const std::string &valign) {
     _contentPane->setRegionVerticalAlignment(region, valign);
 }
 
@@ -1218,7 +1221,7 @@ void GWindow::setSize(double width, double height) {
     });
 }
 
-void GWindow::setSize(const GDimension& size) {
+void GWindow::setSize(const GDimension &size) {
     setSize(size.getWidth(), size.getHeight());
 }
 
@@ -1238,7 +1241,7 @@ void GWindow::setTimerListener(double ms, GEventListenerVoid func) {
     });
 }
 
-void GWindow::setTitle(const std::string& title) {
+void GWindow::setTitle(const std::string &title) {
     GThread::runOnQtGuiThread([this, title]() {
         _iqmainwindow->setWindowTitle(QString::fromStdString(title));
     });
@@ -1254,7 +1257,7 @@ void GWindow::setWidth(double width) {
     setSize(width, getHeight());
 }
 
-void GWindow::setWindowIcon(const std::string& iconFile) {
+void GWindow::setWindowIcon(const std::string &iconFile) {
     if (fileExists(iconFile)) {
         GThread::runOnQtGuiThread([this, iconFile]() {
             QIcon qicon(QString::fromStdString(iconFile));
@@ -1265,25 +1268,25 @@ void GWindow::setWindowIcon(const std::string& iconFile) {
 
 void GWindow::setWindowListener(GEventListener func) {
     setEventListeners({"close",
-                      "closing",
-                      "maximize",
-                      "minimize",
-                      "open",
-                      "resize",
-                      "restore"}, func);
+                       "closing",
+                       "maximize",
+                       "minimize",
+                       "open",
+                       "resize",
+                       "restore"}, func);
 }
 
 void GWindow::setWindowListener(GEventListenerVoid func) {
     setEventListeners({"close",
-                      "closing",
-                      "maximize",
-                      "minimize",
-                      "open",
-                      "resize",
-                      "restore"}, func);
+                       "closing",
+                       "maximize",
+                       "minimize",
+                       "open",
+                       "resize",
+                       "restore"}, func);
 }
 
-void GWindow::setWindowTitle(const std::string& title) {
+void GWindow::setWindowTitle(const std::string &title) {
     setTitle(title);
 }
 
@@ -1304,7 +1307,7 @@ void GWindow::sleep(double ms) {
     GThread::getCurrentThread()->sleep(ms);
 }
 
-GWindow::Region GWindow::stringToRegion(const std::string& regionStr) {
+GWindow::Region GWindow::stringToRegion(const std::string &regionStr) {
     std::string regionLC = toLowerCase(trim(regionStr));
     if (stringContains(regionLC, "north") || stringContains(regionLC, "top")) {
         return GWindow::REGION_NORTH;
@@ -1335,7 +1338,7 @@ void GWindow::toFront() {
 
 // global functions for compatibility
 
-int convertColorToRGB(const std::string& colorName) {
+int convertColorToRGB(const std::string &colorName) {
     return GColor::convertColorToRGB(colorName);
 }
 
@@ -1360,13 +1363,15 @@ double getScreenWidth() {
 }
 
 #ifndef SPL_HEADLESS_MODE
+
 void pause(double milliseconds) {
     GThread::getCurrentThread()->sleep(milliseconds);
 }
+
 #endif // SPL_HEADLESS_MODE
 
 void repaint() {
-    QMainWindow* lastWindow = GWindow::getLastWindow();
+    QMainWindow *lastWindow = GWindow::getLastWindow();
     if (lastWindow) {
         lastWindow->repaint();
     }
@@ -1374,7 +1379,7 @@ void repaint() {
 }
 
 
-_Internal_QMainWindow::_Internal_QMainWindow(GWindow* gwindow, QWidget* parent)
+_Internal_QMainWindow::_Internal_QMainWindow(GWindow *gwindow, QWidget *parent)
         : QMainWindow(parent),
           _gwindow(gwindow) {
     require::nonNull(gwindow, "_Internal_QMainWindow::constructor");
@@ -1382,7 +1387,7 @@ _Internal_QMainWindow::_Internal_QMainWindow(GWindow* gwindow, QWidget* parent)
     setObjectName(QString::fromStdString("_Internal_QMainWindow"));
 }
 
-void _Internal_QMainWindow::changeEvent(QEvent* event) {
+void _Internal_QMainWindow::changeEvent(QEvent *event) {
     require::nonNull(event, "_Internal_QMainWindow::changeEvent", "event");
     QMainWindow::changeEvent(event);   // call super
     if (!_gwindow || event->type() != QEvent::WindowStateChange) {
@@ -1390,7 +1395,7 @@ void _Internal_QMainWindow::changeEvent(QEvent* event) {
     }
 
     // https://doc.qt.io/Qt-5/qt.html#WindowState-enum
-    QWindowStateChangeEvent* stateChangeEvent = static_cast<QWindowStateChangeEvent*>(event);
+    QWindowStateChangeEvent *stateChangeEvent = static_cast<QWindowStateChangeEvent *>(event);
     Qt::WindowStates state = windowState();
     bool wasMaximized = (stateChangeEvent->oldState() & Qt::WindowMaximized) != 0;
     bool wasMinimized = (stateChangeEvent->oldState() & Qt::WindowMinimized) != 0;
@@ -1405,7 +1410,7 @@ void _Internal_QMainWindow::changeEvent(QEvent* event) {
     }
 }
 
-void _Internal_QMainWindow::closeEvent(QCloseEvent* event) {
+void _Internal_QMainWindow::closeEvent(QCloseEvent *event) {
     require::nonNull(event, "_Internal_QMainWindow::closeEvent", "event");
     if (!_gwindow) {
         QMainWindow::closeEvent(event);   // call super
@@ -1432,17 +1437,17 @@ void _Internal_QMainWindow::closeEvent(QCloseEvent* event) {
     }
 }
 
-void _Internal_QMainWindow::handleMenuAction(const std::string& menu, const std::string& item) {
+void _Internal_QMainWindow::handleMenuAction(const std::string &menu, const std::string &item) {
     GEvent actionEvent(
-                /* class  */ ACTION_EVENT,
-                /* type   */ ACTION_MENU,
-                /* name   */ "actionMenu",
-                /* source */ _gwindow);
+            /* class  */ ACTION_EVENT,
+            /* type   */ ACTION_MENU,
+            /* name   */ "actionMenu",
+            /* source */ _gwindow);
     actionEvent.setActionCommand(menu + "/" + item);
     _gwindow->fireEvent(actionEvent);
 }
 
-void _Internal_QMainWindow::keyPressEvent(QKeyEvent* event) {
+void _Internal_QMainWindow::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QMainWindow::keyPressEvent", "event");
     QMainWindow::keyPressEvent(event);   // call super
     if (!_gwindow) {
@@ -1451,7 +1456,7 @@ void _Internal_QMainWindow::keyPressEvent(QKeyEvent* event) {
     _gwindow->processKeyPressEventInternal(event);
 }
 
-void _Internal_QMainWindow::resizeEvent(QResizeEvent* event) {
+void _Internal_QMainWindow::resizeEvent(QResizeEvent *event) {
     require::nonNull(event, "_Internal_QMainWindow::resizeEvent", "event");
     QMainWindow::resizeEvent(event);   // call super
     if (!_gwindow) {
@@ -1460,7 +1465,7 @@ void _Internal_QMainWindow::resizeEvent(QResizeEvent* event) {
     _gwindow->fireGEvent(event, WINDOW_RESIZED, "resize");
 }
 
-void _Internal_QMainWindow::timerEvent(QTimerEvent* event) {
+void _Internal_QMainWindow::timerEvent(QTimerEvent *event) {
     require::nonNull(event, "_Internal_QMainWindow::timerEvent", "event");
     QMainWindow::timerEvent(event);   // call super
     if (!_gwindow) {

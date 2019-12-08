@@ -44,21 +44,25 @@
 /* Traits type for the HashSet, which wraps an underlying HashMap. */
 namespace stanfordcpplib {
     namespace collections {
-        template <typename T> struct HashSetTraits {
+        template<typename T>
+        struct HashSetTraits {
             using ValueType = T;
             using MapType   = HashMap<T, bool>;
+
             static std::string name() {
                 return "HashSet";
             }
+
             /* You can default-construct a LinkedHashSet. */
             static MapType construct() {
                 return {};
             }
 
             /* However, you can't pass in any other arguments. */
-            template <typename... Args>
-            static void construct(Args&&...) {
-                static_assert(Fail<Args...>::value, "Oops! Seems like you tried to initialize a LinkedHashSet incorrectly. Click here for details.");
+            template<typename... Args>
+            static void construct(Args &&...) {
+                static_assert(Fail<Args...>::value,
+                              "Oops! Seems like you tried to initialize a LinkedHashSet incorrectly. Click here for details.");
 
                 /*
                  * Hello student! If you are reading this message, it means that you tried to
@@ -103,7 +107,7 @@ namespace stanfordcpplib {
  *
  * that returns a nonnegative integer, along with equality comparison using ==.
  */
-template <typename ValueType>
-    using HashSet = stanfordcpplib::collections::GenericSet<stanfordcpplib::collections::HashSetTraits<ValueType>>;
+template<typename ValueType>
+using HashSet = stanfordcpplib::collections::GenericSet<stanfordcpplib::collections::HashSetTraits<ValueType>>;
 
 #endif // _hashset_h

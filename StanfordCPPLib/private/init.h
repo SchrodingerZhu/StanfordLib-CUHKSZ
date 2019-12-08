@@ -28,14 +28,14 @@ namespace stanfordcpplib {
  * Returns true if the std::exit function is enabled.
  * This will be true unless disabled by, say, an autograder.
  */
-bool exitEnabled();
+    bool exitEnabled();
 
 /**
  * Initializes the Stanford C++ library.
  * A call to this function is inserted before the student's main() runs.
  * This should be run from the Qt GUI (main) thread.
  */
-void initializeLibrary(int argc, char** argv);
+    void initializeLibrary(int argc, char **argv);
 
 /**
  * This is for any initialization that needs to be done in the student's thread
@@ -43,30 +43,29 @@ void initializeLibrary(int argc, char** argv);
  * Currently this is used primarily to set up exception handlers for the
  * student's thread so we can print usable stack traces.
  */
-void initializeLibraryStudentThread();
+    void initializeLibraryStudentThread();
 
 // JDZ: where do these functions belong?
-std::string pathForExecutable(const std::string& executableName);
+    std::string pathForExecutable(const std::string &executableName);
 
 /**
  * Sets whether the std::exit function will be enabled or not.
  * If disabled, an error() will be thrown if student tries to exit().
  */
-void setExitEnabled(bool enabled);
+    void setExitEnabled(bool enabled);
 
 /**
  * Shuts down the Stanford C++ library.
  * A call to this function is inserted after the student's main().
  */
-void shutdownLibrary();
-
+    void shutdownLibrary();
 
 
 } // namespace stanfordcpplib
 
 // bypass std::exit function
 namespace std {
-void __stanfordcpplib__exitLibrary(int status);
+    void __stanfordcpplib__exitLibrary(int status);
 } // namespace std
 
 #define STD_EXIT __std_exit_function_

@@ -45,7 +45,7 @@ iurlstream::iurlstream()
     // empty
 }
 
-iurlstream::iurlstream(const std::string& url)
+iurlstream::iurlstream(const std::string &url)
         : _url(url),
           _httpStatusCode(0) {
     open(url);
@@ -56,7 +56,7 @@ void iurlstream::close() {
 }
 
 int iurlstream::getErrorCode() const {
-    return isHttpSuccess(_httpStatusCode)? 0 : _httpStatusCode;
+    return isHttpSuccess(_httpStatusCode) ? 0 : _httpStatusCode;
 }
 
 std::string iurlstream::getErrorMessage() const {
@@ -65,10 +65,10 @@ std::string iurlstream::getErrorMessage() const {
 
 int iurlstream::getHttpStatusCode() const {
     /* All HTTP status codes are between 1xx and 5xx, inclusive. */
-    return _httpStatusCode >= 100 && _httpStatusCode <= 599? _httpStatusCode : 0;
+    return _httpStatusCode >= 100 && _httpStatusCode <= 599 ? _httpStatusCode : 0;
 }
 
-std::string iurlstream::getHeader(const std::string& name) const {
+std::string iurlstream::getHeader(const std::string &name) const {
     return _headers[name];
 }
 
@@ -84,12 +84,12 @@ std::string iurlstream::getUserAgent() const {
     }
 }
 
-void iurlstream::open(const std::string& url) {
+void iurlstream::open(const std::string &url) {
     if (!url.empty()) {
         _url = url;
     }
     _errorMessage = "";
-    
+
     // GDownloader does the heavy lifting of downloading the file for us
     GDownloader downloader;
 
@@ -112,10 +112,10 @@ void iurlstream::open(const std::string& url) {
     }
 }
 
-void iurlstream::setHeader(const std::string& name, const std::string& value) {
+void iurlstream::setHeader(const std::string &name, const std::string &value) {
     _headers[name] = value;
 }
 
-void iurlstream::setUserAgent(const std::string& userAgent) {
+void iurlstream::setUserAgent(const std::string &userAgent) {
     setHeader("User-Agent", userAgent);
 }

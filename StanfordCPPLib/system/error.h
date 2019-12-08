@@ -68,7 +68,7 @@ public:
      * Prints the exception to the given output stream,
      * including its message and stack trace if any.
      */
-    virtual void dump(std::ostream& out) const;
+    virtual void dump(std::ostream &out) const;
 
     /**
      * Returns what kind of exception this is.
@@ -104,18 +104,18 @@ public:
      * Sets what kind of exception this is.
      * Default is "error".
      */
-    void setKind(const std::string& kind);
+    void setKind(const std::string &kind);
 
     /**
      * Returns the exception's error message as a C string.
      */
-    virtual const char* what() const noexcept;
+    virtual const char *what() const noexcept;
 
 protected:
     /**
      * Sets this exception's stack trace to the given multi-line string.
      */
-    void setStackTrace(const std::string& stackTrace);
+    void setStackTrace(const std::string &stackTrace);
 
 private:
     std::string _kind;
@@ -126,18 +126,18 @@ private:
      * Prepends "*** " to each line of the given string.
      * Used to format stack traces that print to the console.
      */
-    static std::string insertStarsBeforeEachLine(const std::string& s);
+    static std::string insertStarsBeforeEachLine(const std::string &s);
 };
 
 /**
  * Prints the error exception to the given output stream.
  */
-std::ostream& operator <<(std::ostream& out, const ErrorException& ex);
+std::ostream &operator<<(std::ostream &out, const ErrorException &ex);
 
 /**
  * Signals an error condition in a program by throwing an
  * <code>ErrorException</code> with the specified message.
  */
-[[noreturn]] void error(const std::string& msg);
+[[noreturn]] void error(const std::string &msg);
 
 #endif // _error_h

@@ -43,7 +43,7 @@
  * last-in/first-out (LIFO) behavior. That is the defining
  * feature of deques.
  */
-template <typename ValueType>
+template<typename ValueType>
 class Deque {
 public:
     /*
@@ -68,7 +68,7 @@ public:
      * Frees any heap storage associated with this deque.
      */
     virtual ~Deque() = default;
-    
+
     /*
      * Method: add
      * Usage: deque.add(value);
@@ -76,9 +76,11 @@ public:
      * Adds <code>value</code> to the end of the deque.
      * A synonym for the enqueueBack method.
      */
-    void add(const ValueType& value);
-    void addBack(const ValueType& value);
-    void addFront(const ValueType& value);
+    void add(const ValueType &value);
+
+    void addBack(const ValueType &value);
+
+    void addFront(const ValueType &value);
 
     /*
      * Method: back
@@ -86,7 +88,7 @@ public:
      * -------------------------------------
      * Returns the last value in the deque by reference.
      */
-    const ValueType& back() const;
+    const ValueType &back() const;
 
     /*
      * Method: clear
@@ -95,7 +97,7 @@ public:
      * Removes all elements from the deque.
      */
     void clear();
-    
+
     /*
      * Method: dequeue
      * Usage: ValueType first = deque.dequeue();
@@ -104,7 +106,9 @@ public:
      * A synonym for the dequeueFront method.
      */
     ValueType dequeue();
+
     ValueType dequeueBack();
+
     ValueType dequeueFront();
 
     /*
@@ -114,10 +118,12 @@ public:
      * Adds <code>value</code> to the end of the deque.
      * A synonym for the enqueueBack method.
      */
-    void enqueue(const ValueType& value);
-    void enqueueBack(const ValueType& value);
-    void enqueueFront(const ValueType& value);
-    
+    void enqueue(const ValueType &value);
+
+    void enqueueBack(const ValueType &value);
+
+    void enqueueFront(const ValueType &value);
+
     /*
      * Method: equals
      * Usage: if (deque.equals(deque2)) ...
@@ -127,15 +133,15 @@ public:
      * values as the given other deque.
      * Identical in behavior to the == operator.
      */
-    bool equals(const Deque<ValueType>& deque2) const;
-    
+    bool equals(const Deque<ValueType> &deque2) const;
+
     /*
      * Method: front
      * Usage: ValueType first = deque.front();
      * ---------------------------------------
      * Returns the first value in the deque by reference.
      */
-    const ValueType& front() const;
+    const ValueType &front() const;
 
     /*
      * Method: isEmpty
@@ -144,7 +150,7 @@ public:
      * Returns <code>true</code> if the deque contains no elements.
      */
     bool isEmpty() const;
-    
+
     /*
      * Method: peek
      * Usage: ValueType first = deque.peek();
@@ -155,9 +161,11 @@ public:
      * value by reference.
      * A synonym for the peekFront method.
      */
-    const ValueType& peek() const;
-    const ValueType& peekBack() const;
-    const ValueType& peekFront() const;
+    const ValueType &peek() const;
+
+    const ValueType &peekBack() const;
+
+    const ValueType &peekFront() const;
 
     /*
      * Method: remove
@@ -167,7 +175,9 @@ public:
      * A synonym for the dequeue method.
      */
     ValueType remove();
+
     ValueType removeBack();
+
     ValueType removeFront();
 
     /*
@@ -177,12 +187,12 @@ public:
      * Returns the number of values in the deque.
      */
     int size() const;
-    
+
     /*
      * Returns an STL deque object with the same elements as this Deque.
      */
     std::deque<ValueType> toStlDeque() const;
-    
+
     /*
      * Method: toString
      * Usage: string str = deque.toString();
@@ -203,12 +213,17 @@ public:
      * The <, >, <=, >= operators require that the ValueType has a < operator
      * so that the elements can be compared pairwise.
      */
-    bool operator ==(const Deque& deque2) const;
-    bool operator !=(const Deque& deque2) const;
-    bool operator <(const Deque& deque2) const;
-    bool operator <=(const Deque& deque2) const;
-    bool operator >(const Deque& deque2) const;
-    bool operator >=(const Deque& deque2) const;
+    bool operator==(const Deque &deque2) const;
+
+    bool operator!=(const Deque &deque2) const;
+
+    bool operator<(const Deque &deque2) const;
+
+    bool operator<=(const Deque &deque2) const;
+
+    bool operator>(const Deque &deque2) const;
+
+    bool operator>=(const Deque &deque2) const;
 
     /* Private section */
 
@@ -217,11 +232,11 @@ public:
     /* of the implementation and should not be of interest to clients.    */
     /**********************************************************************/
 
-    template <typename T>
-    friend int hashCode(const Deque<T>& s);
-    
-    template <typename T>
-    friend std::ostream& operator <<(std::ostream& os, const Deque<T>& deque);
+    template<typename T>
+    friend int hashCode(const Deque<T> &s);
+
+    template<typename T>
+    friend std::ostream &operator<<(std::ostream &os, const Deque<T> &deque);
 
 private:
     // Instance variables
@@ -234,40 +249,43 @@ public:
     using const_iterator = stanfordcpplib::collections::CheckedIterator<typename std::deque<ValueType>::const_iterator>;
 
     iterator begin();
+
     iterator end();
+
     const_iterator begin() const;
+
     const_iterator end() const;
 };
 
-template <typename ValueType>
+template<typename ValueType>
 Deque<ValueType>::Deque(std::initializer_list<ValueType> list) : _elements(list) {
 
 }
 
-template <typename ValueType>
-void Deque<ValueType>::add(const ValueType& value) {
+template<typename ValueType>
+void Deque<ValueType>::add(const ValueType &value) {
     enqueue(value);
 }
 
-template <typename ValueType>
-void Deque<ValueType>::addBack(const ValueType& value) {
+template<typename ValueType>
+void Deque<ValueType>::addBack(const ValueType &value) {
     enqueueBack(value);
 }
 
-template <typename ValueType>
-void Deque<ValueType>::addFront(const ValueType& value) {
+template<typename ValueType>
+void Deque<ValueType>::addFront(const ValueType &value) {
     enqueueFront(value);
 }
 
-template <typename ValueType>
-const ValueType& Deque<ValueType>::back() const {
+template<typename ValueType>
+const ValueType &Deque<ValueType>::back() const {
     if (isEmpty()) {
         error("Deque::back: Attempting to read back of an empty deque");
     }
     return _elements.back();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void Deque<ValueType>::clear() {
     _elements.clear();
     _version.update();
@@ -279,12 +297,12 @@ void Deque<ValueType>::clear() {
  * These methods must check for an empty deque and report an error
  * if there is no first element.
  */
-template <typename ValueType>
+template<typename ValueType>
 ValueType Deque<ValueType>::dequeue() {
     return dequeueFront();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType Deque<ValueType>::dequeueBack() {
     if (isEmpty()) {
         error("Deque::dequeueBack: Attempting to dequeue from an empty deque");
@@ -295,7 +313,7 @@ ValueType Deque<ValueType>::dequeueBack() {
     return result;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType Deque<ValueType>::dequeueFront() {
     if (isEmpty()) {
         error("Deque::dequeueFront: Attempting to dequeue from an empty deque");
@@ -306,68 +324,68 @@ ValueType Deque<ValueType>::dequeueFront() {
     return result;
 }
 
-template <typename ValueType>
-void Deque<ValueType>::enqueue(const ValueType& value) {
+template<typename ValueType>
+void Deque<ValueType>::enqueue(const ValueType &value) {
     enqueueBack(value);
 }
 
-template <typename ValueType>
-void Deque<ValueType>::enqueueBack(const ValueType& value) {
+template<typename ValueType>
+void Deque<ValueType>::enqueueBack(const ValueType &value) {
     _elements.push_back(value);
     _version.update();
 }
 
-template <typename ValueType>
-void Deque<ValueType>::enqueueFront(const ValueType& value) {
+template<typename ValueType>
+void Deque<ValueType>::enqueueFront(const ValueType &value) {
     _elements.push_front(value);
     _version.update();
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::equals(const Deque<ValueType>& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::equals(const Deque<ValueType> &deque2) const {
     return _elements == deque2._elements;
 }
 
-template <typename ValueType>
-const ValueType& Deque<ValueType>::front() const {
+template<typename ValueType>
+const ValueType &Deque<ValueType>::front() const {
     if (isEmpty()) {
         error("Deque::front: Attempting to read front of an empty deque");
     }
     return _elements.front();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 bool Deque<ValueType>::isEmpty() const {
     return _elements.empty();
 }
 
-template <typename ValueType>
-const ValueType& Deque<ValueType>::peek() const {
+template<typename ValueType>
+const ValueType &Deque<ValueType>::peek() const {
     return peekFront();
 }
 
-template <typename ValueType>
-const ValueType& Deque<ValueType>::peekBack() const {
+template<typename ValueType>
+const ValueType &Deque<ValueType>::peekBack() const {
     if (isEmpty()) {
         error("Deque::peekBack: Attempting to peek at an empty deque");
     }
     return back();
 }
 
-template <typename ValueType>
-const ValueType& Deque<ValueType>::peekFront() const {
+template<typename ValueType>
+const ValueType &Deque<ValueType>::peekFront() const {
     if (isEmpty()) {
         error("Deque::peekFront: Attempting to peek at an empty deque");
     }
     return front();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType Deque<ValueType>::remove() {
     return dequeue();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType Deque<ValueType>::removeBack() {
     if (isEmpty()) {
         error("Deque::removeBack: Attempting to remove from an empty deque");
@@ -375,7 +393,7 @@ ValueType Deque<ValueType>::removeBack() {
     return dequeueBack();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType Deque<ValueType>::removeFront() {
     if (isEmpty()) {
         error("Deque::removeFront: Attempting to remove from an empty deque");
@@ -383,88 +401,90 @@ ValueType Deque<ValueType>::removeFront() {
     return dequeueFront();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int Deque<ValueType>::size() const {
     return _elements.size();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 std::deque<ValueType> Deque<ValueType>::toStlDeque() const {
     return _elements;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 std::string Deque<ValueType>::toString() const {
     std::ostringstream os;
     os << *this;
     return os.str();
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::operator ==(const Deque& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::operator==(const Deque &deque2) const {
     return equals(deque2);
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::operator !=(const Deque& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::operator!=(const Deque &deque2) const {
     return !equals(deque2);
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::operator <(const Deque& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::operator<(const Deque &deque2) const {
     return stanfordcpplib::collections::compare(_elements, deque2._elements) < 0;
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::operator <=(const Deque& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::operator<=(const Deque &deque2) const {
     return stanfordcpplib::collections::compare(_elements, deque2._elements) <= 0;
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::operator >(const Deque& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::operator>(const Deque &deque2) const {
     return stanfordcpplib::collections::compare(_elements, deque2._elements) > 0;
 }
 
-template <typename ValueType>
-bool Deque<ValueType>::operator >=(const Deque& deque2) const {
+template<typename ValueType>
+bool Deque<ValueType>::operator>=(const Deque &deque2) const {
     return stanfordcpplib::collections::compare(_elements, deque2._elements) >= 0;
 }
 
-template <typename ValueType>
-std::ostream& operator <<(std::ostream& os, const Deque<ValueType>& deque) {
+template<typename ValueType>
+std::ostream &operator<<(std::ostream &os, const Deque<ValueType> &deque) {
     return stanfordcpplib::collections::writeCollection(os, deque);
 }
 
-template <typename ValueType>
-std::istream& operator >>(std::istream& is, Deque<ValueType>& deque) {
+template<typename ValueType>
+std::istream &operator>>(std::istream &is, Deque<ValueType> &deque) {
     ValueType element;
     return stanfordcpplib::collections::readCollection(is, deque, element, /* descriptor */ "Deque::operator >>");
 }
 
-template <typename ValueType>
+template<typename ValueType>
 typename Deque<ValueType>::iterator Deque<ValueType>::begin() {
-    return { &_version, _elements.begin(), _elements };
-}
-template <typename ValueType>
-typename Deque<ValueType>::const_iterator Deque<ValueType>::begin() const {
-    return { &_version, _elements.begin(), _elements };
+    return {&_version, _elements.begin(), _elements};
 }
 
-template <typename ValueType>
-typename Deque<ValueType>::iterator Deque<ValueType>::end() {
-    return { &_version, _elements.end(), _elements };
+template<typename ValueType>
+typename Deque<ValueType>::const_iterator Deque<ValueType>::begin() const {
+    return {&_version, _elements.begin(), _elements};
 }
-template <typename ValueType>
+
+template<typename ValueType>
+typename Deque<ValueType>::iterator Deque<ValueType>::end() {
+    return {&_version, _elements.end(), _elements};
+}
+
+template<typename ValueType>
 typename Deque<ValueType>::const_iterator Deque<ValueType>::end() const {
-    return { &_version, _elements.end(), _elements };
+    return {&_version, _elements.end(), _elements};
 }
 
 /*
  * Template hash function for deques.
  * Requires the element type in the deque to have a hashCode function.
  */
-template <typename T>
-int hashCode(const Deque<T>& deq) {
+template<typename T>
+int hashCode(const Deque<T> &deq) {
     return stanfordcpplib::collections::hashCodeCollection(deq);
 }
 

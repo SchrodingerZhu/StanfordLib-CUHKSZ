@@ -57,24 +57,24 @@ void QFunctionThread::run() {
 }
 
 
-/*static*/ GThread* GThread::_qtMainThread = nullptr;
-/*static*/ GThread* GThread::_studentThread = nullptr;
-Map<QThread*, GThread*> GThread::_allGThreadsQt;
-Map<std::thread*, GThread*> GThread::_allGThreadsStd;
+/*static*/ GThread *GThread::_qtMainThread = nullptr;
+/*static*/ GThread *GThread::_studentThread = nullptr;
+Map<QThread *, GThread *> GThread::_allGThreadsQt;
+Map<std::thread *, GThread *> GThread::_allGThreadsStd;
 
 GThread::GThread() {
     // empty
 }
 
-/*static*/ void GThread::ensureThatThisIsTheQtGuiThread(const std::string& message) {
+/*static*/ void GThread::ensureThatThisIsTheQtGuiThread(const std::string &message) {
     if (!iAmRunningOnTheQtGuiThread()) {
         error((message.empty() ? "" : (message + ": "))
               + "Qt GUI system must be initialized from the application's main thread.");
     }
 }
 
-/*static*/ GThread* GThread::getCurrentThread() {
-    QThread* currentQtThread = QThread::currentThread();
+/*static*/ GThread *GThread::getCurrentThread() {
+    QThread *currentQtThread = QThread::currentThread();
     if (_allGThreadsQt.containsKey(currentQtThread)) {
         return _allGThreadsQt[currentQtThread];
     } else {
@@ -82,11 +82,11 @@ GThread::GThread() {
     }
 }
 
-/*static*/ GThread* GThread::getQtMainThread() {
+/*static*/ GThread *GThread::getQtMainThread() {
     return _qtMainThread;
 }
 
-/*static*/ GThread* GThread::getStudentThread() {
+/*static*/ GThread *GThread::getStudentThread() {
     return _studentThread;
 }
 
@@ -98,9 +98,9 @@ GThread::GThread() {
     return _qtMainThread != nullptr;
 }
 
-/*static*/ void GThread::runInNewThread(GThunk func, const std::string& threadName) {
-    GThread* currentThread = getCurrentThread();
-    GThreadQt* thread = new GThreadQt(func, threadName);
+/*static*/ void GThread::runInNewThread(GThunk func, const std::string &threadName) {
+    GThread *currentThread = getCurrentThread();
+    GThreadQt *thread = new GThreadQt(func, threadName);
     thread->start();
     while (thread->isRunning()) {
         currentThread->sleep(10);
@@ -108,8 +108,8 @@ GThread::GThread() {
     delete thread;
 }
 
-/*static*/ GThread* GThread::runInNewThreadAsync(GThunk func, const std::string& threadName) {
-    GThreadQt* thread = new GThreadQt(func, threadName);
+/*static*/ GThread *GThread::runInNewThreadAsync(GThunk func, const std::string &threadName) {
+    GThreadQt *thread = new GThreadQt(func, threadName);
     thread->start();
     return thread;
 }
@@ -158,8 +158,8 @@ GThread::GThread() {
     return _studentThread != nullptr;
 }
 
-/*static*/ bool GThread::wait(GThread* thread, long ms) {
-    GThread* currentThread = getCurrentThread();
+/*static*/ bool GThread::wait(GThread *thread, long ms) {
+    GThread *currentThread = getCurrentThread();
     if (currentThread == thread) {
         error("GThread::wait: a thread cannot wait for itself");
     }
@@ -182,7 +182,7 @@ void GThread::yield() {
 }
 
 
-GThreadQt::GThreadQt(GThunk func, const std::string& threadName)
+GThreadQt::GThreadQt(GThunk func, const std::string &threadName)
         : _qThread(nullptr) {
     _func = func;
     _hasReturn = false;
@@ -194,7 +194,7 @@ GThreadQt::GThreadQt(GThunk func, const std::string& threadName)
     _allGThreadsQt[_qThread] = this;
 }
 
-GThreadQt::GThreadQt(GThunkInt func, const std::string& threadName)
+GThreadQt::GThreadQt(GThunkInt func, const std::string &threadName)
         : _qThread(nullptr) {
     _funcInt = func;
     _hasReturn = true;
@@ -206,7 +206,7 @@ GThreadQt::GThreadQt(GThunkInt func, const std::string& threadName)
     _allGThreadsQt[_qThread] = this;
 }
 
-GThreadQt::GThreadQt(QThread* qthread)
+GThreadQt::GThreadQt(QThread *qthread)
         : _qThread(qthread) {
     _hasReturn = false;
     _returnValue = 0;
@@ -257,22 +257,40 @@ void GThreadQt::run() {
     }
 }
 
-void GThreadQt::setName(const std::string& name) {
+void GThreadQt::setName(const std::string &name) {
     _qThread->setObjectName(QString::fromStdString(name));
 }
 
 void GThreadQt::setPriority(int priority) {
     QThread::Priority priorityEnum;
     switch (priority) {
-        case 0: priorityEnum = QThread::IdlePriority; break;
-        case 1: priorityEnum = QThread::LowestPriority; break;
-        case 2: priorityEnum = QThread::LowPriority; break;
-        case 3: priorityEnum = QThread::NormalPriority; break;
-        case 4: priorityEnum = QThread::HighPriority; break;
-        case 5: priorityEnum = QThread::HighestPriority; break;
-        case 6: priorityEnum = QThread::TimeCriticalPriority; break;
-        case 7: priorityEnum = QThread::InheritPriority; break;
-        default: priorityEnum = QThread::NormalPriority; break;
+        case 0:
+            priorityEnum = QThread::IdlePriority;
+            break;
+        case 1:
+            priorityEnum = QThread::LowestPriority;
+            break;
+        case 2:
+            priorityEnum = QThread::LowPriority;
+            break;
+        case 3:
+            priorityEnum = QThread::NormalPriority;
+            break;
+        case 4:
+            priorityEnum = QThread::HighPriority;
+            break;
+        case 5:
+            priorityEnum = QThread::HighestPriority;
+            break;
+        case 6:
+            priorityEnum = QThread::TimeCriticalPriority;
+            break;
+        case 7:
+            priorityEnum = QThread::InheritPriority;
+            break;
+        default:
+            priorityEnum = QThread::NormalPriority;
+            break;
     }
     _qThread->setPriority(priorityEnum);
 }
@@ -295,7 +313,7 @@ void GThreadQt::yield() {
 }
 
 
-GThreadStd::GThreadStd(GThunk func, const std::string& threadName)
+GThreadStd::GThreadStd(GThunk func, const std::string &threadName)
         : _stdThread(nullptr) {
     _func = func;
     _hasReturn = false;
@@ -307,7 +325,7 @@ GThreadStd::GThreadStd(GThunk func, const std::string& threadName)
     _allGThreadsStd[_stdThread] = this;
 }
 
-GThreadStd::GThreadStd(GThunkInt func, const std::string& threadName)
+GThreadStd::GThreadStd(GThunkInt func, const std::string &threadName)
         : _stdThread(nullptr) {
     _funcInt = func;
     _hasReturn = true;
@@ -319,7 +337,7 @@ GThreadStd::GThreadStd(GThunkInt func, const std::string& threadName)
     _allGThreadsStd[_stdThread] = this;
 }
 
-GThreadStd::GThreadStd(std::thread* stdThread)
+GThreadStd::GThreadStd(std::thread *stdThread)
         : _stdThread(stdThread) {
     _hasReturn = false;
     _returnValue = 0;
@@ -383,7 +401,7 @@ void GThreadStd::run() {
     _running = false;
 }
 
-void GThreadStd::setName(const std::string& name) {
+void GThreadStd::setName(const std::string &name) {
     _name = name;
 }
 

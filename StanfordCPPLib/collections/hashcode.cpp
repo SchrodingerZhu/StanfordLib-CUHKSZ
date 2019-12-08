@@ -93,7 +93,7 @@ int hashCode(uintptr_t key) {
  * Catch-all handler for pointers not matched by other
  * overloads just treats the pointer value numerically.
  */
-int hashCode(void* key) {
+int hashCode(void *key) {
     return hashCode(reinterpret_cast<uintptr_t>(key));
 }
 
@@ -108,19 +108,19 @@ int hashCode(void* key) {
  * called djb2 after the initials of its inventor, Daniel J. Bernstein,
  * Professor of Mathematics at the University of Illinois at Chicago.
  */
-int hashCode(const char* base, size_t numBytes) {
+int hashCode(const char *base, size_t numBytes) {
     unsigned hash = HASH_SEED;
     for (size_t i = 0; i < numBytes; i++) {
         hash = HASH_MULTIPLIER * hash + base[i];
     }
     return hashCode(hash);
-} 
+}
 
-int hashCode(const char* str) {
+int hashCode(const char *str) {
     return hashCode(str, strlen(str));
 }
 
-int hashCode(const std::string& str) {
+int hashCode(const std::string &str) {
     return hashCode(str.data(), str.length());
 }
 

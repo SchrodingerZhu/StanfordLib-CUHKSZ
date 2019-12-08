@@ -36,9 +36,13 @@
 #include <string>
 
 #ifndef SPL_HEADLESS_MODE
+
 class GConsoleWindow;
+
 class GDimension;
+
 class GPoint;
+
 #endif // SPL_HEADLESS_MODE
 
 /**
@@ -109,7 +113,9 @@ double getConsoleHeight();
  * Returns the x/y position of the top-left corner of the console window.
  */
 #ifndef SPL_HEADLESS_MODE
+
 GPoint getConsoleLocation();
+
 #endif // SPL_HEADLESS_MODE
 
 /**
@@ -137,7 +143,9 @@ bool getConsoleSettingsLocked();
  * Returns the size of the console window in pixels.
  */
 #ifndef SPL_HEADLESS_MODE
+
 GDimension getConsoleSize();
+
 #endif // SPL_HEADLESS_MODE
 
 /**
@@ -153,7 +161,9 @@ double getConsoleWidth();
  * @private
  */
 #ifndef SPL_HEADLESS_MODE
-GConsoleWindow* getConsoleWindow();
+
+GConsoleWindow *getConsoleWindow();
+
 #endif // SPL_HEADLESS_MODE
 
 /**
@@ -199,7 +209,7 @@ void setConsoleEcho(bool echo);
  * The color string passed should be in a hex format such as "#ffa32f";
  * See gcolor.h for more detail about colors and color strings.
  */
-void setConsoleErrorColor(const std::string& color);
+void setConsoleErrorColor(const std::string &color);
 
 /**
  * Sets whether an event should be generated if the console
@@ -229,7 +239,7 @@ void setConsoleExitProgramOnClose(bool exitOnClose);
  * first available font on the system is used.
  * See gfont.h for more detail about font strings.
  */
-void setConsoleFont(const std::string& font);
+void setConsoleFont(const std::string &font);
 
 /**
  * Changes the (x, y) pixel position of the top-left corner of the console to
@@ -248,7 +258,7 @@ void setConsoleLocationSaved(bool value);
  * The color string passed should be in a hex format such as "#ffa32f";
  * See gcolor.h for more detail about color strings.
  */
-void setConsoleOutputColor(const std::string& color);
+void setConsoleOutputColor(const std::string &color);
 
 /**
  * Enables or disables a feature that causes exceptions to be echoed to the
@@ -276,7 +286,7 @@ void setConsoleSize(double width, double height);
 /**
  * Changes the title bar text of the console window to the specified text.
  */
-void setConsoleWindowTitle(const std::string& title);
+void setConsoleWindowTitle(const std::string &title);
 
 /**
  * Closes the graphical console window and turns it off.
@@ -303,33 +313,34 @@ void shutdownConsole();
 extern void setConsoleEnabled(bool);
 
 namespace stanfordcpplib {
-namespace qtgui {
+    namespace qtgui {
 
 #ifndef QtConsoleInitializer_created
 #define QtConsoleInitializer_created
-/**
- * @private
- */
-class QtConsoleInitializer_private {
-public:
-    /*
-     * Code to initialize the library.
-     * Implemented as a class constructor so that it will run during
-     * static initialization phase, which happens before the student's
-     * main function.
-     */
-    QtConsoleInitializer_private() {
-        setConsoleEnabled(true);
-    }
-};
 
 /**
  * @private
  */
-static QtConsoleInitializer_private __qt_console_init;
+        class QtConsoleInitializer_private {
+        public:
+            /*
+             * Code to initialize the library.
+             * Implemented as a class constructor so that it will run during
+             * static initialization phase, which happens before the student's
+             * main function.
+             */
+            QtConsoleInitializer_private() {
+                setConsoleEnabled(true);
+            }
+        };
+
+/**
+ * @private
+ */
+        static QtConsoleInitializer_private __qt_console_init;
 #endif // QtConsoleInitializer_created
 
-} // namespace qtgui
+    } // namespace qtgui
 } // namespace stanfordcpplib
 
 #endif // __DONT_ENABLE_QT_GRAPHICAL_CONSOLE

@@ -49,14 +49,14 @@ static int _seed = 1;
 
 #  include <cstdlib>
 
-   static time_t patchedTime(time_t *) {
-      char *str = getenv("RANDOM_SEED");
-      if (!str) {
-         return time(nullptr);
-      } else {
-         return atoi(str);
-      }
+static time_t patchedTime(time_t *) {
+   char *str = getenv("RANDOM_SEED");
+   if (!str) {
+      return time(nullptr);
+   } else {
+      return atoi(str);
    }
+}
 
 #  define time(dummy) patchedTime(dummy)
 

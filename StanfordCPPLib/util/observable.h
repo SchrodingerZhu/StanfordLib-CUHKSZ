@@ -29,7 +29,7 @@
 #include <system/error.h>
 
 // forward declarations
-template <class T>
+template<class T>
 class Observer;
 
 /**
@@ -42,7 +42,7 @@ class Observer;
  * places.  Then create some other object that extends Observer and defines an
  * update method, and attach it to the Observable so it will be notified.
  */
-template <typename T>
+template<typename T>
 class Observable {
 public:
     /**
@@ -51,14 +51,14 @@ public:
      * notifyObservers method is called afterward.
      * Precondition: obs != nullptr
      */
-    void addObserver(Observer<T>* obs);
+    void addObserver(Observer<T> *obs);
 
     /**
      * Adds the given observer object to this observable object's internal list
      * of observers.  The observer's update method will be called when the
      * notifyObservers method is called afterward.
      */
-    void addObserver(Observer<T>& obs);
+    void addObserver(Observer<T> &obs);
 
     /**
      * Calls the update method of all observers that have been added previously
@@ -72,24 +72,24 @@ public:
      * Removes the given observer object from this observable object's internal
      * list of observers.  The observer will no longer be notified.
      */
-    void removeObserver(Observer<T>* obs);
+    void removeObserver(Observer<T> *obs);
 
     /**
      * Removes the given observer object from this observable object's internal
      * list of observers.  The observer will no longer be notified.
      */
-    void removeObserver(Observer<T>& obs);
+    void removeObserver(Observer<T> &obs);
 
 private:
     // a list of observers to notify when notifyObservers is called
-    std::set<Observer<T>*> m_observers;
+    std::set<Observer<T> *> m_observers;
 };
 
 /**
  * An object that wishes to be notified when the state of an observable object
  * changes.
  */
-template <typename T>
+template<typename T>
 class Observer {
 public:
     /**
@@ -99,39 +99,39 @@ public:
      * the extra information passed by the Observable when it called
      * notifyObservers, if any.
      */
-    virtual void update(Observable<T>* obs, const T& arg = T()) = 0;
+    virtual void update(Observable<T> *obs, const T &arg = T()) = 0;
 };
 
-template <typename T>
-void Observable<T>::addObserver(Observer<T>* obs) {
+template<typename T>
+void Observable<T>::addObserver(Observer<T> *obs) {
     if (!obs) {
         error("Observable::addObserver: null observer passed");
     }
     m_observers.insert(obs);
 }
 
-template <typename T>
-void Observable<T>::addObserver(Observer<T>& obs) {
+template<typename T>
+void Observable<T>::addObserver(Observer<T> &obs) {
     addObserver(&obs);
 }
 
-template <typename T>
+template<typename T>
 void Observable<T>::notifyObservers(T arg) {
-    for (Observer<T>* obs : m_observers) {
+    for (Observer<T> *obs : m_observers) {
         obs->update(this, arg);
     }
 }
 
-template <typename T>
-void Observable<T>::removeObserver(Observer<T>* obs) {
+template<typename T>
+void Observable<T>::removeObserver(Observer<T> *obs) {
     if (!obs) {
         error("Observable::removeObserver: null observer passed");
     }
     m_observers.erase(obs);
 }
 
-template <typename T>
-void Observable<T>::removeObserver(Observer<T>& obs) {
+template<typename T>
+void Observable<T>::removeObserver(Observer<T> &obs) {
     removeObserver(&obs);
 }
 

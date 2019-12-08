@@ -45,7 +45,7 @@ public:
      * If a URL string is passed, loads the data from that URL.
      * Otherwise, the pane is initially blank.
      */
-    GBrowserPane(const std::string& url = "", QWidget* parent = nullptr);
+    GBrowserPane(const std::string &url = "", QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the browser pane.
@@ -77,7 +77,7 @@ public:
     virtual int getCursorPosition() const;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the URL of the web page or file name being currently viewed.
@@ -122,7 +122,7 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns whether the text pane allows the user to modify its text.
@@ -155,7 +155,7 @@ public:
      * such as rendering basic HTML content with formatting intact.
      * If the file cannot be read, sets the pane's text to be empty.
      */
-    virtual void readTextFromFile(std::istream& file);
+    virtual void readTextFromFile(std::istream &file);
 
     /**
      * Reads text from the given file and displays the entire file's text as the
@@ -164,14 +164,14 @@ public:
      * such as rendering basic HTML content with formatting intact.
      * If the file does not exist or cannot be read, sets the pane's text to be empty.
      */
-    virtual void readTextFromFile(const std::string& filename);
+    virtual void readTextFromFile(const std::string &filename);
 
     /**
      * Reads text from the given web page URL and displays the entire page's
      * text as the contents of this formatted pane.
      * If the page does not exist or cannot be read, sets the pane's text to be empty.
      */
-    virtual void readTextFromUrl(const std::string& url);
+    virtual void readTextFromUrl(const std::string &url);
 
     /**
      * Removes the link listener from the canvas so that it will no longer
@@ -218,7 +218,7 @@ public:
      * (If you need to look up the content type for a given file/page extension,
      * consider using the HttpServer::getContentType(extension) function.)
      */
-    virtual void setContentType(const std::string& contentType);
+    virtual void setContentType(const std::string &contentType);
 
     /**
      * Moves the keyboard cursor to the given 0-based character index within
@@ -272,7 +272,7 @@ public:
      * For example, if you build your own string of HTML or text content and want
      * to display it in the pane without saving it to a file, this is the method to use.
      */
-    virtual void setText(const std::string& text);
+    virtual void setText(const std::string &text);
 
     /**
      * Sets a text change listener on this text pane so that it will be called
@@ -311,7 +311,7 @@ private:
 
     std::string _pageUrl;   // url/filename of the most recently loaded page
     std::string _contentType;
-    _Internal_QTextBrowser* _iqtextbrowser;
+    _Internal_QTextBrowser *_iqtextbrowser;
 
     friend class _Internal_QTextBrowser;
 };
@@ -321,18 +321,23 @@ private:
  * @private
  */
 class _Internal_QTextBrowser : public QTextBrowser, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QTextBrowser(GBrowserPane* gbrowserpane, QWidget* parent = nullptr);
+    _Internal_QTextBrowser(GBrowserPane *gbrowserpane, QWidget *parent = nullptr);
+
     void detach() override;
+
     QVariant loadResource(int type, const QUrl &url) override;
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
+
+    void mousePressEvent(QMouseEvent *event) override;
+
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
     QSize sizeHint() const override;
 
 private:
-    GBrowserPane* _gbrowserpane;
+    GBrowserPane *_gbrowserpane;
     QString _clickedLink;
 };
 

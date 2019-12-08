@@ -27,7 +27,7 @@
  * Adds a space at the end of the given string by reference if none is present.
  * @private
  */
-void appendSpace(std::string& prompt);
+void appendSpace(std::string &prompt);
 
 /**
  * Reads a complete line from <code>cin</code>, expecting the user to type a
@@ -42,8 +42,8 @@ void appendSpace(std::string& prompt);
  * displayed each time if the user types a file that is not found.
  * If no value is passed, defaults to, "You must type a single character. Try again.".
  */
-char getChar(const std::string& prompt = "",
-             const std::string& reprompt = "");
+char getChar(const std::string &prompt = "",
+             const std::string &reprompt = "");
 
 /**
  * Reads a complete line from <code>cin</code> and scans it as a
@@ -61,8 +61,8 @@ char getChar(const std::string& prompt = "",
  *
  * Equivalent to getReal.
  */
-double getDouble(const std::string& prompt = "",
-                 const std::string& reprompt = "");
+double getDouble(const std::string &prompt = "",
+                 const std::string &reprompt = "");
 
 /**
  * Reads a complete line from <code>cin</code> and scans it as a
@@ -76,7 +76,7 @@ double getDouble(const std::string& prompt = "",
  *
  * Equivalent to getRealBetween.
  */
-double getDoubleBetween(const std::string& prompt, double min, double max);
+double getDoubleBetween(const std::string &prompt, double min, double max);
 
 
 /**
@@ -93,8 +93,8 @@ double getDoubleBetween(const std::string& prompt, double min, double max);
  * displayed each time if the user types a file that is not found.
  * If no value is passed, defaults to, "Illegal integer format. Try again.".
  */
-int getInteger(const std::string& prompt = "",
-               const std::string& reprompt = "");
+int getInteger(const std::string &prompt = "",
+               const std::string &reprompt = "");
 
 /**
  * Reads a complete line from <code>cin</code> and scans it as an
@@ -105,7 +105,7 @@ int getInteger(const std::string& prompt = "",
  *
  * The required <code>prompt</code> string is printed before reading the value.
  */
-int getIntegerBetween(const std::string& prompt, int min, int max);
+int getIntegerBetween(const std::string &prompt, int min, int max);
 
 /**
  * Reads a line of text from <code>cin</code> and returns that line
@@ -113,22 +113,22 @@ int getIntegerBetween(const std::string& prompt, int min, int max);
  * not stored as part of the return value.  If supplied, the optional
  * <code>prompt</code> string is printed before reading the value.
  */
-std::string getLine(const std::string& prompt = "");
+std::string getLine(const std::string &prompt = "");
 
 /**
  * Alternate version of getLine that accepts a prompt and fills a given output
  * variable with its result.
  */
-void getLine(const std::string& prompt,
-             std::string& out);
+void getLine(const std::string &prompt,
+             std::string &out);
 
 /**
  * Alternate version of getLine that accepts an input stream to read from.
  * Meant as a drop-in replacement for the standard C++ getline (lowercase L)
  * function.
  */
-void getLine(std::istream& input,
-             std::string& out);
+void getLine(std::istream &input,
+             std::string &out);
 
 /**
  * Reads a complete line from <code>cin</code> and scans it as a
@@ -146,8 +146,8 @@ void getLine(std::istream& input,
  *
  * Equivalent to getDouble.
  */
-double getReal(const std::string& prompt = "",
-               const std::string& reprompt = "");
+double getReal(const std::string &prompt = "",
+               const std::string &reprompt = "");
 
 /**
  * Reads a complete line from <code>cin</code> and scans it as a
@@ -161,7 +161,7 @@ double getReal(const std::string& prompt = "",
  *
  * Equivalent to getDoubleBetween.
  */
-double getRealBetween(const std::string& prompt, double min, double max);
+double getRealBetween(const std::string &prompt, double min, double max);
 
 /**
  * Reads a complete line from <code>cin</code> and treats it as a
@@ -185,8 +185,8 @@ double getRealBetween(const std::string& prompt, double min, double max);
  * This is useful where the default Y/N answer is Yes or No and you want to
  * let the user avoid typing.
  */
-bool getYesOrNo(const std::string& prompt = "",
-                const std::string& reprompt = "",
-                const std::string& defaultValue = "");
+bool getYesOrNo(const std::string &prompt = "",
+                const std::string &reprompt = "",
+                const std::string &defaultValue = "");
 
 #endif // _simpio_h

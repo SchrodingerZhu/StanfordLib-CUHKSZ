@@ -22,13 +22,13 @@ namespace plainconsole {
  * total characters are ever printed to it.
  * This can be used to stop student programs that try to print infinite output.
  */
-void setOutputLimit(int limit);
+    void setOutputLimit(int limit);
 
 /**
  * Sets whether user input values read from cin are echoed back to cout.
  * This is useful when capturing output dialogues for comparison/diffing.
  */
-void setEcho(bool value);
+    void setEcho(bool value);
 } // namespace plainconsole
 
 #endif // _plainconsole_h

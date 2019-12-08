@@ -26,6 +26,7 @@
  */
 
 #include "private/init.h"
+
 #ifndef _gthread_h
 #define _gthread_h
 
@@ -152,7 +153,7 @@ public:
      * Sets the thread's name to the given value.
      * Not all thread implementations support names.
      */
-    virtual void setName(const std::string& name) = 0;
+    virtual void setName(const std::string &name) = 0;
 
     /**
      * Sets the thread's priority to the given value.
@@ -194,24 +195,24 @@ public:
      * Generates an error if the caller is not running on the Qt GUI main thread.
      * An optional error detail message can be passed.
      */
-    static void ensureThatThisIsTheQtGuiThread(const std::string& message = "");
+    static void ensureThatThisIsTheQtGuiThread(const std::string &message = "");
 
     /**
      * Returns the caller's Qt thread object.
      */
-    static GThread* getCurrentThread();
+    static GThread *getCurrentThread();
 
     /**
      * Returns the Qt thread object representing the main thread for the
      * application, also referred to as the Qt GUI thread.
      */
-    static GThread* getQtMainThread();
+    static GThread *getQtMainThread();
 
     /**
      * Returns the Qt thread object representing the thread on which the
      * student's main() function runs.
      */
-    static GThread* getStudentThread();
+    static GThread *getStudentThread();
 
     /**
      * Returns true if the caller is running on the Qt GUI thread.
@@ -241,7 +242,7 @@ public:
      * If you want the new thread to run in the background,
      * use the <code>runInNewThreadAsync</code> function instead.
      */
-    static void runInNewThread(GThunk func, const std::string& threadName = "");
+    static void runInNewThread(GThunk func, const std::string &threadName = "");
 
     /**
      * Runs the given void function in its own new thread in the background;
@@ -257,7 +258,7 @@ public:
      * If you want the caller to wait for the new thread to finish running,
      * use the <code>runInNewThread</code> function instead.
      */
-    static GThread* runInNewThreadAsync(GThunk func, const std::string& threadName = "");
+    static GThread *runInNewThreadAsync(GThunk func, const std::string &threadName = "");
 
     /**
      * Runs the given void function on the Qt GUI thread,
@@ -301,11 +302,12 @@ public:
      * Waits the given number of milliseconds for the given thread to finish.
      * @return true if the entire amount of ms was elapsed without the thread finishing
      */
-    static bool wait(GThread* thread, long ms);
+    static bool wait(GThread *thread, long ms);
 
 protected:
     // forbid construction
     GThread();
+
     virtual ~GThread() = default;
 
     virtual void run() = 0;
@@ -317,12 +319,12 @@ protected:
     int _returnValue;
 
     // pointers to the two core library threads
-    static GThread* _qtMainThread;
-    static GThread* _studentThread;
+    static GThread *_qtMainThread;
+    static GThread *_studentThread;
 
     // mapping between QThreads and their related GThread wrappings
-    static Map<QThread*, GThread*> _allGThreadsQt;
-    static Map<std::thread*, GThread*> _allGThreadsStd;
+    static Map<QThread *, GThread *> _allGThreadsQt;
+    static Map<std::thread *, GThread *> _allGThreadsStd;
 
 private:
     /**
@@ -335,7 +337,8 @@ private:
     static void setMainThread();
 
     friend class QtGui;
-    friend void stanfordcpplib::initializeLibrary(int argc, char** argv);
+
+    friend void stanfordcpplib::initializeLibrary(int argc, char **argv);
 };
 
 
@@ -360,17 +363,17 @@ public:
     /**
      * Constructs a new thread to execute, with an optional thread name.
      */
-    GThreadQt(GThunk func, const std::string& threadName = "");
+    GThreadQt(GThunk func, const std::string &threadName = "");
 
     /**
      * Constructs a new thread to execute, with an optional thread name.
      */
-    GThreadQt(GThunkInt func, const std::string& threadName = "");
+    GThreadQt(GThunkInt func, const std::string &threadName = "");
 
     /**
      * Constructs a new thread to wrap the given existing Qt thread.
      */
-    GThreadQt(QThread* qthread);
+    GThreadQt(QThread *qthread);
 
     virtual ~GThreadQt();
 
@@ -393,7 +396,7 @@ public:
     int priority() const override;
 
     /* @inherit */
-    void setName(const std::string& name) override;
+    void setName(const std::string &name) override;
 
     /* @inherit */
     void setPriority(int priority) override;
@@ -417,7 +420,7 @@ protected:
 private:
     Q_DISABLE_COPY(GThreadQt)
 
-    QThread* _qThread;   // underlying real Qt thread
+    QThread *_qThread;   // underlying real Qt thread
 };
 
 
@@ -442,17 +445,17 @@ public:
     /**
      * Constructs a new thread to execute, with an optional thread name.
      */
-    GThreadStd(GThunk func, const std::string& threadName = "");
+    GThreadStd(GThunk func, const std::string &threadName = "");
 
     /**
      * Constructs a new thread to execute, with an optional thread name.
      */
-    GThreadStd(GThunkInt func, const std::string& threadName = "");
+    GThreadStd(GThunkInt func, const std::string &threadName = "");
 
     /**
      * Constructs a new thread to wrap the given existing Qt thread.
      */
-    GThreadStd(std::thread* stdThread);
+    GThreadStd(std::thread *stdThread);
 
     virtual ~GThreadStd();
 
@@ -475,7 +478,7 @@ public:
     int priority() const override;
 
     /* @inherit */
-    void setName(const std::string& name) override;
+    void setName(const std::string &name) override;
 
     /* @inherit */
     void setPriority(int priority) override;
@@ -499,7 +502,7 @@ protected:
 private:
     Q_DISABLE_COPY(GThreadStd)
 
-    std::thread* _stdThread;   // underlying real Qt thread
+    std::thread *_stdThread;   // underlying real Qt thread
     std::string _name;
     std::atomic<bool> _running;
 };

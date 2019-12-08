@@ -11,5 +11,7 @@
  */
 
 #define __DONT_ENABLE_QT_GRAPHICAL_CONSOLE
+
 #include "console.h"
+
 #undef __DONT_ENABLE_QT_GRAPHICAL_CONSOLE

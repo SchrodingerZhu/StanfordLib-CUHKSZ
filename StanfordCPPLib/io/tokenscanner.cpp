@@ -24,12 +24,12 @@ TokenScanner::TokenScanner() {
     setInput("");
 }
 
-TokenScanner::TokenScanner(std::istream& infile) {
+TokenScanner::TokenScanner(std::istream &infile) {
     initScanner();
     setInput(infile);
 }
 
-TokenScanner::TokenScanner(const std::string& str) {
+TokenScanner::TokenScanner(const std::string &str) {
     initScanner();
     setInput(str);
 }
@@ -40,14 +40,14 @@ TokenScanner::~TokenScanner() {
     }
 }
 
-void TokenScanner::addOperator(const std::string& op) {
-    StringCell* cp = new StringCell;
+void TokenScanner::addOperator(const std::string &op) {
+    StringCell *cp = new StringCell;
     cp->str = op;
     cp->link = operators;
     operators = cp;
 }
 
-void TokenScanner::addWordCharacters(const std::string& str) {
+void TokenScanner::addWordCharacters(const std::string &str) {
     wordChars += str;
 }
 
@@ -67,7 +67,7 @@ int TokenScanner::getPosition() const {
     }
 }
 
-std::string TokenScanner::getStringValue(const std::string& token) const {
+std::string TokenScanner::getStringValue(const std::string &token) const {
     std::string str = "";
     int start = 0;
     int finish = token.length();
@@ -106,16 +106,36 @@ std::string TokenScanner::getStringValue(const std::string& token) const {
                 i--;
             } else {
                 switch (ch) {
-                case 'a': ch = '\a'; break;
-                case 'b': ch = '\b'; break;
-                case 'f': ch = '\f'; break;
-                case 'n': ch = '\n'; break;
-                case 'r': ch = '\r'; break;
-                case 't': ch = '\t'; break;
-                case 'v': ch = '\v'; break;
-                case '"': ch = '"'; break;
-                case '\'': ch = '\''; break;
-                case '\\': ch = '\\'; break;
+                    case 'a':
+                        ch = '\a';
+                        break;
+                    case 'b':
+                        ch = '\b';
+                        break;
+                    case 'f':
+                        ch = '\f';
+                        break;
+                    case 'n':
+                        ch = '\n';
+                        break;
+                    case 'r':
+                        ch = '\r';
+                        break;
+                    case 't':
+                        ch = '\t';
+                        break;
+                    case 'v':
+                        ch = '\v';
+                        break;
+                    case '"':
+                        ch = '"';
+                        break;
+                    case '\'':
+                        ch = '\'';
+                        break;
+                    case '\\':
+                        ch = '\\';
+                        break;
                 }
             }
         }
@@ -124,7 +144,7 @@ std::string TokenScanner::getStringValue(const std::string& token) const {
     return str;
 }
 
-TokenScanner::TokenType TokenScanner::getTokenType(const std::string& token) const {
+TokenScanner::TokenType TokenScanner::getTokenType(const std::string &token) const {
     if (token.empty()) {
         return TokenType(EOF);
     }
@@ -163,7 +183,7 @@ bool TokenScanner::isWordCharacter(char ch) const {
 
 std::string TokenScanner::nextToken() {
     if (savedTokens) {
-        StringCell* cp = savedTokens;
+        StringCell *cp = savedTokens;
         std::string token = cp->str;
         savedTokens = cp->link;
         delete cp;
@@ -232,8 +252,8 @@ std::string TokenScanner::nextToken() {
     }
 }
 
-void TokenScanner::saveToken(const std::string& token) {
-    StringCell* cp = new StringCell;
+void TokenScanner::saveToken(const std::string &token) {
+    StringCell *cp = new StringCell;
     cp->str = token;
     cp->link = savedTokens;
     savedTokens = cp;
@@ -247,13 +267,13 @@ void TokenScanner::scanStrings() {
     scanStringsFlag = true;
 }
 
-void TokenScanner::setInput(std::istream& infile) {
+void TokenScanner::setInput(std::istream &infile) {
     stringInputFlag = false;
     isp = &infile;
     savedTokens = nullptr;
 }
 
-void TokenScanner::setInput(const std::string& str) {
+void TokenScanner::setInput(const std::string &str) {
     stringInputFlag = true;
     buffer = str;
     isp = new std::istringstream(buffer);
@@ -264,11 +284,11 @@ void TokenScanner::ungetChar(int) {
     isp->unget();
 }
 
-void TokenScanner::verifyToken(const std::string& expected) {
+void TokenScanner::verifyToken(const std::string &expected) {
     std::string token = nextToken();
     if (token != expected) {
         std::string msg = "TokenScanner::verifyToken: Found \"" + token + "\""
-                + " when expecting \"" + expected + "\"";
+                          + " when expecting \"" + expected + "\"";
         if (!buffer.empty()) {
             msg += "\ninput = \"" + buffer + "\"";
         }
@@ -294,7 +314,7 @@ void TokenScanner::initScanner() {
  * in the list, respectively.  This code could be made considerably more
  * efficient by implementing operators as a trie.
  */
-bool TokenScanner::isOperator(const std::string& op) {
+bool TokenScanner::isOperator(const std::string &op) {
     for (StringCell *cp = operators; cp != nullptr; cp = cp->link) {
         if (op == cp->str) {
             return true;
@@ -303,8 +323,8 @@ bool TokenScanner::isOperator(const std::string& op) {
     return false;
 }
 
-bool TokenScanner::isOperatorPrefix(const std::string& op) {
-    for (StringCell* cp = operators; cp != nullptr; cp = cp->link) {
+bool TokenScanner::isOperatorPrefix(const std::string &op) {
+    for (StringCell *cp = operators; cp != nullptr; cp = cp->link) {
         if (startsWith(cp->str, op)) {
             return true;
         }
@@ -327,70 +347,70 @@ std::string TokenScanner::scanNumber() {
     while (state != FINAL_STATE) {
         int ch = isp->get();
         switch (state) {
-        case INITIAL_STATE:
-            if (!isdigit(ch)) {
-                error("TokenScanner::scanNumber: internal error: illegal call");
-            }
-            state = BEFORE_DECIMAL_POINT;
-            break;
-        case BEFORE_DECIMAL_POINT:
-            if (ch == '.') {
-                state = AFTER_DECIMAL_POINT;
-            } else if (ch == 'E' || ch == 'e') {
-                state = STARTING_EXPONENT;
-            } else if (!isdigit(ch)) {
-                if (ch != EOF) {
-                    isp->unget();
+            case INITIAL_STATE:
+                if (!isdigit(ch)) {
+                    error("TokenScanner::scanNumber: internal error: illegal call");
                 }
-                state = FINAL_STATE;
-            }
-            break;
-        case AFTER_DECIMAL_POINT:
-            if (ch == 'E' || ch == 'e') {
-                state = STARTING_EXPONENT;
-            } else if (!isdigit(ch)) {
-                if (ch != EOF) {
-                    isp->unget();
+                state = BEFORE_DECIMAL_POINT;
+                break;
+            case BEFORE_DECIMAL_POINT:
+                if (ch == '.') {
+                    state = AFTER_DECIMAL_POINT;
+                } else if (ch == 'E' || ch == 'e') {
+                    state = STARTING_EXPONENT;
+                } else if (!isdigit(ch)) {
+                    if (ch != EOF) {
+                        isp->unget();
+                    }
+                    state = FINAL_STATE;
                 }
-                state = FINAL_STATE;
-            }
-            break;
-        case STARTING_EXPONENT:
-            if (ch == '+' || ch == '-') {
-                state = FOUND_EXPONENT_SIGN;
-            } else if (isdigit(ch)) {
-                state = SCANNING_EXPONENT;
-            } else {
-                if (ch != EOF) {
-                    isp->unget();
+                break;
+            case AFTER_DECIMAL_POINT:
+                if (ch == 'E' || ch == 'e') {
+                    state = STARTING_EXPONENT;
+                } else if (!isdigit(ch)) {
+                    if (ch != EOF) {
+                        isp->unget();
+                    }
+                    state = FINAL_STATE;
                 }
-                isp->unget();
-                state = FINAL_STATE;
-            }
-            break;
-        case FOUND_EXPONENT_SIGN:
-            if (isdigit(ch)) {
-                state = SCANNING_EXPONENT;
-            } else {
-                if (ch != EOF) {
+                break;
+            case STARTING_EXPONENT:
+                if (ch == '+' || ch == '-') {
+                    state = FOUND_EXPONENT_SIGN;
+                } else if (isdigit(ch)) {
+                    state = SCANNING_EXPONENT;
+                } else {
+                    if (ch != EOF) {
+                        isp->unget();
+                    }
                     isp->unget();
+                    state = FINAL_STATE;
                 }
-                isp->unget();
-                isp->unget();
-                state = FINAL_STATE;
-            }
-            break;
-        case SCANNING_EXPONENT:
-            if (!isdigit(ch)) {
-                if (ch != EOF) {
+                break;
+            case FOUND_EXPONENT_SIGN:
+                if (isdigit(ch)) {
+                    state = SCANNING_EXPONENT;
+                } else {
+                    if (ch != EOF) {
+                        isp->unget();
+                    }
                     isp->unget();
+                    isp->unget();
+                    state = FINAL_STATE;
                 }
+                break;
+            case SCANNING_EXPONENT:
+                if (!isdigit(ch)) {
+                    if (ch != EOF) {
+                        isp->unget();
+                    }
+                    state = FINAL_STATE;
+                }
+                break;
+            default:
                 state = FINAL_STATE;
-            }
-            break;
-        default:
-            state = FINAL_STATE;
-            break;
+                break;
         }
         if (state != FINAL_STATE) {
             token += char(ch);
@@ -466,7 +486,7 @@ void TokenScanner::skipSpaces() {
     }
 }
 
-std::ostream& operator <<(std::ostream& out, const TokenScanner& scanner) {
+std::ostream &operator<<(std::ostream &out, const TokenScanner &scanner) {
     out << "TokenScanner{";
     bool first = true;
     if (!scanner.buffer.empty()) {

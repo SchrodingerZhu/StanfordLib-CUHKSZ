@@ -18,7 +18,7 @@
 #include <graphics/gtypes.h>
 
 extern const double PI = 3.14159265358979323846;
-extern const double E  = 2.71828182845904523536;
+extern const double E = 2.71828182845904523536;
 
 double cosDegrees(double angle) {
     return cos(toRadians(angle));
@@ -59,16 +59,18 @@ double toRadians(double degrees) {
 
 double vectorAngle(double x, double y) {
     return floatingPointEqual(x, 0) && floatingPointEqual(y, 0)
-            ? 0 : toDegrees(atan2(-y, x));
+           ? 0 : toDegrees(atan2(-y, x));
 }
 
 #ifndef SPL_HEADLESS_MODE
-double vectorAngle(const GPoint& pt) {
+
+double vectorAngle(const GPoint &pt) {
     return vectorAngle(pt.getX(), pt.getY());
 }
+
 #endif // SPL_HEADLESS_MODE
 
-double vectorAngle(const Point& pt) {
+double vectorAngle(const Point &pt) {
     return vectorAngle(pt.getX(), pt.getY());
 }
 
@@ -77,11 +79,13 @@ double vectorDistance(double x, double y) {
 }
 
 #ifndef SPL_HEADLESS_MODE
-double vectorDistance(const GPoint& pt) {
+
+double vectorDistance(const GPoint &pt) {
     return vectorDistance(pt.getX(), pt.getY());
 }
+
 #endif // SPL_HEADLESS_MODE
 
-double vectorDistance(const Point& pt) {
+double vectorDistance(const Point &pt) {
     return vectorDistance(pt.getX(), pt.getY());
 }

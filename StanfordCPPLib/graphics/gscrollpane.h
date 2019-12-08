@@ -43,7 +43,7 @@ public:
      * Creates a new scroll pane to scroll the given interactor.
      * @throw ErrorException if the interactor is null
      */
-    GScrollPane(GInteractor* interactor, QWidget* parent = nullptr);
+    GScrollPane(GInteractor *interactor, QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the scroll pane.
@@ -63,16 +63,16 @@ public:
     /**
      * Returns the inner interactor being wrapped by this scroll pane.
      */
-    virtual GInteractor* getInteractor() const;
+    virtual GInteractor *getInteractor() const;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /* @inherit */
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns true if the inner interactor should stretch itself to its
@@ -104,8 +104,8 @@ public:
 private:
     Q_DISABLE_COPY(GScrollPane)
 
-    _Internal_QScrollArea* _iqscrollarea;
-    GInteractor* _interactor;
+    _Internal_QScrollArea *_iqscrollarea;
+    GInteractor *_interactor;
     ScrollBarPolicy _horizontalScrollBarPolicy;
     ScrollBarPolicy _verticalScrollBarPolicy;
 
@@ -119,10 +119,11 @@ private:
  * @private
  */
 class _Internal_QScrollArea : public QScrollArea, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QScrollArea(GScrollPane* gscrollpane, QWidget* parent = nullptr);
+    _Internal_QScrollArea(GScrollPane *gscrollpane, QWidget *parent = nullptr);
+
     QSize sizeHint() const override;
 
 // private:

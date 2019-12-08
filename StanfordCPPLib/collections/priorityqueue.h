@@ -70,7 +70,7 @@
  * priority 2 item.
  */
 
-template <typename ValueType>
+template<typename ValueType>
 class PriorityQueue {
 public:
     /*
@@ -97,23 +97,23 @@ public:
      * Frees any heap storage associated with this priority queue.
      */
     virtual ~PriorityQueue() = default;
-    
+
     /*
      * Method: add
      * Usage: pq.add(value, priority);
      * -------------------------------
      * A synonym for the enqueue method.
      */
-    void add(const ValueType& value, double priority);
-    
+    void add(const ValueType &value, double priority);
+
     /*
      * Method: back
      * Usage: ValueType last = pq.back();
      * ----------------------------------
      * Returns the last value in the queue by reference.
      */
-    ValueType& back();
-    
+    ValueType &back();
+
     /*
      * Method: changePriority
      * Usage: pq.changePriority(value, newPriority);
@@ -133,7 +133,7 @@ public:
      * Removes all elements from the priority queue.
      */
     void clear();
-    
+
     /*
      * Method: dequeue
      * Usage: ValueType first = pq.dequeue();
@@ -153,8 +153,8 @@ public:
      * means that all priority 1 elements are dequeued before any
      * priority 2 elements.
      */
-    void enqueue(const ValueType& value, double priority);
-    
+    void enqueue(const ValueType &value, double priority);
+
     /*
      * Method: equals
      * Usage: if (pq.equals(pq2)) ...
@@ -164,15 +164,15 @@ public:
      * values and priorities as the given other queue.
      * Identical in behavior to the == operator.
      */
-    bool equals(const PriorityQueue<ValueType>& pq2) const;
-    
+    bool equals(const PriorityQueue<ValueType> &pq2) const;
+
     /*
      * Method: front
      * Usage: ValueType first = pq.front();
      * ------------------------------------
      * Returns the first value in the queue by reference.
      */
-    ValueType& front();
+    ValueType &front();
 
     /*
      * Method: isEmpty
@@ -181,7 +181,7 @@ public:
      * Returns <code>true</code> if the priority queue contains no elements.
      */
     bool isEmpty() const;
-    
+
     /*
      * Method: peek
      * Usage: ValueType first = pq.peek();
@@ -223,14 +223,14 @@ public:
      * Converts the queue to a printable string representation.
      */
     std::string toString() const;
-    
+
     /*
      * Operator: <<
      * Prints the priority queue to the given output stream.
      */
-    template <typename T>
-    friend std::ostream& operator <<(std::ostream& os, const PriorityQueue<T>& pq);
-    
+    template<typename T>
+    friend std::ostream &operator<<(std::ostream &os, const PriorityQueue<T> &pq);
+
     /*
      * Operators: ==, !=
      * Usage: if (pq1 == pq2) ...
@@ -239,8 +239,9 @@ public:
      * The ==, != operators require that the ValueType has a == operator
      * so that the elements can be tested for equality.
      */
-    bool operator ==(const PriorityQueue& pq2) const;
-    bool operator !=(const PriorityQueue& pq2) const;
+    bool operator==(const PriorityQueue &pq2) const;
+
+    bool operator!=(const PriorityQueue &pq2) const;
 
 #ifdef SPL_PQUEUE_COMPARISON_OPERATORS_ENABLED
     /*
@@ -277,7 +278,7 @@ private:
         double priority;
         long sequence;
 
-        bool operator < (const HeapEntry& rhs) const;
+        bool operator<(const HeapEntry &rhs) const;
     };
 
     /* Instance variables */
@@ -291,8 +292,8 @@ private:
 public:
     /* private implentation section */
 
-    template <typename Collection>
-    friend int stanfordcpplib::collections::compare(const Collection& pq1, const Collection& pq2);
+    template<typename Collection>
+    friend int stanfordcpplib::collections::compare(const Collection &pq1, const Collection &pq2);
 
 #ifdef SPL_PQUEUE_ALLOW_HEAP_ACCESS
     const ValueType& __getValueFromHeap(int index) const;
@@ -300,7 +301,7 @@ public:
 #endif // SPL_PQUEUE_ALLOW_HEAP_ACCESS
 };
 
-template <typename ValueType>
+template<typename ValueType>
 PriorityQueue<ValueType>::PriorityQueue(
         std::initializer_list<std::pair<double, ValueType>> list) {
     for (std::pair<double, ValueType> pair : list) {
@@ -308,13 +309,13 @@ PriorityQueue<ValueType>::PriorityQueue(
     }
 }
 
-template <typename ValueType>
-void PriorityQueue<ValueType>::add(const ValueType& value, double priority) {
+template<typename ValueType>
+void PriorityQueue<ValueType>::add(const ValueType &value, double priority) {
     enqueue(value, priority);
 }
 
-template <typename ValueType>
-ValueType & PriorityQueue<ValueType>::back() {
+template<typename ValueType>
+ValueType &PriorityQueue<ValueType>::back() {
     if (isEmpty()) {
         error("PriorityQueue::back: Attempting to read back of an empty queue");
     }
@@ -326,7 +327,7 @@ ValueType & PriorityQueue<ValueType>::back() {
  * Parts of this implementation are adapted from TrailblazerPQueue.h,
  * which was written by Keith Schwarz.
  */
-template <typename ValueType>
+template<typename ValueType>
 void PriorityQueue<ValueType>::changePriority(ValueType value, double newPriority) {
     if (std::isnan(newPriority)) {
         error("PriorityQueue::changePriority: Attempted to use NaN as a priority.");
@@ -336,7 +337,7 @@ void PriorityQueue<ValueType>::changePriority(ValueType value, double newPriorit
     }
 
     /* Find the element to change. */
-    auto itr = std::find_if(_heap.begin(), _heap.end(), [&](const HeapEntry& entry) {
+    auto itr = std::find_if(_heap.begin(), _heap.end(), [&](const HeapEntry &entry) {
         return entry.value == value;
     });
     if (itr == _heap.end()) {
@@ -350,7 +351,7 @@ void PriorityQueue<ValueType>::changePriority(ValueType value, double newPriorit
     std::push_heap(_heap.begin(), itr + 1);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void PriorityQueue<ValueType>::clear() {
     _heap.clear();
     _enqueueCount = 0;   // BUGFIX 2014/10/10: was previously using garbage unassigned value
@@ -362,7 +363,7 @@ void PriorityQueue<ValueType>::clear() {
  * These methods must check for an empty queue and report an error
  * if there is no first element.
  */
-template <typename ValueType>
+template<typename ValueType>
 ValueType PriorityQueue<ValueType>::dequeue() {
     if (isEmpty()) {
         error("PriorityQueue::dequeue: Attempting to dequeue an empty queue");
@@ -374,8 +375,8 @@ ValueType PriorityQueue<ValueType>::dequeue() {
     return result;
 }
 
-template <typename ValueType>
-void PriorityQueue<ValueType>::enqueue(const ValueType& value, double priority) {
+template<typename ValueType>
+void PriorityQueue<ValueType>::enqueue(const ValueType &value, double priority) {
     if (std::isnan(priority)) {
         error("PriorityQueue::enqueue: Attempted to use NaN as a priority.");
     }
@@ -383,12 +384,12 @@ void PriorityQueue<ValueType>::enqueue(const ValueType& value, double priority) 
         priority = 0.0;
     }
 
-    _heap.add({ value, priority, _enqueueCount++ });
+    _heap.add({value, priority, _enqueueCount++});
     std::push_heap(_heap.begin(), _heap.end());
 }
 
-template <typename ValueType>
-bool PriorityQueue<ValueType>::equals(const PriorityQueue<ValueType>& pq2) const {
+template<typename ValueType>
+bool PriorityQueue<ValueType>::equals(const PriorityQueue<ValueType> &pq2) const {
     // optimization: if literally same pq, stop
     if (this == &pq2) {
         return true;
@@ -409,20 +410,20 @@ bool PriorityQueue<ValueType>::equals(const PriorityQueue<ValueType>& pq2) const
     return backup1.isEmpty() == backup2.isEmpty();
 }
 
-template <typename ValueType>
-ValueType& PriorityQueue<ValueType>::front() {
+template<typename ValueType>
+ValueType &PriorityQueue<ValueType>::front() {
     if (isEmpty()) {
         error("PriorityQueue::front: Attempting to read front of an empty queue");
     }
     return _heap[0].value;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 bool PriorityQueue<ValueType>::isEmpty() const {
     return _heap.size() == 0;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType PriorityQueue<ValueType>::peek() const {
     if (isEmpty()) {
         error("PriorityQueue::peek: Attempting to peek at an empty queue");
@@ -430,7 +431,7 @@ ValueType PriorityQueue<ValueType>::peek() const {
     return _heap.front().value;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 double PriorityQueue<ValueType>::peekPriority() const {
     if (isEmpty()) {
         error("PriorityQueue::peekPriority: Attempting to peek at an empty queue");
@@ -438,17 +439,17 @@ double PriorityQueue<ValueType>::peekPriority() const {
     return _heap.get(0).priority;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType PriorityQueue<ValueType>::remove() {
     return dequeue();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int PriorityQueue<ValueType>::size() const {
     return _heap.size();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 std::string PriorityQueue<ValueType>::toString() const {
     std::ostringstream os;
     os << *this;
@@ -504,21 +505,21 @@ int PriorityQueue<ValueType>::pqCompare(const PriorityQueue& pq2) const {
  * Because std::push_heap and std::pop_heap try creating a max-heap whereas we want
  * a min-heap, the priority comparisons are reversed.
  */
-template <typename ValueType>
-bool PriorityQueue<ValueType>::HeapEntry::operator < (const HeapEntry& rhs) const {
+template<typename ValueType>
+bool PriorityQueue<ValueType>::HeapEntry::operator<(const HeapEntry &rhs) const {
     if (priority > rhs.priority) return true;
     if (rhs.priority > priority) return false;
 
     return sequence < rhs.sequence;
 }
 
-template <typename ValueType>
-bool PriorityQueue<ValueType>::operator ==(const PriorityQueue& pq2) const {
+template<typename ValueType>
+bool PriorityQueue<ValueType>::operator==(const PriorityQueue &pq2) const {
     return equals(pq2);
 }
 
-template <typename ValueType>
-bool PriorityQueue<ValueType>::operator !=(const PriorityQueue& pq2) const {
+template<typename ValueType>
+bool PriorityQueue<ValueType>::operator!=(const PriorityQueue &pq2) const {
     return !equals(pq2);
 }
 
@@ -548,8 +549,8 @@ bool PriorityQueue<ValueType>::operator >=(const PriorityQueue& pq2) const {
  * Template hash function for priority queues.
  * Requires the element type in the priority queue to have a hashCode function.
  */
-template <typename T>
-int hashCode(const PriorityQueue<T>& pq) {
+template<typename T>
+int hashCode(const PriorityQueue<T> &pq) {
     // (slow, memory-inefficient) implementation: copy pq, dequeue all, and hash together
     PriorityQueue<T> backup = pq;
     int code = hashSeed();
@@ -573,9 +574,9 @@ double PriorityQueue<ValueType>::__getPriorityFromHeap(int index) const {
 }
 #endif // SPL_PQUEUE_ALLOW_HEAP_ACCESS
 
-template <typename ValueType>
-std::ostream& operator <<(std::ostream& os,
-                          const PriorityQueue<ValueType>& pq) {
+template<typename ValueType>
+std::ostream &operator<<(std::ostream &os,
+                         const PriorityQueue<ValueType> &pq) {
     os << "{";
 
 #ifdef SPL_PQUEUE_PRINT_IN_HEAP_ORDER
@@ -603,8 +604,8 @@ std::ostream& operator <<(std::ostream& os,
     return os << "}";
 }
 
-template <typename ValueType>
-std::istream& operator >>(std::istream& is, PriorityQueue<ValueType>& pq) {
+template<typename ValueType>
+std::istream &operator>>(std::istream &is, PriorityQueue<ValueType> &pq) {
     char ch = '\0';
     is >> ch;
     if (ch != '{') {

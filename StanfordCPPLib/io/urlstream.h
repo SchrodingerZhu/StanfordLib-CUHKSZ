@@ -50,7 +50,7 @@ public:
      * Initializes a new iurlstream that is attached to the given source URL.
      * The data from that URL is downloaded immediately.
      */
-    iurlstream(const std::string& url);
+    iurlstream(const std::string &url);
 
     /**
      * Closes the stream.
@@ -82,7 +82,7 @@ public:
      * Returns the value of the given HTTP header for this URL request.
      * If the given header is not defined, returns an empty string.
      */
-    std::string getHeader(const std::string& name) const;
+    std::string getHeader(const std::string &name) const;
 
     /**
      * Returns the URL sent to the stream's constructor or to the last call
@@ -100,7 +100,7 @@ public:
      * Opens the given URL for reading.
      * If no URL is passed, uses the URL passed to the constructor.
      */
-    void open(const std::string& url = "");
+    void open(const std::string &url = "");
 
     /**
      * Sets the value of the given HTTP header for this URL request.
@@ -109,7 +109,7 @@ public:
      *
      * @example stream.setHeader("Referer", "http://cs106b.stanford.edu/");
      */
-    void setHeader(const std::string& name, const std::string& value);
+    void setHeader(const std::string &name, const std::string &value);
 
     /**
      * Sets the value of the HTTP "User-Agent" header for this URL request.
@@ -119,7 +119,7 @@ public:
      *
      * @example stream.setUserAgent("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
      */
-    void setUserAgent(const std::string& userAgent);
+    void setUserAgent(const std::string &userAgent);
 
 private:
     std::string _url;                         // URL to be opened
@@ -134,7 +134,7 @@ private:
  */
 typedef enum {
     // client side errors
-    ERRHOST = -1,    // no such host
+            ERRHOST = -1,    // no such host
     ERRSOCK = -2,    // can't create socket
     ERRCONN = -3,    // can't connect to host
     ERRWRHD = -4,    // write error on socket while writing header
@@ -143,17 +143,17 @@ typedef enum {
     ERRPAHD = -7,    // invalid answer from data server
     ERRNULL = -8,    // null data pointer
     ERRNOLG = -9,    // no/bad length in header
-    ERRMEM  = -10,   // can't allocate memory
+    ERRMEM = -10,   // can't allocate memory
     ERRRDDT = -11,   // read error while reading data
     ERRURLH = -12,   // invalid url - must start with 'http://'
     ERRURLP = -13,   // invalid port in url
-    
+
     ERR_MALFORMED_URL = -42,
     ERR_IO_EXCEPTION = -43,
 
 
     // return code by the server
-    ERR400 = 400,   // invalid query
+            ERR400 = 400,   // invalid query
     ERR403 = 403,   // forbidden
     ERR408 = 408,   // request timeout
     ERR500 = 500,   // server error
@@ -161,7 +161,7 @@ typedef enum {
     ERR503 = 503,   // service overloaded
 
     // successful results
-    OK0 = 0,     // successful parse
+            OK0 = 0,     // successful parse
     OK201 = 201, // resource succesfully created
     OK200 = 200  // resource succesfully read
 

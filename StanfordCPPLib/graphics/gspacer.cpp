@@ -11,7 +11,7 @@
 #include <graphics/gthread.h>
 #include <util/require.h>
 
-GSpacer::GSpacer(double width, double height, QWidget* parent)
+GSpacer::GSpacer(double width, double height, QWidget *parent)
         : _iqspacer(nullptr) {
     require::nonNegative2D(width, height, "GSpacer::constructor", "width", "height");
     GThread::runOnQtGuiThread([this, width, height, parent]() {
@@ -26,7 +26,7 @@ GSpacer::~GSpacer() {
     _iqspacer = nullptr;
 }
 
-_Internal_QWidget* GSpacer::getInternalWidget() const {
+_Internal_QWidget *GSpacer::getInternalWidget() const {
     return _iqspacer;
 }
 
@@ -34,12 +34,12 @@ std::string GSpacer::getType() const {
     return "GSpacer";
 }
 
-QWidget* GSpacer::getWidget() const {
-    return static_cast<QWidget*>(_iqspacer);
+QWidget *GSpacer::getWidget() const {
+    return static_cast<QWidget *>(_iqspacer);
 }
 
 
-_Internal_QSpacer::_Internal_QSpacer(GSpacer* gspacer, double width, double height, QWidget* parent)
+_Internal_QSpacer::_Internal_QSpacer(GSpacer *gspacer, double width, double height, QWidget *parent)
         : QWidget(parent) {
     require::nonNull(gspacer, "_Internal_QSpacer::constructor");
     setObjectName(QString::fromStdString("_Internal_QSpacer_" + std::to_string(gspacer->getID())));

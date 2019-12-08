@@ -33,19 +33,19 @@ namespace exceptions {
  * better when printed in a stack trace.
  * e.g. basic_string -> string, removes std::, removes some weird compiler gibberish.
  */
-std::string cleanupFunctionNameForStackTrace(std::string function);
+    std::string cleanupFunctionNameForStackTrace(std::string function);
 
 /**
  * Called by C++ lib's main wrapper so that the stack trace knows the program's name.
  * (Taken from argv[0].)
  */
-std::string& getProgramNameForStackTrace();
+    std::string &getProgramNameForStackTrace();
 
 /**
  * Returns whether the top-level exception handler is enabled.
  * Initially false.
  */
-bool getTopLevelExceptionHandlerEnabled();
+    bool getTopLevelExceptionHandlerEnabled();
 
 /**
  * Prints a stack trace to the system standard error console (cerr).
@@ -53,7 +53,7 @@ bool getTopLevelExceptionHandlerEnabled();
  *  may not work perfectly on all platforms.  It has been tested to work
  *  on Linux with GCC/G++, Mac OS X with clang++, and Windows with MinGW.)
  */
-void printStackTrace();
+    void printStackTrace();
 
 /**
  * Prints a stack trace to the given output stream.
@@ -62,26 +62,26 @@ void printStackTrace();
  *  may not work perfectly on all platforms.  It has been tested to work
  *  on Linux with GCC/G++, Mac OS X with clang++, and Windows with MinGW.)
  */
-void printStackTrace(std::ostream& out);
+    void printStackTrace(std::ostream &out);
 
 /**
  * Called by C++ lib's main wrapper so that the stack trace knows the program's name.
  * (Taken from argv[0].)
  */
-void setProgramNameForStackTrace(char* programName);
+    void setProgramNameForStackTrace(char *programName);
 
 /**
  * Sets whether the top-level exception handler is enabled.
  * If the optional 'force' parameter is passed, will set the handler again
  * even if it was set before.
  */
-void setTopLevelExceptionHandlerEnabled(bool enabled, bool force = false);
+    void setTopLevelExceptionHandlerEnabled(bool enabled, bool force = false);
 
 /**
  * Whether the given function should be filtered out when displaying a stack trace.
  * Not meant to be called by clients.
  */
-bool shouldFilterOutFromStackTrace(const std::string& function);
+    bool shouldFilterOutFromStackTrace(const std::string &function);
 }
 
 #endif // _exceptions_h

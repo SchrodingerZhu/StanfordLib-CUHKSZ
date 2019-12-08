@@ -80,7 +80,7 @@
  *   <li>A <code>NodeType *</code> field called <code>finish</code>
  * </ul>
  */
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 class Graph {
 public:
     /**
@@ -88,20 +88,20 @@ public:
      * @bigoh O(1)
      */
     Graph();
-    
+
     /**
      * Frees the internal storage allocated to represent the graph.
      * @bigoh O(V + E)
      */
     virtual ~Graph();
-    
+
     /**
      * Adds a directed arc to the graph from node n1 to n2.
      * If either node is not found in the graph, said node will be added to the graph.
      * Returns a pointer to the arc in case the client needs to capture this value.
      * @bigoh O(log V + log E)
      */
-    ArcType* addArc(const std::string& n1, const std::string& n2);
+    ArcType *addArc(const std::string &n1, const std::string &n2);
 
     /**
      * Adds a directed arc to the graph from node n1 to n2.
@@ -111,7 +111,7 @@ public:
      * @throw ErrorException if any pointer passed is null
      * @bigoh O(log V + log E)
      */
-    ArcType* addArc(NodeType* n1, NodeType* n2);
+    ArcType *addArc(NodeType *n1, NodeType *n2);
 
     /**
      * Adds the given arc to the graph.
@@ -126,7 +126,7 @@ public:
      * @throw ErrorException if any pointer passed is null
      * @bigoh O(log V + log E)
      */
-    ArcType* addArc(ArcType* arc);
+    ArcType *addArc(ArcType *arc);
 
     /**
      * Adds a node to the graph.  The first version of this method
@@ -143,7 +143,7 @@ public:
      * @throw ErrorException if any pointer passed is null
      * @bigoh O(log V)
      */
-    NodeType* addNode(const std::string& name);
+    NodeType *addNode(const std::string &name);
 
     /**
      * Adds a node to the graph.
@@ -159,7 +159,7 @@ public:
      * @throw ErrorException if any pointer passed is null
      * @bigoh O(log V)
      */
-    NodeType* addNode(NodeType* node);
+    NodeType *addNode(NodeType *node);
 
     /**
      * Returns the number of arcs in the graph.
@@ -173,7 +173,7 @@ public:
      * @throw ErrorException if the graph is empty
      * @bigoh O(1)
      */
-    NodeType* back() const;
+    NodeType *back() const;
 
     /**
      * Reinitializes the graph to be empty, removing all nodes and arcs
@@ -196,7 +196,7 @@ public:
      * If the given node pointer is null or not found in the graph, has no effect.
      * @bigoh O(log V + E)
      */
-    void clearArcs(NodeType* node);
+    void clearArcs(NodeType *node);
 
     /**
      * Removes all arcs from the graph that start from the given node,
@@ -205,21 +205,21 @@ public:
      * If the given node is not found in the graph, has no effect.
      * @bigoh O(E log E)
      */
-    void clearArcs(const std::string& name);
+    void clearArcs(const std::string &name);
 
     /**
      * Returns true if there exists an arc directly between the given two nodes.
      * If either node is null or is not contained in this graph, returns false.
      * @bigoh O(log E)
      */
-    bool containsArc(NodeType* node1, NodeType* node2) const;
+    bool containsArc(NodeType *node1, NodeType *node2) const;
 
     /**
      * Returns true if there exists an arc directly between the given two nodes.
      * If either node is not contained in this graph, returns false.
      * @bigoh O(log E)
      */
-    bool containsArc(const std::string& node1, const std::string& node2) const;
+    bool containsArc(const std::string &node1, const std::string &node2) const;
 
     /**
      * Returns true if the given arc exists in this graph.
@@ -227,20 +227,20 @@ public:
      * this graph, returns false.
      * @bigoh O(log E)
      */
-    bool containsArc(ArcType* arc) const;
+    bool containsArc(ArcType *arc) const;
 
     /**
      * Returns true if there exists a node in this graph with the given name.
      * @bigoh O(log V)
      */
-    bool containsNode(const std::string& name) const;
+    bool containsNode(const std::string &name) const;
 
     /**
      * Returns true if the given node is part of this graph.
      * If the pointer passed is null, returns false.
      * @bigoh O(log V)
      */
-    bool containsNode(NodeType* node) const;
+    bool containsNode(NodeType *node) const;
 
     /**
      * Compares two graphs for equality.
@@ -249,15 +249,15 @@ public:
      * Identical in behavior to the == operator.
      * @bigoh O(V log V + E log E)
      */
-    bool equals(const Graph<NodeType, ArcType>& graph2) const;
-    
+    bool equals(const Graph<NodeType, ArcType> &graph2) const;
+
     /**
      * Returns the first node in the graph in the order as would be returned by
      * a for-each loop or iterator.
      * @throw ErrorException if the graph is empty
      * @bigoh O(1)
      */
-    NodeType* front() const;
+    NodeType *front() const;
 
     /**
      * Returns the arc, if any, from node1 to node2.
@@ -265,7 +265,7 @@ public:
      * If either pointer passed is null or no such arc exists, returns a null pointer.
      * @bigoh O(log V + log E)
      */
-    ArcType* getArc(NodeType* node1, NodeType* node2) const;
+    ArcType *getArc(NodeType *node1, NodeType *node2) const;
 
     /**
      * Returns the arc, if any, from node1 to node2.
@@ -273,13 +273,13 @@ public:
      * If no such arc exists, returns a null pointer.
      * @bigoh O(log V + log E)
      */
-    ArcType* getArc(const std::string& node1, const std::string& node2) const;
+    ArcType *getArc(const std::string &node1, const std::string &node2) const;
 
     /**
      * Returns the set of all arcs in the graph.
      * @bigoh O(1)
      */
-    const Set<ArcType*>& getArcSet() const;
+    const Set<ArcType *> &getArcSet() const;
 
     /**
      * Returns the set of all arcs that start at the specified node,
@@ -288,14 +288,14 @@ public:
      * returns an empty set.
      * @bigoh O(1)
      */
-    const Set<ArcType*>& getArcSet(NodeType* node) const;
+    const Set<ArcType *> &getArcSet(NodeType *node) const;
 
     /**
      * Returns the set of all arcs that start at the specified node.
      * If the given node is not found in the graph, returns an empty set.
      * @bigoh O(1)
      */
-    const Set<ArcType*>& getArcSet(const std::string& name) const;
+    const Set<ArcType *> &getArcSet(const std::string &name) const;
 
     /**
      * Returns the set of outbound arcs to the given node from other nodes.
@@ -306,7 +306,7 @@ public:
      * in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    const Set<ArcType*> getInverseArcSet(NodeType* node) const;
+    const Set<ArcType *> getInverseArcSet(NodeType *node) const;
 
     /**
      * Returns the set of outbound arcs to the given node from other nodes.
@@ -316,7 +316,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    const Set<ArcType*> getInverseArcSet(const std::string& name) const;
+    const Set<ArcType *> getInverseArcSet(const std::string &name) const;
 
     /**
      * Returns the set of strings of names of nodes that are neighbors of the
@@ -328,7 +328,7 @@ public:
      * in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    Set<std::string> getInverseNeighborNames(NodeType* node) const;
+    Set<std::string> getInverseNeighborNames(NodeType *node) const;
 
     /**
      * Returns the set of strings of names of nodes that are neighbors of the
@@ -339,7 +339,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    Set<std::string> getInverseNeighborNames(const std::string& node) const;
+    Set<std::string> getInverseNeighborNames(const std::string &node) const;
 
     /**
      * Returns the set of nodes that are neighbors of the specified node.
@@ -350,7 +350,7 @@ public:
      * in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    Set<NodeType*> getInverseNeighbors(NodeType* node) const;
+    Set<NodeType *> getInverseNeighbors(NodeType *node) const;
 
     /**
      * Returns the set of nodes that are neighbors of the specified node.
@@ -360,7 +360,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    Set<NodeType*> getInverseNeighbors(const std::string& node) const;
+    Set<NodeType *> getInverseNeighbors(const std::string &node) const;
 
     /**
      * Returns the set of node names that are neighbors of the specified node.
@@ -371,7 +371,7 @@ public:
      * in this graph, returns an empty set.
      * @bigoh O(log V)
      */
-    Set<std::string> getNeighborNames(NodeType* node) const;
+    Set<std::string> getNeighborNames(NodeType *node) const;
 
     /**
      * Returns the set of node names that are neighbors of the specified node.
@@ -381,7 +381,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(log V)
      */
-    Set<std::string> getNeighborNames(const std::string& node) const;
+    Set<std::string> getNeighborNames(const std::string &node) const;
 
     /**
      * Returns the set of nodes that are neighbors of the specified node.
@@ -392,7 +392,7 @@ public:
      * in this graph, returns an empty set.
      * @bigoh O(log V)
      */
-    Set<NodeType*> getNeighbors(NodeType* node) const;
+    Set<NodeType *> getNeighbors(NodeType *node) const;
 
     /**
      * Returns the set of nodes that are neighbors of the specified node.
@@ -402,7 +402,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(log V)
      */
-    Set<NodeType*> getNeighbors(const std::string& node) const;
+    Set<NodeType *> getNeighbors(const std::string &node) const;
 
     /**
      * Looks up a node in the name table attached to the graph and
@@ -410,7 +410,7 @@ public:
      * If no node with the specified name exists, returns <code>nullptr</code>.
      * @bigoh O(log V)
      */
-    NodeType* getNode(const std::string& name) const;
+    NodeType *getNode(const std::string &name) const;
 
     /**
      * Returns the set of the names of all nodes in the graph.
@@ -419,14 +419,14 @@ public:
      * @bigoh O(V log V)
      */
     Set<std::string> getNodeNames() const;
-    
+
     /**
      * Returns the set of all nodes in the graph.
      * These are direct pointers to the internal NodeType* structures in the
      * graph, so any modifications you make to them will be reflected in the graph.
      * @bigoh O(1)
      */
-    const Set<NodeType*>& getNodeSet() const;
+    const Set<NodeType *> &getNodeSet() const;
 
     /**
      * Returns <code>true</code> if the graph contains an arc from
@@ -435,7 +435,7 @@ public:
      * in this graph, returns false.
      * @bigoh O(log V)
      */
-    bool isConnected(NodeType* n1, NodeType* n2) const;
+    bool isConnected(NodeType *n1, NodeType *n2) const;
 
     /**
      * Returns <code>true</code> if the graph contains an arc from
@@ -443,21 +443,21 @@ public:
      * If either node is not contained in this graph, returns false.
      * @bigoh O(log V)
      */
-    bool isConnected(const std::string& s1, const std::string& s2) const;
+    bool isConnected(const std::string &s1, const std::string &s2) const;
 
     /**
      * Returns true if the graph contains an edge from v1 to v2.
      * If either of the vertexes supplied is not found in the graph, returns false.
      * @bigoh O(log V)
      */
-    bool isNeighbor(const std::string& node1, const std::string& node2) const;
+    bool isNeighbor(const std::string &node1, const std::string &node2) const;
 
     /**
      * Returns true if the graph contains an edge from v1 to v2.
      * If either of the vertexes supplied is null or is not found in the graph, returns false.
      * @bigoh O(log V)
      */
-    bool isNeighbor(NodeType* node1, NodeType* node2) const;
+    bool isNeighbor(NodeType *node1, NodeType *node2) const;
 
     /**
      * Returns <code>true</code> if the graph contains no vertexes.
@@ -479,7 +479,7 @@ public:
      * the call has no effect.
      * @bigoh O(E + log V)
      */
-    void removeArc(const std::string& s1, const std::string& s2);
+    void removeArc(const std::string &s1, const std::string &s2);
 
     /**
      * Removes an arc from v1 to v2 in the graph, specified by the node pointers
@@ -489,7 +489,7 @@ public:
      * the call has no effect.
      * @bigoh O(E + log V)
      */
-    void removeArc(NodeType* n1, NodeType* n2);
+    void removeArc(NodeType *n1, NodeType *n2);
 
     /**
      * Removes the given arc from the graph, specified as an arc pointer.
@@ -501,7 +501,7 @@ public:
      * You do not need to (and should not) free it yourself.
      * @bigoh O(log E + log V)
      */
-    void removeArc(ArcType* arc);
+    void removeArc(ArcType *arc);
 
     /**
      * Removes the node with the given name from the graph.
@@ -510,7 +510,7 @@ public:
      * the call has no effect.
      * @bigoh O(E + log V)
      */
-    void removeNode(const std::string& name);
+    void removeNode(const std::string &name);
 
     /**
      * Removes a node from the graph, specified as a pointer value.
@@ -522,7 +522,7 @@ public:
      * You do not need to (and should not) free it yourself.
      * @bigoh O(E + log V)
      */
-    void removeNode(NodeType* node);
+    void removeNode(NodeType *node);
 
     /**
      * Reads the data for an arc from the scanner.
@@ -534,7 +534,7 @@ public:
      * Clients that want to initialize other fields in the arc must override
      * this method so that it initializes one or both arc, as appropriate.
      */
-    virtual void scanArcData(TokenScanner &, ArcType* /*forward*/, ArcType* /*backward*/) {
+    virtual void scanArcData(TokenScanner &, ArcType * /*forward*/, ArcType * /*backward*/) {
         // empty
     }
 
@@ -562,7 +562,7 @@ public:
      * versions of <code>scanNodeData</code> and <code>scanArcData</code>
      * included in this interface.
      */
-    virtual bool scanGraphEntry(TokenScanner& scanner);
+    virtual bool scanGraphEntry(TokenScanner &scanner);
 
     /**
      * Reads the data for the specified node from the scanner.
@@ -570,7 +570,7 @@ public:
      * Clients that want to initialize other fields in the node from the token
      * stream must override this method.
      */
-    virtual void scanNodeData(TokenScanner&, NodeType*) {
+    virtual void scanNodeData(TokenScanner &, NodeType *) {
         /* Empty */
     }
 
@@ -587,14 +587,14 @@ public:
      * @bigoh O(V + E)
      */
     std::string toString() const;
-    
+
     /**
      * Writes the data for the arc to the output stream.
      * The default implementation of this method is empty.
      * Clients that want to store other fields from the arc must override this
      * method so that it writes that data in a form that scanArcData can read.
      */
-    virtual void writeArcData(std::ostream&, ArcType*) const {
+    virtual void writeArcData(std::ostream &, ArcType *) const {
         // empty
     }
 
@@ -604,12 +604,12 @@ public:
      * Clients that want to store other fields from the node must override this
      * method so that it writes that data in a form that scanNodeData can read.
      */
-    virtual void writeNodeData(std::ostream&, NodeType*) const {
+    virtual void writeNodeData(std::ostream &, NodeType *) const {
         // empty
     }
 
     using graph_iterator = typename Set<NodeType *>::const_iterator;
-    
+
     /**
      * Returns an STL iterator positioned at the first vertex in the graph.
      * @bigoh O(1)
@@ -625,14 +625,6 @@ public:
     graph_iterator end() const {
         return _nodes.end();
     }
-    
-    /**
-     * Relational operators to compare two graphs.
-     * The ==, != operators require that the ValueType has a == operator
-     * so that the elements can be tested for equality.
-     * @bigoh O(V log V + E log E)
-     */
-    bool operator ==(const Graph& graph2) const;
 
     /**
      * Relational operators to compare two graphs.
@@ -640,7 +632,15 @@ public:
      * so that the elements can be tested for equality.
      * @bigoh O(V log V + E log E)
      */
-    bool operator !=(const Graph& graph2) const;
+    bool operator==(const Graph &graph2) const;
+
+    /**
+     * Relational operators to compare two graphs.
+     * The ==, != operators require that the ValueType has a == operator
+     * so that the elements can be tested for equality.
+     * @bigoh O(V log V + E log E)
+     */
+    bool operator!=(const Graph &graph2) const;
 
     /**
      * Relational operators to compare two graphs.
@@ -648,7 +648,7 @@ public:
      * so that the elements can be compared pairwise.
      * @bigoh O(V log V + E log E)
      */
-    bool operator <(const Graph& graph2) const;
+    bool operator<(const Graph &graph2) const;
 
     /**
      * Relational operators to compare two graphs.
@@ -656,7 +656,7 @@ public:
      * so that the elements can be compared pairwise.
      * @bigoh O(V log V + E log E)
      */
-    bool operator <=(const Graph& graph2) const;
+    bool operator<=(const Graph &graph2) const;
 
     /**
      * Relational operators to compare two graphs.
@@ -664,7 +664,7 @@ public:
      * so that the elements can be compared pairwise.
      * @bigoh O(V log V + E log E)
      */
-    bool operator >(const Graph& graph2) const;
+    bool operator>(const Graph &graph2) const;
 
     /**
      * Relational operators to compare two graphs.
@@ -672,7 +672,7 @@ public:
      * so that the elements can be compared pairwise.
      * @bigoh O(V log V + E log E)
      */
-    bool operator >=(const Graph& graph2) const;
+    bool operator>=(const Graph &graph2) const;
 
 private:
     /* Private section */
@@ -698,18 +698,18 @@ private:
      */
     class GraphComparator {
     public:
-        bool operator ()(NodeType* n1, NodeType* n2) {
+        bool operator()(NodeType *n1, NodeType *n2) {
             return compare(n1, n2) < 0;
         }
 
-        bool operator ()(ArcType* a1, ArcType* a2) {
+        bool operator()(ArcType *a1, ArcType *a2) {
             return compare(a1, a2) < 0;
         }
     };
 
-    Set<NodeType*> _nodes{GraphComparator()}; /* The set of nodes in the graph */
-    Set<ArcType*> _arcs{GraphComparator()};   /* The set of arcs in the graph  */
-    Map<std::string, NodeType*> _nodeMap;     /* A map from names to nodes     */
+    Set<NodeType *> _nodes{GraphComparator()}; /* The set of nodes in the graph */
+    Set<ArcType *> _arcs{GraphComparator()};   /* The set of arcs in the graph  */
+    Map<std::string, NodeType *> _nodeMap;     /* A map from names to nodes     */
 
 public:
     /**
@@ -718,7 +718,7 @@ public:
      *
      * @private
      */
-    Graph& operator =(const Graph& src);
+    Graph &operator=(const Graph &src);
 
     /**
      * These functions are part of the public interface of the class but are
@@ -726,14 +726,14 @@ public:
      *
      * @private
      */
-    Graph(const Graph& src);
+    Graph(const Graph &src);
 
     /**
      * Compares two nodes for ordering within a set.
      *
      * @private
      */
-    static int compare(NodeType* n1, NodeType* n2) {
+    static int compare(NodeType *n1, NodeType *n2) {
         if (n1 == n2) {
             return 0;
         }
@@ -751,12 +751,12 @@ public:
      *
      * @private
      */
-    static int compare(ArcType* a1, ArcType* a2) {
+    static int compare(ArcType *a1, ArcType *a2) {
         if (a1 == a2) {
             return 0;
         }
-        NodeType* n1 = a1->start;
-        NodeType* n2 = a2->start;
+        NodeType *n1 = a1->start;
+        NodeType *n2 = a2->start;
         if (n1 != n2) {
             return compare(n1, n2);
         }
@@ -769,14 +769,21 @@ public:
     }
 
 private:
-    void deepCopy(const Graph& src);
-    NodeType* getExistingNode(const std::string& name, const std::string& member = "") const;
-    int graphCompare(const Graph& graph2) const;
-    bool isExistingArc(ArcType* arc) const;
-    bool isExistingNode(NodeType* node) const;
-    void verifyExistingNode(NodeType* node, const std::string& member = "") const;
-    void verifyNotNull(void* p, const std::string& member = "") const;
-    NodeType* scanNode(TokenScanner& scanner);
+    void deepCopy(const Graph &src);
+
+    NodeType *getExistingNode(const std::string &name, const std::string &member = "") const;
+
+    int graphCompare(const Graph &graph2) const;
+
+    bool isExistingArc(ArcType *arc) const;
+
+    bool isExistingNode(NodeType *node) const;
+
+    void verifyExistingNode(NodeType *node, const std::string &member = "") const;
+
+    void verifyNotNull(void *p, const std::string &member = "") const;
+
+    NodeType *scanNode(TokenScanner &scanner);
 };
 
 /*
@@ -787,13 +794,13 @@ private:
  * arcs set are given the correct comparison functions.
  */
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 Graph<NodeType, ArcType>::Graph() {
     // empty
 }
 
-template <typename NodeType, typename ArcType>
-Graph<NodeType, ArcType>::Graph(const Graph& src) {
+template<typename NodeType, typename ArcType>
+Graph<NodeType, ArcType>::Graph(const Graph &src) {
     deepCopy(src);
 }
 
@@ -805,7 +812,7 @@ Graph<NodeType, ArcType>::Graph(const Graph& src) {
  * this memory, which means that the destructor can simply call
  * clear to do the work.
  */
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 Graph<NodeType, ArcType>::~Graph() {
     clear();
 }
@@ -817,16 +824,16 @@ Graph<NodeType, ArcType>::~Graph() {
  * interface.  The code for each form of the method, however, is
  * quite straightforward.
  */
-template <typename NodeType, typename ArcType>
-ArcType* Graph<NodeType, ArcType>::addArc(const std::string& s1, const std::string& s2) {
+template<typename NodeType, typename ArcType>
+ArcType *Graph<NodeType, ArcType>::addArc(const std::string &s1, const std::string &s2) {
     return addArc(getExistingNode(s1, "addArc"), getExistingNode(s2, "addArc"));
 }
 
-template <typename NodeType, typename ArcType>
-ArcType* Graph<NodeType, ArcType>::addArc(NodeType* n1, NodeType* n2) {
+template<typename NodeType, typename ArcType>
+ArcType *Graph<NodeType, ArcType>::addArc(NodeType *n1, NodeType *n2) {
     verifyExistingNode(n1, "addArc");
     verifyExistingNode(n2, "addArc");
-    ArcType* arc = getArc(n1, n2);
+    ArcType *arc = getArc(n1, n2);
     if (arc) {
         return arc;
     } else {
@@ -837,8 +844,8 @@ ArcType* Graph<NodeType, ArcType>::addArc(NodeType* n1, NodeType* n2) {
     }
 }
 
-template <typename NodeType, typename ArcType>
-ArcType* Graph<NodeType, ArcType>::addArc(ArcType* arc) {
+template<typename NodeType, typename ArcType>
+ArcType *Graph<NodeType, ArcType>::addArc(ArcType *arc) {
     verifyNotNull(arc, "addArc");
     if (!isExistingNode(arc->start)) {
         addNode(arc->start);
@@ -860,22 +867,22 @@ ArcType* Graph<NodeType, ArcType>::addArc(ArcType* arc) {
  * the set of nodes for the graph and add the name-to-node association
  * to the node map.
  */
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::addNode(const std::string& name) {
-    NodeType* node = getNode(name);
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::addNode(const std::string &name) {
+    NodeType *node = getNode(name);
     if (node) {
         return node;   // vertex already exists
     }
     node = new NodeType();
-    node->arcs = Set<ArcType*>(GraphComparator());
+    node->arcs = Set<ArcType *>(GraphComparator());
     node->name = name;
     return addNode(node);
 }
 
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::addNode(NodeType* node) {
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::addNode(NodeType *node) {
     verifyNotNull(node, "addNode");
-    NodeType* existingNode = getNode(node->name);
+    NodeType *existingNode = getNode(node->name);
     if (existingNode) {
         *existingNode = *node;   // copy state from parameter
         return existingNode;
@@ -886,13 +893,13 @@ NodeType* Graph<NodeType, ArcType>::addNode(NodeType* node) {
     }
 }
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 int Graph<NodeType, ArcType>::arcCount() const {
     return getArcSet().size();
 }
 
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::back() const {
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::back() const {
     if (this->isEmpty()) {
         error("Graph::back: graph is empty");
     }
@@ -906,12 +913,12 @@ NodeType* Graph<NodeType, ArcType>::back() const {
  * their respective sets and then uses the Set class clear method
  * to ensure that these sets are empty.
  */
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 void Graph<NodeType, ArcType>::clear() {
-    for (NodeType* node : _nodes) {
+    for (NodeType *node : _nodes) {
         delete node;
     }
-    for (ArcType* arc : _arcs) {
+    for (ArcType *arc : _arcs) {
         delete arc;
     }
     _arcs.clear();
@@ -919,44 +926,44 @@ void Graph<NodeType, ArcType>::clear() {
     _nodeMap.clear();
 }
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 void Graph<NodeType, ArcType>::clearArcs() {
-    Set<ArcType*> arcsCopy = getArcSet();   // makes a copy
-    for (ArcType* arc : arcsCopy) {
+    Set<ArcType *> arcsCopy = getArcSet();   // makes a copy
+    for (ArcType *arc : arcsCopy) {
         removeArc(arc);
     }
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::clearArcs(NodeType* node) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::clearArcs(NodeType *node) {
     if (isExistingNode(node)) {
-        Set<ArcType*> arcsCopy = getArcSet(node);   // makes a copy
-        for (ArcType* arc : arcsCopy) {
+        Set<ArcType *> arcsCopy = getArcSet(node);   // makes a copy
+        for (ArcType *arc : arcsCopy) {
             removeArc(arc);
         }
     }
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::clearArcs(const std::string& name) {
-    Set<ArcType*> arcsCopy = getArcSet(name);   // makes a copy
-    for (ArcType* arc : arcsCopy) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::clearArcs(const std::string &name) {
+    Set<ArcType *> arcsCopy = getArcSet(name);   // makes a copy
+    for (ArcType *arc : arcsCopy) {
         removeArc(arc);
     }
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::containsArc(NodeType* node1, NodeType* node2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::containsArc(NodeType *node1, NodeType *node2) const {
     return getArc(node1, node2) != nullptr;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::containsArc(const std::string& node1, const std::string& node2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::containsArc(const std::string &node1, const std::string &node2) const {
     return getArc(node1, node2) != nullptr;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::containsArc(ArcType* arc) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::containsArc(ArcType *arc) const {
     if (!arc) {
         return false;
     } else {
@@ -964,13 +971,13 @@ bool Graph<NodeType, ArcType>::containsArc(ArcType* arc) const {
     }
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::containsNode(const std::string& name) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::containsNode(const std::string &name) const {
     return _nodeMap.containsKey(name);
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::containsNode(NodeType* node) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::containsNode(NodeType *node) const {
     if (node) {
         return _nodes.contains(node);
     } else {
@@ -979,25 +986,25 @@ bool Graph<NodeType, ArcType>::containsNode(NodeType* node) const {
 }
 
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::equals(const Graph<NodeType, ArcType>& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::equals(const Graph<NodeType, ArcType> &graph2) const {
     return *this == graph2;
 }
 
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::front() const {
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::front() const {
     if (this->isEmpty()) {
         error("Graph::front: graph is empty");
     }
     return this->_nodes.front();
 }
 
-template <typename NodeType, typename ArcType>
-ArcType* Graph<NodeType, ArcType>::getArc(NodeType* node1, NodeType* node2) const {
+template<typename NodeType, typename ArcType>
+ArcType *Graph<NodeType, ArcType>::getArc(NodeType *node1, NodeType *node2) const {
     if (!containsNode(node1) || !containsNode(node2)) {
         return nullptr;
     }
-    for (ArcType* arc : getArcSet(node1)) {
+    for (ArcType *arc : getArcSet(node1)) {
         if (arc->finish == node2) {
             return arc;
         }
@@ -1005,70 +1012,70 @@ ArcType* Graph<NodeType, ArcType>::getArc(NodeType* node1, NodeType* node2) cons
     return nullptr;
 }
 
-template <typename NodeType, typename ArcType>
-ArcType* Graph<NodeType, ArcType>::getArc(const std::string& node1, const std::string& node2) const {
+template<typename NodeType, typename ArcType>
+ArcType *Graph<NodeType, ArcType>::getArc(const std::string &node1, const std::string &node2) const {
     return getArc(getNode(node1), getNode(node2));
 }
 
-template <typename NodeType, typename ArcType>
-const Set<ArcType*>& Graph<NodeType, ArcType>::getArcSet() const {
+template<typename NodeType, typename ArcType>
+const Set<ArcType *> &Graph<NodeType, ArcType>::getArcSet() const {
     return _arcs;
 }
 
-template <typename NodeType, typename ArcType>
-const Set<ArcType*>& Graph<NodeType, ArcType>::getArcSet(NodeType* node) const {
+template<typename NodeType, typename ArcType>
+const Set<ArcType *> &Graph<NodeType, ArcType>::getArcSet(NodeType *node) const {
     if (isExistingNode(node)) {
         return node->arcs;
     } else {
-        static Set<ArcType*> set;   // empty
+        static Set<ArcType *> set;   // empty
         return set;
     }
 }
 
-template <typename NodeType, typename ArcType>
-const Set<ArcType*>& Graph<NodeType, ArcType>::getArcSet(const std::string& name) const {
+template<typename NodeType, typename ArcType>
+const Set<ArcType *> &Graph<NodeType, ArcType>::getArcSet(const std::string &name) const {
     return getArcSet(getNode(name));
 }
 
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::getExistingNode(const std::string& name, const std::string& member) const {
-    NodeType* node = _nodeMap.get(name);
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::getExistingNode(const std::string &name, const std::string &member) const {
+    NodeType *node = _nodeMap.get(name);
     if (!node) {
         error("Graph::" + member + ": no node named " + name);
     }
     return node;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::isExistingArc(ArcType* arc) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::isExistingArc(ArcType *arc) const {
     return arc && _arcs.contains(arc);
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::isExistingNode(NodeType* node) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::isExistingNode(NodeType *node) const {
     return node && _nodeMap.containsKey(node->name) && _nodeMap.get(node->name) == node;
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::verifyExistingNode(NodeType* node, const std::string& member) const {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::verifyExistingNode(NodeType *node, const std::string &member) const {
     verifyNotNull(node, member);
     if (!isExistingNode(node)) {
         error("Graph::" + member + ": node not found in graph");
     }
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::verifyNotNull(void* p, const std::string& member) const {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::verifyNotNull(void *p, const std::string &member) const {
     if (!p) {
         error("Graph::" + member + ": parameter cannot be null");
     }
 }
 
-template <typename NodeType, typename ArcType>
-const Set<ArcType*> Graph<NodeType, ArcType>::getInverseArcSet(NodeType* node) const {
-    Set<ArcType*> set;
+template<typename NodeType, typename ArcType>
+const Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(NodeType *node) const {
+    Set<ArcType *> set;
     if (isExistingNode(node)) {
-        for (ArcType* arc : getArcSet()) {
+        for (ArcType *arc : getArcSet()) {
             if (arc->finish == node) {
                 set.add(arc);
             }
@@ -1077,16 +1084,16 @@ const Set<ArcType*> Graph<NodeType, ArcType>::getInverseArcSet(NodeType* node) c
     return set;
 }
 
-template <typename NodeType, typename ArcType>
-const Set<ArcType*> Graph<NodeType, ArcType>::getInverseArcSet(const std::string& nodeName) const {
+template<typename NodeType, typename ArcType>
+const Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(const std::string &nodeName) const {
     return getInverseArcSet(getNode(nodeName));
 }
 
-template <typename NodeType, typename ArcType>
-Set<std::string> Graph<NodeType, ArcType>::getInverseNeighborNames(NodeType* node) const {
+template<typename NodeType, typename ArcType>
+Set<std::string> Graph<NodeType, ArcType>::getInverseNeighborNames(NodeType *node) const {
     Set<std::string> set;
     if (isExistingNode(node)) {
-        for (ArcType* arc : getArcSet()) {
+        for (ArcType *arc : getArcSet()) {
             if (arc->finish == node) {
                 set.add(arc->start->name);
             }
@@ -1095,16 +1102,16 @@ Set<std::string> Graph<NodeType, ArcType>::getInverseNeighborNames(NodeType* nod
     return set;
 }
 
-template <typename NodeType, typename ArcType>
-Set<std::string> Graph<NodeType, ArcType>::getInverseNeighborNames(const std::string& name) const {
+template<typename NodeType, typename ArcType>
+Set<std::string> Graph<NodeType, ArcType>::getInverseNeighborNames(const std::string &name) const {
     return getInverseNeighborNames(getNode(name));
 }
 
-template <typename NodeType, typename ArcType>
-Set<NodeType*> Graph<NodeType, ArcType>::getInverseNeighbors(NodeType* node) const {
-    Set<NodeType*> set;
+template<typename NodeType, typename ArcType>
+Set<NodeType *> Graph<NodeType, ArcType>::getInverseNeighbors(NodeType *node) const {
+    Set<NodeType *> set;
     if (isExistingNode(node)) {
-        for (ArcType* arc : getArcSet()) {
+        for (ArcType *arc : getArcSet()) {
             if (arc->finish == node) {
                 set.add(arc->start);
             }
@@ -1113,24 +1120,24 @@ Set<NodeType*> Graph<NodeType, ArcType>::getInverseNeighbors(NodeType* node) con
     return set;
 }
 
-template <typename NodeType, typename ArcType>
-Set<NodeType*> Graph<NodeType, ArcType>::getInverseNeighbors(const std::string& nodeName) const {
+template<typename NodeType, typename ArcType>
+Set<NodeType *> Graph<NodeType, ArcType>::getInverseNeighbors(const std::string &nodeName) const {
     return getInverseNeighbors(getNode(nodeName));
 }
 
-template <typename NodeType, typename ArcType>
-Set<std::string> Graph<NodeType, ArcType>::getNeighborNames(NodeType* node) const {
+template<typename NodeType, typename ArcType>
+Set<std::string> Graph<NodeType, ArcType>::getNeighborNames(NodeType *node) const {
     Set<std::string> neighbors;
     if (isExistingNode(node)) {
-        for (ArcType* arc : node->arcs) {
+        for (ArcType *arc : node->arcs) {
             neighbors.add(arc->finish->name);
         }
     }
     return neighbors;
 }
 
-template <typename NodeType, typename ArcType>
-Set<std::string> Graph<NodeType, ArcType>::getNeighborNames(const std::string& name) const {
+template<typename NodeType, typename ArcType>
+Set<std::string> Graph<NodeType, ArcType>::getNeighborNames(const std::string &name) const {
     return getNeighborNames(getNode(name));
 }
 
@@ -1140,19 +1147,19 @@ Set<std::string> Graph<NodeType, ArcType>::getNeighborNames(const std::string& n
  * This implementation recomputes the set each time, which is reasonably
  * efficient if the degree of the node is small.
  */
-template <typename NodeType, typename ArcType>
-Set<NodeType*> Graph<NodeType, ArcType>::getNeighbors(NodeType* node) const {
-    Set<NodeType*> nodesResult{GraphComparator{}};
+template<typename NodeType, typename ArcType>
+Set<NodeType *> Graph<NodeType, ArcType>::getNeighbors(NodeType *node) const {
+    Set<NodeType *> nodesResult{GraphComparator{}};
     if (isExistingNode(node)) {
-        for (ArcType* arc : node->arcs) {
+        for (ArcType *arc : node->arcs) {
             nodesResult.add(arc->finish);
         }
     }
     return nodesResult;
 }
 
-template <typename NodeType, typename ArcType>
-Set<NodeType*> Graph<NodeType, ArcType>::getNeighbors(const std::string& name) const {
+template<typename NodeType, typename ArcType>
+Set<NodeType *> Graph<NodeType, ArcType>::getNeighbors(const std::string &name) const {
     return getNeighbors(getNode(name));
 }
 
@@ -1164,15 +1171,15 @@ Set<NodeType*> Graph<NodeType, ArcType>::getNeighbors(const std::string& name) c
  * implementation call the private method getExistingNode instead,
  * which checks for a null value and signals an error.
  */
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::getNode(const std::string& name) const {
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::getNode(const std::string &name) const {
     return _nodeMap.get(name);
 }
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 Set<std::string> Graph<NodeType, ArcType>::getNodeNames() const {
     Set<std::string> nodeNames;
-    for (NodeType* node : _nodes) {
+    for (NodeType *node : _nodes) {
         nodeNames.add(node->name);
     }
     return nodeNames;
@@ -1185,8 +1192,8 @@ Set<std::string> Graph<NodeType, ArcType>::getNodeNames() const {
  * sets are returned by reference for efficiency, because doing so
  * eliminates the need to copy the set.
  */
-template <typename NodeType, typename ArcType>
-const Set<NodeType*>& Graph<NodeType, ArcType>::getNodeSet() const {
+template<typename NodeType, typename ArcType>
+const Set<NodeType *> &Graph<NodeType, ArcType>::getNodeSet() const {
     return _nodes;
 }
 
@@ -1197,14 +1204,14 @@ const Set<NodeType*>& Graph<NodeType, ArcType>::getNodeSet() const {
  * The two versions of this method allow nodes to be specified either as
  * node pointers or by name.
  */
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::isConnected(NodeType* n1, NodeType* n2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::isConnected(NodeType *n1, NodeType *n2) const {
     // don't call verifyExistingNode here because it will throw an error
     // if n1 or n2 is not found; should just make the call return false
     if (!isExistingNode(n1) || !isExistingNode(n2)) {
         return false;
     }
-    for (ArcType* arc : n1->arcs) {
+    for (ArcType *arc : n1->arcs) {
         if (arc->finish == n2) {
             return true;
         }
@@ -1212,29 +1219,29 @@ bool Graph<NodeType, ArcType>::isConnected(NodeType* n1, NodeType* n2) const {
     return false;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::isConnected(const std::string& s1, const std::string& s2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::isConnected(const std::string &s1, const std::string &s2) const {
     // don't call getExistingNode here because it will throw an error
     // if s1 or s2 is not found; should just make the call return false
     return isConnected(_nodeMap.get(s1), _nodeMap.get(s2));
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::isNeighbor(const std::string& node1, const std::string& node2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::isNeighbor(const std::string &node1, const std::string &node2) const {
     return isConnected(node1, node2);
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::isNeighbor(NodeType* node1, NodeType* node2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::isNeighbor(NodeType *node1, NodeType *node2) const {
     return isConnected(node1, node2);
 }
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 bool Graph<NodeType, ArcType>::isEmpty() const {
     return _nodes.isEmpty();
 }
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 int Graph<NodeType, ArcType>::nodeCount() const {
     return getNodeSet().size();
 }
@@ -1249,33 +1256,33 @@ int Graph<NodeType, ArcType>::nodeCount() const {
  * must take account of the fact that there might be more than one
  * such arc and delete all of them.
  */
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::removeArc(const std::string& s1, const std::string& s2) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::removeArc(const std::string &s1, const std::string &s2) {
     // don't call getExistingNode here because it will throw an error
     // if s1 or s2 is not found; should just make the call have no effect
     removeArc(_nodeMap.get(s1), _nodeMap.get(s2));
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::removeArc(NodeType* n1, NodeType* n2) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::removeArc(NodeType *n1, NodeType *n2) {
     // don't call verifyExistingNode here because it will throw an error
     // if n1 or n2 is not found; should just make the call have no effect
     if (!isExistingNode(n1) || !isExistingNode(n2)) {
         return;
     }
-    Vector<ArcType*> toRemove;
-    for (ArcType* arc : _arcs) {
+    Vector<ArcType *> toRemove;
+    for (ArcType *arc : _arcs) {
         if (arc->start == n1 && arc->finish == n2) {
             toRemove.add(arc);
         }
     }
-    for (ArcType* arc : toRemove) {
+    for (ArcType *arc : toRemove) {
         removeArc(arc);
     }
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::removeArc(ArcType* arc) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::removeArc(ArcType *arc) {
     if (!isExistingArc(arc)) {
         return;
     }
@@ -1292,27 +1299,27 @@ void Graph<NodeType, ArcType>::removeArc(ArcType* arc) {
  * changing the node set during iteration, this implementation creates
  * a vector of arcs that require deletion.
  */
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::removeNode(const std::string& name) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::removeNode(const std::string &name) {
     // don't call getExistingNode here because it will throw an error
     // if name is not found; should just make the call have no effect
     removeNode(_nodeMap.get(name));
 }
 
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::removeNode(NodeType* node) {
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::removeNode(NodeType *node) {
     // don't call verifyExistingNode here because it will throw an error
     // if node is not found; should just make the call have no effect
     if (!isExistingNode(node)) {
         return;
     }
-    Vector<ArcType*> toRemove;
-    for (ArcType* arc : _arcs) {
+    Vector<ArcType *> toRemove;
+    for (ArcType *arc : _arcs) {
         if (arc->start == node || arc->finish == node) {
             toRemove.add(arc);
         }
     }
-    for (ArcType* arc : toRemove) {
+    for (ArcType *arc : toRemove) {
         removeArc(arc);
     }
     _nodes.remove(node);
@@ -1327,9 +1334,9 @@ void Graph<NodeType, ArcType>::removeNode(NodeType* node) {
  * initialized to the input stream and has the options ignoreWhitespace,
  * scanStrings, and scanNumbers set.
  */
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::scanGraphEntry(TokenScanner& scanner) {
-    NodeType* n1 = scanNode(scanner);
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::scanGraphEntry(TokenScanner &scanner) {
+    NodeType *n1 = scanNode(scanner);
     if (!n1) {
         return false;
     }
@@ -1338,18 +1345,18 @@ bool Graph<NodeType, ArcType>::scanGraphEntry(TokenScanner& scanner) {
         scanner.saveToken(op);
         return true;
     }
-    NodeType* n2 = scanNode(scanner);
+    NodeType *n2 = scanNode(scanner);
     if (!n2) {
 #ifdef SPL_ERROR_ON_COLLECTION_PARSE
         error("Graph::scanGraphEntry: Missing node after " + op);
 #endif
         return false;
     }
-    ArcType* forward = new ArcType();
+    ArcType *forward = new ArcType();
     forward->start = n1;
     forward->finish = n2;
     addArc(forward);
-    ArcType* backward = nullptr;
+    ArcType *backward = nullptr;
     if (op == "-") {
         backward = new ArcType();
         backward->start = n2;
@@ -1360,20 +1367,20 @@ bool Graph<NodeType, ArcType>::scanGraphEntry(TokenScanner& scanner) {
     return true;
 }
 
-template <typename NodeType, typename ArcType>
-NodeType* Graph<NodeType, ArcType>::scanNode(TokenScanner& scanner) {
+template<typename NodeType, typename ArcType>
+NodeType *Graph<NodeType, ArcType>::scanNode(TokenScanner &scanner) {
     std::string token = scanner.nextToken();
     switch (scanner.getTokenType(token)) {
-    case TokenScanner::WORD:
-        break;
-    case TokenScanner::STRING:
-        token = scanner.getStringValue(token);
-        break;
-    default:
-        scanner.saveToken(token);
-        return nullptr;
+        case TokenScanner::WORD:
+            break;
+        case TokenScanner::STRING:
+            token = scanner.getStringValue(token);
+            break;
+        default:
+            scanner.saveToken(token);
+            return nullptr;
     }
-    NodeType* node = getNode(token);
+    NodeType *node = getNode(token);
     if (!node) {
         node = new NodeType();
         node->name = token;
@@ -1390,12 +1397,12 @@ NodeType* Graph<NodeType, ArcType>::scanNode(TokenScanner& scanner) {
  * simply forwards the request there.  Note that it is impossible for a
  * graph to have arcs if it has no nodes.
  */
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 int Graph<NodeType, ArcType>::size() const {
     return _nodes.size();
 }
 
-template <typename NodeType, typename ArcType>
+template<typename NodeType, typename ArcType>
 std::string Graph<NodeType, ArcType>::toString() const {
     std::ostringstream os;
     os << *this;
@@ -1408,9 +1415,9 @@ std::string Graph<NodeType, ArcType>::toString() const {
  * These methods ensure that copying a graph creates an entirely new
  * parallel structure of nodes and arcs.
  */
-template <typename NodeType, typename ArcType>
-Graph<NodeType,ArcType>&
-Graph<NodeType, ArcType>::operator =(const Graph& src) {
+template<typename NodeType, typename ArcType>
+Graph<NodeType, ArcType> &
+Graph<NodeType, ArcType>::operator=(const Graph &src) {
     if (this != &src) {
         clear();
         deepCopy(src);
@@ -1424,16 +1431,16 @@ Graph<NodeType, ArcType>::operator =(const Graph& src) {
  * Common code factored out of the copy constructor and operator= to
  * copy the contents from the other graph.
  */
-template <typename NodeType, typename ArcType>
-void Graph<NodeType, ArcType>::deepCopy(const Graph& src) {
-    for (NodeType* oldNode : src._nodes) {
-        NodeType* newNode = new NodeType();
+template<typename NodeType, typename ArcType>
+void Graph<NodeType, ArcType>::deepCopy(const Graph &src) {
+    for (NodeType *oldNode : src._nodes) {
+        NodeType *newNode = new NodeType();
         *newNode = *oldNode;
         newNode->arcs.clear();
         addNode(newNode);
     }
-    for (ArcType* oldArc : src._arcs) {
-        ArcType* newArc = new ArcType();
+    for (ArcType *oldArc : src._arcs) {
+        ArcType *newArc = new ArcType();
         *newArc = *oldArc;
         newArc->start = getExistingNode(oldArc->start->name, "deepCopy");
         newArc->finish = getExistingNode(oldArc->finish->name, "deepCopy");
@@ -1448,39 +1455,39 @@ void Graph<NodeType, ArcType>::deepCopy(const Graph& src) {
  *
  * @private
  */
-template <typename NodeType, typename ArcType>
-int Graph<NodeType, ArcType>::graphCompare(const Graph<NodeType, ArcType>& graph2) const {
+template<typename NodeType, typename ArcType>
+int Graph<NodeType, ArcType>::graphCompare(const Graph<NodeType, ArcType> &graph2) const {
     // optimization: if literally the same graph, return true
     if (this == &graph2) {
         return 0;
     }
-    
+
     auto itr1 = begin();
     auto itr2 = graph2.begin();
     auto g1end = end();
     auto g2end = graph2.end();
-    
+
     while (itr1 != g1end && itr2 != g2end) {
         // compare each pair of elements from iterators
-        NodeType* node1 = *itr1;
-        NodeType* node2 = *itr2;
-        
+        NodeType *node1 = *itr1;
+        NodeType *node2 = *itr2;
+
         // optimization: if literally same node, equal; don't compare
         if (node1 != node2) {
             // first check names
             if (node1->name != node2->name) {
                 return node1->name.compare(node2->name);
             }
-            
+
             // then check all arcs, pairwise
             auto eitr1 = node1->arcs.begin();
             auto eitr2 = node2->arcs.begin();
             auto e1end = node1->arcs.end();
             auto e2end = node2->arcs.end();
             while (eitr1 != e1end && eitr2 != e2end) {
-                ArcType* arc1 = *eitr1;
-                ArcType* arc2 = *eitr2;
-                
+                ArcType *arc1 = *eitr1;
+                ArcType *arc2 = *eitr2;
+
                 // optimization: if literally same arc, equal; don't compare
                 if (arc1 != arc2) {
                     // first check start vertex names, then end vertex names
@@ -1493,7 +1500,7 @@ int Graph<NodeType, ArcType>::graphCompare(const Graph<NodeType, ArcType>& graph
                 eitr1++;
                 eitr2++;
             }
-            
+
             // if we get here, everything from me matched graph2, so either arcs equal,
             // or one is shorter than the other (fewer arcs) and is therefore less
             if (eitr1 == e1end && eitr2 == e2end) {
@@ -1504,13 +1511,13 @@ int Graph<NodeType, ArcType>::graphCompare(const Graph<NodeType, ArcType>& graph
                 return 1;
             }
         }
-        
+
         // if we get here, those two vertices and their outbound arcs
         // were equal; so advance to next element
         itr1++;
         itr2++;
     }
-    
+
     // if we get here, everything from me matched graph2, so either equal,
     // or one is shorter than the other (fewer vertices) and is therefore less
     if (itr1 == g1end && itr2 == g2end) {
@@ -1525,39 +1532,39 @@ int Graph<NodeType, ArcType>::graphCompare(const Graph<NodeType, ArcType>& graph
 /*
  * Operators
  */
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::operator ==(const Graph& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::operator==(const Graph &graph2) const {
     // optimization: if sizes not same, graphs not equal
     if (_nodes.size() != graph2._nodes.size()
-            || _arcs.size() != graph2._arcs.size()
-            || _nodeMap.size() != graph2._nodeMap.size()) {
+        || _arcs.size() != graph2._arcs.size()
+        || _nodeMap.size() != graph2._nodeMap.size()) {
         return false;
     }
     return graphCompare(graph2) == 0;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::operator !=(const Graph& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::operator!=(const Graph &graph2) const {
     return !(*this == graph2);
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::operator <(const Graph& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::operator<(const Graph &graph2) const {
     return graphCompare(graph2) < 0;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::operator <=(const Graph& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::operator<=(const Graph &graph2) const {
     return graphCompare(graph2) <= 0;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::operator >(const Graph& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::operator>(const Graph &graph2) const {
     return graphCompare(graph2) > 0;
 }
 
-template <typename NodeType, typename ArcType>
-bool Graph<NodeType, ArcType>::operator >=(const Graph& graph2) const {
+template<typename NodeType, typename ArcType>
+bool Graph<NodeType, ArcType>::operator>=(const Graph &graph2) const {
     return graphCompare(graph2) >= 0;
 }
 
@@ -1569,11 +1576,11 @@ bool Graph<NodeType, ArcType>::operator >=(const Graph& graph2) const {
  * correctly written and read by these operators, clients must override
  * the methods writeNodeData, writeArcData, scanNodeData, and scanArcData.
  */
-template <typename NodeType, typename ArcType>
-std::ostream& operator <<(std::ostream& os, const Graph<NodeType, ArcType>& g) {
+template<typename NodeType, typename ArcType>
+std::ostream &operator<<(std::ostream &os, const Graph<NodeType, ArcType> &g) {
     os << "{";
     bool started = false;
-    for (NodeType* node : g.getNodeSet()) {
+    for (NodeType *node : g.getNodeSet()) {
         if (started) {
             os << ", ";
         }
@@ -1581,7 +1588,7 @@ std::ostream& operator <<(std::ostream& os, const Graph<NodeType, ArcType>& g) {
         g.writeNodeData(os, node);
         started = true;
     }
-    for (ArcType* arc : g.getArcSet()) {
+    for (ArcType *arc : g.getArcSet()) {
         os << ", ";
         writeGenericValue(os, arc->start->name, stringIsInteger(arc->start->name) || stringIsReal(arc->start->name));
         os << " -> ";
@@ -1599,8 +1606,8 @@ std::ostream& operator <<(std::ostream& os, const Graph<NodeType, ArcType>& g) {
  * correctly written and read by these operators, clients must override
  * the methods writeNodeData, writeArcData, scanNodeData, and scanArcData.
  */
-template <typename NodeType, typename ArcType>
-std::istream& operator >>(std::istream& is, Graph<NodeType, ArcType>& g) {
+template<typename NodeType, typename ArcType>
+std::istream &operator>>(std::istream &is, Graph<NodeType, ArcType> &g) {
     TokenScanner scanner(is);
     scanner.ignoreWhitespace();
     scanner.scanNumbers();
@@ -1641,13 +1648,13 @@ std::istream& operator >>(std::istream& is, Graph<NodeType, ArcType>& g) {
 /**
  * Template hash function for graphs.
  */
-template <typename NodeType, typename ArcType>
-int hashCode(const Graph<NodeType, ArcType>& graph) {
+template<typename NodeType, typename ArcType>
+int hashCode(const Graph<NodeType, ArcType> &graph) {
     int code = hashSeed();
-    for (NodeType* node : graph) {
+    for (NodeType *node : graph) {
         code = hashMultiplier() * code + hashCode(node->name);
     }
-    for (ArcType* arc : graph.getArcSet()) {
+    for (ArcType *arc : graph.getArcSet()) {
         code = hashMultiplier() * code + hashCode(arc->start->name);
         code = hashMultiplier() * code + hashCode(arc->finish->name);
     }

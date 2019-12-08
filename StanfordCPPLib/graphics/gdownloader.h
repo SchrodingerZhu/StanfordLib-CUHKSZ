@@ -39,7 +39,7 @@
  * It can save the data to a file or return the data as a string.
  */
 class GDownloader : public QObject {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     /**
@@ -56,13 +56,13 @@ public:
      * Downloads the text contents of the given URL, returning them as a string.
      * This method blocks until the data is finished downloading.
      */
-    std::string downloadAsString(const std::string& url);
+    std::string downloadAsString(const std::string &url);
 
     /**
      * Downloads the text contents of the given URL, saving it to the given output file.
      * This method blocks until the data is finished downloading.
      */
-    void downloadToFile(const std::string& url, const std::string& file);
+    void downloadToFile(const std::string &url, const std::string &file);
 
     /**
      * Returns the last HTTP error message that occurred.
@@ -74,7 +74,7 @@ public:
      * Returns the value of the given HTTP header for this URL request.
      * If the given header is not defined, returns an empty string.
      */
-    std::string getHeader(const std::string& name) const;
+    std::string getHeader(const std::string &name) const;
 
     /**
      * Returns the most recent HTTP status code, which may be a successful
@@ -99,13 +99,13 @@ public:
      * Performs an HTTP GET request to the given URL.
      * along with any headers previously specified.
      */
-    void httpGet(const std::string& url);
+    void httpGet(const std::string &url);
 
     /**
      * Performs an HTTP POST request to the given URL,
      * submitting any headers and query parameters previously specified.
      */
-    void httpPost(const std::string& url);
+    void httpPost(const std::string &url);
 
     /**
      * Sets the value of the given HTTP header for this URL request.
@@ -114,7 +114,7 @@ public:
      *
      * @example stream.setHeader("Referer", "http://cs106b.stanford.edu/");
      */
-    void setHeader(const std::string& name, const std::string& value);
+    void setHeader(const std::string &name, const std::string &value);
 
     /**
      * Sets the value of the HTTP "User-Agent" header for this URL request.
@@ -124,19 +124,25 @@ public:
      *
      * @example stream.setUserAgent("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
      */
-    void setUserAgent(const std::string& userAgent);
+    void setUserAgent(const std::string &userAgent);
 
 signals:
+
     /**
      * This Qt signal fires when the data is done downloading.
      */
     void downloaded();
 
 private slots:
+
     void downloadInternal();
+
     void fileDownloadError(QNetworkReply::NetworkError);
-    void saveDownloadedData(const std::string& member, const std::string& filename = "");
+
+    void saveDownloadedData(const std::string &member, const std::string &filename = "");
+
     void sslErrors(QList<QSslError>);
+
     void waitForDownload();
 
 private:
@@ -144,8 +150,8 @@ private:
 
     static std::string qtNetworkErrorToString(QNetworkReply::NetworkError nerror);
 
-    QNetworkAccessManager* _manager;
-    QNetworkReply* _reply;
+    QNetworkAccessManager *_manager;
+    QNetworkReply *_reply;
     Map<std::string, std::string> _headers;   // HTTP headers to send (name => value)
     int _httpStatusCode;
     bool _downloadComplete;

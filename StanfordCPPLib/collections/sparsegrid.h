@@ -61,11 +61,12 @@
  * This class stores an indexed, two-dimensional array.
  */
 
-template <typename ValueType>
+template<typename ValueType>
 class SparseGrid {
 public:
     /* Forward reference */
     class SparseGridRow;
+
     class SparseGridRowConst;
 
     /*
@@ -83,8 +84,10 @@ public:
      * fills every cell of the grid with that value.
      */
     SparseGrid();
+
     SparseGrid(int _rowCount, int _columnCount);
-    SparseGrid(int _rowCount, int _columnCount, const ValueType& value);
+
+    SparseGrid(int _rowCount, int _columnCount, const ValueType &value);
 
     /*
      * This constructor uses an initializer list to set up the grid.
@@ -126,7 +129,7 @@ public:
      * values as the given other grid.
      * Identical in behavior to the == operator.
      */
-    bool equals(const SparseGrid<ValueType>& grid) const;
+    bool equals(const SparseGrid<ValueType> &grid) const;
 
     /*
      * Method: fill
@@ -134,7 +137,7 @@ public:
      * ------------------------
      * Stores the given value in every cell of this grid.
      */
-    void fill(const ValueType& value);
+    void fill(const ValueType &value);
 
     /*
      * Method: front
@@ -160,9 +163,12 @@ public:
      * arguments are outside the grid boundaries.
      */
     ValueType get(int row, int col);
-    const ValueType& get(int row, int col) const;
-    ValueType get(const GridLocation& loc);
-    const ValueType& get(const GridLocation& loc) const;
+
+    const ValueType &get(int row, int col) const;
+
+    ValueType get(const GridLocation &loc);
+
+    const ValueType &get(const GridLocation &loc) const;
 
     /*
      * Method: height
@@ -171,7 +177,7 @@ public:
      * Returns the grid's height, that is, the number of rows in the grid.
      */
     int height() const;
-    
+
     /*
      * Method: inBounds
      * Usage: if (grid.inBounds(row, col)) ...
@@ -180,7 +186,8 @@ public:
      * is inside the bounds of the grid.
      */
     bool inBounds(int row, int col) const;
-    bool inBounds(const GridLocation& loc) const;
+
+    bool inBounds(const GridLocation &loc) const;
 
     /*
      * Method: isEmpty
@@ -200,7 +207,8 @@ public:
      * there by a previous call to fill, set, [], etc.
      */
     bool isSet(int row, int col) const;
-    bool isSet(const GridLocation& loc) const;
+
+    bool isSet(const GridLocation &loc) const;
 
     /*
      * Method: locations
@@ -225,9 +233,10 @@ public:
      * in row 1, and so on.
      */
     void mapAll(void (*fn)(ValueType value)) const;
-    void mapAll(void (*fn)(const ValueType& value)) const;
 
-    template <typename FunctorType>
+    void mapAll(void (*fn)(const ValueType &value)) const;
+
+    template<typename FunctorType>
     void mapAll(FunctorType fn) const;
 
     /*
@@ -267,8 +276,9 @@ public:
      * if the <code>row</code> and <code>col</code> arguments are outside
      * the grid boundaries.
      */
-    void set(int row, int col, const ValueType& value);
-    void set(const GridLocation& loc, const ValueType& value);
+    void set(int row, int col, const ValueType &value);
+
+    void set(const GridLocation &loc, const ValueType &value);
 
     /*
      * Method: size
@@ -318,7 +328,8 @@ public:
      * arguments are outside the grid boundaries.
      */
     void unset(int row, int col);
-    void unset(const GridLocation& loc);
+
+    void unset(const GridLocation &loc);
 
     /*
      * Method: width
@@ -342,10 +353,13 @@ public:
      * This method signals an error if the <code>row</code> and <code>col</code>
      * arguments are outside the grid boundaries.
      */
-    SparseGridRow operator [](int row);
-    const SparseGridRowConst operator [](int row) const;
-    ValueType& operator [](const GridLocation& loc);
-    const ValueType& operator [](const GridLocation& loc) const;
+    SparseGridRow operator[](int row);
+
+    const SparseGridRowConst operator[](int row) const;
+
+    ValueType &operator[](const GridLocation &loc);
+
+    const ValueType &operator[](const GridLocation &loc) const;
 
     /*
      * Additional SparseGrid operations
@@ -366,7 +380,7 @@ public:
      * ------------------------------
      * Compares two grids for equality.
      */
-    bool operator ==(const SparseGrid& grid2) const;
+    bool operator==(const SparseGrid &grid2) const;
 
     /*
      * Operator: !=
@@ -374,7 +388,7 @@ public:
      * ------------------------------
      * Compares two grids for inequality.
      */
-    bool operator !=(const SparseGrid& grid2) const;
+    bool operator!=(const SparseGrid &grid2) const;
 
     /*
      * Operators: <, >, <=, >=
@@ -384,10 +398,13 @@ public:
      * The <, >, <=, >= operators require that the ValueType has a < operator
      * so that the elements can be compared pairwise.
      */
-    bool operator <(const SparseGrid& grid2) const;
-    bool operator <=(const SparseGrid& grid2) const;
-    bool operator >(const SparseGrid& grid2) const;
-    bool operator >=(const SparseGrid& grid2) const;
+    bool operator<(const SparseGrid &grid2) const;
+
+    bool operator<=(const SparseGrid &grid2) const;
+
+    bool operator>(const SparseGrid &grid2) const;
+
+    bool operator>=(const SparseGrid &grid2) const;
 
     /* Private section */
 
@@ -427,7 +444,8 @@ private:
     void checkIndexes(int row, int col,
                       int rowMax, int colMax,
                       std::string prefix) const;
-    int gridCompare(const SparseGrid& grid2) const;
+
+    int gridCompare(const SparseGrid &grid2) const;
 
     /*
      * Hidden features
@@ -451,30 +469,30 @@ private:
      * by reference, however, when a copy is needed, these operations
      * are supported.
      */
-    void deepCopy(const SparseGrid& grid) {
+    void deepCopy(const SparseGrid &grid) {
         _elements = grid._elements;
         _rowCount = grid._rowCount;
         _columnCount = grid._columnCount;
     }
 
-    template <typename T>
-    friend const T& randomElement(const SparseGrid<T>& grid);
+    template<typename T>
+    friend const T &randomElement(const SparseGrid<T> &grid);
 
-    template <typename T>
-    friend std::ostream& operator <<(std::ostream& os, const SparseGrid<T>& grid);
+    template<typename T>
+    friend std::ostream &operator<<(std::ostream &os, const SparseGrid<T> &grid);
 
-    template <typename T>
-    friend std::istream& operator >>(std::istream& is, SparseGrid<T>& grid);
+    template<typename T>
+    friend std::istream &operator>>(std::istream &is, SparseGrid<T> &grid);
 
 public:
-    SparseGrid& operator =(const SparseGrid& src) {
+    SparseGrid &operator=(const SparseGrid &src) {
         if (this != &src) {
             deepCopy(src);
         }
         return *this;
     }
 
-    SparseGrid(const SparseGrid& src) {
+    SparseGrid(const SparseGrid &src) {
         deepCopy(src);
     }
 
@@ -487,49 +505,49 @@ public:
      */
     class iterator : public std::iterator<std::input_iterator_tag, ValueType> {
     public:
-        iterator(const SparseGrid* gp, int index)
+        iterator(const SparseGrid *gp, int index)
                 : gp(gp),
                   index(index),
                   itr_version(gp->version()) {
             // empty
         }
 
-        iterator(const iterator& it)
+        iterator(const iterator &it)
                 : gp(it.gp),
                   index(it.index),
                   itr_version(it.itr_version) {
             // empty
         }
 
-        iterator& operator ++() {
+        iterator &operator++() {
             stanfordcpplib::collections::checkVersion(*gp, *this);
             index++;
             return *this;
         }
 
-        iterator operator ++(int) {
+        iterator operator++(int) {
             stanfordcpplib::collections::checkVersion(*gp, *this);
             iterator copy(*this);
             operator++();
             return copy;
         }
 
-        bool operator ==(const iterator& rhs) {
+        bool operator==(const iterator &rhs) {
             return gp == rhs.gp && index == rhs.index;
         }
 
-        bool operator !=(const iterator& rhs) {
+        bool operator!=(const iterator &rhs) {
             return !(*this == rhs);
         }
 
-        ValueType operator *() {
+        ValueType operator*() {
             stanfordcpplib::collections::checkVersion(*gp, *this);
             int row = index / gp->_columnCount;
             int col = index % gp->_columnCount;
             return gp->_elements[row][col];
         }
 
-        ValueType* operator ->() {
+        ValueType *operator->() {
             stanfordcpplib::collections::checkVersion(*gp, *this);
             int row = index / gp->_columnCount;
             int col = index % gp->_columnCount;
@@ -541,7 +559,7 @@ public:
         }
 
     private:
-        const SparseGrid* gp;
+        const SparseGrid *gp;
         int index;
         unsigned int itr_version;
     };
@@ -572,66 +590,70 @@ public:
             /* Empty */
         }
 
-        ValueType& operator [](int col) {
-            _gp->checkIndexes(_row, col, _gp->_rowCount-1, _gp->_columnCount-1, "operator [][]");
+        ValueType &operator[](int col) {
+            _gp->checkIndexes(_row, col, _gp->_rowCount - 1, _gp->_columnCount - 1, "operator [][]");
             return _gp->_elements[_row][col];
         }
 
-        const ValueType& operator [](int col) const {
-            _gp->checkIndexes(_row, col, _gp->_rowCount-1, _gp->_columnCount-1, "operator [][]");
+        const ValueType &operator[](int col) const {
+            _gp->checkIndexes(_row, col, _gp->_rowCount - 1, _gp->_columnCount - 1, "operator [][]");
             return _gp->_elements[_row][col];
         }
 
     private:
-        SparseGridRow(SparseGrid* gridRef, int index) {
+        SparseGridRow(SparseGrid *gridRef, int index) {
             _gp = gridRef;
             _row = index;
         }
 
-        SparseGrid* _gp;
+        SparseGrid *_gp;
         int _row;
+
         friend class SparseGrid;
     };
+
     friend class SparseGridRow;
 
     class SparseGridRowConst {
     public:
-        const ValueType operator [](int col) const {
-            _gp->checkIndexes(_row, col, _gp->_rowCount-1, _gp->_columnCount-1, "operator [][]");
+        const ValueType operator[](int col) const {
+            _gp->checkIndexes(_row, col, _gp->_rowCount - 1, _gp->_columnCount - 1, "operator [][]");
             return _gp->_elements[_row][col];
         }
 
     private:
-        SparseGridRowConst(SparseGrid* const gridRef, int index) : _gp(gridRef), _row(index) {
+        SparseGridRowConst(SparseGrid *const gridRef, int index) : _gp(gridRef), _row(index) {
             // empty
         }
 
-        const SparseGrid* const _gp;
+        const SparseGrid *const _gp;
         const int _row;
+
         friend class SparseGrid;
     };
+
     friend class SparseGridRowConst;
 };
 
-template <typename ValueType>
+template<typename ValueType>
 SparseGrid<ValueType>::SparseGrid()
         : _rowCount(0),
           _columnCount(0) {
     // empty
 }
 
-template <typename ValueType>
+template<typename ValueType>
 SparseGrid<ValueType>::SparseGrid(int nRows, int nCols) {
     resize(nRows, nCols);
 }
 
-template <typename ValueType>
-SparseGrid<ValueType>::SparseGrid(int nRows, int nCols, const ValueType& value) {
+template<typename ValueType>
+SparseGrid<ValueType>::SparseGrid(int nRows, int nCols, const ValueType &value) {
     resize(nRows, nCols);
     fill(value);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 SparseGrid<ValueType>::SparseGrid(std::initializer_list<std::initializer_list<ValueType>> list)
         : _rowCount(0),
           _columnCount(0) {
@@ -658,12 +680,12 @@ SparseGrid<ValueType>::SparseGrid(std::initializer_list<std::initializer_list<Va
 }
 
 
-template <typename ValueType>
+template<typename ValueType>
 SparseGrid<ValueType>::~SparseGrid() {
     // empty
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType SparseGrid<ValueType>::back() const {
     if (isEmpty()) {
         error("SparseGrid::back: grid is empty");
@@ -673,13 +695,13 @@ ValueType SparseGrid<ValueType>::back() const {
     return _elements[lastRow][lastCol];
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void SparseGrid<ValueType>::clear() {
     _elements.clear();
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::equals(const SparseGrid<ValueType>& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::equals(const SparseGrid<ValueType> &grid2) const {
     // optimization: if literally same grid, stop
     if (this == &grid2) {
         return true;
@@ -705,8 +727,8 @@ bool SparseGrid<ValueType>::equals(const SparseGrid<ValueType>& grid2) const {
     return true;
 }
 
-template <typename ValueType>
-void SparseGrid<ValueType>::fill(const ValueType& value) {
+template<typename ValueType>
+void SparseGrid<ValueType>::fill(const ValueType &value) {
     for (int row = 0; row < _rowCount; row++) {
         for (int col = 0; col < _columnCount; col++) {
             set(row, col, value);
@@ -714,7 +736,7 @@ void SparseGrid<ValueType>::fill(const ValueType& value) {
     }
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType SparseGrid<ValueType>::front() const {
     if (isEmpty()) {
         error("SparseGrid::front: grid is empty");
@@ -722,65 +744,65 @@ ValueType SparseGrid<ValueType>::front() const {
     return *begin();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 ValueType SparseGrid<ValueType>::get(int row, int col) {
-    checkIndexes(row, col, _rowCount-1, _columnCount-1, "get");
+    checkIndexes(row, col, _rowCount - 1, _columnCount - 1, "get");
     return _elements[row][col];
 }
 
-template <typename ValueType>
-const ValueType& SparseGrid<ValueType>::get(int row, int col) const {
-    checkIndexes(row, col, _rowCount-1, _columnCount-1, "get");
+template<typename ValueType>
+const ValueType &SparseGrid<ValueType>::get(int row, int col) const {
+    checkIndexes(row, col, _rowCount - 1, _columnCount - 1, "get");
     return _elements[row][col];
 }
 
-template <typename ValueType>
-ValueType SparseGrid<ValueType>::get(const GridLocation& loc) {
+template<typename ValueType>
+ValueType SparseGrid<ValueType>::get(const GridLocation &loc) {
     return get(loc.row, loc.col);
 }
 
-template <typename ValueType>
-const ValueType& SparseGrid<ValueType>::get(const GridLocation& loc) const {
+template<typename ValueType>
+const ValueType &SparseGrid<ValueType>::get(const GridLocation &loc) const {
     return get(loc.row, loc.col);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int SparseGrid<ValueType>::height() const {
     return _rowCount;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 bool SparseGrid<ValueType>::inBounds(int row, int col) const {
     return row >= 0 && col >= 0 && row < _rowCount && col < _columnCount;
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::inBounds(const GridLocation& loc) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::inBounds(const GridLocation &loc) const {
     return inBounds(loc.row, loc.col);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 bool SparseGrid<ValueType>::isEmpty() const {
     return _elements.isEmpty();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 bool SparseGrid<ValueType>::isSet(int row, int col) const {
     return inBounds(row, col) && _elements.containsKey(row) &&
-            _elements[row].containsKey(col);
+           _elements[row].containsKey(col);
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::isSet(const GridLocation& loc) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::isSet(const GridLocation &loc) const {
     return isSet(loc.row, loc.col);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 GridLocationRange SparseGrid<ValueType>::locations(bool rowMajor) const {
     return GridLocationRange(0, 0, numRows() - 1, numCols() - 1, rowMajor);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void SparseGrid<ValueType>::mapAll(void (*fn)(ValueType value)) const {
     for (int row = 0; row < _rowCount; row++) {
         for (int col = 0; col < _columnCount; col++) {
@@ -791,8 +813,8 @@ void SparseGrid<ValueType>::mapAll(void (*fn)(ValueType value)) const {
     }
 }
 
-template <typename ValueType>
-void SparseGrid<ValueType>::mapAll(void (*fn)(const ValueType& value)) const {
+template<typename ValueType>
+void SparseGrid<ValueType>::mapAll(void (*fn)(const ValueType &value)) const {
     for (int row = 0; row < _rowCount; row++) {
         for (int col = 0; col < _columnCount; col++) {
             if (isSet(row, col)) {
@@ -802,8 +824,8 @@ void SparseGrid<ValueType>::mapAll(void (*fn)(const ValueType& value)) const {
     }
 }
 
-template <typename ValueType>
-template <typename FunctorType>
+template<typename ValueType>
+template<typename FunctorType>
 void SparseGrid<ValueType>::mapAll(FunctorType fn) const {
     for (int row = 0; row < _rowCount; row++) {
         for (int col = 0; col < _columnCount; col++) {
@@ -814,29 +836,29 @@ void SparseGrid<ValueType>::mapAll(FunctorType fn) const {
     }
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int SparseGrid<ValueType>::numCols() const {
     return _columnCount;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int SparseGrid<ValueType>::numRows() const {
     return _rowCount;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void SparseGrid<ValueType>::resize(int nRows, int nCols, bool retain) {
     if (nRows < 0 || nCols < 0) {
         std::ostringstream out;
         out << "SparseGrid::resize: Attempt to resize grid to invalid size ("
-               << nRows << ", " << nCols << ")";
+            << nRows << ", " << nCols << ")";
         error(out.str());
     }
     int oldnRows = this->_rowCount;
     int oldnCols = this->_columnCount;
     this->_rowCount = nRows;
     this->_columnCount = nCols;
-    
+
     if (retain) {
         // if resizing to a smaller size, must evict any row/col entries
         // that exceed the new grid's bounds
@@ -861,19 +883,19 @@ void SparseGrid<ValueType>::resize(int nRows, int nCols, bool retain) {
     _version++;
 }
 
-template <typename ValueType>
-void SparseGrid<ValueType>::set(int row, int col, const ValueType& value) {
-    checkIndexes(row, col, _rowCount-1, _columnCount-1, "set");
+template<typename ValueType>
+void SparseGrid<ValueType>::set(int row, int col, const ValueType &value) {
+    checkIndexes(row, col, _rowCount - 1, _columnCount - 1, "set");
     _elements[row][col] = value;
     _version++;
 }
 
-template <typename ValueType>
-void SparseGrid<ValueType>::set(const GridLocation& loc, const ValueType& value) {
+template<typename ValueType>
+void SparseGrid<ValueType>::set(const GridLocation &loc, const ValueType &value) {
     set(loc.row, loc.col, value);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int SparseGrid<ValueType>::size() const {
     int count = 0;
     for (int row : _elements) {
@@ -882,14 +904,14 @@ int SparseGrid<ValueType>::size() const {
     return count;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 std::string SparseGrid<ValueType>::toString() const {
     std::ostringstream os;
     os << *this;
     return os.str();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 std::string SparseGrid<ValueType>::toString2D(
         std::string rowStart, std::string rowEnd,
         std::string colSeparator, std::string rowSeparator) const {
@@ -919,9 +941,9 @@ std::string SparseGrid<ValueType>::toString2D(
     return os.str();
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void SparseGrid<ValueType>::unset(int row, int col) {
-    checkIndexes(row, col, _rowCount-1, _columnCount-1, "unset");
+    checkIndexes(row, col, _rowCount - 1, _columnCount - 1, "unset");
     if (_elements.containsKey(row)) {
         _elements[row].remove(col);
         if (_elements[row].isEmpty()) {
@@ -931,22 +953,22 @@ void SparseGrid<ValueType>::unset(int row, int col) {
     _version++;
 }
 
-template <typename ValueType>
-void SparseGrid<ValueType>::unset(const GridLocation& loc) {
+template<typename ValueType>
+void SparseGrid<ValueType>::unset(const GridLocation &loc) {
     unset(loc.row, loc.col);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 unsigned int SparseGrid<ValueType>::version() const {
     return _version;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 int SparseGrid<ValueType>::width() const {
     return _columnCount;
 }
 
-template <typename ValueType>
+template<typename ValueType>
 void SparseGrid<ValueType>::checkIndexes(int row, int col,
                                          int rowMax, int colMax,
                                          std::string prefix) const {
@@ -957,18 +979,18 @@ void SparseGrid<ValueType>::checkIndexes(int row, int col,
         out << "SparseGrid::" << prefix << ": (" << row << ", " << col << ")"
             << " is outside of valid range [";
         if (rowMin < rowMax && colMin < colMax) {
-            out << "(" << rowMin << ", " << colMin <<  ")..("
+            out << "(" << rowMin << ", " << colMin << ")..("
                 << rowMax << ", " << colMax << ")";
         } else if (rowMin == rowMax && colMin == colMax) {
-            out << "(" << rowMin << ", " << colMin <<  ")";
+            out << "(" << rowMin << ", " << colMin << ")";
         } // else min > max, no range, empty grid
         out << "]";
         error(out.str());
     }
 }
 
-template <typename ValueType>
-int SparseGrid<ValueType>::gridCompare(const SparseGrid& grid2) const {
+template<typename ValueType>
+int SparseGrid<ValueType>::gridCompare(const SparseGrid &grid2) const {
     int h1 = height();
     int w1 = width();
     int h2 = grid2.height();
@@ -982,19 +1004,19 @@ int SparseGrid<ValueType>::gridCompare(const SparseGrid& grid2) const {
             } else if (r >= h2) {
                 return 1;
             }
-            
+
             if (c >= w1) {
                 return -1;
             } else if (c >= w2) {
                 return 1;
             }
-            
+
             if (!isSet(r, c) && grid2.isSet(r, c)) {
                 return -1;
             } else if (isSet(r, c) && !grid2.isSet(r, c)) {
                 return 1;
             }
-            
+
             if (get(r, c) < grid2.get(r, c)) {
                 return -1;
             } else if (grid2.get(r, c) < get(r, c)) {
@@ -1005,56 +1027,56 @@ int SparseGrid<ValueType>::gridCompare(const SparseGrid& grid2) const {
     return 0;
 }
 
-template <typename ValueType>
-typename SparseGrid<ValueType>::SparseGridRow SparseGrid<ValueType>::operator [](int row) {
+template<typename ValueType>
+typename SparseGrid<ValueType>::SparseGridRow SparseGrid<ValueType>::operator[](int row) {
     return SparseGridRow(this, row);
 }
 
-template <typename ValueType>
+template<typename ValueType>
 const typename SparseGrid<ValueType>::SparseGridRowConst
-SparseGrid<ValueType>::operator [](int row) const {
-    return SparseGridRowConst(const_cast<SparseGrid*>(this), row);
+SparseGrid<ValueType>::operator[](int row) const {
+    return SparseGridRowConst(const_cast<SparseGrid *>(this), row);
 }
 
-template <typename ValueType>
-ValueType& SparseGrid<ValueType>::operator [](const GridLocation& loc) {
-    checkIndexes(loc.row, loc.col, _rowCount-1, _columnCount-1, "operator []");
+template<typename ValueType>
+ValueType &SparseGrid<ValueType>::operator[](const GridLocation &loc) {
+    checkIndexes(loc.row, loc.col, _rowCount - 1, _columnCount - 1, "operator []");
     return _elements[loc.row][loc.col];
 }
 
-template <typename ValueType>
-const ValueType& SparseGrid<ValueType>::operator [](const GridLocation& loc) const {
-    checkIndexes(loc.row, loc.col, _rowCount-1, _columnCount-1, "operator []");
+template<typename ValueType>
+const ValueType &SparseGrid<ValueType>::operator[](const GridLocation &loc) const {
+    checkIndexes(loc.row, loc.col, _rowCount - 1, _columnCount - 1, "operator []");
     return _elements[loc.row][loc.col];
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::operator ==(const SparseGrid& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::operator==(const SparseGrid &grid2) const {
     return equals(grid2);
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::operator !=(const SparseGrid& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::operator!=(const SparseGrid &grid2) const {
     return !equals(grid2);
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::operator <(const SparseGrid& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::operator<(const SparseGrid &grid2) const {
     return gridCompare(grid2) < 0;
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::operator <=(const SparseGrid& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::operator<=(const SparseGrid &grid2) const {
     return gridCompare(grid2) <= 0;
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::operator >(const SparseGrid& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::operator>(const SparseGrid &grid2) const {
     return gridCompare(grid2) > 0;
 }
 
-template <typename ValueType>
-bool SparseGrid<ValueType>::operator >=(const SparseGrid& grid2) const {
+template<typename ValueType>
+bool SparseGrid<ValueType>::operator>=(const SparseGrid &grid2) const {
     return gridCompare(grid2) >= 0;
 }
 
@@ -1065,14 +1087,14 @@ bool SparseGrid<ValueType>::operator >=(const SparseGrid& grid2) const {
  * strlib.h to read and write generic values in a way that treats strings
  * specially.
  */
-template <typename ValueType>
-std::ostream& operator <<(std::ostream& os, const SparseGrid<ValueType>& grid) {
+template<typename ValueType>
+std::ostream &operator<<(std::ostream &os, const SparseGrid<ValueType> &grid) {
     os << grid._elements << ", " << grid._rowCount << " x " << grid._columnCount;
     return os;
 }
 
-template <typename ValueType>
-std::istream& operator >>(std::istream& is, SparseGrid<ValueType>& grid) {
+template<typename ValueType>
+std::istream &operator>>(std::istream &is, SparseGrid<ValueType> &grid) {
     // "{...}, 4 x 3"
 
     // read "{...}" (map of elements)
@@ -1119,8 +1141,8 @@ std::istream& operator >>(std::istream& is, SparseGrid<ValueType>& grid) {
  * Template hash function for sparse grids.
  * Requires the element type in the SparseGrid to have a hashCode function.
  */
-template <typename T>
-int hashCode(const SparseGrid<T>& grid) {
+template<typename T>
+int hashCode(const SparseGrid<T> &grid) {
     return stanfordcpplib::collections::hashCodeCollection(grid);
 }
 
@@ -1131,12 +1153,12 @@ int hashCode(const SparseGrid<T>& grid) {
  * Returns a randomly chosen element of the given grid.
  * Throws an error if the grid is empty.
  */
-template <typename T>
-const T& randomElement(const SparseGrid<T>& grid) {
+template<typename T>
+const T &randomElement(const SparseGrid<T> &grid) {
     if (grid.isEmpty()) {
         error("randomElement: empty sparse grid was passed");
     }
-    
+
     // pick a non-empty row, then pick a random element from it
     // TODO: fix, this is NOT evenly distributed when rows/cols are unequal in size
     int row = randomKey(grid._elements);

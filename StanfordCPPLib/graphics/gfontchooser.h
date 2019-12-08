@@ -41,21 +41,21 @@ public:
      * and the given initially selected font.  All arguments are optional.
      * @param initialFont a font string such as "Helvetica-12-Bold".
      */
-    static std::string showDialog(const std::string& title = "", const std::string& initialFont = "");
+    static std::string showDialog(const std::string &title = "", const std::string &initialFont = "");
 
     /**
      * Pops up a font chooser dialog with the given top title text
      * and the given initially selected font.  All arguments are optional.
      * @param initialFont a font string such as "Helvetica-12-Bold".
      */
-    static std::string showDialog(GWindow* parent, const std::string& title = "", const std::string& initialFont = "");
+    static std::string showDialog(GWindow *parent, const std::string &title = "", const std::string &initialFont = "");
 
     /**
      * Pops up a font chooser dialog with the given top title text
      * and the given initially selected font.  All arguments are optional.
      * @param initialFont a font string such as "Helvetica-12-Bold".
      */
-    static std::string showDialog(QWidget* parent, const std::string& title = "", const std::string& initialFont = "");
+    static std::string showDialog(QWidget *parent, const std::string &title = "", const std::string &initialFont = "");
 
 private:
     GFontChooser();   // prevent construction

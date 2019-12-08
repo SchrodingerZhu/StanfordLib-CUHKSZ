@@ -21,9 +21,9 @@
 #include <io/xmlutils.h>
 #include "private/static.h"
 
-GInputPanel* GInputPanel::_instance = nullptr;
+GInputPanel *GInputPanel::_instance = nullptr;
 
-GInputPanel* GInputPanel::instance() {
+GInputPanel *GInputPanel::instance() {
     if (!_instance) {
         _instance = new GInputPanel();
     }
@@ -35,19 +35,19 @@ GInputPanel::GInputPanel()
     // empty
 }
 
-void GInputPanel::addButton(const std::string& /*text*/, const std::string& /*input*/) {
+void GInputPanel::addButton(const std::string & /*text*/, const std::string & /*input*/) {
     // TODO
 }
 
-void GInputPanel::addCategory(const std::string& /*name*/) {
+void GInputPanel::addCategory(const std::string & /*name*/) {
     // TODO
 }
 
-void GInputPanel::removeCategory(const std::string& /*name*/) {
+void GInputPanel::removeCategory(const std::string & /*name*/) {
     // TODO
 }
 
-void GInputPanel::removeButton(const std::string& /*text*/) {
+void GInputPanel::removeButton(const std::string & /*text*/) {
     // TODO
 }
 
@@ -59,22 +59,22 @@ bool GInputPanel::isLoaded() const {
     return _loaded;
 }
 
-void GInputPanel::load(const std::string& xmlFilename) {
+void GInputPanel::load(const std::string &xmlFilename) {
     if (isLoaded() || !fileExists(xmlFilename)) {
         return;
     }
 
     _loaded = true;
-    rapidxml::xml_node<>* doc = xmlutils::openXmlDocument(xmlFilename, "inputpanel");
-    for (rapidxml::xml_node<>* category : xmlutils::getChildNodes(doc, "category")) {
+    rapidxml::xml_node<> *doc = xmlutils::openXmlDocument(xmlFilename, "inputpanel");
+    for (rapidxml::xml_node<> *category : xmlutils::getChildNodes(doc, "category")) {
         std::string categoryName = xmlutils::getAttribute(category, "name");
         addCategory(categoryName);
-        for (rapidxml::xml_node<>* button : xmlutils::getChildNodes(category, "button")) {
+        for (rapidxml::xml_node<> *button : xmlutils::getChildNodes(category, "button")) {
             std::string text = xmlutils::getAttribute(button, "text");
             std::string input = text;
             if (xmlutils::hasAttribute(button, "input")) {
                 input = xmlutils::getAttribute(button, "input");
-                
+
                 // preprocess text to allow stuff like \n, \\, &quot; from XML to C++
                 input = stringReplace(input, "\\n", "\n");
                 input = stringReplace(input, "\\t", "\t");

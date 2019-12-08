@@ -13,13 +13,18 @@
  */
 
 #include <system/os.h>
+
 #ifndef SPL_HEADLESS_MODE
+
 #include <QString>
 #include <QSysInfo>
+
 #endif // SPL_HEADLESS_MODE
+
 #include <util/strlib.h>
 
 #if !defined(SPL_HEADLESS_MODE) && QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+
 /*static*/ std::string OS::getName() {
     std::string productName = QSysInfo::prettyProductName().toStdString();
     return productName;
@@ -40,21 +45,22 @@ bool OS::isMac() {
     std::string kernelType = toLowerCase(QSysInfo::kernelType().toStdString());
     std::string productType = toLowerCase(QSysInfo::productType().toStdString());
     return stringContains(kernelType, "apple")
-            || stringContains(kernelType, "darwin")
-            || stringContains(kernelType, "mac")
-            || stringContains(kernelType, "ios")
-            || stringContains(productType, "apple")
-            || stringContains(productType, "ios")
-            || stringContains(productType, "mac")
-            || stringContains(productType, "osx");
+           || stringContains(kernelType, "darwin")
+           || stringContains(kernelType, "mac")
+           || stringContains(kernelType, "ios")
+           || stringContains(productType, "apple")
+           || stringContains(productType, "ios")
+           || stringContains(productType, "mac")
+           || stringContains(productType, "osx");
 }
 
 bool OS::isWindows() {
     std::string kernelType = toLowerCase(QSysInfo::kernelType().toStdString());
     std::string productType = toLowerCase(QSysInfo::productType().toStdString());
     return stringContains(kernelType, "windows")
-            || stringContains(productType, "windows");
+           || stringContains(productType, "windows");
 }
+
 #else
 /*static*/ std::string OS::getName() {
     return "unknown";

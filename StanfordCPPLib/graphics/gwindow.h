@@ -173,7 +173,7 @@ public:
      * This replaces the graphical canvas and causes the canvas to be hidden.
      * @throw ErrorException if the interactor is null
      */
-    virtual void add(GInteractor* interactor);
+    virtual void add(GInteractor *interactor);
 
     /**
      * Adds the given interactor to the center region of the window
@@ -181,27 +181,27 @@ public:
      * This replaces the graphical canvas and causes the canvas to be hidden.
      * @throw ErrorException if the interactor is null
      */
-    virtual void add(GInteractor* interactor, double x, double y);
+    virtual void add(GInteractor *interactor, double x, double y);
 
     /**
      * Adds the given interactor to the center region of the window.
      * This replaces the graphical canvas and causes the canvas to be hidden.
      */
-    virtual void add(GInteractor& interactor);
+    virtual void add(GInteractor &interactor);
 
     /**
      * Adds the given interactor to the center region of the window
      * and moves it to the given x/y location.
      * This replaces the graphical canvas and causes the canvas to be hidden.
      */
-    virtual void add(GInteractor& interactor, double x, double y);
+    virtual void add(GInteractor &interactor, double x, double y);
 
     /**
      * Adds the given graphical object to the window's canvas.
      * This causes the graphical canvas to appear if it was not already showing.
      * @throw ErrorException if the interactor is null
      */
-    virtual void add(GObject* obj);
+    virtual void add(GObject *obj);
 
     /**
      * Adds the given graphical object to the window's canvas
@@ -209,26 +209,26 @@ public:
      * This causes the graphical canvas to appear if it was not already showing.
      * @throw ErrorException if the interactor is null
      */
-    virtual void add(GObject* obj, double x, double y);
+    virtual void add(GObject *obj, double x, double y);
 
     /**
      * Adds the given graphical object to the window's canvas.
      * This causes the graphical canvas to appear if it was not already showing.
      */
-    virtual void add(GObject& obj);
+    virtual void add(GObject &obj);
 
     /**
      * Adds the given graphical object to the window's canvas
      * and moves it to the given x/y location.
      * This causes the graphical canvas to appear if it was not already showing.
      */
-    virtual void add(GObject& obj, double x, double y);
+    virtual void add(GObject &obj, double x, double y);
 
     /**
      * Adds a menu with the given text to the window's top menu bar.
      * If the given menu already exists, returns it without adding it again.
      */
-    virtual QMenu* addMenu(const std::string& text);
+    virtual QMenu *addMenu(const std::string &text);
 
     /**
      * Adds a new menu item to the given menu.
@@ -238,8 +238,8 @@ public:
      * When the menu item is clicked, an ACTION_MENU action event will occur.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuItem(const std::string& menu, const std::string& item,
-                                 const std::string& icon = "");
+    virtual QAction *addMenuItem(const std::string &menu, const std::string &item,
+                                 const std::string &icon = "");
 
     /**
      * Adds a new menu item to the given menu.
@@ -249,8 +249,8 @@ public:
      * When the menu item is clicked, the given listener function will be called.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuItem(const std::string& menu, const std::string& item,
-                                 const std::string& icon, GEventListenerVoid func);
+    virtual QAction *addMenuItem(const std::string &menu, const std::string &item,
+                                 const std::string &icon, GEventListenerVoid func);
 
     /**
      * Adds a new menu item to the given menu.
@@ -260,8 +260,8 @@ public:
      * When the menu item is clicked, the given listener function will be called.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuItem(const std::string& menu, const std::string& item,
-                                 const QIcon& icon, GEventListenerVoid func);
+    virtual QAction *addMenuItem(const std::string &menu, const std::string &item,
+                                 const QIcon &icon, GEventListenerVoid func);
 
     /**
      * Adds a new menu item to the given menu.
@@ -271,8 +271,8 @@ public:
      * When the menu item is clicked, the given listener function will be called.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuItem(const std::string& menu, const std::string& item,
-                                 const QPixmap& icon, GEventListenerVoid func);
+    virtual QAction *addMenuItem(const std::string &menu, const std::string &item,
+                                 const QPixmap &icon, GEventListenerVoid func);
 
     /**
      * Adds a new checkbox menu item to the given menu.
@@ -282,9 +282,9 @@ public:
      * When the menu item is clicked, an ACTION_MENU action event will occur.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuItemCheckBox(const std::string& menu, const std::string& item,
+    virtual QAction *addMenuItemCheckBox(const std::string &menu, const std::string &item,
                                          bool checked = false,
-                                         const std::string& icon = "");
+                                         const std::string &icon = "");
 
     /**
      * Adds a new checkbox menu item to the given menu.
@@ -294,15 +294,15 @@ public:
      * When the menu item is clicked, the given listener function will be called.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuItemCheckBox(const std::string& menu, const std::string& item,
+    virtual QAction *addMenuItemCheckBox(const std::string &menu, const std::string &item,
                                          bool checked,
-                                         const std::string& icon, GEventListenerVoid func);
+                                         const std::string &icon, GEventListenerVoid func);
 
     /**
      * Adds a horizontal line separator to the end of the given menu.
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QAction* addMenuSeparator(const std::string& menu);
+    virtual QAction *addMenuSeparator(const std::string &menu);
 
     /**
      * Adds a sub-menu within an existing menu.
@@ -311,34 +311,34 @@ public:
      * myWindow->addMenuItem(menu + "/" + submenu, item);
      * @throw ErrorException if the given menu does not exist
      */
-    virtual QMenu* addSubMenu(const std::string& menu, const std::string& submenu);
+    virtual QMenu *addSubMenu(const std::string &menu, const std::string &submenu);
 
     /**
      * Adds the given interactor to the given region in this window.
      * @throw ErrorException if the interactor is null
      */
-    virtual void addToRegion(GInteractor* interactor, Region region);
+    virtual void addToRegion(GInteractor *interactor, Region region);
 
     /**
      * Adds the given interactor to the given region in this window.
      * @throw ErrorException if the interactor is null
      */
-    virtual void addToRegion(GInteractor* interactor, const std::string& region = "Center");
+    virtual void addToRegion(GInteractor *interactor, const std::string &region = "Center");
 
     /**
      * Adds the given interactor to the given region in this window.
      */
-    virtual void addToRegion(GInteractor& interactor, Region region);
+    virtual void addToRegion(GInteractor &interactor, Region region);
 
     /**
      * Adds the given interactor to the given region in this window.
      */
-    virtual void addToRegion(GInteractor& interactor, const std::string& region = "Center");
+    virtual void addToRegion(GInteractor &interactor, const std::string &region = "Center");
 
     /**
      * Adds a toolbar to this window where action buttons can be placed.
      */
-    virtual void addToolbar(const std::string& title = "");
+    virtual void addToolbar(const std::string &title = "");
 
     /**
      * Adds a new item to the window's toolbar.
@@ -346,8 +346,8 @@ public:
      * You can supply an optional icon to show next to the menu item.
      * When the menu item is clicked, an ACTION_MENU action event will occur.
      */
-    virtual QAction* addToolbarItem(const std::string& item,
-                                    const std::string& icon = "");
+    virtual QAction *addToolbarItem(const std::string &item,
+                                    const std::string &icon = "");
 
     /**
      * Adds a new item to the window's toolbar.
@@ -355,8 +355,8 @@ public:
      * You can supply an optional icon to show next to the menu item.
      * When the menu item is clicked, the given listener function will be called.
      */
-    virtual QAction* addToolbarItem(const std::string& item,
-                                    const std::string& icon,
+    virtual QAction *addToolbarItem(const std::string &item,
+                                    const std::string &icon,
                                     GEventListenerVoid func);
 
     /**
@@ -365,8 +365,8 @@ public:
      * You can supply an optional icon to show next to the menu item.
      * When the menu item is clicked, the given listener function will be called.
      */
-    virtual QAction* addToolbarItem(const std::string& item,
-                                    const QIcon& icon,
+    virtual QAction *addToolbarItem(const std::string &item,
+                                    const QIcon &icon,
                                     GEventListenerVoid func);
 
     /**
@@ -375,15 +375,15 @@ public:
      * You can supply an optional icon to show next to the menu item.
      * When the menu item is clicked, the given listener function will be called.
      */
-    virtual QAction* addToolbarItem(const std::string& item,
-                                    const QPixmap& icon,
+    virtual QAction *addToolbarItem(const std::string &item,
+                                    const QPixmap &icon,
                                     GEventListenerVoid func);
 
     /**
      * Adds a separator to the window's toolbar.
      * If the window does not have a toolbar, one is added.
      */
-    virtual QAction* addToolbarSeparator();
+    virtual QAction *addToolbarSeparator();
 
     /**
      * Removes all interactors from all regionss of the window.
@@ -425,7 +425,7 @@ public:
     /**
      * Removes all interactors from the given region of this window.
      */
-    virtual void clearRegion(const std::string& region);
+    virtual void clearRegion(const std::string &region);
 
     /**
      * Removes all items from the window's toolbar, if present.
@@ -442,8 +442,8 @@ public:
      * in light or dark mode.
      * If in light mode, returns lightColor; else returns darkColor.
      */
-    static std::string chooseLightDarkModeColor(const std::string& lightColor,
-                                                const std::string& darkColor);
+    static std::string chooseLightDarkModeColor(const std::string &lightColor,
+                                                const std::string &darkColor);
 
     /**
      * Returns which color to use depending on whether the user's computer is
@@ -468,7 +468,7 @@ public:
      * TODO: implement
      * @private
      */
-    virtual void compareToImage(const std::string& filename, bool ignoreWindowSize = true) const;
+    virtual void compareToImage(const std::string &filename, bool ignoreWindowSize = true) const;
 
     /**
      * Returns true if events can occur on the window.
@@ -482,7 +482,7 @@ public:
      * on which shapes and objects are drawn.
      * Use with care!
      */
-    virtual GCanvas* getCanvas() const;
+    virtual GCanvas *getCanvas() const;
 
     /**
      * Returns the height of the window's central canvas area in pixels.
@@ -542,14 +542,14 @@ public:
      * graphical canvas.
      * @throw ErrorException if the index is out of bounds
      */
-    virtual GObject* getGObject(int index) const;
+    virtual GObject *getGObject(int index) const;
 
     /**
      * Returns the top-most graphical object in the z-ordering in the window's
      * graphical canvas that touches the given x/y pixel location.
      * If no object touches the given location, returns nullptr.
      */
-    virtual GObject* getGObjectAt(double x, double y) const;
+    virtual GObject *getGObjectAt(double x, double y) const;
 
     /**
      * Returns the total number of graphical objects in the window's canvas.
@@ -561,7 +561,7 @@ public:
      * Not to be called by students.
      * @private
      */
-    static QMainWindow* getLastWindow();
+    static QMainWindow *getLastWindow();
 
     /**
      * Returns the x/y location of the top-left corner of the interior of the window on screen,
@@ -591,7 +591,7 @@ public:
     /**
      * Returns the height of the given region of the window in pixels.
      */
-    virtual double getRegionHeight(const std::string& region) const;
+    virtual double getRegionHeight(const std::string &region) const;
 
     /**
      * Returns the width and height of the given region of the window in pixels.
@@ -601,7 +601,7 @@ public:
     /**
      * Returns the width and height of the given region of the window in pixels.
      */
-    virtual GDimension getRegionSize(const std::string& region) const;
+    virtual GDimension getRegionSize(const std::string &region) const;
 
     /**
      * Returns the width of the given region of the window in pixels.
@@ -611,7 +611,7 @@ public:
     /**
      * Returns the width of the given region of the window in pixels.
      */
-    virtual double getRegionWidth(const std::string& region) const;
+    virtual double getRegionWidth(const std::string &region) const;
 
     /**
      * Returns the dots-per-inch of the screen.
@@ -659,7 +659,7 @@ public:
      * Clients do not need to use this method directly.
      * @private
      */
-    virtual QWidget* getWidget() const;
+    virtual QWidget *getWidget() const;
 
     /**
      * Returns the total width of the window in pixels, excluding its title
@@ -763,7 +763,7 @@ public:
      * window's canvas area.
      * @throw ErrorException if the file is not found or cannot be loaded as an image
      */
-    virtual void loadCanvasPixels(const std::string& filename);
+    virtual void loadCanvasPixels(const std::string &filename);
 
     /**
      * Puts the window in a maximized state, occupying the entire screen.
@@ -805,27 +805,27 @@ public:
      * If the given interactor is not found in this container, has no effect.
      * @throw ErrorException if the interactor is null
      */
-    virtual void remove(GInteractor* interactor);
+    virtual void remove(GInteractor *interactor);
 
     /**
      * Removes the given interactor from the window.
      * This will work regardless of which region you added the interactor to.
      * If the given interactor is not found in this container, has no effect.
      */
-    virtual void remove(GInteractor& interactor);
+    virtual void remove(GInteractor &interactor);
 
     /**
      * Removes the given graphical object from the canvas of this window,
      * if it was present.
      * @throw ErrorException if the graphical object is null
      */
-    virtual void remove(GObject* obj);
+    virtual void remove(GObject *obj);
 
     /**
      * Removes the given graphical object from the canvas of this window,
      * if it was present.
      */
-    virtual void remove(GObject& obj);
+    virtual void remove(GObject &obj);
 
     /**
      * Removes the click listener from this window so that it will no longer
@@ -838,26 +838,26 @@ public:
      * If the given interactor is not found in the given region, has no effect.
      * @throw ErrorException if the interactor is null
      */
-    virtual void removeFromRegion(GInteractor* interactor, Region region);
+    virtual void removeFromRegion(GInteractor *interactor, Region region);
 
     /**
      * Removes the given interactor from the given region within this window.
      * If the given interactor is not found in the given region, has no effect.
      * @throw ErrorException if the interactor is null
      */
-    virtual void removeFromRegion(GInteractor* interactor, const std::string& region);
+    virtual void removeFromRegion(GInteractor *interactor, const std::string &region);
 
     /**
      * Removes the given interactor from the given region within this window.
      * If the given interactor is not found in the given region, has no effect.
      */
-    virtual void removeFromRegion(GInteractor& interactor, Region region);
+    virtual void removeFromRegion(GInteractor &interactor, Region region);
 
     /**
      * Removes the given interactor from the given region within this window.
      * If the given interactor is not found in the given region, has no effect.
      */
-    virtual void removeFromRegion(GInteractor& interactor, const std::string& region);
+    virtual void removeFromRegion(GInteractor &interactor, const std::string &region);
 
     /**
      * Removes the key listener from this window so that it will no longer
@@ -912,13 +912,13 @@ public:
      * as all pixels from the background layer.
      * @throw ErrorException if the file cannot be saved
      */
-    virtual void saveCanvasPixels(const std::string& filename);
+    virtual void saveCanvasPixels(const std::string &filename);
 
     /* @inherit */
     void setBackground(int color) override;
 
     /* @inherit */
-    void setBackground(const std::string& color) override;
+    void setBackground(const std::string &color) override;
 
     /**
      * Resizes the window so that its central canvas region will occupy exactly
@@ -936,7 +936,7 @@ public:
      * Resizes the window so that its central canvas region will occupy exactly
      * the given width and height in pixels.
      */
-    virtual void setCanvasSize(const GDimension& size);
+    virtual void setCanvasSize(const GDimension &size);
 
     /**
      * Resizes the window so that its central canvas region will occupy exactly
@@ -1002,19 +1002,19 @@ public:
     /**
      * Sets the window's top-left x/y location on the screen to the given point.
      */
-    virtual void setLocation(const GPoint& p);
+    virtual void setLocation(const GPoint &p);
 
     /**
      * Sets the window's top-left x/y location on the screen to the given point.
      */
 
-    virtual void setLocation(const Point& p);
+    virtual void setLocation(const Point &p);
 
     /**
      * Sets whether the given item in the given menu is enabled or disabled.
      * @throw ErrorException if the menu and/or item does not exist
      */
-    virtual void setMenuItemEnabled(const std::string& menu, const std::string& item, bool enabled);
+    virtual void setMenuItemEnabled(const std::string &menu, const std::string &item, bool enabled);
 
     /**
      * Sets a menu listener on this window so that it will be called
@@ -1066,13 +1066,13 @@ public:
      * Sets the horizontal and/or vertical alignment of interactors in the given
      * region of the window.
      */
-    virtual void setRegionAlignment(const std::string& region, const std::string& align);
+    virtual void setRegionAlignment(const std::string &region, const std::string &align);
 
     /**
      * Sets the horizontal and vertical alignment of interactors in the given
      * region of the window.
      */
-    virtual void setRegionAlignment(const std::string& region, const std::string& halign, const std::string& valign);
+    virtual void setRegionAlignment(const std::string &region, const std::string &halign, const std::string &valign);
 
     /**
      * Sets the horizontal alignment of interactors in the given region of
@@ -1084,13 +1084,13 @@ public:
      * Sets the horizontal alignment of interactors in the given region of
      * the window.
      */
-    virtual void setRegionHorizontalAlignment(const std::string& region, const std::string& halign);
+    virtual void setRegionHorizontalAlignment(const std::string &region, const std::string &halign);
 
     /**
      * Sets the vertical alignment of interactors in the given region of
      * the window.
      */
-    virtual void setRegionVerticalAlignment(const std::string& region, const std::string& valign);
+    virtual void setRegionVerticalAlignment(const std::string &region, const std::string &valign);
 
     /**
      * Sets the vertical alignment of interactors in the given region of
@@ -1120,7 +1120,7 @@ public:
      * If you actually want to draw shapes over a given width and height of pixels,
      * you should instead use the setCanvasSize method.
      */
-    virtual void setSize(const GDimension& size);
+    virtual void setSize(const GDimension &size);
 
     /**
      * Sets a menu listener on this window so that it will be called
@@ -1142,7 +1142,7 @@ public:
      * Sets the window's title bar text to the given string.
      * Equivalent to setWindowTitle.
      */
-    virtual void setTitle(const std::string& title);
+    virtual void setTitle(const std::string &title);
 
     /**
      * Sets whether the window can be seen on the screen.
@@ -1159,7 +1159,7 @@ public:
     /**
      * Sets the window to use the
      */
-    virtual void setWindowIcon(const std::string& iconFile);
+    virtual void setWindowIcon(const std::string &iconFile);
 
     /**
      * Sets a window listener on this window so that it will be called
@@ -1179,7 +1179,7 @@ public:
      * Sets the window's title bar text to the given string.
      * Equivalent to setWindowTitle.
      */
-    virtual void setWindowTitle(const std::string& title);
+    virtual void setWindowTitle(const std::string &title);
 
     /**
      * Sets the window's left x location on the screen to the given coordinate.
@@ -1241,27 +1241,30 @@ protected:
     /**
      * @private
      */
-    virtual void processKeyPressEventInternal(QKeyEvent* event);
+    virtual void processKeyPressEventInternal(QKeyEvent *event);
 
 private:
     Q_DISABLE_COPY(GWindow)
 
-    static _Internal_QMainWindow* _lastWindow;
+    static _Internal_QMainWindow *_lastWindow;
 
     void ensureForwardTarget() override;
-    void _init(double width, double height, bool visible);
-    static Region stringToRegion(const std::string& regionStr);
 
-    _Internal_QMainWindow* _iqmainwindow;
-    GContainer* _contentPane;
-    GCanvas* _canvas;
+    void _init(double width, double height, bool visible);
+
+    static Region stringToRegion(const std::string &regionStr);
+
+    _Internal_QMainWindow *_iqmainwindow;
+    GContainer *_contentPane;
+    GCanvas *_canvas;
     bool _resizable;
     CloseOperation _closeOperation;
-    Map<std::string, QMenu*> _menuMap;
-    Map<std::string, QAction*> _menuActionMap;
-    QToolBar* _toolbar;
+    Map<std::string, QMenu *> _menuMap;
+    Map<std::string, QAction *> _menuActionMap;
+    QToolBar *_toolbar;
 
     friend class GInteractor;
+
     friend class _Internal_QMainWindow;
 };
 
@@ -1273,7 +1276,7 @@ private:
  * red, green, and blue components of the color.
  * See gcolor.h for more details about colors.
  */
-int convertColorToRGB(const std::string& colorName);
+int convertColorToRGB(const std::string &colorName);
 
 /**
  * Converts an <code>rgb</code> value into a color name in the
@@ -1323,25 +1326,33 @@ void repaint();
  * @private
  */
 class _Internal_QMainWindow : public QMainWindow {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QMainWindow(GWindow* gwindow, QWidget* parent = nullptr);
+    _Internal_QMainWindow(GWindow *gwindow, QWidget *parent = nullptr);
 
-    void changeEvent(QEvent* event) override;
-    void closeEvent(QCloseEvent* event) override;
-    void keyPressEvent(QKeyEvent* event) override;
-    void resizeEvent(QResizeEvent* event) override;
-    void timerEvent(QTimerEvent* event) override;
+    void changeEvent(QEvent *event) override;
+
+    void closeEvent(QCloseEvent *event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+    void resizeEvent(QResizeEvent *event) override;
+
+    void timerEvent(QTimerEvent *event) override;
+
     virtual bool timerExists(int id = -1);
+
     virtual int timerStart(double ms);
+
     virtual void timerStop(int id = -1);
 
 public slots:
-    void handleMenuAction(const std::string& menu, const std::string& item);
+
+    void handleMenuAction(const std::string &menu, const std::string &item);
 
 private:
-    GWindow* _gwindow;
+    GWindow *_gwindow;
     Set<int> _timerIDs;
 
     void processTimerEvent();

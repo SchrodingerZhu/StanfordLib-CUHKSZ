@@ -48,7 +48,9 @@ public:
      * This enumerated type defines the values of the
      * <code>getTokenType</code> method.
      */
-    enum TokenType {SEPARATOR, WORD, NUMBER, STRING, OPERATOR};
+    enum TokenType {
+        SEPARATOR, WORD, NUMBER, STRING, OPERATOR
+    };
 
     /**
      * Initializes a scanner object with an empty token stream.
@@ -59,13 +61,13 @@ public:
      * Initializes a scanner object.  The initial token stream comes from
      * the specified input stream.
      */
-    TokenScanner(std::istream& infile);
+    TokenScanner(std::istream &infile);
 
     /**
      * Initializes a scanner object.  The initial token stream comes from
      * the specified string.
      */
-    TokenScanner(const std::string& str);
+    TokenScanner(const std::string &str);
 
     /**
      * Deallocates the storage associated with this scanner.
@@ -78,7 +80,7 @@ public:
      * characters, the scanner returns the longest possible operator
      * string that can be read at that point.
      */
-    void addOperator(const std::string& op);
+    void addOperator(const std::string &op);
 
     /**
      * Adds the characters in <code>str</code> to the set of characters
@@ -86,7 +88,7 @@ public:
      * <code>addWordCharacters("_")</code> adds the underscore to the
      * set of characters that are accepted as part of a word.
      */
-    void addWordCharacters(const std::string& str);
+    void addWordCharacters(const std::string &str);
 
     /**
      * Reads the next character from the scanner input stream.
@@ -113,7 +115,7 @@ public:
      * any surrounding quotation marks and replacing escape sequences by the
      * appropriate characters.
      */
-    std::string getStringValue(const std::string& token) const;
+    std::string getStringValue(const std::string &token) const;
 
     /**
      * Returns the type of this token.  This type will match one of the
@@ -121,7 +123,7 @@ public:
      * <code>SEPARATOR</code>, <code>WORD</code>, <code>NUMBER</code>,
      * <code>STRING</code>, or <code>OPERATOR</code>.
      */
-    TokenType getTokenType(const std::string& token) const;
+    TokenType getTokenType(const std::string &token) const;
 
     /**
      * Returns <code>true</code> if there are additional tokens for this
@@ -174,7 +176,7 @@ public:
      * the saved token without reading any additional characters from the
      * token stream.
      */
-    void saveToken(const std::string& token);
+    void saveToken(const std::string &token);
 
     /**
      * Controls how the scanner treats tokens that begin with a digit.  By
@@ -211,13 +213,13 @@ public:
      * Sets the token stream for this scanner to the specified input stream.
      * Any previous token stream is discarded.
      */
-    void setInput(std::istream& infile);
+    void setInput(std::istream &infile);
 
     /**
      * Sets the token stream for this scanner to the specified string.
      * Any previous token stream is discarded.
      */
-    void setInput(const std::string& str);
+    void setInput(const std::string &str);
 
     /**
      * Pushes the character <code>ch</code> back into the scanner stream.
@@ -231,7 +233,7 @@ public:
      * throws an error.
      * @throw ErrorException if the next token does not match the given string
      */
-    void verifyToken(const std::string& expected);
+    void verifyToken(const std::string &expected);
 
     /* Private section */
 
@@ -266,31 +268,37 @@ private:
     };
 
     std::string buffer;              /* The original argument string */
-    std::istream* isp;               /* The input stream for tokens  */
+    std::istream *isp;               /* The input stream for tokens  */
     bool stringInputFlag;            /* Flag indicating string input */
     bool ignoreWhitespaceFlag;       /* Scanner ignores whitespace   */
     bool ignoreCommentsFlag;         /* Scanner ignores comments     */
     bool scanNumbersFlag;            /* Scanner parses numbers       */
     bool scanStringsFlag;            /* Scanner parses strings       */
     std::string wordChars;           /* Additional word characters   */
-    StringCell* savedTokens;         /* Stack of saved tokens        */
-    StringCell* operators;           /* List of multichar operators  */
+    StringCell *savedTokens;         /* Stack of saved tokens        */
+    StringCell *operators;           /* List of multichar operators  */
 
     /* Private method prototypes */
     void initScanner();
-    bool isOperator(const std::string& op);
-    bool isOperatorPrefix(const std::string& op);
+
+    bool isOperator(const std::string &op);
+
+    bool isOperatorPrefix(const std::string &op);
+
     std::string scanNumber();
+
     std::string scanString();
+
     std::string scanWord();
+
     void skipSpaces();
 
-    friend std::ostream& operator <<(std::ostream& out, const TokenScanner& scanner);
+    friend std::ostream &operator<<(std::ostream &out, const TokenScanner &scanner);
 };
 
 /**
  * Prints the token scanner to the given output stream.
  */
-std::ostream& operator <<(std::ostream& out, const TokenScanner& scanner);
+std::ostream &operator<<(std::ostream &out, const TokenScanner &scanner);
 
 #endif // _tokenscanner_h

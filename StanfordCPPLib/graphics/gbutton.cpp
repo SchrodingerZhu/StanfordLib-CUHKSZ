@@ -24,7 +24,7 @@
 #include <graphics/gwindow.h>
 #include <util/require.h>
 
-GButton::GButton(const std::string& text, const std::string& iconFileName, QWidget* parent) {
+GButton::GButton(const std::string &text, const std::string &iconFileName, QWidget *parent) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqpushbutton = new _Internal_QPushButton(this, getInternalParent(parent));
     });
@@ -35,7 +35,7 @@ GButton::GButton(const std::string& text, const std::string& iconFileName, QWidg
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GButton::GButton(const std::string& text, const QIcon& icon, QWidget* parent) {
+GButton::GButton(const std::string &text, const QIcon &icon, QWidget *parent) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqpushbutton = new _Internal_QPushButton(this, getInternalParent(parent));
     });
@@ -44,7 +44,7 @@ GButton::GButton(const std::string& text, const QIcon& icon, QWidget* parent) {
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GButton::GButton(const std::string& text, const QPixmap& icon, QWidget* parent) {
+GButton::GButton(const std::string &text, const QPixmap &icon, QWidget *parent) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqpushbutton = new _Internal_QPushButton(this, getInternalParent(parent));
     });
@@ -71,7 +71,7 @@ std::string GButton::getActionCommand() const {
     }
 }
 
-_Internal_QWidget* GButton::getInternalWidget() const {
+_Internal_QWidget *GButton::getInternalWidget() const {
     return _iqpushbutton;
 }
 
@@ -81,13 +81,13 @@ std::string GButton::getText() const {
 
 GInteractor::TextPosition GButton::getTextPosition() const {
     switch (_iqpushbutton->toolButtonStyle()) {
-    case Qt::ToolButtonTextBesideIcon:
-        return GInteractor::TEXT_BESIDE_ICON;
-    case Qt::ToolButtonTextUnderIcon:
-        return GInteractor::TEXT_UNDER_ICON;
-    case Qt::ToolButtonTextOnly:
-    default:
-        return GInteractor::TEXT_ONLY;
+        case Qt::ToolButtonTextBesideIcon:
+            return GInteractor::TEXT_BESIDE_ICON;
+        case Qt::ToolButtonTextUnderIcon:
+            return GInteractor::TEXT_UNDER_ICON;
+        case Qt::ToolButtonTextOnly:
+        default:
+            return GInteractor::TEXT_ONLY;
     }
 }
 
@@ -95,18 +95,18 @@ std::string GButton::getType() const {
     return "GButton";
 }
 
-QWidget* GButton::getWidget() const {
-    return static_cast<QWidget*>(_iqpushbutton);
+QWidget *GButton::getWidget() const {
+    return static_cast<QWidget *>(_iqpushbutton);
 }
 
-void GButton::setAccelerator(const std::string& accelerator) {
+void GButton::setAccelerator(const std::string &accelerator) {
     GThread::runOnQtGuiThread([this, accelerator]() {
         QKeySequence keySeq(QString::fromStdString(normalizeAccelerator(accelerator)));
         _iqpushbutton->setShortcut(keySeq);
     });
 }
 
-void GButton::setIcon(const QIcon& icon) {
+void GButton::setIcon(const QIcon &icon) {
     GInteractor::setIcon(icon);
     GThread::runOnQtGuiThread([this, &icon]() {
         _iqpushbutton->setIcon(icon);
@@ -119,7 +119,7 @@ void GButton::setIcon(const QIcon& icon) {
     });
 }
 
-void GButton::setIcon(const QPixmap& icon) {
+void GButton::setIcon(const QPixmap &icon) {
     GInteractor::setIcon(icon);
     GThread::runOnQtGuiThread([this, &icon]() {
         _iqpushbutton->setIcon(icon);
@@ -130,7 +130,7 @@ void GButton::setIcon(const QPixmap& icon) {
     });
 }
 
-void GButton::setIcon(const std::string& filename, bool retainIconSize) {
+void GButton::setIcon(const std::string &filename, bool retainIconSize) {
     GInteractor::setIcon(filename, retainIconSize);
     if (!filename.empty() && fileExists(filename)) {
         GThread::runOnQtGuiThread([this, filename, retainIconSize]() {
@@ -151,7 +151,7 @@ void GButton::setIcon(const std::string& filename, bool retainIconSize) {
     }
 }
 
-void GButton::setText(const std::string& text) {
+void GButton::setText(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         _iqpushbutton->setText(QString::fromStdString(text));
     });
@@ -176,7 +176,7 @@ void GButton::setTextPosition(SwingConstants /*horizontal*/, SwingConstants /*ve
 }
 
 
-_Internal_QPushButton::_Internal_QPushButton(GButton* button, QWidget* parent)
+_Internal_QPushButton::_Internal_QPushButton(GButton *button, QWidget *parent)
         : QToolButton(parent),
           _gbutton(button) {
     require::nonNull(button, "_Internal_QPushButton::constructor");
@@ -194,15 +194,15 @@ void _Internal_QPushButton::handleClick() {
         return;
     }
     GEvent actionEvent(
-                /* class  */ ACTION_EVENT,
-                /* type   */ ACTION_PERFORMED,
-                /* name   */ "click",
-                /* source */ _gbutton);
+            /* class  */ ACTION_EVENT,
+            /* type   */ ACTION_PERFORMED,
+            /* name   */ "click",
+            /* source */ _gbutton);
     actionEvent.setActionCommand(_gbutton->getActionCommand());
     _gbutton->fireEvent(actionEvent);
 }
 
-void _Internal_QPushButton::mouseDoubleClickEvent(QMouseEvent* event) {
+void _Internal_QPushButton::mouseDoubleClickEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QPushButton::mouseDoubleClickEvent", "event");
     QWidget::mouseDoubleClickEvent(event);   // call super
     if (!_gbutton || !_gbutton->isAcceptingEvent("doubleclick")) {
@@ -210,10 +210,10 @@ void _Internal_QPushButton::mouseDoubleClickEvent(QMouseEvent* event) {
     }
     emit doubleClicked();
     GEvent mouseEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ MOUSE_DOUBLE_CLICKED,
-                /* name   */ "doubleclick",
-                /* source */ _gbutton);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ MOUSE_DOUBLE_CLICKED,
+            /* name   */ "doubleclick",
+            /* source */ _gbutton);
     mouseEvent.setActionCommand(_gbutton->getActionCommand());
     mouseEvent.setButton((int) event->button());
     mouseEvent.setX(event->x());

@@ -34,15 +34,15 @@
  * on how their objects are allocated. For example, in a Managed subclass you
  * can forbid objects from being allocated on the stack
  */
-template <typename T>
+template<typename T>
 class Managed {
 public:
     /**
      * Overloaded new operator tracks heap memory allocated to newly created
      * objects.
      */
-    void* operator new(size_t n) {
-        void* p = ::operator new(n);
+    void *operator new(size_t n) {
+        void *p = ::operator new(n);
         s_allocatedUsingNew().add(p);
         s_deleted().remove(p);
         return p;
@@ -53,7 +53,7 @@ public:
      * print errors if the client, for example, tries to delete the same pointer
      * twice by mistake.
      */
-    void operator delete(void* p) {
+    void operator delete(void *p) {
         ::operator delete(p);
         if (s_deleted().contains(p)) {
             error("You are trying to delete the same pointer twice: " + pointerToString(p));
@@ -155,7 +155,7 @@ protected:
      * Called when a new object is constructed.
      * @throw ErrorException if this object is created in an illegal way.
      */
-    static void notifyOfConstruction(void* const p) {
+    static void notifyOfConstruction(void *const p) {
         checkAllocation(p);
         s_allocated().add(p);
         s_instanceCount()++;
@@ -164,7 +164,7 @@ protected:
     /**
      * Called when an object is deleted.
      */
-    static void notifyOfDelete(T* const /*p*/) {
+    static void notifyOfDelete(T *const /*p*/) {
         // empty
     }
 
@@ -173,7 +173,7 @@ private:
      * Checks how this object was allocated.
      * @throw ErrorException if object was allocated in an illegal way.
      */
-    static void checkAllocation(void* const p) {
+    static void checkAllocation(void *const p) {
         if (s_allocatedUsingNew().contains(p)) {
             // this must be a heap/new-allocated pointer; always allowed
             return;
@@ -214,8 +214,8 @@ private:
      * A set of pointers of this type that are currently allocated.
      * @private
      */
-    static Set<void*>& s_allocated() {
-        static Set<void*> _s_allocated;
+    static Set<void *> &s_allocated() {
+        static Set<void *> _s_allocated;
         return _s_allocated;
     }
 
@@ -224,8 +224,8 @@ private:
      * 'new' operator.
      * @private
      */
-    static Set<void*>& s_allocatedUsingNew() {
-        static Set<void*> _s_allocatedUsingNew;
+    static Set<void *> &s_allocatedUsingNew() {
+        static Set<void *> _s_allocatedUsingNew;
         return _s_allocatedUsingNew;
     }
 
@@ -233,8 +233,8 @@ private:
      * A set of pointers of this type that have been deleted.
      * @private
      */
-    static Set<void*>& s_deleted() {
-        static Set<void*> _s_deleted;
+    static Set<void *> &s_deleted() {
+        static Set<void *> _s_deleted;
         return _s_deleted;
     }
 
@@ -242,7 +242,7 @@ private:
      * A count of how many pointers of this type have been deleted.
      * @private
      */
-    static int& s_deleteCount() {
+    static int &s_deleteCount() {
         static int _s_deleteCount = 0;
         return _s_deleteCount;
     }
@@ -251,7 +251,7 @@ private:
      * A count of how many objects of this type have been allocated.
      * @private
      */
-    static int& s_instanceCount() {
+    static int &s_instanceCount() {
         static int _s_instanceCount = 0;
         return _s_instanceCount;
     }
@@ -260,7 +260,7 @@ private:
      * Whether this type allows allocating objects on the heap.
      * @private
      */
-    static bool& s_heapAllowed() {
+    static bool &s_heapAllowed() {
         static bool _s_heapAllowed = true;
         return _s_heapAllowed;
     }
@@ -270,7 +270,7 @@ private:
      * without the 'new' operator.
      * @private
      */
-    static bool& s_heapWithoutNewAllowed() {
+    static bool &s_heapWithoutNewAllowed() {
         static bool _s_heapWithoutNewAllowed = false;
         return _s_heapWithoutNewAllowed;
     }
@@ -279,7 +279,7 @@ private:
      * Whether this type allows allocating objects on the stack.
      * @private
      */
-    static bool& s_stackAllowed() {
+    static bool &s_stackAllowed() {
         static bool _s_stackAllowed = false;
         return _s_stackAllowed;
     }
@@ -288,7 +288,7 @@ private:
      * Whether this type allows allocating objects in static storage.
      * @private
      */
-    static bool& s_staticAllowed() {
+    static bool &s_staticAllowed() {
         static bool _s_staticAllowed = false;
         return _s_staticAllowed;
     }
@@ -298,7 +298,7 @@ private:
      * @private
      */
     static std::string typeName() {
-        const std::type_info& type = typeid(T);
+        const std::type_info &type = typeid(T);
         std::string name = type.name();
 
 // TODO: demangle names using the function below

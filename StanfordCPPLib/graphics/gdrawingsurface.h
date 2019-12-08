@@ -48,39 +48,39 @@ public:
     /**
      * Repaints the given region of the interactor only if its contents have changed.
      */
-    virtual void conditionalRepaintRegion(const GRectangle& bounds);
+    virtual void conditionalRepaintRegion(const GRectangle &bounds);
 
     /**
      * Draws the given graphical object onto the background pixel layer of this
      * interactor.
      * @throw ErrorException if the object is null
      */
-    virtual void draw(GObject* gobj) = 0;
+    virtual void draw(GObject *gobj) = 0;
 
     /**
      * Draws the given graphical object onto the background pixel layer of this
      * interactor, moving it to the given x/y location first.
      * @throw ErrorException if the object is null
      */
-    virtual void draw(GObject* gobj, double x, double y);
+    virtual void draw(GObject *gobj, double x, double y);
 
     /**
      * Draws the given graphical object onto the background pixel layer of this
      * interactor.
      */
-    virtual void draw(GObject& gobj);
+    virtual void draw(GObject &gobj);
 
     /**
      * Draws the given graphical object onto the background pixel layer of this
      * interactor, moving it to the given x/y location first.
      */
-    virtual void draw(GObject& gobj, double x, double y);
+    virtual void draw(GObject &gobj, double x, double y);
 
     /**
      * Draws this interactor with the given Qt painter object.
      * @private
      */
-    virtual void draw(QPainter* painter) = 0;
+    virtual void draw(QPainter *painter) = 0;
 
     /**
      * Draws an unfilled arc with the given attributes onto the background pixel
@@ -96,14 +96,14 @@ public:
      * @throw ErrorException if the given file is not found or cannot be loaded
      *        as a valid image file
      */
-    virtual void drawImage(const std::string& filename, double x = 0, double y = 0);
+    virtual void drawImage(const std::string &filename, double x = 0, double y = 0);
 
     /**
      * Draws a line between the given two points onto the background pixel
      * layer of this interactor at the given x/y location in the current color.
      * See gobjects.h for explanation of GLine parameters.
      */
-    virtual void drawLine(const GPoint& p0, const GPoint& p1);
+    virtual void drawLine(const GPoint &p0, const GPoint &p1);
 
     /**
      * Draws a line between the given two points onto the background pixel
@@ -117,7 +117,7 @@ public:
      * layer of this interactor at the given x/y location in the current color.
      * See gobjects.h for explanation of GOval parameters.
      */
-    virtual void drawOval(const GRectangle& bounds);
+    virtual void drawOval(const GRectangle &bounds);
 
     /**
      * Draws an unfilled oval with the given bounding box onto the background pixel
@@ -134,7 +134,7 @@ public:
      * Returns the end point opposite p0 where the line ends.
      * See gobjects.h for explanation of GLine parameters.
      */
-    virtual GPoint drawPolarLine(const GPoint& p0, double r, double theta);
+    virtual GPoint drawPolarLine(const GPoint &p0, double r, double theta);
 
     /**
      * Draws a line using polar coordinates onto the background pixel
@@ -162,7 +162,7 @@ public:
      * Colors the given x/y pixel of the background layer of this interactor
      * using the given color.
      */
-    virtual void drawPixel(double x, double y, const std::string& color);
+    virtual void drawPixel(double x, double y, const std::string &color);
 
     /**
      * Draws an unfilled polygon containing the given points onto the background
@@ -183,7 +183,7 @@ public:
      * pixel layer of this interactor in the current color.
      * See gobjects.h for explanation of GRect parameters.
      */
-    virtual void drawRect(const GRectangle& bounds);
+    virtual void drawRect(const GRectangle &bounds);
 
     /**
      * Draws an unfilled rectangle of the given dimensions onto the background
@@ -197,7 +197,7 @@ public:
      * at the given x/y location in the current font and color.
      * See gobjects.h for explanation of GText parameters.
      */
-    virtual void drawString(const std::string& text, double x, double y);
+    virtual void drawString(const std::string &text, double x, double y);
 
     /**
      * Draws a filled arc with the given attributes onto the background pixel
@@ -212,7 +212,7 @@ public:
      * and fill color.
      * See gobjects.h for explanation of GOval parameters.
      */
-    virtual void fillOval(const GRectangle& bounds);
+    virtual void fillOval(const GRectangle &bounds);
 
     /**
      * Draws a filled oval with the given bounding box onto the background pixel
@@ -234,7 +234,7 @@ public:
      * pixel layer of this interactor in the current color and fill color.
      * See gobjects.h for explanation of GRect parameters.
      */
-    virtual void fillRect(const GRectangle& bounds);
+    virtual void fillRect(const GRectangle &bounds);
 
     /**
      * Draws a filled rectangle of the given dimensions onto the background
@@ -462,7 +462,7 @@ public:
      * made a small change that affects only the given rectangular region of
      * the interactor.
      */
-    virtual void repaintRegion(const GRectangle& bounds);
+    virtual void repaintRegion(const GRectangle &bounds);
 
     /**
      * Sets whether the interactor should repaint itself automatically whenever
@@ -485,7 +485,7 @@ public:
      * Sets the current background color of the interactor as a string.
      * See gcolor.h for more detail about color strings.
      */
-    virtual void setBackground(const std::string& color);
+    virtual void setBackground(const std::string &color);
 
     /**
      * Sets the current foreground outline color of the interactor as as RGB integer.
@@ -505,7 +505,7 @@ public:
      * See gcolor.h for more detail about color strings.
      * Equivalent to setForeground.
      */
-    virtual void setColor(const std::string& color);
+    virtual void setColor(const std::string &color);
 
     /**
      * Sets the current fill color of the interactor as an RGB integer.
@@ -519,21 +519,21 @@ public:
      * This color will appear in shapes drawn using the fillXxx methods.
      * See gcolor.h for more detail about color strings.
      */
-    virtual void setFillColor(const std::string& color);
+    virtual void setFillColor(const std::string &color);
 
     /**
      * Returns the current text font of the interactor using a Qt font object.
      * This font will be used when drawing text strings using drawString.
      * @private
      */
-    virtual void setFont(const QFont& font);
+    virtual void setFont(const QFont &font);
 
     /**
      * Sets the current text font of the interactor as a font string.
      * This font will be used when drawing text strings using drawString.
      * See gfont.h for more detail about font strings.
      */
-    virtual void setFont(const std::string& font);
+    virtual void setFont(const std::string &font);
 
     /**
      * Sets the current foreground outline color of the interactor as an RGB integer.
@@ -553,7 +553,7 @@ public:
      * See gcolor.h for more detail about color strings.
      * Equivalent to setColor.
      */
-    virtual void setForeground(const std::string& color);
+    virtual void setForeground(const std::string &color);
 
     /**
      * Sets the thickness used when drawing outlines of shapes and lines.
@@ -608,7 +608,7 @@ public:
      *
      * @throw ErrorException if x/y is out of range
      */
-    virtual void setPixel(double x, double y, const std::string& color);
+    virtual void setPixel(double x, double y, const std::string &color);
 
     /**
      * Sets the color of the given x/y pixel in the background layer of the
@@ -643,7 +643,7 @@ public:
      * If the given grid is not the same size as this interactor, the interactor
      * will be resized to match the grid.
      */
-    virtual void setPixels(const Grid<int>& pixels) = 0;
+    virtual void setPixels(const Grid<int> &pixels) = 0;
 
     /**
      * Sets the color of the all pixels in the background layer of the
@@ -652,7 +652,7 @@ public:
      * If the given grid is not the same size as this interactor, the interactor
      * will be resized to match the grid.
      */
-    virtual void setPixelsARGB(const Grid<int>& pixelsARGB) = 0;
+    virtual void setPixelsARGB(const Grid<int> &pixelsARGB) = 0;
 
     /**
      * Sets whether the interactor should repaint itself automatically whenever
@@ -705,13 +705,14 @@ public:
      *
      * @throw ErrorException if x/y is out of range
      */
-    virtual void setRGB(double x, double y, const std::string& color);
+    virtual void setRGB(double x, double y, const std::string &color);
 
 protected:
     GDrawingSurface();
+
     virtual ~GDrawingSurface();
 
-    GDrawingSurface* _forwardTarget;
+    GDrawingSurface *_forwardTarget;
     std::string _backgroundColor;
     std::string _color;
     std::string _fillColor;
@@ -726,17 +727,17 @@ protected:
     /**
      * Throws an error if the given x/y values are out of bounds.
      */
-    void checkBounds(const std::string& member, double x, double y, double width, double height) const;
+    void checkBounds(const std::string &member, double x, double y, double width, double height) const;
 
     /**
      * Throws an error if the given rgb value is not a valid color.
      */
-    void checkColor(const std::string& member, int rgb) const;
+    void checkColor(const std::string &member, int rgb) const;
 
     /**
      * Throws an error if the given width/height values are out of bounds.
      */
-    void checkSize(const std::string& member, double width, double height) const;
+    void checkSize(const std::string &member, double width, double height) const;
 
     /**
      * Initializes a new graphical object to be drawn.
@@ -744,7 +745,7 @@ protected:
      * font, and other settings of graphical objects based on the settings of
      * the drawing surface.
      */
-    virtual void initializeGObject(GObject& obj, bool filled = false);
+    virtual void initializeGObject(GObject &obj, bool filled = false);
 
     /**
      * Initializes a new graphical object to be drawn.
@@ -752,14 +753,14 @@ protected:
      * font, and other settings of graphical objects based on the settings of
      * the drawing surface.
      */
-    virtual void initializeGObject(GObject* obj, bool filled = false);
+    virtual void initializeGObject(GObject *obj, bool filled = false);
 
     /**
      * Sets a forward target to which drawing calls should be sent.
      * Used by GForwardDrawingSurface.
      * @private
      */
-    virtual void setDrawingForwardTarget(GDrawingSurface* forwardTarget);
+    virtual void setDrawingForwardTarget(GDrawingSurface *forwardTarget);
 };
 
 /**
@@ -772,38 +773,68 @@ protected:
 class GForwardDrawingSurface : public virtual GDrawingSurface {
 public:
     void clear() override;
-    void draw(GObject* gobj) override;
-    void draw(GObject* gobj, double x, double y) override;
-    void draw(GObject& gobj) override;
-    void draw(GObject& gobj, double x, double y) override;
-    void draw(QPainter* painter) override;
+
+    void draw(GObject *gobj) override;
+
+    void draw(GObject *gobj, double x, double y) override;
+
+    void draw(GObject &gobj) override;
+
+    void draw(GObject &gobj, double x, double y) override;
+
+    void draw(QPainter *painter) override;
+
     int getPixel(double x, double y) const override;
+
     int getPixelARGB(double x, double y) const override;
+
     Grid<int> getPixels() const override;
+
     Grid<int> getPixelsARGB() const override;
+
     bool isAutoRepaint() const override;
+
     void repaint() override;
+
     void repaintRegion(int x, int y, int width, int height) override;
+
     void setAutoRepaint(bool autoRepaint) override;
+
     void setBackground(int color) override;
-    void setBackground(const std::string& color) override;
+
+    void setBackground(const std::string &color) override;
+
     void setColor(int color) override;
-    void setColor(const std::string& color) override;
+
+    void setColor(const std::string &color) override;
+
     void setFillColor(int color) override;
-    void setFillColor(const std::string& color) override;
-    void setFont(const QFont& font) override;
-    void setFont(const std::string& font) override;
+
+    void setFillColor(const std::string &color) override;
+
+    void setFont(const QFont &font) override;
+
+    void setFont(const std::string &font) override;
+
     void setLineWidth(double lineWidth) override;
+
     void setPixel(double x, double y, int rgb) override;
+
     void setPixel(double x, double y, int r, int g, int b) override;
+
     void setPixelARGB(double x, double y, int argb) override;
+
     void setPixelARGB(double x, double y, int a, int r, int g, int b) override;
-    void setPixels(const Grid<int>& pixels) override;
-    void setPixelsARGB(const Grid<int>& pixelsARGB) override;
+
+    void setPixels(const Grid<int> &pixels) override;
+
+    void setPixelsARGB(const Grid<int> &pixelsARGB) override;
+
     void setRepaintImmediately(bool repaintImmediately) override;
 
 protected:
     virtual void ensureForwardTarget() = 0;
+
     virtual void ensureForwardTargetConstHack() const;
 };
 

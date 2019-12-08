@@ -101,13 +101,13 @@ public:
     /**
      * Creates a new container with the given layout.
      */
-    GContainer(Layout layout = LAYOUT_FLOW_HORIZONTAL, QWidget* parent = nullptr);
+    GContainer(Layout layout = LAYOUT_FLOW_HORIZONTAL, QWidget *parent = nullptr);
 
     /**
      * Creates a new container with the given number of rows and columns.
      * Meant to be used for grid layouts.
      */
-    GContainer(Layout layout, int rows, int cols, QWidget* parent = nullptr);
+    GContainer(Layout layout, int rows, int cols, QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the container.
@@ -120,14 +120,14 @@ public:
      * row/column.  If it uses a border layout, adds to the center region.
      * @throw ErrorException if the interactor is null
      */
-    virtual void add(GInteractor* interactor);
+    virtual void add(GInteractor *interactor);
 
     /**
      * Adds the given interactor to the end of the list of interactors in this container.
      * If the container uses a grid layout, adds the interactor to the next available
      * row/column.  If it uses a border layout, adds to the center region.
      */
-    virtual void add(GInteractor& interactor);
+    virtual void add(GInteractor &interactor);
 
     /**
      * Adds the given interactor to the given row and column in this container,
@@ -137,7 +137,7 @@ public:
      * If the container does not use a grid layout, equivalent to add().
      * @throw ErrorException if the interactor is null
      */
-    virtual void addToGrid(GInteractor* interactor, int row, int col, int rowspan = 1, int colspan = 1);
+    virtual void addToGrid(GInteractor *interactor, int row, int col, int rowspan = 1, int colspan = 1);
 
     /**
      * Adds the given interactor to the given row and column in this container,
@@ -146,7 +146,7 @@ public:
      * multiple rows or columns' worth of space.
      * If the container does not use a grid layout, equivalent to add().
      */
-    virtual void addToGrid(GInteractor& interactor, int row, int col, int rowspan = 1, int colspan = 1);
+    virtual void addToGrid(GInteractor &interactor, int row, int col, int rowspan = 1, int colspan = 1);
 
     /**
      * Adds the given interactor to the given region in this container,
@@ -154,7 +154,7 @@ public:
      * If the container does not use a border layout, equivalent to add().
      * @throw ErrorException if the interactor is null
      */
-    virtual void addToRegion(GInteractor* interactor, Region region);
+    virtual void addToRegion(GInteractor *interactor, Region region);
 
     /**
      * Adds the given interactor to the given region in this container,
@@ -162,21 +162,21 @@ public:
      * If the container does not use a border layout, equivalent to add().
      * @throw ErrorException if the interactor is null
      */
-    virtual void addToRegion(GInteractor* interactor, const std::string& region = "Center");
+    virtual void addToRegion(GInteractor *interactor, const std::string &region = "Center");
 
     /**
      * Adds the given interactor to the given region in this container,
      * which is assumed to use a border layout.
      * If the container does not use a border layout, equivalent to add().
      */
-    virtual void addToRegion(GInteractor& interactor, Region region);
+    virtual void addToRegion(GInteractor &interactor, Region region);
 
     /**
      * Adds the given interactor to the given region in this container,
      * which is assumed to use a border layout.
      * If the container does not use a border layout, equivalent to add().
      */
-    virtual void addToRegion(GInteractor& interactor, const std::string& region = "Center");
+    virtual void addToRegion(GInteractor &interactor, const std::string &region = "Center");
 
     /**
      * Removes all interactors from this container.
@@ -195,18 +195,18 @@ public:
      * which is assumed to use a border layout.
      * If the container does not use a border layout, has no effect.
      */
-    virtual void clearRegion(const std::string& region);
+    virtual void clearRegion(const std::string &region);
 
     /**
      * Returns true if the given interactor is found in this container.
      * Returns false if the interactor is null
      */
-    virtual bool contains(GInteractor* interactor) const;
+    virtual bool contains(GInteractor *interactor) const;
 
     /**
      * Returns true if the given interactor is found in this container.
      */
-    virtual bool contains(GInteractor& interactor) const;
+    virtual bool contains(GInteractor &interactor) const;
 
     /**
      * Returns all interactors that are children or descendents inside this
@@ -215,18 +215,18 @@ public:
      * If the type argument is passed, will return only interactors of that type
      * (e.g. "GCheckBox").  Otherwise all interactors will be returned.
      */
-    virtual Vector<GInteractor*> getDescendents(const std::string& type = "") const;
+    virtual Vector<GInteractor *> getDescendents(const std::string &type = "") const;
 
     /**
      * Returns the child interactor at the given 0-based index in this container.
      * @throw ErrorException if the index is out of bounds
      */
-    virtual GInteractor* getInteractor(int i) const;
+    virtual GInteractor *getInteractor(int i) const;
 
     /**
      * Returns a vector of all children interactors in this container.
      */
-    virtual const Vector<GInteractor*>& getInteractors() const;
+    virtual const Vector<GInteractor *> &getInteractors() const;
 
     /**
      * Returns the number of children interactors in this container.
@@ -239,7 +239,7 @@ public:
      * If the container does not use a border layout, returns nullptr.
      * @throw ErrorException if the index is out of bounds
      */
-    virtual GInteractor* getInteractorByRegion(int i, Region region) const;
+    virtual GInteractor *getInteractorByRegion(int i, Region region) const;
 
     /**
      * Returns the child interactor at the given 0-based index within the given
@@ -247,7 +247,7 @@ public:
      * If the container does not use a border layout, returns nullptr.
      * @throw ErrorException if the index is out of bounds
      */
-    virtual GInteractor* getInteractorByRegion(int i, const std::string& region = "Center") const;
+    virtual GInteractor *getInteractorByRegion(int i, const std::string &region = "Center") const;
 
     /**
      * Returns the number of children interactors within the given region in
@@ -261,10 +261,10 @@ public:
      * this container, which is assumed to use a border layout.
      * If the container does not use a border layout, returns 0.
      */
-    virtual int getInteractorCountByRegion(const std::string& region = "Center") const;
+    virtual int getInteractorCountByRegion(const std::string &region = "Center") const;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the type of layout used by this container.
@@ -316,7 +316,7 @@ public:
      * which is assumed to use a border layout.
      * If the container does not use a border layout, returns 0.
      */
-    virtual double getRegionHeight(const std::string& region) const;
+    virtual double getRegionHeight(const std::string &region) const;
 
     /**
      * Returns the width and height in pixels of the given region of this container,
@@ -330,7 +330,7 @@ public:
      * which is assumed to use a border layout.
      * If the container does not use a border layout, returns 0.
      */
-    virtual GDimension getRegionSize(const std::string& region) const;
+    virtual GDimension getRegionSize(const std::string &region) const;
 
     /**
      * Returns the width in pixels of the given region of this container,
@@ -344,7 +344,7 @@ public:
      * which is assumed to use a border layout.
      * If the container does not use a border layout, returns 0.
      */
-    virtual double getRegionWidth(const std::string& region) const;
+    virtual double getRegionWidth(const std::string &region) const;
 
     /**
      * Returns the spacing between widgets in this container in pixels.
@@ -355,19 +355,19 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Adds the given interactor to this container just before the given index.
      * @throw ErrorException if the index is out of bounds or interactor is null
      */
-    virtual void insert(int index, GInteractor* interactor);
+    virtual void insert(int index, GInteractor *interactor);
 
     /**
      * Adds the given interactor to this container just before the given index.
      * @throw ErrorException if the index is out of bounds
      */
-    virtual void insert(int index, GInteractor& interactor);
+    virtual void insert(int index, GInteractor &interactor);
 
     /**
      * Adds the given interactor to the given layout region within this container
@@ -375,7 +375,7 @@ public:
      * layout; if it does not, equivalent to insert().
      * @throw ErrorException if the index is out of bounds or interactor is null
      */
-    virtual void insertToRegion(int index, GInteractor* interactor, Region region);
+    virtual void insertToRegion(int index, GInteractor *interactor, Region region);
 
     /**
      * Adds the given interactor to the given layout region within this container
@@ -383,7 +383,7 @@ public:
      * layout; if it does not, equivalent to insert().
      * @throw ErrorException if the index is out of bounds or interactor is null
      */
-    virtual void insertToRegion(int index, GInteractor* interactor, const std::string& region = "Center");
+    virtual void insertToRegion(int index, GInteractor *interactor, const std::string &region = "Center");
 
     /**
      * Adds the given interactor to the given layout region within this container
@@ -391,7 +391,7 @@ public:
      * layout; if it does not, equivalent to insert().
      * @throw ErrorException if the index is out of bounds
      */
-    virtual void insertToRegion(int index, GInteractor& interactor, Region region);
+    virtual void insertToRegion(int index, GInteractor &interactor, Region region);
 
     /**
      * Adds the given interactor to the given layout region within this container
@@ -399,7 +399,7 @@ public:
      * layout; if it does not, equivalent to insert().
      * @throw ErrorException if the index is out of bounds
      */
-    virtual void insertToRegion(int index, GInteractor& interactor, const std::string& region = "Center");
+    virtual void insertToRegion(int index, GInteractor &interactor, const std::string &region = "Center");
 
     /**
      * Returns true if the container does not contain any interactors.
@@ -412,7 +412,7 @@ public:
      * If the container does not use a border layout, equivalent to contains().
      * @throw ErrorException if the interactor is null
      */
-    virtual bool regionContains(GInteractor* interactor, Region region) const;
+    virtual bool regionContains(GInteractor *interactor, Region region) const;
 
     /**
      * Returns true if the given interactor is found in the given region of
@@ -420,21 +420,21 @@ public:
      * If the container does not use a border layout, equivalent to contains().
      * @throw ErrorException if the interactor is null
      */
-    virtual bool regionContains(GInteractor* interactor, const std::string& region) const;
+    virtual bool regionContains(GInteractor *interactor, const std::string &region) const;
 
     /**
      * Returns true if the given interactor is found in the given region of
      * this container, which is assumed to use a border layout.
      * If the container does not use a border layout, equivalent to contains().
      */
-    virtual bool regionContains(GInteractor& interactor, Region region) const;
+    virtual bool regionContains(GInteractor &interactor, Region region) const;
 
     /**
      * Returns true if the given interactor is found in the given region of
      * this container, which is assumed to use a border layout.
      * If the container does not use a border layout, equivalent to contains().
      */
-    virtual bool regionContains(GInteractor& interactor, const std::string& region) const;
+    virtual bool regionContains(GInteractor &interactor, const std::string &region) const;
 
     /**
      * Removes the given interactor from this container.
@@ -442,14 +442,14 @@ public:
      * If the given interactor is not found in this container, has no effect.
      * @throw ErrorException if the interactor is null
      */
-    virtual void remove(GInteractor* interactor);
+    virtual void remove(GInteractor *interactor);
 
     /**
      * Removes the given interactor from this container.
      * Works for any layout.
      * If the given interactor is not found in this container, has no effect.
      */
-    virtual void remove(GInteractor& interactor);
+    virtual void remove(GInteractor &interactor);
 
     /**
      * Removes the child interactor at the given 0-based index from this container.
@@ -465,7 +465,7 @@ public:
      * If the given interactor is not found in the given region, has no effect.
      * @throw ErrorException if the interactor is null
      */
-    virtual void removeFromRegion(GInteractor* interactor, Region region);
+    virtual void removeFromRegion(GInteractor *interactor, Region region);
 
     /**
      * Removes the given interactor from the given region within this container,
@@ -474,7 +474,7 @@ public:
      * If the given interactor is not found in the given region, has no effect.
      * @throw ErrorException if the interactor is null
      */
-    virtual void removeFromRegion(GInteractor* interactor, const std::string& region);
+    virtual void removeFromRegion(GInteractor *interactor, const std::string &region);
 
     /**
      * Removes the given interactor from the given region within this container,
@@ -482,7 +482,7 @@ public:
      * If the container does not use a border layout, equivalent to remove().
      * If the given interactor is not found in the given region, has no effect.
      */
-    virtual void removeFromRegion(GInteractor& interactor, Region region);
+    virtual void removeFromRegion(GInteractor &interactor, Region region);
 
     /**
      * Removes the given interactor from the given region within this container,
@@ -490,7 +490,7 @@ public:
      * If the container does not use a border layout, equivalent to remove().
      * If the given interactor is not found in the given region, has no effect.
      */
-    virtual void removeFromRegion(GInteractor& interactor, const std::string& region);
+    virtual void removeFromRegion(GInteractor &interactor, const std::string &region);
 
     /**
      * Removes the child interactor at the given 0-based index from the given
@@ -508,7 +508,7 @@ public:
      * If the given interactor is not found in the given region, has no effect.
      * @throw ErrorException if the index is out of bounds
      */
-    virtual void removeFromRegion(int index, const std::string& region);
+    virtual void removeFromRegion(int index, const std::string &region);
 
     /**
      * Sets the horizontal and vertical alignment of interactors in this container.
@@ -577,7 +577,7 @@ public:
      * If the container does not use a border layout, sets the alignment of
      * the entire container instead.
      */
-    virtual void setRegionAlignment(const std::string& region, const std::string& align);
+    virtual void setRegionAlignment(const std::string &region, const std::string &align);
 
     /**
      * Sets the horizontal and vertical alignment of interactors in the given region of
@@ -585,7 +585,7 @@ public:
      * If the container does not use a border layout, sets the alignment of
      * the entire container instead.
      */
-    virtual void setRegionAlignment(const std::string& region, const std::string& halign, const std::string& valign);
+    virtual void setRegionAlignment(const std::string &region, const std::string &halign, const std::string &valign);
 
     /**
      * Sets the horizontal alignment of interactors in the given region of
@@ -601,7 +601,7 @@ public:
      * If the container does not use a border layout, sets the alignment of
      * the entire container instead.
      */
-    virtual void setRegionHorizontalAlignment(const std::string& region, const std::string& halign);
+    virtual void setRegionHorizontalAlignment(const std::string &region, const std::string &halign);
 
     /**
      * Sets the vertical alignment of interactors in the given region of
@@ -609,7 +609,7 @@ public:
      * If the container does not use a border layout, sets the alignment of
      * the entire container instead.
      */
-    virtual void setRegionVerticalAlignment(const std::string& region, const std::string& valign);
+    virtual void setRegionVerticalAlignment(const std::string &region, const std::string &valign);
 
     /**
      * Sets the vertical alignment of interactors in the given region of
@@ -627,15 +627,16 @@ public:
 private:
     Q_DISABLE_COPY(GContainer)
 
-    _Internal_QContainer* _iqcontainer;
-    Vector<GInteractor*> _interactors;
-    Map<Region, Vector<GInteractor*>> _interactorsByRegion;
+    _Internal_QContainer *_iqcontainer;
+    Vector<GInteractor *> _interactors;
+    Map<Region, Vector<GInteractor *>> _interactorsByRegion;
     Layout _layout;
 
     friend class _Internal_QContainer;
+
     friend class GWindow;
 
-    static Region stringToRegion(const std::string& regionStr);
+    static Region stringToRegion(const std::string &regionStr);
 };
 
 
@@ -644,15 +645,17 @@ private:
  * @private
  */
 class _Internal_QContainer : public QWidget, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QContainer(GContainer* gcontainer, GContainer::Layout layoutType, QWidget* parent = nullptr);
-    _Internal_QContainer(GContainer* gcontainer, int rows, int cols, QWidget* parent = nullptr);
+    _Internal_QContainer(GContainer *gcontainer, GContainer::Layout layoutType, QWidget *parent = nullptr);
+
+    _Internal_QContainer(GContainer *gcontainer, int rows, int cols, QWidget *parent = nullptr);
+
     QSize sizeHint() const override;
 
 private:
-    GContainer* _gcontainer;
+    GContainer *_gcontainer;
     GContainer::Layout _layoutType;
     HorizontalAlignment _halign;
     VerticalAlignment _valign;
@@ -678,56 +681,91 @@ private:
     // - W/E expand vertically
     // - C takes all remaining space
     // - each widget other than Center widget appears at its preferred ("hinted") size
-    QVBoxLayout* _overallLayout;
-    QHBoxLayout* _northLayout;
-    QHBoxLayout* _southLayout;
-    QVBoxLayout* _westLayout;
-    QVBoxLayout* _eastLayout;
-    QHBoxLayout* _centerLayout;
-    QHBoxLayout* _middleLayout;
+    QVBoxLayout *_overallLayout;
+    QHBoxLayout *_northLayout;
+    QHBoxLayout *_southLayout;
+    QVBoxLayout *_westLayout;
+    QVBoxLayout *_eastLayout;
+    QHBoxLayout *_centerLayout;
+    QHBoxLayout *_middleLayout;
     Map<GContainer::Region, HorizontalAlignment> _halignMap;
     Map<GContainer::Region, VerticalAlignment> _valignMap;
     Map<GContainer::Region, bool> _regionStretchMap;
 
-    virtual void add(QWidget* widget);
-    virtual void addToGrid(QWidget* widget, int row, int col, int rowspan = 1, int colspan = 1);
-    virtual void addToRegion(QWidget* widget, GContainer::Region region);
+    virtual void add(QWidget *widget);
+
+    virtual void addToGrid(QWidget *widget, int row, int col, int rowspan = 1, int colspan = 1);
+
+    virtual void addToRegion(QWidget *widget, GContainer::Region region);
+
     virtual void clear();
+
     virtual void clearRegion(GContainer::Region region);
-    virtual bool contains(QWidget* widget) const;
+
+    virtual bool contains(QWidget *widget) const;
+
     void detach() override;
-    virtual void fixAlignment(QWidget* widget, GContainer::Region region = GContainer::REGION_CENTER);
-    virtual void fixMargin(QLayout* layout, bool hasStretch = false);
+
+    virtual void fixAlignment(QWidget *widget, GContainer::Region region = GContainer::REGION_CENTER);
+
+    virtual void fixMargin(QLayout *layout, bool hasStretch = false);
+
     virtual HorizontalAlignment getHorizontalAlignment() const;
+
     virtual VerticalAlignment getVerticalAlignment() const;
+
     virtual GContainer::Layout getLayoutType() const;
+
     virtual int getMargin() const;
+
     QSize getPreferredSize() const override;
-    virtual QLayout* getQLayout() const;
+
+    virtual QLayout *getQLayout() const;
+
     virtual int getSpacing() const;
-    virtual void insert(int i, QWidget* widget);
-    virtual void insertToRegion(int i, QWidget* widget, GContainer::Region region);
+
+    virtual void insert(int i, QWidget *widget);
+
+    virtual void insertToRegion(int i, QWidget *widget, GContainer::Region region);
+
     virtual bool isRegionStretch(GContainer::Region region) const;
-    virtual QLayout* layoutForRegion(GContainer::Region region) const;
-    virtual bool regionContains(QWidget* widget, GContainer::Region region) const;
-    virtual void remove(QWidget* widget);
-    virtual void removeFromRegion(QWidget* widget, GContainer::Region region);
+
+    virtual QLayout *layoutForRegion(GContainer::Region region) const;
+
+    virtual bool regionContains(QWidget *widget, GContainer::Region region) const;
+
+    virtual void remove(QWidget *widget);
+
+    virtual void removeFromRegion(QWidget *widget, GContainer::Region region);
+
     virtual void remove(int i);
+
     virtual void removeFromRegion(int i, GContainer::Region region);
+
     virtual void setHorizontalAlignment(HorizontalAlignment halign);
+
     virtual void setLayoutType(GContainer::Layout layout);
+
     virtual void setMargin(int margin);
+
     virtual void setPadding(int padding);
+
     virtual void setPadding(int left, int top, int right, int bottom);
+
     virtual void setRegionAlignment(GContainer::Region region,
                                     HorizontalAlignment halign,
                                     VerticalAlignment valign);
+
     virtual void setRegionHorizontalAlignment(GContainer::Region region,
                                               HorizontalAlignment halign);
+
     virtual void setRegionStretch(GContainer::Region region, bool stretch = true);
+
     virtual void setRegionVerticalAlignment(GContainer::Region region,
                                             VerticalAlignment valign);
+
     virtual void setSpacing(int spacing);
+
     virtual void setVerticalAlignment(VerticalAlignment valign);
 
     friend class GContainer;

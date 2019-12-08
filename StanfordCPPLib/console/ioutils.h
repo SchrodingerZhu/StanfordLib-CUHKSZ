@@ -15,10 +15,13 @@
 #include <string>
 
 namespace ioutils {
-void captureStderrBegin();
-std::string captureStderrEnd();
-void captureStdoutBegin(bool alsoStderr = false);
-std::string captureStdoutEnd();
+    void captureStderrBegin();
+
+    std::string captureStderrEnd();
+
+    void captureStdoutBegin(bool alsoStderr = false);
+
+    std::string captureStdoutEnd();
 
 /*
  * Function: getConsoleEchoUserInput
@@ -29,12 +32,15 @@ std::string captureStdoutEnd();
  * window. Initially this is false unless set to true by a previous call to
  * setConsoleEchoUserInput(true).
  */
-bool getConsoleEchoUserInput();
-int getConsoleOutputLimit();
+    bool getConsoleEchoUserInput();
 
-void redirectStdinBegin(std::string userInput = "");
-void redirectStdinFeedInput(std::string userInput);
-void redirectStdinEnd();
+    int getConsoleOutputLimit();
+
+    void redirectStdinBegin(std::string userInput = "");
+
+    void redirectStdinFeedInput(std::string userInput);
+
+    void redirectStdinEnd();
 
 /*
  * Function: setConsoleEchoUserInput
@@ -45,14 +51,14 @@ void redirectStdinEnd();
  * Normally you don't need this echoing, but if you want to be able to copy
  * and paste your console interaction into another window, it is useful.
  */
-void setConsoleEchoUserInput(bool echo);
+    void setConsoleEchoUserInput(bool echo);
 
 /*
  * Sets console to throw an error if more than 'limit' total chars are printed.
  * Used to stop students who print infinite or semi-infinite output.
  * If limit <= 0, no limit.
  */
-void setConsoleOutputLimit(int limit = 0);
+    void setConsoleOutputLimit(int limit = 0);
 } // namespace ioutils
 
 #endif // _ioutils_h

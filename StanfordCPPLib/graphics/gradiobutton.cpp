@@ -22,12 +22,12 @@
 #include <graphics/gwindow.h>
 #include <util/require.h>
 
-Map<std::string, QButtonGroup*> GRadioButton::_buttonGroups;
+Map<std::string, QButtonGroup *> GRadioButton::_buttonGroups;
 
-GRadioButton::GRadioButton(const std::string& text, const std::string& group, bool checked, QWidget* parent) {
+GRadioButton::GRadioButton(const std::string &text, const std::string &group, bool checked, QWidget *parent) {
     GThread::runOnQtGuiThread([this, text, group, checked, parent]() {
         _iqradioButton = new _Internal_QRadioButton(this, checked, getInternalParent(parent));
-        QButtonGroup* buttonGroup = getButtonGroup(group);
+        QButtonGroup *buttonGroup = getButtonGroup(group);
         buttonGroup->addButton(_iqradioButton);
     });
     setText(text);
@@ -52,7 +52,7 @@ std::string GRadioButton::getActionEventType() const {
     return "change";
 }
 
-_Internal_QWidget* GRadioButton::getInternalWidget() const {
+_Internal_QWidget *GRadioButton::getInternalWidget() const {
     return _iqradioButton;
 }
 
@@ -64,8 +64,8 @@ std::string GRadioButton::getType() const {
     return "GRadioButton";
 }
 
-QWidget* GRadioButton::getWidget() const {
-    return static_cast<QWidget*>(_iqradioButton);
+QWidget *GRadioButton::getWidget() const {
+    return static_cast<QWidget *>(_iqradioButton);
 }
 
 bool GRadioButton::isChecked() const {
@@ -86,7 +86,7 @@ void GRadioButton::setSelected(bool selected) {
     setChecked(selected);
 }
 
-void GRadioButton::setText(const std::string& text) {
+void GRadioButton::setText(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         _iqradioButton->setText(QString::fromStdString(text));
     });
@@ -96,7 +96,7 @@ void GRadioButton::toggle() {
     setChecked(!isChecked());
 }
 
-/* static */ QButtonGroup* GRadioButton::getButtonGroup(const std::string& group) {
+/* static */ QButtonGroup *GRadioButton::getButtonGroup(const std::string &group) {
     if (!_buttonGroups.containsKey(group)) {
         GThread::runOnQtGuiThread([group]() {
             _buttonGroups.put(group, new QButtonGroup());
@@ -106,7 +106,7 @@ void GRadioButton::toggle() {
 }
 
 
-_Internal_QRadioButton::_Internal_QRadioButton(GRadioButton* gradioButton, bool checked, QWidget* parent)
+_Internal_QRadioButton::_Internal_QRadioButton(GRadioButton *gradioButton, bool checked, QWidget *parent)
         : QRadioButton(parent),
           _gradioButton(gradioButton) {
     require::nonNull(gradioButton, "_Internal_QRadioButton::constructor");
@@ -124,15 +124,15 @@ void _Internal_QRadioButton::detach() {
 
 void _Internal_QRadioButton::handleClick() {
     GEvent changeEvent(
-                /* class  */ CHANGE_EVENT,
-                /* type   */ STATE_CHANGED,
-                /* name   */ "change",
-                /* source */ _gradioButton);
+            /* class  */ CHANGE_EVENT,
+            /* type   */ STATE_CHANGED,
+            /* name   */ "change",
+            /* source */ _gradioButton);
     changeEvent.setActionCommand(_gradioButton->getActionCommand());
     _gradioButton->fireEvent(changeEvent);
 }
 
-void _Internal_QRadioButton::keyPressEvent(QKeyEvent* event) {
+void _Internal_QRadioButton::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QRadioButton::keyPressEvent", "event");
     if (_gradioButton && _gradioButton->isAcceptingEvent("keypress")) {
         event->accept();
@@ -145,7 +145,7 @@ void _Internal_QRadioButton::keyPressEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QRadioButton::keyReleaseEvent(QKeyEvent* event) {
+void _Internal_QRadioButton::keyReleaseEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QRadioButton::keyReleaseEvent", "event");
     if (_gradioButton && _gradioButton->isAcceptingEvent("keyrelease")) {
         event->accept();
@@ -158,7 +158,7 @@ void _Internal_QRadioButton::keyReleaseEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QRadioButton::mouseDoubleClickEvent(QMouseEvent* event) {
+void _Internal_QRadioButton::mouseDoubleClickEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QRadioButton::mouseDoubleClickEvent");
     QWidget::mouseDoubleClickEvent(event);   // call super
     if (!_gradioButton) {
@@ -170,10 +170,10 @@ void _Internal_QRadioButton::mouseDoubleClickEvent(QMouseEvent* event) {
         return;
     }
     GEvent mouseEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ MOUSE_DOUBLE_CLICKED,
-                /* name   */ "doubleclick",
-                /* source */ _gradioButton);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ MOUSE_DOUBLE_CLICKED,
+            /* name   */ "doubleclick",
+            /* source */ _gradioButton);
     mouseEvent.setActionCommand(_gradioButton->getActionCommand());
     mouseEvent.setButton((int) event->button());
     mouseEvent.setX(event->x());

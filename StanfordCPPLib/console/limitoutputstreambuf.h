@@ -27,56 +27,56 @@ namespace stanfordcpplib {
  *
  * inspired by: http://gabisoft.free.fr/articles/fltrsbf1.html
  */
-class LimitOutputStreambuf : public std::streambuf {
-public:
-    LimitOutputStreambuf(std::streambuf* source, int max) : m_source(source), m_count(0), m_max(max) {
-        // empty
-    }
-
-    virtual ~LimitOutputStreambuf() {
-        sync();
-    }
-
-    /*
-     * This is the crucial function; called to write a character to the
-     * underlying stream buffer (cout).  We count them so we can throw
-     * an error if too many are printed.
-     */
-    virtual int overflow(int ch) {
-        if (m_count >= 0) {
-            m_count++;
-            if (m_count > m_max) {
-                m_count = -1;   // disable checking on further calls so I can print again
-                std::ostringstream os;
-                os << std::endl;
-                os << "*** ERROR: Excessive output produced! (over " << m_max << " chars)" << std::endl;
-                os << "***        Halting program." << std::endl;
-                std::string str = os.str();
-                m_source->sputn(str.c_str(), (int) str.length());
-                throw std::exception();
-            }
+    class LimitOutputStreambuf : public std::streambuf {
+    public:
+        LimitOutputStreambuf(std::streambuf *source, int max) : m_source(source), m_count(0), m_max(max) {
+            // empty
         }
 
-        return m_source->sputc(ch);
-    }
+        virtual ~LimitOutputStreambuf() {
+            sync();
+        }
 
-    virtual int underflow() {
-        return EOF;
-    }
+        /*
+         * This is the crucial function; called to write a character to the
+         * underlying stream buffer (cout).  We count them so we can throw
+         * an error if too many are printed.
+         */
+        virtual int overflow(int ch) {
+            if (m_count >= 0) {
+                m_count++;
+                if (m_count > m_max) {
+                    m_count = -1;   // disable checking on further calls so I can print again
+                    std::ostringstream os;
+                    os << std::endl;
+                    os << "*** ERROR: Excessive output produced! (over " << m_max << " chars)" << std::endl;
+                    os << "***        Halting program." << std::endl;
+                    std::string str = os.str();
+                    m_source->sputn(str.c_str(), (int) str.length());
+                    throw std::exception();
+                }
+            }
 
-    virtual int sync() {
-        return m_source->pubsync();
-    }
+            return m_source->sputc(ch);
+        }
 
-    virtual std::streambuf* setbuf(char* p, std::streamsize len) {
-        return m_source->pubsetbuf(p, len);
-    }
+        virtual int underflow() {
+            return EOF;
+        }
 
-private:
-    std::streambuf* m_source;
-    int m_count;
-    int m_max;
-};
+        virtual int sync() {
+            return m_source->pubsync();
+        }
+
+        virtual std::streambuf *setbuf(char *p, std::streamsize len) {
+            return m_source->pubsetbuf(p, len);
+        }
+
+    private:
+        std::streambuf *m_source;
+        int m_count;
+        int m_max;
+    };
 
 } // namespace stanfordcpplib
 

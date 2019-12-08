@@ -17,6 +17,7 @@
 #include <string>
 
 #ifndef SPL_HEADLESS_MODE
+
 class GPoint;   // forward declaration
 #endif // SPL_HEADLESS_MODE
 
@@ -39,11 +40,13 @@ public:
     Point(int x, int y);
 
 #ifndef SPL_HEADLESS_MODE
+
     /**
      * Creates a <code>Point</code> object with the same x and y coordinates
      * as the given other point.
      */
-    Point(const GPoint& point);
+    Point(const GPoint &point);
+
 #endif // SPL_HEADLESS_MODE
 
     /**
@@ -66,13 +69,13 @@ public:
      * Returns <code>true</code> if <code>p1</code> and <code>p2</code>
      * are the same point.
      */
-    bool operator ==(const Point& p2) const;
+    bool operator==(const Point &p2) const;
 
     /**
      * Returns <code>true</code> if <code>p1</code> and <code>p2</code>
      * are different.
      */
-    bool operator !=(const Point& p2) const;
+    bool operator!=(const Point &p2) const;
 
     /* Private section */
 
@@ -91,11 +94,11 @@ private:
  * Overloads the <code>&lt;&lt;</code> operator so that it is able
  * to display <code>Point</code> values.
  */
-std::ostream& operator <<(std::ostream& os, const Point& pt);
+std::ostream &operator<<(std::ostream &os, const Point &pt);
 
 /**
  * Hash code function for Point objects.
  */
-int hashCode(const Point& pt);
+int hashCode(const Point &pt);
 
 #endif // _point_h

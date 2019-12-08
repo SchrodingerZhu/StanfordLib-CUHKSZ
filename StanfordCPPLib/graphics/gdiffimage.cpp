@@ -26,29 +26,29 @@
 /*static*/ const std::string GDiffImage::HIGHLIGHT_COLOR_DEFAULT = "#e000e0";   // 224, 0, 224
 
 /*static*/ void GDiffImage::showDialog(
-        const std::string& name1,
-        GCanvas* image1,
-        const std::string& name2,
-        GCanvas* image2) {
+        const std::string &name1,
+        GCanvas *image1,
+        const std::string &name2,
+        GCanvas *image2) {
     // TODO: free memory on close
     new GDiffImage(name1, image1, name2, image2);
 }
 
 /*static*/ void GDiffImage::showDialog(
-        const std::string& name1,
-        const std::string& imageFile1,
-        const std::string& name2,
-        const std::string& imageFile2) {
-    GCanvas* image1 = new GCanvas(imageFile1);
-    GCanvas* image2 = new GCanvas(imageFile2);
+        const std::string &name1,
+        const std::string &imageFile1,
+        const std::string &name2,
+        const std::string &imageFile2) {
+    GCanvas *image1 = new GCanvas(imageFile1);
+    GCanvas *image2 = new GCanvas(imageFile2);
     showDialog(name1, image1, name2, image2);
 }
 
 GDiffImage::GDiffImage(
-        const std::string& name1,
-        GCanvas* image1,
-        const std::string& name2,
-        GCanvas* image2) {
+        const std::string &name1,
+        GCanvas *image1,
+        const std::string &name2,
+        GCanvas *image2) {
     require::nonNull(image1, "GDiffImage::constructor", "image1");
     require::nonNull(image2, "GDiffImage::constructor", "image2");
 
@@ -107,29 +107,29 @@ GDiffImage::GDiffImage(
     // setupMenuBar();
 
     // do layout
-    GContainer* south = new GContainer(GContainer::LAYOUT_FLOW_VERTICAL);
-    GContainer* south1 = new GContainer();
+    GContainer *south = new GContainer(GContainer::LAYOUT_FLOW_VERTICAL);
+    GContainer *south1 = new GContainer();
     south1->add(_imageLabel1);
     south1->add(_slider);
     south1->add(_imageLabel2);
     south->add(south1);
     // 20px strut?
 
-    GContainer* south2 = new GContainer();
+    GContainer *south2 = new GContainer();
     south2->add(_diffPixelsLabel);
     south2->add(new GSpacer(20, 1));
     south2->add(_highlightDiffsBox);
     south2->add(_colorButton);
     south->add(south2);
 
-    GContainer* south3 = new GContainer();
+    GContainer *south3 = new GContainer();
     south3->add(_southPixelLabel);
     south->add(south3);
 
     _window->addToRegion(south, GWindow::REGION_SOUTH);
 
     // poke the canvas
-    double canvasWidth  = std::max(_image1->getWidth(),  _image2->getWidth());
+    double canvasWidth = std::max(_image1->getWidth(), _image2->getWidth());
     double canvasHeight = std::max(_image1->getHeight(), _image2->getHeight());
     // _window->add(_image1);
     // _window->add(_image2);
@@ -194,13 +194,13 @@ void GDiffImage::drawImages() {
             if (!_imageDiffs) {
                 _imageDiffs = new GImage(wmax, hmax);
             }
-            QImage* imgDiff = _imageDiffs->getQImage();
+            QImage *imgDiff = _imageDiffs->getQImage();
 
             // check each pair of pixels
             // (access raw QImages for speed)
             int highlightColor = GColor::convertColorToRGB(_highlightColor) | 0xff000000;
-            QImage* img1 = _image1->getQImage();
-            QImage* img2 = _image2->getQImage();
+            QImage *img1 = _image1->getQImage();
+            QImage *img2 = _image2->getQImage();
             for (int y = 0; y < hmax; y++) {
                 for (int x = 0; x < wmax; x++) {
                     int pixel1 = (x < w1 && y < h1) ? (img1->pixel(x, y) & 0xffffffff) : 0;
@@ -218,9 +218,9 @@ void GDiffImage::drawImages() {
     _window->repaint();
 }
 
-std::string GDiffImage::getPixelString(GImage* image, int x, int y) const {
+std::string GDiffImage::getPixelString(GImage *image, int x, int y) const {
     if (x >= 0 && x < image->getWidth()
-            && y >= 0 && y < image->getHeight()) {
+        && y >= 0 && y < image->getHeight()) {
         int rgb = image->getPixel(x, y);
         return GColor::convertRGBToColor(rgb);
     } else {

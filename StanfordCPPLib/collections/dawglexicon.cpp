@@ -72,7 +72,7 @@ DawgLexicon::DawgLexicon() :
     // empty
 }
 
-DawgLexicon::DawgLexicon(std::istream& input) :
+DawgLexicon::DawgLexicon(std::istream &input) :
         _edges(nullptr),
         _start(nullptr),
         _edgeCount(0),
@@ -80,7 +80,7 @@ DawgLexicon::DawgLexicon(std::istream& input) :
     addWordsFromFile(input);
 }
 
-DawgLexicon::DawgLexicon(const std::string& filename) :
+DawgLexicon::DawgLexicon(const std::string &filename) :
         _edges(nullptr),
         _start(nullptr),
         _edgeCount(0),
@@ -88,7 +88,7 @@ DawgLexicon::DawgLexicon(const std::string& filename) :
     addWordsFromFile(filename);
 }
 
-DawgLexicon::DawgLexicon(const DawgLexicon& src) :
+DawgLexicon::DawgLexicon(const DawgLexicon &src) :
         _edges(nullptr),
         _start(nullptr),
         _edgeCount(0),
@@ -110,7 +110,7 @@ DawgLexicon::~DawgLexicon() {
     }
 }
 
-void DawgLexicon::add(const std::string& word) {
+void DawgLexicon::add(const std::string &word) {
     std::string copy = word;
     toLowerCaseInPlace(copy);
     if (!contains(copy)) {
@@ -118,15 +118,15 @@ void DawgLexicon::add(const std::string& word) {
     }
 }
 
-DawgLexicon& DawgLexicon::addAll(const DawgLexicon& lex) {
-    for (const std::string& word : lex) {
+DawgLexicon &DawgLexicon::addAll(const DawgLexicon &lex) {
+    for (const std::string &word : lex) {
         add(word);
     }
     return *this;
 }
 
-DawgLexicon& DawgLexicon::addAll(std::initializer_list<std::string> list) {
-    for (const std::string& word : list) {
+DawgLexicon &DawgLexicon::addAll(std::initializer_list<std::string> list) {
+    for (const std::string &word : list) {
         add(word);
     }
     return *this;
@@ -136,7 +136,7 @@ DawgLexicon& DawgLexicon::addAll(std::initializer_list<std::string> list) {
  * Check for DAWG in first 4 to identify as special binary format,
  * otherwise assume ASCII, one word per line
  */
-void DawgLexicon::addWordsFromFile(std::istream& input) {
+void DawgLexicon::addWordsFromFile(std::istream &input) {
     char firstFour[4], expected[] = "DAWG";
     if (input.fail()) {
         error("DawgLexicon::addWordsFromFile: Couldn't read input");
@@ -161,7 +161,7 @@ void DawgLexicon::addWordsFromFile(std::istream& input) {
  * Check for DAWG in first 4 to identify as special binary format,
  * otherwise assume ASCII, one word per line
  */
-void DawgLexicon::addWordsFromFile(const std::string& filename) {
+void DawgLexicon::addWordsFromFile(const std::string &filename) {
     std::ifstream input(filename.c_str());
     if (input.fail()) {
         error("DawgLexicon::addWordsFromFile: Couldn't open lexicon file " + filename);
@@ -179,18 +179,18 @@ void DawgLexicon::clear() {
     _otherWords.clear();
 }
 
-bool DawgLexicon::contains(const std::string& word) const {
+bool DawgLexicon::contains(const std::string &word) const {
     std::string copy = word;
     toLowerCaseInPlace(copy);
-    Edge* lastEdge = traceToLastEdge(copy);
+    Edge *lastEdge = traceToLastEdge(copy);
     if (lastEdge && lastEdge->accept) {
         return true;
     }
     return _otherWords.contains(copy);
 }
 
-bool DawgLexicon::containsAll(const DawgLexicon& lex2) const {
-    for (const std::string& word : lex2) {
+bool DawgLexicon::containsAll(const DawgLexicon &lex2) const {
+    for (const std::string &word : lex2) {
         if (!contains(word)) {
             return false;
         }
@@ -199,7 +199,7 @@ bool DawgLexicon::containsAll(const DawgLexicon& lex2) const {
 }
 
 bool DawgLexicon::containsAll(std::initializer_list<std::string> list) const {
-    for (const std::string& word : list) {
+    for (const std::string &word : list) {
         if (!contains(word)) {
             return false;
         }
@@ -207,7 +207,7 @@ bool DawgLexicon::containsAll(std::initializer_list<std::string> list) const {
     return true;
 }
 
-bool DawgLexicon::containsPrefix(const std::string& prefix) const {
+bool DawgLexicon::containsPrefix(const std::string &prefix) const {
     if (prefix.empty()) {
         return true;
     }
@@ -227,7 +227,7 @@ bool DawgLexicon::containsPrefix(const std::string& prefix) const {
     return false;
 }
 
-bool DawgLexicon::equals(const DawgLexicon& lex2) const {
+bool DawgLexicon::equals(const DawgLexicon &lex2) const {
     return stanfordcpplib::collections::equals(*this, lex2);
 }
 
@@ -239,7 +239,7 @@ std::string DawgLexicon::front() const {
     return *it;
 }
 
-void DawgLexicon::insert(const std::string& word) {
+void DawgLexicon::insert(const std::string &word) {
     add(word);
 }
 
@@ -247,7 +247,7 @@ bool DawgLexicon::isEmpty() const {
     return size() == 0;
 }
 
-bool DawgLexicon::isSubsetOf(const DawgLexicon& lex2) const {
+bool DawgLexicon::isSubsetOf(const DawgLexicon &lex2) const {
     auto it = begin();
     auto end = this->end();
     while (it != end) {
@@ -264,7 +264,7 @@ bool DawgLexicon::isSubsetOf(std::initializer_list<std::string> list) const {
     return isSubsetOf(lex2);
 }
 
-bool DawgLexicon::isSupersetOf(const DawgLexicon& lex2) const {
+bool DawgLexicon::isSupersetOf(const DawgLexicon &lex2) const {
     return containsAll(lex2);
 }
 
@@ -297,57 +297,57 @@ std::string DawgLexicon::toString() const {
 /*
  * Operators
  */
-bool DawgLexicon::operator ==(const DawgLexicon& lex2) const {
+bool DawgLexicon::operator==(const DawgLexicon &lex2) const {
     return equals(lex2);
 }
 
-bool DawgLexicon::operator !=(const DawgLexicon& lex2) const {
+bool DawgLexicon::operator!=(const DawgLexicon &lex2) const {
     return !equals(lex2);
 }
 
-bool DawgLexicon::operator <(const DawgLexicon& lex2) const {
+bool DawgLexicon::operator<(const DawgLexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) < 0;
 }
 
-bool DawgLexicon::operator <=(const DawgLexicon& lex2) const {
+bool DawgLexicon::operator<=(const DawgLexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) <= 0;
 }
 
-bool DawgLexicon::operator >(const DawgLexicon& lex2) const {
+bool DawgLexicon::operator>(const DawgLexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) > 0;
 }
 
-bool DawgLexicon::operator >=(const DawgLexicon& lex2) const {
+bool DawgLexicon::operator>=(const DawgLexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) >= 0;
 }
 
-DawgLexicon DawgLexicon::operator +(const DawgLexicon& lex2) const {
+DawgLexicon DawgLexicon::operator+(const DawgLexicon &lex2) const {
     DawgLexicon lex = *this;
     lex.addAll(lex2);
     return lex;
 }
 
-DawgLexicon DawgLexicon::operator +(std::initializer_list<std::string> list) const {
+DawgLexicon DawgLexicon::operator+(std::initializer_list<std::string> list) const {
     DawgLexicon lex = *this;
     lex.addAll(list);
     return lex;
 }
 
-DawgLexicon DawgLexicon::operator +(const std::string& word) const {
+DawgLexicon DawgLexicon::operator+(const std::string &word) const {
     DawgLexicon lex = *this;
     lex.add(word);
     return lex;
 }
 
-DawgLexicon& DawgLexicon::operator +=(const DawgLexicon& lex2) {
+DawgLexicon &DawgLexicon::operator+=(const DawgLexicon &lex2) {
     return addAll(lex2);
 }
 
-DawgLexicon& DawgLexicon::operator +=(std::initializer_list<std::string> list) {
+DawgLexicon &DawgLexicon::operator+=(std::initializer_list<std::string> list) {
     return addAll(list);
 }
 
-DawgLexicon& DawgLexicon::operator +=(const std::string& word) {
+DawgLexicon &DawgLexicon::operator+=(const std::string &word) {
     add(word);
     return *this;
 }
@@ -356,12 +356,12 @@ DawgLexicon& DawgLexicon::operator +=(const std::string& word) {
  * Private methods and helpers
  */
 
-DawgLexicon& DawgLexicon::operator ,(const std::string& word) {
+DawgLexicon &DawgLexicon::operator,(const std::string &word) {
     add(word);
     return *this;
 }
 
-int DawgLexicon::countDawgWords(Edge* ep) const {
+int DawgLexicon::countDawgWords(Edge *ep) const {
     int count = 0;
     while (true) {
         if (ep->accept) count++;
@@ -374,14 +374,14 @@ int DawgLexicon::countDawgWords(Edge* ep) const {
     return count;
 }
 
-void DawgLexicon::deepCopy(const DawgLexicon& src) {
+void DawgLexicon::deepCopy(const DawgLexicon &src) {
     if (!src._edges) {
         _edges = nullptr;
         _start = nullptr;
     } else {
         _edgeCount = src._edgeCount;
         _edges = new Edge[src._edgeCount];
-        memcpy(_edges, src._edges, sizeof(Edge)*src._edgeCount);
+        memcpy(_edges, src._edges, sizeof(Edge) * src._edgeCount);
         _start = _edges + (src._start - src._edges);
     }
     _dawgWordsCount = src._dawgWordsCount;
@@ -396,8 +396,8 @@ void DawgLexicon::deepCopy(const DawgLexicon& src) {
  * last child without finding a match (thus no such
  * child edge exists).
  */
-DawgLexicon::Edge* DawgLexicon::findEdgeForChar(Edge* children, char ch) const {
-    Edge* curEdge = children;
+DawgLexicon::Edge *DawgLexicon::findEdgeForChar(Edge *children, char ch) const {
+    Edge *curEdge = children;
     while (true) {
         if (curEdge->letter == charToOrd(ch)) {
             return curEdge;
@@ -415,7 +415,7 @@ DawgLexicon::Edge* DawgLexicon::findEdgeForChar(Edge* children, char ch) const {
  * The binary lexicon file format must follow this pattern:
  * DAWG:<startnode index>:<num bytes>:<num bytes block of edge data>
  */
-void DawgLexicon::readBinaryFile(std::istream& input) {
+void DawgLexicon::readBinaryFile(std::istream &input) {
     input.clear();
     input.seekg(0, std::ios::beg);
     long startIndex, numBytes;
@@ -430,20 +430,20 @@ void DawgLexicon::readBinaryFile(std::istream& input) {
     input >> numBytes;
     input.get();
     if (input.fail() || strncmp(firstFour, expected, 4) != 0
-            || startIndex < 0 || numBytes < 0) {
+        || startIndex < 0 || numBytes < 0) {
         error("DawgLexicon::addWordsFromFile: Improperly formed lexicon file");
     }
     _edgeCount = numBytes / sizeof(Edge);
     _edges = new Edge[_edgeCount];
     _start = &_edges[startIndex];
-    input.read((char*) _edges, numBytes);
+    input.read((char *) _edges, numBytes);
     if (input.fail() && !input.eof()) {
         error("DawgLexicon::addWordsFromFile: Improperly formed lexicon file");
     }
 
 #if defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN
     // uint32_t* cur = (uint32_t*) edges;
-    uint32_t* cur = reinterpret_cast<uint32_t*>(_edges);
+    uint32_t *cur = reinterpret_cast<uint32_t *>(_edges);
     for (int i = 0; i < _edgeCount; i++, cur++) {
         *cur = my_ntohl(*cur);
     }
@@ -458,7 +458,7 @@ void DawgLexicon::readBinaryFile(std::istream& input) {
  * The binary lexicon file format must follow this pattern:
  * DAWG:<startnode index>:<num bytes>:<num bytes block of edge data>
  */
-void DawgLexicon::readBinaryFile(const std::string& filename) {
+void DawgLexicon::readBinaryFile(const std::string &filename) {
 #ifdef _foreachpatch_h
     std::ifstream input(filename.c_str(), __IOS_IN__ | __IOS_BINARY__);
 #else
@@ -478,11 +478,11 @@ void DawgLexicon::readBinaryFile(const std::string& filename) {
  * If a path exists, return last edge; otherwise return nullptr.
  */
 
-DawgLexicon::Edge* DawgLexicon::traceToLastEdge(const std::string& s) const {
+DawgLexicon::Edge *DawgLexicon::traceToLastEdge(const std::string &s) const {
     if (!_start) {
         return nullptr;
     }
-    Edge* curEdge = findEdgeForChar(_start, s[0]);
+    Edge *curEdge = findEdgeForChar(_start, s[0]);
     int len = (int) s.length();
     for (int i = 1; i < len; i++) {
         if (!curEdge || !curEdge->children) {
@@ -493,7 +493,7 @@ DawgLexicon::Edge* DawgLexicon::traceToLastEdge(const std::string& s) const {
     return curEdge;
 }
 
-DawgLexicon& DawgLexicon::operator =(const DawgLexicon& src) {
+DawgLexicon &DawgLexicon::operator=(const DawgLexicon &src) {
     if (this != &src) {
         if (_edges) {
             delete[] _edges;
@@ -543,16 +543,16 @@ void DawgLexicon::iterator::advanceToNextWordInDawg() {
     }
 }
 
-std::ostream& operator <<(std::ostream& os, const DawgLexicon& lex) {
+std::ostream &operator<<(std::ostream &os, const DawgLexicon &lex) {
     return stanfordcpplib::collections::writeCollection(os, lex);
 }
 
-std::istream& operator >>(std::istream& is, DawgLexicon& lex) {
+std::istream &operator>>(std::istream &is, DawgLexicon &lex) {
     std::string element;
     return stanfordcpplib::collections::readCollection(is, lex, element, /* descriptor */ "DawgLexicon::operator >>");
 }
 
-int hashCode(const DawgLexicon& lex) {
+int hashCode(const DawgLexicon &lex) {
     return stanfordcpplib::collections::hashCodeCollection(lex);
 }
 
@@ -561,8 +561,8 @@ int hashCode(const DawgLexicon& lex) {
  */
 static uint32_t my_ntohl(uint32_t arg) {
     uint32_t result = ((arg & 0xff000000) >> 24) |
-            ((arg & 0x00ff0000) >> 8) |
-            ((arg & 0x0000ff00) << 8) |
-            ((arg & 0x000000ff) << 24);
+                      ((arg & 0x00ff0000) >> 8) |
+                      ((arg & 0x0000ff00) << 8) |
+                      ((arg & 0x000000ff) << 24);
     return result;
 }

@@ -27,68 +27,68 @@ namespace stanfordcpplib {
  *
  * inspired by: http://gabisoft.free.fr/articles/fltrsbf1.html
  */
-class EchoInputStreambuf : public std::streambuf {
-public:
-    EchoInputStreambuf(std::streambuf* source) : m_source(source), m_buffer('\0') {
-        // empty
-    }
+    class EchoInputStreambuf : public std::streambuf {
+    public:
+        EchoInputStreambuf(std::streambuf *source) : m_source(source), m_buffer('\0') {
+            // empty
+        }
 
-    EchoInputStreambuf(const std::string& input) : m_buffer('\0') {
-        std::istringstream* istream = new std::istringstream(input);
-        m_source = istream->rdbuf();
-    }
+        EchoInputStreambuf(const std::string &input) : m_buffer('\0') {
+            std::istringstream *istream = new std::istringstream(input);
+            m_source = istream->rdbuf();
+        }
 
-    virtual ~EchoInputStreambuf() {
-        sync();
-    }
+        virtual ~EchoInputStreambuf() {
+            sync();
+        }
 
-    virtual int overflow(int) {
-        return EOF;
-    }
+        virtual int overflow(int) {
+            return EOF;
+        }
 
-    /*
-     * This is the crucial function; called to read a character from the
-     * underlying stream buffer (cin).  We capture it in a one-char m_buffer
-     * so we can return it later.
-     */
-    virtual int underflow() {
-        int result(EOF);
-        if (gptr() < egptr()) {
-            result = *gptr();
-        } else {
-            result = m_source->sbumpc();
-            if (result != EOF) {
-                m_buffer = result;
-                setg(&m_buffer, &m_buffer, &m_buffer + 1);
+        /*
+         * This is the crucial function; called to read a character from the
+         * underlying stream buffer (cin).  We capture it in a one-char m_buffer
+         * so we can return it later.
+         */
+        virtual int underflow() {
+            int result(EOF);
+            if (gptr() < egptr()) {
+                result = *gptr();
+            } else {
+                result = m_source->sbumpc();
+                if (result != EOF) {
+                    m_buffer = result;
+                    setg(&m_buffer, &m_buffer, &m_buffer + 1);
 
-                // echo the character to stdout
-                std::cout.put(result);
-                std::cout.flush();
+                    // echo the character to stdout
+                    std::cout.put(result);
+                    std::cout.flush();
+                }
             }
+            return result;
         }
-        return result;
-    }
 
-    virtual int sync() {
-        int result(0);
-        if (gptr() < egptr()) {
-            result = m_source->sputbackc(*gptr());
-            setg(nullptr, nullptr, nullptr);
+        virtual int sync() {
+            int result(0);
+            if (gptr() < egptr()) {
+                result = m_source->sputbackc(*gptr());
+                setg(nullptr, nullptr, nullptr);
+            }
+            if (m_source->pubsync() == EOF) {
+                result = EOF;
+            }
+            return result;
         }
-        if (m_source->pubsync() == EOF) {
-            result = EOF;
+
+        virtual std::streambuf *setbuf(char *p, std::streamsize len) {
+            return m_source->pubsetbuf(p, len);
         }
-        return result;
-    }
 
-    virtual std::streambuf* setbuf(char* p, std::streamsize len) {
-        return m_source->pubsetbuf(p, len);
-    }
-
-private:
-    std::streambuf* m_source;
-    char m_buffer;
-};
+    private:
+        std::streambuf *m_source;
+        char m_buffer;
+    };
 
 } // namespace stanfordcpplib
 

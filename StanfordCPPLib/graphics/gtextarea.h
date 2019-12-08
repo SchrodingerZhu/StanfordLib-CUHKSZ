@@ -37,12 +37,12 @@ public:
      * and columns of text.
      * @throw ErrorException if rows or columns value is negative
      */
-    GTextArea(int rows, int columns, QWidget* parent = nullptr);
+    GTextArea(int rows, int columns, QWidget *parent = nullptr);
 
     /**
      * Creates a new text area with the given initial text.
      */
-    GTextArea(const std::string& text = "", QWidget* parent = nullptr);
+    GTextArea(const std::string &text = "", QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the text area.
@@ -53,17 +53,18 @@ public:
      * Adds formatted text to the end of the text area.
      * The text will be formatted with the given color and font.
      */
-    virtual void appendFormattedText(const std::string& text, const std::string& color = "", const std::string& font = "");
+    virtual void
+    appendFormattedText(const std::string &text, const std::string &color = "", const std::string &font = "");
 
     /**
      * Adds HTML-formatted text to the end of the text area.
      */
-    virtual void appendHtml(const std::string& html);
+    virtual void appendHtml(const std::string &html);
 
     /**
      * Adds the given plain text to the end of the text area.
      */
-    virtual void appendText(const std::string& text);
+    virtual void appendText(const std::string &text);
 
     /**
      * Deselects any text that is currently selected in the text area.
@@ -93,7 +94,7 @@ public:
     virtual std::string getHtml() const;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the text area's placeholder text, which is usually displayed
@@ -145,7 +146,7 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns true if a context menu will pop up when the user right-clicks the
@@ -242,7 +243,7 @@ public:
      * This differs from setText in that HTML tags and formatting are applied
      * to the text rather than considered to be regular characters.
      */
-    virtual void setHtml(const std::string& html);
+    virtual void setHtml(const std::string &html);
 
     /**
      * Sets whether the text area wraps its text when a line becomes too long.
@@ -270,7 +271,7 @@ public:
      * This usually indicates a hint to the user about what value to type.
      * The default initial placeholder is empty.
      */
-    virtual void setPlaceholder(const std::string& text);
+    virtual void setPlaceholder(const std::string &text);
 
     /**
      * Sets the height of the text area to be wide enough to fit the given number
@@ -290,7 +291,7 @@ public:
      * Sets the text area's current text to the given string,
      * replacing any existing text.
      */
-    virtual void setText(const std::string& text);
+    virtual void setText(const std::string &text);
 
     /**
      * Sets a text change listener on this text area so that it will be called
@@ -327,7 +328,7 @@ public:
 private:
     Q_DISABLE_COPY(GTextArea)
 
-    _Internal_QTextEdit* _iqtextedit;
+    _Internal_QTextEdit *_iqtextedit;
     bool _contextMenuEnabled;
 
     // helper used by getRows, getColumns, etc.
@@ -341,24 +342,33 @@ private:
  * @private
  */
 class _Internal_QTextEdit : public QTextEdit, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QTextEdit(GTextArea* gtextArea, QWidget* parent = nullptr);
-    void contextMenuEvent(QContextMenuEvent* event) override;
+    _Internal_QTextEdit(GTextArea *gtextArea, QWidget *parent = nullptr);
+
+    void contextMenuEvent(QContextMenuEvent *event) override;
+
     void detach() override;
-    void keyPressEvent(QKeyEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+    void keyReleaseEvent(QKeyEvent *event) override;
+
+    void mousePressEvent(QMouseEvent *event) override;
+
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
     QSize sizeHint() const override;
 
 public slots:
+
     void handleScroll(int value);
+
     void handleTextChange();
 
 private:
-    GTextArea* _gtextarea;
+    GTextArea *_gtextarea;
 
     friend class GTextArea;
 };

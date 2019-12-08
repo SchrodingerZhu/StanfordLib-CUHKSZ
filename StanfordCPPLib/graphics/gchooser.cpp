@@ -19,14 +19,14 @@
 #include <graphics/gwindow.h>
 #include <util/require.h>
 
-GChooser::GChooser(QWidget* parent) {
+GChooser::GChooser(QWidget *parent) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqcomboBox = new _Internal_QComboBox(this, getInternalParent(parent));
     });
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GChooser::GChooser(const std::initializer_list<std::string>& items, QWidget* parent) {
+GChooser::GChooser(const std::initializer_list<std::string> &items, QWidget *parent) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqcomboBox = new _Internal_QComboBox(this, getInternalParent(parent));
     });
@@ -34,7 +34,7 @@ GChooser::GChooser(const std::initializer_list<std::string>& items, QWidget* par
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GChooser::GChooser(const Vector<std::string>& items, QWidget* parent) {
+GChooser::GChooser(const Vector<std::string> &items, QWidget *parent) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqcomboBox = new _Internal_QComboBox(this, getInternalParent(parent));
     });
@@ -48,16 +48,16 @@ GChooser::~GChooser() {
     _iqcomboBox = nullptr;
 }
 
-void GChooser::addItem(const std::string& item) {
+void GChooser::addItem(const std::string &item) {
     require::nonEmpty(item, "GChooser::addItem", "item");
     GThread::runOnQtGuiThread([this, item]() {
         _iqcomboBox->addItem(QString::fromStdString(item));
     });
 }
 
-void GChooser::addItems(const std::initializer_list<std::string>& items) {
+void GChooser::addItems(const std::initializer_list<std::string> &items) {
     GThread::runOnQtGuiThread([this, &items]() {
-        for (const std::string& item : items) {
+        for (const std::string &item : items) {
             if (!item.empty()) {
                 _iqcomboBox->addItem(QString::fromStdString(item));
             }
@@ -65,9 +65,9 @@ void GChooser::addItems(const std::initializer_list<std::string>& items) {
     });
 }
 
-void GChooser::addItems(const Vector<std::string>& items) {
+void GChooser::addItems(const Vector<std::string> &items) {
     GThread::runOnQtGuiThread([this, &items]() {
-        for (const std::string& item : items) {
+        for (const std::string &item : items) {
             if (!item.empty()) {
                 _iqcomboBox->addItem(QString::fromStdString(item));
             }
@@ -75,7 +75,7 @@ void GChooser::addItems(const Vector<std::string>& items) {
     });
 }
 
-void GChooser::checkIndex(const std::string& member, int index, int min, int max) const {
+void GChooser::checkIndex(const std::string &member, int index, int min, int max) const {
     if (max < 0) {
         max = size() - 1;
     }
@@ -100,7 +100,7 @@ std::string GChooser::getActionEventType() const {
     return "change";
 }
 
-_Internal_QWidget* GChooser::getInternalWidget() const {
+_Internal_QWidget *GChooser::getInternalWidget() const {
     return _iqcomboBox;
 }
 
@@ -125,8 +125,8 @@ std::string GChooser::getType() const {
     return "GChooser";
 }
 
-QWidget* GChooser::getWidget() const {
-    return static_cast<QWidget*>(_iqcomboBox);
+QWidget *GChooser::getWidget() const {
+    return static_cast<QWidget *>(_iqcomboBox);
 }
 
 bool GChooser::isEditable() const {
@@ -137,7 +137,7 @@ bool GChooser::isEmpty() const {
     return getItemCount() == 0;
 }
 
-void GChooser::setItem(int index, const std::string& item) {
+void GChooser::setItem(int index, const std::string &item) {
     checkIndex("GChooser::setItem", index);
     GThread::runOnQtGuiThread([this, index, item]() {
         _iqcomboBox->setItemText(index, QString::fromStdString(item));
@@ -157,7 +157,7 @@ void GChooser::setEditable(bool editable) {
     });
 }
 
-void GChooser::setSelectedItem(const std::string& item) {
+void GChooser::setSelectedItem(const std::string &item) {
     for (int i = 0, len = getItemCount(); i < len; i++) {
         std::string thisItem = _iqcomboBox->itemText(i).toStdString();
         if (thisItem == item) {
@@ -172,7 +172,7 @@ int GChooser::size() const {
 }
 
 
-_Internal_QComboBox::_Internal_QComboBox(GChooser* gchooser, QWidget* parent)
+_Internal_QComboBox::_Internal_QComboBox(GChooser *gchooser, QWidget *parent)
         : QComboBox(parent),
           _gchooser(gchooser) {
     require::nonNull(gchooser, "_Internal_QComboBox::constructor");
@@ -189,15 +189,15 @@ void _Internal_QComboBox::handleChange() {
         return;
     }
     GEvent changeEvent(
-                /* class  */ CHANGE_EVENT,
-                /* type   */ STATE_CHANGED,
-                /* name   */ "change",
-                /* source */ _gchooser);
+            /* class  */ CHANGE_EVENT,
+            /* type   */ STATE_CHANGED,
+            /* name   */ "change",
+            /* source */ _gchooser);
     changeEvent.setActionCommand(_gchooser->getActionCommand());
     _gchooser->fireEvent(changeEvent);
 }
 
-void _Internal_QComboBox::keyPressEvent(QKeyEvent* event) {
+void _Internal_QComboBox::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QComboBox::keyPressEvent", "event");
     if (_gchooser && _gchooser->isAcceptingEvent("keypress")) {
         event->accept();
@@ -210,7 +210,7 @@ void _Internal_QComboBox::keyPressEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QComboBox::keyReleaseEvent(QKeyEvent* event) {
+void _Internal_QComboBox::keyReleaseEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QComboBox::keyReleaseEvent", "event");
     if (_gchooser && _gchooser->isAcceptingEvent("keyrelease")) {
         event->accept();

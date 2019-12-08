@@ -22,7 +22,7 @@
 #include <graphics/gwindow.h>
 #include <util/require.h>
 
-GCheckBox::GCheckBox(const std::string& text, bool checked, QWidget* parent) {
+GCheckBox::GCheckBox(const std::string &text, bool checked, QWidget *parent) {
     GThread::runOnQtGuiThread([this, checked, parent]() {
         _iqcheckBox = new _Internal_QCheckBox(this, checked, getInternalParent(parent));
     });
@@ -48,7 +48,7 @@ std::string GCheckBox::getActionEventType() const {
     return "change";
 }
 
-_Internal_QWidget* GCheckBox::getInternalWidget() const {
+_Internal_QWidget *GCheckBox::getInternalWidget() const {
     return _iqcheckBox;
 }
 
@@ -60,8 +60,8 @@ std::string GCheckBox::getType() const {
     return "GCheckBox";
 }
 
-QWidget* GCheckBox::getWidget() const {
-    return static_cast<QWidget*>(_iqcheckBox);
+QWidget *GCheckBox::getWidget() const {
+    return static_cast<QWidget *>(_iqcheckBox);
 }
 
 bool GCheckBox::isChecked() const {
@@ -82,7 +82,7 @@ void GCheckBox::setSelected(bool selected) {
     setChecked(selected);
 }
 
-void GCheckBox::setText(const std::string& text) {
+void GCheckBox::setText(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         _iqcheckBox->setText(QString::fromStdString(text));
     });
@@ -93,7 +93,7 @@ void GCheckBox::toggle() {
 }
 
 
-_Internal_QCheckBox::_Internal_QCheckBox(GCheckBox* gcheckBox, bool checked, QWidget* parent)
+_Internal_QCheckBox::_Internal_QCheckBox(GCheckBox *gcheckBox, bool checked, QWidget *parent)
         : QCheckBox(parent),
           _gcheckBox(gcheckBox) {
     require::nonNull(gcheckBox, "_Internal_QCheckBox::constructor");
@@ -111,15 +111,15 @@ void _Internal_QCheckBox::handleStateChange(int /* state */) {
         return;
     }
     GEvent changeEvent(
-                /* class  */ CHANGE_EVENT,
-                /* type   */ STATE_CHANGED,
-                /* name   */ "change",
-                /* source */ _gcheckBox);
+            /* class  */ CHANGE_EVENT,
+            /* type   */ STATE_CHANGED,
+            /* name   */ "change",
+            /* source */ _gcheckBox);
     changeEvent.setActionCommand(_gcheckBox->getActionCommand());
     _gcheckBox->fireEvent(changeEvent);
 }
 
-void _Internal_QCheckBox::keyPressEvent(QKeyEvent* event) {
+void _Internal_QCheckBox::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QCheckBox::keyPressEvent", "event");
     if (_gcheckBox && _gcheckBox->isAcceptingEvent("keypress")) {
         event->accept();
@@ -132,7 +132,7 @@ void _Internal_QCheckBox::keyPressEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QCheckBox::keyReleaseEvent(QKeyEvent* event) {
+void _Internal_QCheckBox::keyReleaseEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QCheckBox::keyReleaseEvent", "event");
     if (_gcheckBox && _gcheckBox->isAcceptingEvent("keyrelease")) {
         event->accept();
@@ -145,7 +145,7 @@ void _Internal_QCheckBox::keyReleaseEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QCheckBox::mouseDoubleClickEvent(QMouseEvent* event) {
+void _Internal_QCheckBox::mouseDoubleClickEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QCheckBox::mouseDoubleClickEvent");
     QWidget::mouseDoubleClickEvent(event);   // call super
     emit doubleClicked();
@@ -154,10 +154,10 @@ void _Internal_QCheckBox::mouseDoubleClickEvent(QMouseEvent* event) {
         return;
     }
     GEvent mouseEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ MOUSE_DOUBLE_CLICKED,
-                /* name   */ "doubleclick",
-                /* source */ _gcheckBox);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ MOUSE_DOUBLE_CLICKED,
+            /* name   */ "doubleclick",
+            /* source */ _gcheckBox);
     mouseEvent.setActionCommand(_gcheckBox->getActionCommand());
     mouseEvent.setButton((int) event->button());
     mouseEvent.setX(event->x());

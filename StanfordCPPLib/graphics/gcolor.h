@@ -117,26 +117,26 @@ public:
      * Converts a color name into an ARGB integer that encodes the
      * alpha (opacity), red, green, and blue components of the color.
      */
-    static int convertColorToARGB(const std::string& colorName);
+    static int convertColorToARGB(const std::string &colorName);
 
     /**
      * Converts a color name into an integer that encodes the
      * red, green, and blue components of the color.
      * This function is also compatible with ARGB colors.
      */
-    static int convertColorToRGB(const std::string& colorName);
+    static int convertColorToRGB(const std::string &colorName);
 
     /**
      * Converts a Qt RGB color object into a color string.
      * Does not preserve alpha transparency.
      */
-    static std::string convertQColorToColor(const QColor& color);
+    static std::string convertQColorToColor(const QColor &color);
 
     /**
      * Converts a Qt color object into an RGB integer.
      * Does not preserve alpha transparency.
      */
-    static int convertQColorToRGB(const QColor& color);
+    static int convertQColorToRGB(const QColor &color);
 
     /**
      * Converts an RGB integer value into a color name in the
@@ -183,14 +183,14 @@ public:
      * This is calculated using the following formula:
      * https://en.wikipedia.org/wiki/Relative_luminance
      */
-    static double getLuminance(const std::string& color);
+    static double getLuminance(const std::string &color);
 
     /**
      * Returns true if the given color string is of the 8-hex-character form
      * that contains an alpha channel in the highest order two characters,
      * preceded by a hash sign, such as "#aaff0033".
      */
-    static bool hasAlpha(const std::string& color);
+    static bool hasAlpha(const std::string &color);
 
     /**
      * Splits the given ARGB integer into four integer RGB values from 0-255.
@@ -198,7 +198,7 @@ public:
      * <code>gg</code>, and <code>bb</code> values are two-digit
      * hexadecimal numbers indicating the intensity of that component.
      */
-    static void splitARGB(int argb, int& a, int& r, int& g, int& b);
+    static void splitARGB(int argb, int &a, int &r, int &g, int &b);
 
     /**
      * Splits the given RGB integer into three integer RGB values from 0-255.
@@ -206,13 +206,13 @@ public:
      * are two-digit hexadecimal numbers indicating the intensity of that component.
      * Ignores alpha transparency.
      */
-    static void splitRGB(int rgb, int& r, int& g, int& b);
+    static void splitRGB(int rgb, int &r, int &g, int &b);
 
     /**
      * Converts a color string into a Qt color object.
      * Preserves alpha transparency if the color string contains an alpha component.
      */
-    static QColor toQColor(const std::string& color);
+    static QColor toQColor(const std::string &color);
 
     /**
      * Converts an ARGB integer into a Qt color object.
@@ -226,19 +226,19 @@ private:
     /**
      * Strips casing and punctuation; e.g. "Dark Gray" => "darkgray"
      */
-    static std::string canonicalColorName(const std::string& str);
+    static std::string canonicalColorName(const std::string &str);
 
     /**
      * Returns a reference to the table of common colors,
      * mapping from names to RGB integers.
      */
-    static const Map<std::string, int>& colorTable();
+    static const Map<std::string, int> &colorTable();
 
     /**
      * Returns a reference to the table of common colors,
      * mapping from names to color strings.
      */
-    static const Map<std::string, std::string>& colorNameTable();
+    static const Map<std::string, std::string> &colorNameTable();
 
     // internal color tables
     static Map<std::string, int> _colorTable;

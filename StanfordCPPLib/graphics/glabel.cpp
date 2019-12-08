@@ -29,7 +29,7 @@
 #include <graphics/gwindow.h>
 #include <util/require.h>
 
-GLabel::GLabel(const std::string& text, const std::string& iconFileName, QWidget* parent)
+GLabel::GLabel(const std::string &text, const std::string &iconFileName, QWidget *parent)
         : _gtext(nullptr) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqlabel = new _Internal_QLabel(this, getInternalParent(parent));
@@ -41,7 +41,7 @@ GLabel::GLabel(const std::string& text, const std::string& iconFileName, QWidget
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GLabel::GLabel(const std::string& text, const QIcon& icon, QWidget* parent)
+GLabel::GLabel(const std::string &text, const QIcon &icon, QWidget *parent)
         : _gtext(nullptr) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqlabel = new _Internal_QLabel(this, getInternalParent(parent));
@@ -51,7 +51,7 @@ GLabel::GLabel(const std::string& text, const QIcon& icon, QWidget* parent)
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GLabel::GLabel(const std::string& text, const QPixmap& icon, QWidget* parent)
+GLabel::GLabel(const std::string &text, const QPixmap &icon, QWidget *parent)
         : _gtext(nullptr) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqlabel = new _Internal_QLabel(this, getInternalParent(parent));
@@ -74,11 +74,11 @@ void GLabel::ensureGText() {
     _gtext->setFont(getFont());
 }
 
-GText* GLabel::getGText() const {
+GText *GLabel::getGText() const {
     return _gtext;
 }
 
-_Internal_QWidget* GLabel::getInternalWidget() const {
+_Internal_QWidget *GLabel::getInternalWidget() const {
     return _iqlabel;
 }
 
@@ -109,8 +109,8 @@ std::string GLabel::getType() const {
     return "GLabel";
 }
 
-QWidget* GLabel::getWidget() const {
-    return static_cast<QWidget*>(_iqlabel);
+QWidget *GLabel::getWidget() const {
+    return static_cast<QWidget *>(_iqlabel);
 }
 
 bool GLabel::hasGText() const {
@@ -128,7 +128,7 @@ void GLabel::setBounds(double x, double y, double width, double height) {
     GInteractor::setBounds(x, y, width, height);
 }
 
-void GLabel::setBounds(const GRectangle& size) {
+void GLabel::setBounds(const GRectangle &size) {
     if (_gtext) {
         _gtext->setBounds(size);
     }
@@ -142,21 +142,21 @@ void GLabel::setColor(int rgb) {
     GInteractor::setColor(rgb);   // call super
 }
 
-void GLabel::setColor(const std::string& color) {
+void GLabel::setColor(const std::string &color) {
     if (_gtext) {
         _gtext->setColor(color);
     }
     GInteractor::setColor(color);   // call super
 }
 
-void GLabel::setFont(const QFont& font) {
+void GLabel::setFont(const QFont &font) {
     if (_gtext) {
         _gtext->setFont(font);
     }
     GInteractor::setFont(font);   // call super
 }
 
-void GLabel::setFont(const std::string& font) {
+void GLabel::setFont(const std::string &font) {
     if (_gtext) {
         _gtext->setFont(font);
     }
@@ -170,7 +170,7 @@ void GLabel::setForeground(int rgb) {
     GInteractor::setForeground(rgb);   // call super
 }
 
-void GLabel::setForeground(const std::string& color) {
+void GLabel::setForeground(const std::string &color) {
     if (_gtext) {
         _gtext->setForeground(color);
     }
@@ -183,7 +183,7 @@ void GLabel::setHeight(double height) {
     GInteractor::setHeight(height);
 }
 
-void GLabel::setIcon(const QIcon& icon) {
+void GLabel::setIcon(const QIcon &icon) {
     GInteractor::setIcon(icon);
     GThread::runOnQtGuiThread([this, &icon]() {
         QSize size(16, 16);   // default size
@@ -202,7 +202,7 @@ void GLabel::setIcon(const QIcon& icon) {
     });
 }
 
-void GLabel::setIcon(const QPixmap& icon) {
+void GLabel::setIcon(const QPixmap &icon) {
     GInteractor::setIcon(icon);
     GThread::runOnQtGuiThread([this, &icon]() {
         _iqlabel->setPixmap(icon);
@@ -216,7 +216,7 @@ void GLabel::setIcon(const QPixmap& icon) {
     });
 }
 
-void GLabel::setIcon(const std::string& filename, bool retainIconSize) {
+void GLabel::setIcon(const std::string &filename, bool retainIconSize) {
     GInteractor::setIcon(filename, retainIconSize);
     if (!filename.empty() && fileExists(filename)) {
         GThread::runOnQtGuiThread([this, filename, retainIconSize]() {
@@ -241,7 +241,7 @@ void GLabel::setIcon(const std::string& filename, bool retainIconSize) {
     }
 }
 
-void GLabel::setLabel(const std::string& text) {
+void GLabel::setLabel(const std::string &text) {
     setText(text);
 }
 
@@ -257,13 +257,13 @@ void GLabel::setSize(double width, double height) {
     GInteractor::setSize(width, height);
 }
 
-void GLabel::setSize(const GDimension& size) {
+void GLabel::setSize(const GDimension &size) {
     ensureGText();   // setting size triggers GText mode
     _gtext->setSize(size);
     GInteractor::setSize(size);
 }
 
-void GLabel::setText(const std::string& text) {
+void GLabel::setText(const std::string &text) {
     if (_gtext) {
         _gtext->setText(text);
     }
@@ -316,7 +316,7 @@ void GLabel::setY(double y) {
 }
 
 
-_Internal_QLabel::_Internal_QLabel(GLabel* glabel, QWidget* parent)
+_Internal_QLabel::_Internal_QLabel(GLabel *glabel, QWidget *parent)
         : QLabel(parent),
           _glabel(glabel) {
     require::nonNull(glabel, "_Internal_QLabel::constructor");
@@ -327,7 +327,7 @@ void _Internal_QLabel::detach() {
     _glabel = nullptr;
 }
 
-void _Internal_QLabel::mouseDoubleClickEvent(QMouseEvent* event) {
+void _Internal_QLabel::mouseDoubleClickEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QLabel::mouseDoubleClickEvent", "event");
     QWidget::mouseDoubleClickEvent(event);   // call super
     if (!_glabel) {
@@ -338,10 +338,10 @@ void _Internal_QLabel::mouseDoubleClickEvent(QMouseEvent* event) {
         return;
     }
     GEvent mouseEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ MOUSE_DOUBLE_CLICKED,
-                /* name   */ "doubleclick",
-                /* source */ _glabel);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ MOUSE_DOUBLE_CLICKED,
+            /* name   */ "doubleclick",
+            /* source */ _glabel);
     mouseEvent.setActionCommand(_glabel->getActionCommand());
     mouseEvent.setButton((int) event->button());
     mouseEvent.setX(event->x());
@@ -349,7 +349,7 @@ void _Internal_QLabel::mouseDoubleClickEvent(QMouseEvent* event) {
     _glabel->fireEvent(mouseEvent);
 }
 
-void _Internal_QLabel::mousePressEvent(QMouseEvent* event) {
+void _Internal_QLabel::mousePressEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QLabel::mousePressEvent", "event");
     QWidget::mousePressEvent(event);   // call super
     if (!_glabel) {
@@ -368,10 +368,10 @@ void _Internal_QLabel::mousePressEvent(QMouseEvent* event) {
     }
 
     GEvent actionEvent(
-                /* class  */ ACTION_EVENT,
-                /* type   */ ACTION_PERFORMED,
-                /* name   */ "click",
-                /* source */ _glabel);
+            /* class  */ ACTION_EVENT,
+            /* type   */ ACTION_PERFORMED,
+            /* name   */ "click",
+            /* source */ _glabel);
     actionEvent.setActionCommand(_glabel->getActionCommand());
     actionEvent.setButton((int) event->button());
     actionEvent.setX(event->x());

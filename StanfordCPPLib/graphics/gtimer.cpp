@@ -52,7 +52,7 @@ void GTimer::setDelay(double ms) {
 }
 
 void GTimer::start() {
-    _Internal_QMainWindow* lastWindow = static_cast<_Internal_QMainWindow*>(GWindow::getLastWindow());
+    _Internal_QMainWindow *lastWindow = static_cast<_Internal_QMainWindow *>(GWindow::getLastWindow());
     if (!lastWindow) {
         error("GTimer::start: You must create at least one GWindow before starting a GTimer.");
         return;
@@ -64,7 +64,7 @@ void GTimer::start() {
 
 void GTimer::stop() {
     if (isStarted()) {
-        _Internal_QMainWindow* lastWindow = static_cast<_Internal_QMainWindow*>(GWindow::getLastWindow());
+        _Internal_QMainWindow *lastWindow = static_cast<_Internal_QMainWindow *>(GWindow::getLastWindow());
         if (!lastWindow) {
             error("GTimer::constructor: You must create at least one GWindow before stopping a GTimer.");
             return;

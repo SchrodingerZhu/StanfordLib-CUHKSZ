@@ -10,9 +10,9 @@
 
 #include "stl.h"
 
-std::set<std::string> toStlSet(const DawgLexicon& lex) {
+std::set<std::string> toStlSet(const DawgLexicon &lex) {
     std::set<std::string> result;
-    for (const std::string& s : lex) {
+    for (const std::string &s : lex) {
         result.insert(s);
     }
     return result;
@@ -21,9 +21,9 @@ std::set<std::string> toStlSet(const DawgLexicon& lex) {
 /**
  * Returns an STL set object with the same elements as this Lexicon.
  */
-std::set<std::string> toStlSet(const Lexicon& lex) {
+std::set<std::string> toStlSet(const Lexicon &lex) {
     std::set<std::string> result;
-    for (const std::string& s : lex) {
+    for (const std::string &s : lex) {
         result.insert(s);
     }
     return result;

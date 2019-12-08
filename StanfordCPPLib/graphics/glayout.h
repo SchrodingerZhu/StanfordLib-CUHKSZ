@@ -29,17 +29,27 @@
 class GLayout {
 public:
 
-    enum Position { West, North, South, East, Center };
+    enum Position {
+        West, North, South, East, Center
+    };
 
-    static void clearLayout(QLayout* layout);
-    static bool contains(QLayout* layout, QWidget* widget);
-    static void forceUpdate(GInteractor* interactor);
-    static void forceUpdate(QWidget* widget);
-    static QSize getPreferredSize(QWidget* widget);
-    static QSize getProperSize(QLayout* layout);
-    static QSize getProperSize(QWidget* widget);
-    static void invalidateLayout(QLayout* layout);
-    static Position toPosition(const std::string& positionName);
+    static void clearLayout(QLayout *layout);
+
+    static bool contains(QLayout *layout, QWidget *widget);
+
+    static void forceUpdate(GInteractor *interactor);
+
+    static void forceUpdate(QWidget *widget);
+
+    static QSize getPreferredSize(QWidget *widget);
+
+    static QSize getProperSize(QLayout *layout);
+
+    static QSize getProperSize(QWidget *widget);
+
+    static void invalidateLayout(QLayout *layout);
+
+    static Position toPosition(const std::string &positionName);
 
 private:
     GLayout();   // forbid construction
@@ -57,42 +67,56 @@ private:
  */
 class GBorderLayout : public QLayout {
 public:
-    GBorderLayout(QWidget* parent, int margin = 0, int spacing = -1);
+    GBorderLayout(QWidget *parent, int margin = 0, int spacing = -1);
+
     GBorderLayout(int spacing = -1);
+
     ~GBorderLayout() override;
 
-    void addItem(QLayoutItem* item) override;
-    void addWidget(QWidget* widget);
-    void addWidget(QWidget* widget, GLayout::Position position);
-    Qt::Orientations expandingDirections() const override;
-    bool hasHeightForWidth() const override;
-    int count() const override;
-    QLayoutItem* itemAt(int index) const override;
-    QSize minimumSize() const override;
-    void setGeometry(const QRect& rect) override;
-    QSize sizeHint() const override;
-    QLayoutItem* takeAt(int index) override;
+    void addItem(QLayoutItem *item) override;
 
-    void add(QLayoutItem* item, GLayout::Position position);
+    void addWidget(QWidget *widget);
+
+    void addWidget(QWidget *widget, GLayout::Position position);
+
+    Qt::Orientations expandingDirections() const override;
+
+    bool hasHeightForWidth() const override;
+
+    int count() const override;
+
+    QLayoutItem *itemAt(int index) const override;
+
+    QSize minimumSize() const override;
+
+    void setGeometry(const QRect &rect) override;
+
+    QSize sizeHint() const override;
+
+    QLayoutItem *takeAt(int index) override;
+
+    void add(QLayoutItem *item, GLayout::Position position);
 
 private:
     Q_DISABLE_COPY(GBorderLayout)
 
     struct ItemWrapper {
-        ItemWrapper(QLayoutItem* i, GLayout::Position p) {
+        ItemWrapper(QLayoutItem *i, GLayout::Position p) {
             item = i;
             position = p;
         }
 
-        QLayoutItem* item;
+        QLayoutItem *item;
         GLayout::Position position;
     };
 
-    enum SizeType { MinimumSize, SizeHint };
+    enum SizeType {
+        MinimumSize, SizeHint
+    };
 
     QSize calculateSize(SizeType sizeType) const;
 
-    QList<ItemWrapper*> list;
+    QList<ItemWrapper *> list;
 };
 
 #endif // _glayout_h

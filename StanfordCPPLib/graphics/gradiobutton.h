@@ -52,7 +52,8 @@ public:
      * one radio button from that group will be checked at any given time.
      * If no group is supplied, the radio button is put into a default group.
      */
-    GRadioButton(const std::string& text = "", const std::string& group = "default", bool checked = false, QWidget* parent = nullptr);
+    GRadioButton(const std::string &text = "", const std::string &group = "default", bool checked = false,
+                 QWidget *parent = nullptr);
 
     /**
      * Frees memory allocated internally by the radio button.
@@ -63,7 +64,7 @@ public:
     std::string getActionCommand() const override;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the text next to the radio button.
@@ -74,7 +75,7 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns true if the radio button is currently checked.
@@ -103,7 +104,7 @@ public:
     /**
      * Sets the text that will appear next to the radio button.
      */
-    virtual void setText(const std::string& text);
+    virtual void setText(const std::string &text);
 
     /**
      * Reverses the checked state of the button, setting it to be checked if it
@@ -120,10 +121,11 @@ protected:
 private:
     Q_DISABLE_COPY(GRadioButton)
 
-    static Map<std::string, QButtonGroup*> _buttonGroups;
-    static QButtonGroup* getButtonGroup(const std::string& group);
+    static Map<std::string, QButtonGroup *> _buttonGroups;
 
-    _Internal_QRadioButton* _iqradioButton;
+    static QButtonGroup *getButtonGroup(const std::string &group);
+
+    _Internal_QRadioButton *_iqradioButton;
 
     friend class _Internal_QRadioButton;
 };
@@ -134,26 +136,32 @@ private:
  * @private
  */
 class _Internal_QRadioButton : public QRadioButton, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QRadioButton(GRadioButton* gradioButton, bool checked = false, QWidget* parent = nullptr);
+    _Internal_QRadioButton(GRadioButton *gradioButton, bool checked = false, QWidget *parent = nullptr);
+
     void detach() override;
-    void keyPressEvent(QKeyEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+    void keyReleaseEvent(QKeyEvent *event) override;
+
     QSize sizeHint() const override;
 
 signals:
+
     void doubleClicked();
 
 public slots:
+
     void handleClick();
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent* e) override;
+    void mouseDoubleClickEvent(QMouseEvent *e) override;
 
 private:
-    GRadioButton* _gradioButton;
+    GRadioButton *_gradioButton;
 
     friend class GRadioButton;
 };

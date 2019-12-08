@@ -51,7 +51,7 @@
 #include <collections/hashcode.h>
 #include <util/strlib.h>
 
-static bool scrub(std::string& str);
+static bool scrub(std::string &str);
 
 Lexicon::Lexicon() :
         _root(nullptr),
@@ -60,14 +60,14 @@ Lexicon::Lexicon() :
     // empty
 }
 
-Lexicon::Lexicon(std::istream& input) :
+Lexicon::Lexicon(std::istream &input) :
         _root(nullptr),
         _size(0),
         _removeFlag(false) {
     addWordsFromFile(input);
 }
 
-Lexicon::Lexicon(const std::string& filename) :
+Lexicon::Lexicon(const std::string &filename) :
         _root(nullptr),
         _size(0),
         _removeFlag(false) {
@@ -81,7 +81,7 @@ Lexicon::Lexicon(std::initializer_list<std::string> list) :
     addAll(list);
 }
 
-Lexicon::Lexicon(const Lexicon& src) :
+Lexicon::Lexicon(const Lexicon &src) :
         _root(nullptr),
         _size(0),
         _removeFlag(false) {
@@ -92,7 +92,7 @@ Lexicon::~Lexicon() {
     clear();
 }
 
-bool Lexicon::add(const std::string& word) {
+bool Lexicon::add(const std::string &word) {
     if (word.empty()) {
         return false;
     }
@@ -103,21 +103,21 @@ bool Lexicon::add(const std::string& word) {
     return addHelper(_root, scrubbed, /* originalWord */ scrubbed);
 }
 
-Lexicon& Lexicon::addAll(const Lexicon& lex) {
-    for (const std::string& word : lex) {
+Lexicon &Lexicon::addAll(const Lexicon &lex) {
+    for (const std::string &word : lex) {
         add(word);
     }
     return *this;
 }
 
-Lexicon& Lexicon::addAll(std::initializer_list<std::string> list) {
-    for (const std::string& word : list) {
+Lexicon &Lexicon::addAll(std::initializer_list<std::string> list) {
+    for (const std::string &word : list) {
         add(word);
     }
     return *this;
 }
 
-void Lexicon::addWordsFromFile(std::istream& input) {
+void Lexicon::addWordsFromFile(std::istream &input) {
     bool isDAWG = isDAWGFile(input);
     rewindStream(input);
     if (isDAWG) {
@@ -133,7 +133,7 @@ void Lexicon::addWordsFromFile(std::istream& input) {
     }
 }
 
-void Lexicon::addWordsFromFile(const std::string& filename) {
+void Lexicon::addWordsFromFile(const std::string &filename) {
     std::ifstream input(filename.c_str());
     if (input.fail()) {
         error("Lexicon::addWordsFromFile: Couldn't read from input file " + filename);
@@ -156,7 +156,7 @@ void Lexicon::clear() {
     _root = nullptr;
 }
 
-bool Lexicon::contains(const std::string& word) const {
+bool Lexicon::contains(const std::string &word) const {
     if (word.empty()) {
         return false;
     }
@@ -167,8 +167,8 @@ bool Lexicon::contains(const std::string& word) const {
     return containsHelper(_root, scrubbed, /* isPrefix */ false);
 }
 
-bool Lexicon::containsAll(const Lexicon& lex2) const {
-    for (const std::string& word : lex2) {
+bool Lexicon::containsAll(const Lexicon &lex2) const {
+    for (const std::string &word : lex2) {
         if (!contains(word)) {
             return false;
         }
@@ -177,7 +177,7 @@ bool Lexicon::containsAll(const Lexicon& lex2) const {
 }
 
 bool Lexicon::containsAll(std::initializer_list<std::string> list) const {
-    for (const std::string& word : list) {
+    for (const std::string &word : list) {
         if (!contains(word)) {
             return false;
         }
@@ -185,7 +185,7 @@ bool Lexicon::containsAll(std::initializer_list<std::string> list) const {
     return true;
 }
 
-bool Lexicon::containsPrefix(const std::string& prefix) const {
+bool Lexicon::containsPrefix(const std::string &prefix) const {
     if (prefix.empty()) {
         return true;
     }
@@ -196,7 +196,7 @@ bool Lexicon::containsPrefix(const std::string& prefix) const {
     return containsHelper(_root, scrubbed, /* isPrefix */ true);
 }
 
-bool Lexicon::equals(const Lexicon& lex2) const {
+bool Lexicon::equals(const Lexicon &lex2) const {
     return stanfordcpplib::collections::equals(*this, lex2);
 }
 
@@ -214,7 +214,7 @@ std::string Lexicon::front() const {
     return _allWords.front();
 }
 
-void Lexicon::insert(const std::string& word) {
+void Lexicon::insert(const std::string &word) {
     add(word);
 }
 
@@ -222,7 +222,7 @@ bool Lexicon::isEmpty() const {
     return size() == 0;
 }
 
-bool Lexicon::isSubsetOf(const Lexicon& lex2) const {
+bool Lexicon::isSubsetOf(const Lexicon &lex2) const {
     auto it = begin();
     auto end = this->end();
     while (it != end) {
@@ -239,7 +239,7 @@ bool Lexicon::isSubsetOf(std::initializer_list<std::string> list) const {
     return isSubsetOf(lex2);
 }
 
-bool Lexicon::isSupersetOf(const Lexicon& lex2) const {
+bool Lexicon::isSupersetOf(const Lexicon &lex2) const {
     return containsAll(lex2);
 }
 
@@ -253,13 +253,13 @@ void Lexicon::mapAll(void (*fn)(std::string)) const {
     }
 }
 
-void Lexicon::mapAll(void (*fn)(const std::string&)) const {
+void Lexicon::mapAll(void (*fn)(const std::string &)) const {
     for (std::string word : _allWords) {
         fn(word);
     }
 }
 
-bool Lexicon::remove(const std::string& word) {
+bool Lexicon::remove(const std::string &word) {
     if (word.empty()) {
         return false;
     }
@@ -270,27 +270,27 @@ bool Lexicon::remove(const std::string& word) {
     return removeHelper(_root, scrubbed, /* originalWord */ scrubbed, /* isPrefix */ false);
 }
 
-Lexicon& Lexicon::removeAll(const Lexicon& lex2) {
+Lexicon &Lexicon::removeAll(const Lexicon &lex2) {
     Vector<std::string> toRemove;
-    for (const std::string& word : *this) {
+    for (const std::string &word : *this) {
         if (lex2.contains(word)) {
             toRemove.add(word);
         }
     }
-    for (const std::string& word : toRemove) {
+    for (const std::string &word : toRemove) {
         remove(word);
     }
     return *this;
 }
 
-Lexicon& Lexicon::removeAll(std::initializer_list<std::string> list) {
-    for (const std::string& word : list) {
+Lexicon &Lexicon::removeAll(std::initializer_list<std::string> list) {
+    for (const std::string &word : list) {
         remove(word);
     }
     return *this;
 }
 
-bool Lexicon::removePrefix(const std::string& prefix) {
+bool Lexicon::removePrefix(const std::string &prefix) {
     if (prefix.empty()) {
         bool result = !isEmpty();
         clear();
@@ -300,24 +300,24 @@ bool Lexicon::removePrefix(const std::string& prefix) {
     if (!scrub(scrubbed)) {
         return false;
     }
-    
+
     return removeHelper(_root, scrubbed, /* originalWord */ scrubbed, /* isPrefix */ true);
 }
 
-Lexicon& Lexicon::retainAll(const Lexicon& lex2) {
+Lexicon &Lexicon::retainAll(const Lexicon &lex2) {
     Vector<std::string> toRemove;
-    for (const std::string& word : *this) {
+    for (const std::string &word : *this) {
         if (!lex2.contains(word)) {
             toRemove.add(word);
         }
     }
-    for (const std::string& word : toRemove) {
+    for (const std::string &word : toRemove) {
         remove(word);
     }
     return *this;
 }
 
-Lexicon& Lexicon::retainAll(std::initializer_list<std::string> list) {
+Lexicon &Lexicon::retainAll(std::initializer_list<std::string> list) {
     Lexicon lex2(list);
     return retainAll(lex2);
 }
@@ -335,105 +335,105 @@ std::string Lexicon::toString() const {
 /*
  * Operators
  */
-bool Lexicon::operator ==(const Lexicon& lex2) const {
+bool Lexicon::operator==(const Lexicon &lex2) const {
     return equals(lex2);
 }
 
-bool Lexicon::operator !=(const Lexicon& lex2) const {
+bool Lexicon::operator!=(const Lexicon &lex2) const {
     return !equals(lex2);
 }
 
-bool Lexicon::operator <(const Lexicon& lex2) const {
+bool Lexicon::operator<(const Lexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) < 0;
 }
 
-bool Lexicon::operator <=(const Lexicon& lex2) const {
+bool Lexicon::operator<=(const Lexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) <= 0;
 }
 
-bool Lexicon::operator >(const Lexicon& lex2) const {
+bool Lexicon::operator>(const Lexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) > 0;
 }
 
-bool Lexicon::operator >=(const Lexicon& lex2) const {
+bool Lexicon::operator>=(const Lexicon &lex2) const {
     return stanfordcpplib::collections::compare(*this, lex2) >= 0;
 }
 
-Lexicon Lexicon::operator +(const Lexicon& lex2) const {
+Lexicon Lexicon::operator+(const Lexicon &lex2) const {
     Lexicon lex = *this;
     lex.addAll(lex2);
     return lex;
 }
 
-Lexicon Lexicon::operator +(std::initializer_list<std::string> list) const {
+Lexicon Lexicon::operator+(std::initializer_list<std::string> list) const {
     Lexicon lex = *this;
     lex.addAll(list);
     return lex;
 }
 
-Lexicon Lexicon::operator +(const std::string& word) const {
+Lexicon Lexicon::operator+(const std::string &word) const {
     Lexicon lex = *this;
     lex.add(word);
     return lex;
 }
 
-Lexicon Lexicon::operator *(const Lexicon& lex2) const {
+Lexicon Lexicon::operator*(const Lexicon &lex2) const {
     Lexicon lex = *this;
     return lex.retainAll(lex2);
 }
 
-Lexicon Lexicon::operator *(std::initializer_list<std::string> list) const {
+Lexicon Lexicon::operator*(std::initializer_list<std::string> list) const {
     Lexicon lex = *this;
     return lex.retainAll(list);
 }
 
-Lexicon Lexicon::operator -(const Lexicon& lex2) const {
+Lexicon Lexicon::operator-(const Lexicon &lex2) const {
     Lexicon lex = *this;
     return lex.removeAll(lex2);
 }
 
-Lexicon Lexicon::operator -(std::initializer_list<std::string> list) const {
+Lexicon Lexicon::operator-(std::initializer_list<std::string> list) const {
     Lexicon lex = *this;
     return lex.removeAll(list);
 }
 
-Lexicon Lexicon::operator -(const std::string& word) const {
+Lexicon Lexicon::operator-(const std::string &word) const {
     Lexicon lex = *this;
     lex.remove(word);
     return lex;
 }
 
-Lexicon& Lexicon::operator +=(const Lexicon& lex2) {
+Lexicon &Lexicon::operator+=(const Lexicon &lex2) {
     return addAll(lex2);
 }
 
-Lexicon& Lexicon::operator +=(std::initializer_list<std::string> list) {
+Lexicon &Lexicon::operator+=(std::initializer_list<std::string> list) {
     return addAll(list);
 }
 
-Lexicon& Lexicon::operator +=(const std::string& word) {
+Lexicon &Lexicon::operator+=(const std::string &word) {
     add(word);
     _removeFlag = false;
     return *this;
 }
 
-Lexicon& Lexicon::operator *=(const Lexicon& lex2) {
+Lexicon &Lexicon::operator*=(const Lexicon &lex2) {
     return retainAll(lex2);
 }
 
-Lexicon& Lexicon::operator *=(std::initializer_list<std::string> list) {
+Lexicon &Lexicon::operator*=(std::initializer_list<std::string> list) {
     return retainAll(list);
 }
 
-Lexicon& Lexicon::operator -=(const Lexicon& lex2) {
+Lexicon &Lexicon::operator-=(const Lexicon &lex2) {
     return removeAll(lex2);
 }
 
-Lexicon& Lexicon::operator -=(std::initializer_list<std::string> list) {
+Lexicon &Lexicon::operator-=(std::initializer_list<std::string> list) {
     return removeAll(list);
 }
 
-Lexicon& Lexicon::operator -=(const std::string& word) {
+Lexicon &Lexicon::operator-=(const std::string &word) {
     remove(word);
     _removeFlag = true;
     return *this;
@@ -441,7 +441,7 @@ Lexicon& Lexicon::operator -=(const std::string& word) {
 
 /* private helpers implementation */
 
-Lexicon& Lexicon::operator ,(const std::string& word) {
+Lexicon &Lexicon::operator,(const std::string &word) {
     if (_removeFlag) {
         remove(word);
     } else {
@@ -451,7 +451,7 @@ Lexicon& Lexicon::operator ,(const std::string& word) {
 }
 
 // pre: word is scrubbed to contain only lowercase a-z letters
-bool Lexicon::addHelper(TrieNode*& node, const std::string& word, const std::string& originalWord) {
+bool Lexicon::addHelper(TrieNode *&node, const std::string &word, const std::string &originalWord) {
     if (!node) {
         // create nodes all the way down, one for each letter of the word
         node = new TrieNode();
@@ -475,7 +475,7 @@ bool Lexicon::addHelper(TrieNode*& node, const std::string& word, const std::str
 }
 
 // pre: word is scrubbed to contain only lowercase a-z letters
-bool Lexicon::containsHelper(TrieNode* node, const std::string& word, bool isPrefix) const {
+bool Lexicon::containsHelper(TrieNode *node, const std::string &word, bool isPrefix) const {
     if (!node) {
         // base case: no pointer down to here, so prefix must not exist
         return false;
@@ -493,7 +493,7 @@ bool Lexicon::containsHelper(TrieNode* node, const std::string& word, bool isPre
 }
 
 // pre: word is scrubbed to contain only lowercase a-z letters
-bool Lexicon::removeHelper(TrieNode*& node, const std::string& word, const std::string& originalWord, bool isPrefix) {
+bool Lexicon::removeHelper(TrieNode *&node, const std::string &word, const std::string &originalWord, bool isPrefix) {
     if (!node) {
         // base case: dead end; this word/prefix must not be contained
         return false;
@@ -529,7 +529,7 @@ bool Lexicon::removeHelper(TrieNode*& node, const std::string& word, const std::
         // memory cleanup: if I wasn't a leaf but now am, and am not a word,
         // then I am now unneeded, so remove me too
         if (result && !wasLeaf && node
-                && node->isLeaf() && !node->isWord()) {
+            && node->isLeaf() && !node->isWord()) {
             delete node;
             node = nullptr;
         }
@@ -538,7 +538,7 @@ bool Lexicon::removeHelper(TrieNode*& node, const std::string& word, const std::
 }
 
 // remove/free this node and all descendents
-void Lexicon::removeSubtreeHelper(TrieNode*& node, const std::string& originalWord) {
+void Lexicon::removeSubtreeHelper(TrieNode *&node, const std::string &originalWord) {
     if (node) {
         for (char letter = 'a'; letter <= 'z'; letter++) {
             removeSubtreeHelper(node->child(letter), originalWord + letter);
@@ -552,13 +552,13 @@ void Lexicon::removeSubtreeHelper(TrieNode*& node, const std::string& originalWo
     }
 }
 
-void Lexicon::deepCopy(const Lexicon& src) {
+void Lexicon::deepCopy(const Lexicon &src) {
     for (std::string word : src._allWords) {
         add(word);
     }
 }
 
-void Lexicon::deleteTree(TrieNode* node) {
+void Lexicon::deleteTree(TrieNode *node) {
     if (node) {
         for (char letter = 'a'; letter <= 'z'; letter++) {
             deleteTree(node->child(letter));
@@ -571,7 +571,7 @@ void Lexicon::deleteTree(TrieNode* node) {
  * Returns true if the given file (probably) represents a
  * binary DAWG lexicon data file.
  */
-bool Lexicon::isDAWGFile(std::istream& input) const {
+bool Lexicon::isDAWGFile(std::istream &input) const {
     char firstFour[4], expected[] = "DAWG";
     if (input.fail()) {
         error(std::string("Lexicon::addWordsFromFile: Couldn't read input"));
@@ -585,7 +585,7 @@ bool Lexicon::isDAWGFile(std::istream& input) const {
  * Returns true if the given file (probably) represents a
  * binary DAWG lexicon data file.
  */
-bool Lexicon::isDAWGFile(const std::string& filename) const {
+bool Lexicon::isDAWGFile(const std::string &filename) const {
     std::ifstream input(filename.c_str());
     if (input.fail()) {
         error(std::string("Lexicon::addWordsFromFile: Couldn't open lexicon file ") + filename);
@@ -599,7 +599,7 @@ bool Lexicon::isDAWGFile(const std::string& filename) const {
  * We just delegate to DawgLexicon, the old implementation, to read a binary
  * lexicon data file, and then we extract its yummy data into our trie.
  */
-void Lexicon::readBinaryFile(std::istream& input) {
+void Lexicon::readBinaryFile(std::istream &input) {
     DawgLexicon ldawg(input);
     for (std::string word : ldawg) {
         add(word);
@@ -610,14 +610,14 @@ void Lexicon::readBinaryFile(std::istream& input) {
  * We just delegate to DawgLexicon, the old implementation, to read a binary
  * lexicon data file, and then we extract its yummy data into our trie.
  */
-void Lexicon::readBinaryFile(const std::string& filename) {
+void Lexicon::readBinaryFile(const std::string &filename) {
     DawgLexicon ldawg(filename);
     for (std::string word : ldawg) {
         add(word);
     }
 }
 
-Lexicon& Lexicon::operator =(const Lexicon& src) {
+Lexicon &Lexicon::operator=(const Lexicon &src) {
     if (this != &src) {
         clear();
         deepCopy(src);
@@ -625,12 +625,12 @@ Lexicon& Lexicon::operator =(const Lexicon& src) {
     return *this;
 }
 
-std::ostream& operator <<(std::ostream& out, const Lexicon& lex) {
+std::ostream &operator<<(std::ostream &out, const Lexicon &lex) {
     out << lex._allWords;
     return out;
 }
 
-std::istream& operator >>(std::istream& is, Lexicon& lex) {
+std::istream &operator>>(std::istream &is, Lexicon &lex) {
     std::string element;
     return stanfordcpplib::collections::readCollection(is, lex, element, /* descriptor */ "Lexicon::operator >>");
 }
@@ -638,11 +638,11 @@ std::istream& operator >>(std::istream& is, Lexicon& lex) {
 /*
  * Hash function for lexicons.
  */
-int hashCode(const Lexicon& lex) {
+int hashCode(const Lexicon &lex) {
     return stanfordcpplib::collections::hashCodeCollection(lex);
 }
 
-static bool scrub(std::string& str) {
+static bool scrub(std::string &str) {
     size_t nChars = str.length();
     size_t outIndex = 0;
     for (size_t i = 0; i < nChars; i++) {

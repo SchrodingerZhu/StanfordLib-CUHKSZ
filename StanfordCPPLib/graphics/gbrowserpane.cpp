@@ -27,7 +27,7 @@
 #include <util/require.h>
 #include <io/server.h>
 
-GBrowserPane::GBrowserPane(const std::string& url, QWidget* parent) {
+GBrowserPane::GBrowserPane(const std::string &url, QWidget *parent) {
     GThread::runOnQtGuiThread([this, url, parent]() {
         _iqtextbrowser = new _Internal_QTextBrowser(this, getInternalParent(parent));
     });
@@ -65,7 +65,7 @@ int GBrowserPane::getCursorPosition() const {
     return _iqtextbrowser->textCursor().position();
 }
 
-_Internal_QWidget* GBrowserPane::getInternalWidget() const {
+_Internal_QWidget *GBrowserPane::getInternalWidget() const {
     return _iqtextbrowser;
 }
 
@@ -122,8 +122,8 @@ std::string GBrowserPane::getType() const {
     return "GBrowserPane";
 }
 
-QWidget* GBrowserPane::getWidget() const {
-    return static_cast<QWidget*>(_iqtextbrowser);
+QWidget *GBrowserPane::getWidget() const {
+    return static_cast<QWidget *>(_iqtextbrowser);
 }
 
 bool GBrowserPane::isEditable() const {
@@ -152,12 +152,12 @@ void GBrowserPane::moveCursorToStart() {
     });
 }
 
-void GBrowserPane::readTextFromFile(std::istream& file) {
+void GBrowserPane::readTextFromFile(std::istream &file) {
     std::string fileText = readEntireStream(file);
     setText(fileText);
 }
 
-void GBrowserPane::readTextFromFile(const std::string& filename) {
+void GBrowserPane::readTextFromFile(const std::string &filename) {
     std::ifstream input;
     input.open(filename.c_str());
     if (!input.fail()) {
@@ -171,7 +171,7 @@ void GBrowserPane::readTextFromFile(const std::string& filename) {
     }
 }
 
-void GBrowserPane::readTextFromUrl(const std::string& url) {
+void GBrowserPane::readTextFromUrl(const std::string &url) {
     this->_pageUrl = url;
     GThread::runOnQtGuiThread([this, url]() {
         QUrl qurl(QString::fromStdString(url));
@@ -189,7 +189,7 @@ void GBrowserPane::removeTextChangeListener() {
 
 void GBrowserPane::scrollToBottom() {
     GThread::runOnQtGuiThread([this]() {
-        QScrollBar* scrollbar = _iqtextbrowser->verticalScrollBar();
+        QScrollBar *scrollbar = _iqtextbrowser->verticalScrollBar();
         scrollbar->setValue(scrollbar->maximum());
         scrollbar->setSliderPosition(scrollbar->maximum());
     });
@@ -197,7 +197,7 @@ void GBrowserPane::scrollToBottom() {
 
 void GBrowserPane::scrollToTop() {
     GThread::runOnQtGuiThread([this]() {
-        QScrollBar* scrollbar = _iqtextbrowser->verticalScrollBar();
+        QScrollBar *scrollbar = _iqtextbrowser->verticalScrollBar();
         scrollbar->setValue(0);
         scrollbar->setSliderPosition(0);
     });
@@ -220,7 +220,7 @@ void GBrowserPane::selectAll() {
     });
 }
 
-void GBrowserPane::setContentType(const std::string& contentType) {
+void GBrowserPane::setContentType(const std::string &contentType) {
     _contentType = contentType;
 }
 
@@ -264,7 +264,7 @@ void GBrowserPane::setLinkListener(GEventListenerVoid func) {
     setEventListener("linkclick", func);
 }
 
-void GBrowserPane::setText(const std::string& text) {
+void GBrowserPane::setText(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         _iqtextbrowser->setText(QString::fromStdString(text));
     });
@@ -279,7 +279,7 @@ void GBrowserPane::setTextChangeListener(GEventListenerVoid func) {
 }
 
 
-_Internal_QTextBrowser::_Internal_QTextBrowser(GBrowserPane* gbrowserpane, QWidget* parent)
+_Internal_QTextBrowser::_Internal_QTextBrowser(GBrowserPane *gbrowserpane, QWidget *parent)
         : QTextBrowser(parent),
           _gbrowserpane(gbrowserpane) {
     require::nonNull(gbrowserpane, "_Internal_QTextBrowser::constructor");
@@ -305,7 +305,7 @@ QVariant _Internal_QTextBrowser::loadResource(int type, const QUrl &url) {
     return QTextBrowser::loadResource(type, url);
 }
 
-void _Internal_QTextBrowser::mousePressEvent(QMouseEvent* event) {
+void _Internal_QTextBrowser::mousePressEvent(QMouseEvent *event) {
     QTextBrowser::mousePressEvent(event);
     if (!_gbrowserpane->isAcceptingEvent("linkclick")) {
         return;
@@ -320,7 +320,7 @@ void _Internal_QTextBrowser::mousePressEvent(QMouseEvent* event) {
     _clickedLink = clickedAnchor;
 }
 
-void _Internal_QTextBrowser::mouseReleaseEvent(QMouseEvent* event) {
+void _Internal_QTextBrowser::mouseReleaseEvent(QMouseEvent *event) {
     if (!_gbrowserpane->isAcceptingEvent("linkclick")) {
         QTextBrowser::mouseReleaseEvent(event);   // call super
         return;
@@ -331,7 +331,7 @@ void _Internal_QTextBrowser::mouseReleaseEvent(QMouseEvent* event) {
     }
     QString clickedAnchor = anchorAt(event->pos());
     if (clickedAnchor.isEmpty() || _clickedLink.isEmpty()
-            || clickedAnchor != _clickedLink) {
+        || clickedAnchor != _clickedLink) {
         QTextBrowser::mouseReleaseEvent(event);   // call super
         return;
     }
@@ -339,10 +339,10 @@ void _Internal_QTextBrowser::mouseReleaseEvent(QMouseEvent* event) {
     _clickedLink = QString::fromStdString("");   // clear
 
     GEvent linkEvent(
-                /* class  */ HYPERLINK_EVENT,
-                /* type   */ HYPERLINK_CLICKED,
-                /* name   */ "linkclick",
-                /* source */ _gbrowserpane);
+            /* class  */ HYPERLINK_EVENT,
+            /* type   */ HYPERLINK_CLICKED,
+            /* name   */ "linkclick",
+            /* source */ _gbrowserpane);
     linkEvent.setButton(static_cast<int>(event->button()));
     linkEvent.setX(event->x());
     linkEvent.setY(event->y());

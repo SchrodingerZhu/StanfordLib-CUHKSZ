@@ -33,11 +33,15 @@
 #include "gobservable.h"
 
 class QPixmap;
+
 class QIcon;
 
 class GContainer;
+
 class GDiffGui;
+
 class GWindow;
+
 class _Internal_QWidget;
 
 /**
@@ -138,7 +142,7 @@ public:
      * @return the container, or nullptr if interactor has not yet been
      *         added to any container
      */
-    virtual GContainer* getContainer() const;
+    virtual GContainer *getContainer() const;
 
     /**
      * Returns the font of this interactor's text as a font string such as
@@ -186,7 +190,7 @@ public:
      * Students/clients generally should not need to call this.
      * @private
      */
-    virtual _Internal_QWidget* getInternalWidget() const = 0;
+    virtual _Internal_QWidget *getInternalWidget() const = 0;
 
     /**
      * Returns an (x, y) point representing the onscreen location of the top-left
@@ -268,7 +272,7 @@ public:
      * Students/clients generally should not need to call this.
      * @private
      */
-    virtual QWidget* getWidget() const = 0;
+    virtual QWidget *getWidget() const = 0;
 
     /**
      * Returns the current onscreen width of this interactor in pixels.
@@ -351,7 +355,7 @@ public:
      * Not all interactor types support accelerators.
      * @param accelerator a hotkey such as "Ctrl-S"
      */
-    virtual void setAccelerator(const std::string& accelerator);
+    virtual void setAccelerator(const std::string &accelerator);
 
     /**
      * Sets the action command for this interactor.
@@ -363,7 +367,7 @@ public:
      * an event listener for many interactors, you can use the action command
      * to help distinguish which interactor generates each event.
      */
-    virtual void setActionCommand(const std::string& actionCommand);
+    virtual void setActionCommand(const std::string &actionCommand);
 
     /**
      * Sets an action listener on this interactor so that it will be called
@@ -393,7 +397,7 @@ public:
      * the given string.
      * @param color a string such as "blue" or "#7700ff"
      */
-    virtual void setBackground(const std::string& color);
+    virtual void setBackground(const std::string &color);
 
     /**
      * Sets the size and location of the widget.
@@ -409,7 +413,7 @@ public:
      * in this way; instead, use containers and regions to help you lay out
      * widgets at the proper sizes.
      */
-    virtual void setBounds(const GRectangle& size);
+    virtual void setBounds(const GRectangle &size);
 
     /**
      * Sets a mouse listener on this interactor so that it will be called
@@ -439,7 +443,7 @@ public:
      * Equivalent to setForeground.
      * @param color a string such as "blue" or "#7700ff"
      */
-    virtual void setColor(const std::string& color);
+    virtual void setColor(const std::string &color);
 
     /**
      * Sets a mouse listener on this interactor so that it will be called
@@ -466,14 +470,14 @@ public:
      * Sets the font used by this widget to the given Qt font.
      * Clients should generally use the string version of this method.
      */
-    virtual void setFont(const QFont& font);
+    virtual void setFont(const QFont &font);
 
     /**
      * Sets the font used by this widget to the font represented by the
      * given font string, such as "Helvetica-16-Bold".
      * @param font a font string such as "Helvetica-16-Bold"
      */
-    virtual void setFont(const std::string& font);
+    virtual void setFont(const std::string &font);
 
     /**
      * Sets the foreground/text color of the interactor to the color represented by
@@ -489,7 +493,7 @@ public:
      * Equivalent to setColor.
      * @param color a string such as "blue" or "#7700ff"
      */
-    virtual void setForeground(const std::string& color);
+    virtual void setForeground(const std::string &color);
 
     /**
      * Sets the onscreen height of the interactor in pixels.
@@ -502,14 +506,14 @@ public:
      * Not all types of interactors support icons.
      * @param icon the icon to use
      */
-    virtual void setIcon(const QIcon& icon);
+    virtual void setIcon(const QIcon &icon);
 
     /**
      * Sets the icon associated with this interactor.
      * Not all types of interactors support icons.
      * @param icon the icon to use
      */
-    virtual void setIcon(const QPixmap& icon);
+    virtual void setIcon(const QPixmap &icon);
 
     /**
      * Sets the file name of the icon associated with this interactor,
@@ -519,7 +523,7 @@ public:
      * @param retainIconSize true if icon should stay at its existing pixel size (default),
      *                       or false if it should be resized to fit the interactor
      */
-    virtual void setIcon(const std::string& filename, bool retainIconSize = true);
+    virtual void setIcon(const std::string &filename, bool retainIconSize = true);
 
     /**
      * Sets a key listener on this interactor so that it will be called
@@ -555,7 +559,7 @@ public:
      * to be resized to.
      * @throw ErrorException if width or height is negative
      */
-    virtual void setMinimumSize(const GDimension& size);
+    virtual void setMinimumSize(const GDimension &size);
 
     /**
      * Sets a one-character 'mnemonic' shortcut that can be used to activate
@@ -586,7 +590,7 @@ public:
      * a string like "GButton_14", but you can override this by calling setName.
      * @param name a string such as "GButton_14"
      */
-    virtual void setName(const std::string& name);
+    virtual void setName(const std::string &name);
 
     /**
      * Sets the height in pixels that this interactor would prefer to be.
@@ -614,7 +618,7 @@ public:
      * Normally clients do not need to call this method; the interactor can
      * figure out its own preferred size.
      */
-    virtual void setPreferredSize(const GDimension& size);
+    virtual void setPreferredSize(const GDimension &size);
 
 
     /**
@@ -634,14 +638,14 @@ public:
      * Sets the onscreen width and height of the interactor in pixels.
      * @throw ErrorException if width or height is negative
      */
-    virtual void setSize(const GDimension& size);
+    virtual void setSize(const GDimension &size);
 
     /**
      * Sets a "tooltip" that will appear if the user hovers their mouse
      * over the interactor.
      * Set an empty string to clear the tooltip.
      */
-    virtual void setTooltip(const std::string& tooltipText);
+    virtual void setTooltip(const std::string &tooltipText);
 
     /**
      * Returns true if the interactor is visible on the screen.
@@ -703,7 +707,7 @@ protected:
     /**
      * @private
      */
-    GContainer* _container;
+    GContainer *_container;
 
     /**
      * @private
@@ -713,7 +717,7 @@ protected:
     /**
      * @private
      */
-    static QWidget* getInternalParent(QWidget* parent);
+    static QWidget *getInternalParent(QWidget *parent);
 
     /**
      * @private
@@ -748,12 +752,12 @@ protected:
     /**
      * @private
      */
-    static std::string normalizeAccelerator(const std::string& accelerator);
+    static std::string normalizeAccelerator(const std::string &accelerator);
 
     /**
      * @private
      */
-    virtual void setContainer(GContainer* container);
+    virtual void setContainer(GContainer *container);
 
     /**
      * @private
@@ -766,8 +770,11 @@ protected:
     virtual void unlockConst() const;
 
     friend class GContainer;
+
     friend class GDiffGui;
+
     friend class GWindow;
+
     friend class _Internal_QWidget;
 
 private:
@@ -785,16 +792,26 @@ private:
 class _Internal_QWidget {
 public:
     _Internal_QWidget();
+
     virtual ~_Internal_QWidget();
+
     virtual void detach();
+
     virtual QSize getMinimumSize() const;
+
     virtual bool hasMinimumSize() const;
+
     virtual QSize getPreferredSize() const;
+
     virtual bool hasPreferredSize() const;
+
     virtual void setMinimumSize(double width, double height);
-    virtual void setMinimumSize(const QSize& size);
+
+    virtual void setMinimumSize(const QSize &size);
+
     virtual void setPreferredSize(double width, double height);
-    virtual void setPreferredSize(const QSize& size);
+
+    virtual void setPreferredSize(const QSize &size);
 
 private:
     GDimension _minimumSize;
@@ -809,15 +826,15 @@ private:
  * Qt widgets that were not built into the original library.
  * @private
  */
-template <typename T>
+template<typename T>
 class GGenericInteractor : public GInteractor {
 public:
-    GGenericInteractor(T* widget)
+    GGenericInteractor(T *widget)
             : _widget(widget) {
         _iqwidget = new _Internal_QWidget();   // dummy
     }
 
-    _Internal_QWidget* getInternalWidget() const override {
+    _Internal_QWidget *getInternalWidget() const override {
         return _iqwidget;
     }
 
@@ -826,13 +843,13 @@ public:
         return std::string("GGenericInteractor<") + typeName + ">";
     }
 
-    QWidget* getWidget() const override {
+    QWidget *getWidget() const override {
         return _widget;
     }
 
 private:
-    _Internal_QWidget* _iqwidget;
-    T* _widget;
+    _Internal_QWidget *_iqwidget;
+    T *_widget;
 };
 
 #endif // _ginteractor_h

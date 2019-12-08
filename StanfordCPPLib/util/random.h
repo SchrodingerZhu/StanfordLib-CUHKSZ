@@ -97,25 +97,25 @@ namespace autograder {
  * Inserts the given boolean value to be returned by the random number
  * generator, rather than truly random choices.
  */
-void randomFeedBool(bool value);
+    void randomFeedBool(bool value);
 
 /**
  * Removes any previously 'fed' random integers so that future calls
  * to random functions will return truly random values.
  */
-void randomFeedClear();
+    void randomFeedClear();
 
 /**
  * Inserts the given integer to be returned by the random number generator,
  * rather than truly random numbers.
  */
-void randomFeedInteger(int value);
+    void randomFeedInteger(int value);
 
 /**
  * Inserts the given real number to be returned by the random number generator,
  * rather than truly random numbers.
  */
-void randomFeedReal(double value);
+    void randomFeedReal(double value);
 }
 
 #endif // _random_h

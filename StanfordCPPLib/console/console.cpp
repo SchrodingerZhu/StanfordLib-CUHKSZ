@@ -218,7 +218,7 @@ bool getConsolePrintExceptions() {
 
 bool getConsoleSettingsLocked() {
     return GConsoleWindow::isInitialized()
-            && GConsoleWindow::instance()->isLocked();
+           && GConsoleWindow::instance()->isLocked();
 }
 
 GDimension getConsoleSize() {
@@ -229,7 +229,7 @@ double getConsoleWidth() {
     return GConsoleWindow::instance()->getWidth();
 }
 
-GConsoleWindow* getConsoleWindow() {
+GConsoleWindow *getConsoleWindow() {
     return GConsoleWindow::instance();
 }
 
@@ -257,7 +257,7 @@ void setConsoleEnabled(bool enabled) {
     GConsoleWindow::setConsoleEnabled(enabled);
 }
 
-void setConsoleErrorColor(const std::string& color) {
+void setConsoleErrorColor(const std::string &color) {
     if (getConsoleSettingsLocked()) { return; }
     GConsoleWindow::instance()->setErrorColor(color);
 }
@@ -271,7 +271,7 @@ void setConsoleExitProgramOnClose(bool exitOnClose) {
     GConsoleWindow::instance()->setExitOnClose(exitOnClose);
 }
 
-void setConsoleFont(const std::string& font) {
+void setConsoleFont(const std::string &font) {
     if (getConsoleSettingsLocked()) { return; }
     GConsoleWindow::instance()->setFont(font);
 }
@@ -289,7 +289,7 @@ void setConsoleLocationSaved(bool value) {
     GConsoleWindow::instance()->setLocationSaved(value);
 }
 
-void setConsoleOutputColor(const std::string& color) {
+void setConsoleOutputColor(const std::string &color) {
     GConsoleWindow::instance()->setOutputColor(color);
 }
 
@@ -307,7 +307,7 @@ void setConsoleSize(double width, double height) {
     GConsoleWindow::instance()->setConsoleSize(width, height);
 }
 
-void setConsoleWindowTitle(const std::string& title) {
+void setConsoleWindowTitle(const std::string &title) {
     if (getConsoleSettingsLocked()) { return; }
     GConsoleWindow::instance()->setTitle(title);
 }
@@ -332,9 +332,9 @@ void setConsolePropertiesQt() {
 
     setConsoleSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     setConsoleLocation(DEFAULT_X, DEFAULT_Y);
- #if defined(SPL_CONSOLE_LOCATION_SAVED)
+#if defined(SPL_CONSOLE_LOCATION_SAVED)
     setConsoleLocationSaved(true);
- #endif
+#endif
     setConsoleEcho(DEFAULT_ECHO);
     setConsoleExitProgramOnClose(DEFAULT_EXIT_ON_CLOSE);
     setConsolePrintExceptions(DEFAULT_PRINT_EXCEPTIONS);

@@ -70,7 +70,7 @@ public:
      * @throw ErrorException if the number of rows, columns, width, or height is negative.
      */
     GTable(int rows = 0, int columns = 0, double width = 0, double height = 0,
-            QWidget* parent = nullptr);
+           QWidget *parent = nullptr);
 
     ~GTable() override;
 
@@ -110,7 +110,7 @@ public:
     /**
      * Sets every cell in the table to have the given value.
      */
-    virtual void fill(const std::string& text);
+    virtual void fill(const std::string &text);
 
     /**
      * Returns the text stored in the given cell.
@@ -132,7 +132,7 @@ public:
     virtual double getColumnWidth(int column) const;
 
     /* @inherit */
-    _Internal_QWidget* getInternalWidget() const override;
+    _Internal_QWidget *getInternalWidget() const override;
 
     /**
      * Returns the height of the given row index in pixels.
@@ -152,7 +152,7 @@ public:
      * by filling the given reference parameters.
      * Sets both row and column to -1 if no cell is currently selected.
      */
-    virtual void getSelectedCell(int& row, int& column) const;
+    virtual void getSelectedCell(int &row, int &column) const;
 
     /**
      * Returns the text in the cell that is currently selected.
@@ -176,7 +176,7 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    QWidget* getWidget() const override;
+    QWidget *getWidget() const override;
 
     /**
      * Returns true if a cell is currently selected.
@@ -249,7 +249,7 @@ public:
      * Modifies the value in the given cell to store the given text.
      * @throw ErrorException if the given row or column are out of bounds
      */
-    virtual void set(int row, int column, const std::string& text);
+    virtual void set(int row, int column, const std::string &text);
 
     /**
      * Sets the background color that appears behind each cell.
@@ -261,7 +261,7 @@ public:
      * Sets the background color that appears behind each cell.
      * See gcolor.h for more detail about colors.
      */
-    void setBackground(const std::string& color) override;
+    void setBackground(const std::string &color) override;
 
     /**
      * Sets the horizontal alignment of the given cell.
@@ -284,7 +284,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given row/column index is out of bounds
      */
-    virtual void setCellBackground(int row, int column, const std::string& color);
+    virtual void setCellBackground(int row, int column, const std::string &color);
 
     /**
      * Sets the text font of the given cell to the given RGB color.
@@ -292,7 +292,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given row/column index is out of bounds
      */
-    virtual void setCellFont(int row, int column, const std::string& font);
+    virtual void setCellFont(int row, int column, const std::string &font);
 
     /**
      * Sets the foreground/text color of the given cell to the given color.
@@ -308,7 +308,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given row/column index is out of bounds
      */
-    virtual void setCellForeground(int row, int column, const std::string& color);
+    virtual void setCellForeground(int row, int column, const std::string &color);
 
     /**
      * Sets the color used for the text of each cell.
@@ -322,7 +322,7 @@ public:
      * Equivalent to setForeground.
      * See gcolor.h for more detail about colors.
      */
-    void setColor(const std::string& color) override;
+    void setColor(const std::string &color) override;
 
     /**
      * Sets the horizontal alignment of the given column.
@@ -345,7 +345,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given column index is out of bounds
      */
-    virtual void setColumnBackground(int column, const std::string& color);
+    virtual void setColumnBackground(int column, const std::string &color);
 
     /**
      * Sets the text font of the given column to the given RGB color.
@@ -353,7 +353,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given column index is out of bounds
      */
-    virtual void setColumnFont(int column, const std::string& font);
+    virtual void setColumnFont(int column, const std::string &font);
 
     /**
      * Sets the foreground/text color of the given column to the given color.
@@ -369,7 +369,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given column index is out of bounds
      */
-    virtual void setColumnForeground(int column, const std::string& color);
+    virtual void setColumnForeground(int column, const std::string &color);
 
     /**
      * Sets the given column index to have the given width in pixels.
@@ -396,18 +396,18 @@ public:
      * merely the value in the editor widget.
      * @throw ErrorException if the given row or column are out of bounds
      */
-    virtual void setEditorValue(int row, int column, const std::string& text);
+    virtual void setEditorValue(int row, int column, const std::string &text);
 
     /**
      * Sets the font used to display each cell's text.
      */
-    void setFont(const QFont& font) override;
+    void setFont(const QFont &font) override;
 
     /**
      * Sets the font used to display each cell's text.
      * See gfont.h for more detail about fonts.
      */
-    void setFont(const std::string& font) override;
+    void setFont(const std::string &font) override;
 
     /**
      * Sets the color used for the text of each cell.
@@ -421,7 +421,7 @@ public:
      * Equivalent to setColor.
      * See gcolor.h for more detail about colors.
      */
-    void setForeground(const std::string& color) override;
+    void setForeground(const std::string &color) override;
 
     /**
      * Sets the horizontal alignment of the text in all cells in the table.
@@ -450,7 +450,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given row index is out of bounds
      */
-    virtual void setRowBackground(int row, const std::string& color);
+    virtual void setRowBackground(int row, const std::string &color);
 
     /**
      * Sets the text font of the given row to the given font.
@@ -458,7 +458,7 @@ public:
      * See gfont.h for more detail about fonts.
      * @throw ErrorException if the given row index is out of bounds
      */
-    virtual void setRowFont(int row, const std::string& font);
+    virtual void setRowFont(int row, const std::string &font);
 
     /**
      * Sets the foreground/text color of the given row to the given color.
@@ -474,7 +474,7 @@ public:
      * See gcolor.h for more detail about colors.
      * @throw ErrorException if the given row index is out of bounds
      */
-    virtual void setRowForeground(int row, const std::string& color);
+    virtual void setRowForeground(int row, const std::string &color);
 
     /**
      * Sets whether row and column headers should be shown in the table.
@@ -493,7 +493,7 @@ public:
      * Sets the text in the cell that is currently selected.
      * If no cell is currently selected, does nothing.
      */
-    virtual void setSelectedCellValue(const std::string& text);
+    virtual void setSelectedCellValue(const std::string &text);
 
     /**
      * Sets the given function to be called when events occur in this table.
@@ -533,12 +533,12 @@ private:
 
         bool isSet() const {
             return background >= 0
-                    && foreground >= 0
-                    && !font.empty()
-                    && alignment >= 0;
+                   && foreground >= 0
+                   && !font.empty()
+                   && alignment >= 0;
         }
 
-        void mergeWith(const TableStyle& other) {
+        void mergeWith(const TableStyle &other) {
             if (other.background >= 0) {
                 background = other.background;
             }
@@ -553,7 +553,7 @@ private:
             }
         }
 
-        TableStyle mergedWith(const TableStyle& other) {
+        TableStyle mergedWith(const TableStyle &other) {
             TableStyle copy = *this;
             copy.mergeWith(other);
             return copy;
@@ -576,7 +576,7 @@ private:
     static TableStyle _defaultCellStyle;
 
     // member variables
-    _Internal_QTableWidget* _iqtableview;
+    _Internal_QTableWidget *_iqtableview;
     ColumnHeaderStyle _columnHeaderStyle;
 
     // styles on table, rows, columns, cells
@@ -584,25 +584,33 @@ private:
     Map<int, TableStyle> _columnStyles;
     TableStyle _globalCellStyle;
 
-    void applyStyleToCell(int row, int column, const TableStyle& style);
+    void applyStyleToCell(int row, int column, const TableStyle &style);
 
     /*
      * @throw ErrorException if the given row/column values are out of bounds.
      */
-    void checkColumn(const std::string& member, int column) const;
-    void checkIndex(const std::string& member, int row, int column) const;
-    void checkRow(const std::string& member, int row) const;
+    void checkColumn(const std::string &member, int column) const;
+
+    void checkIndex(const std::string &member, int row, int column) const;
+
+    void checkRow(const std::string &member, int row) const;
 
     void ensureColumnStyle(int column);
+
     void ensureDefaultFormatting() const;   // const hack
     void ensureGlobalCellStyle();
+
     void ensureRowStyle(int row);
+
     TableStyle getMergedStyleForCell(int row, int column);
 
     // Internal setters for cell formatting.
     virtual void setCellAlignmentInternal(int row, int column, HorizontalAlignment alignment);
+
     virtual void setCellBackgroundInternal(int row, int column, int color);
-    virtual void setCellFontInternal(int row, int column, const std::string& font);
+
+    virtual void setCellFontInternal(int row, int column, const std::string &font);
+
     virtual void setCellForegroundInternal(int row, int column, int color);
 
     static std::string toExcelColumnName(int col);
@@ -618,16 +626,19 @@ private:
  * @private
  */
 class _Internal_QItemDelegate : public QStyledItemDelegate {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QItemDelegate(QObject* parent = nullptr);
-    virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-    virtual void destroyEditor(QWidget* editor, const QModelIndex& index) const;
-    virtual QWidget* getEditor() const;
+    _Internal_QItemDelegate(QObject *parent = nullptr);
+
+    virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+    virtual void destroyEditor(QWidget *editor, const QModelIndex &index) const;
+
+    virtual QWidget *getEditor() const;
 
 private:
-    QWidget* _editor;
+    QWidget *_editor;
 };
 
 
@@ -636,30 +647,41 @@ private:
  * @private
  */
 class _Internal_QTableWidget : public QTableWidget, public _Internal_QWidget {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    _Internal_QTableWidget(GTable* gtable, int rows, int columns, QWidget* parent = nullptr);
+    _Internal_QTableWidget(GTable *gtable, int rows, int columns, QWidget *parent = nullptr);
+
     void detach() override;
-    bool edit(const QModelIndex& index, QAbstractItemView::EditTrigger trigger, QEvent* event) override;
-    virtual QWidget* getEditor() const;
-    virtual _Internal_QItemDelegate* getItemDelegate() const;
+
+    bool edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger, QEvent *event) override;
+
+    virtual QWidget *getEditor() const;
+
+    virtual _Internal_QItemDelegate *getItemDelegate() const;
+
     virtual bool isEditing() const;
-    void closeEditor(QWidget* editor, QAbstractItemDelegate::EndEditHint hint) override;
-    void keyPressEvent(QKeyEvent* event) override;
+
+    void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint) override;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
     QSize sizeHint() const override;
 
 public slots:
+
     void handleCellChange(int row, int column);
+
     void handleCellDoubleClick(int row, int column);
-    void handleSelectionChange(const QItemSelection& selected, const QItemSelection& deselected);
+
+    void handleSelectionChange(const QItemSelection &selected, const QItemSelection &deselected);
 
 private:
-    GTable* _gtable;
-    _Internal_QItemDelegate* _delegate;
+    GTable *_gtable;
+    _Internal_QItemDelegate *_delegate;
     int _lastKeyPressed;
 
-    void fireTableEvent(EventType eventType, const std::string& eventName, int row = -1, int col = -1);
+    void fireTableEvent(EventType eventType, const std::string &eventName, int row = -1, int col = -1);
 
     friend class GTable;
 };

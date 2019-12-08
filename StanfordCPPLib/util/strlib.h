@@ -80,19 +80,19 @@ std::string doubleToString(double d);
  * Returns <code>true</code> if the string <code>str</code> ends with
  * the specified suffix.
  */
-bool endsWith(const std::string& str, const std::string& suffix);
+bool endsWith(const std::string &str, const std::string &suffix);
 
 /**
  * Returns <code>true</code> if the string <code>str</code> ends with
  * the specified character.
  */
-bool endsWith(const std::string& str, char suffix);
+bool endsWith(const std::string &str, char suffix);
 
 /**
  * Returns <code>true</code> if <code>s1</code> and <code>s2</code> are
  * equal discounting differences in case.
  */
-bool equalsIgnoreCase(const std::string& s1, const std::string& s2);
+bool equalsIgnoreCase(const std::string &s1, const std::string &s2);
 
 /**
  * Converts the given string from an HTML-encoded version to its decoded
@@ -101,7 +101,7 @@ bool equalsIgnoreCase(const std::string& s1, const std::string& s2);
  * For example, <code>htmlEncode("&lt;p class=&quot;abc&quot;&gt;I love you &amp; me&lt;/p&gt;")
  * returns "<p class=\"abc\">I love you & me</p>".
  */
-std::string htmlDecode(const std::string& s);
+std::string htmlDecode(const std::string &s);
 
 /**
  * Converts the given string into an HTML-encoded equivalent version, with
@@ -109,7 +109,7 @@ std::string htmlDecode(const std::string& s);
  * For example, <code>htmlEncode("<p class=\"abc\">I love you & me</p>") returns
  * "&lt;p class=&quot;abc&quot;&gt;I love you &amp; me&lt;/p&gt;".
  */
-std::string htmlEncode(const std::string& s);
+std::string htmlEncode(const std::string &s);
 
 /**
  * Converts an integer into the corresponding numeric character.
@@ -143,7 +143,7 @@ std::string longToString(long n, int radix = 10);
  * C++ ostream manipulators such as setw(int), left, and right, as defined in
  * the iomanip library.
  */
-std::string padLeft(const std::string& s, int length, char fill = ' ');
+std::string padLeft(const std::string &s, int length, char fill = ' ');
 
 /**
  * Inserts spaces at the end of the given string until it is at least
@@ -155,13 +155,13 @@ std::string padLeft(const std::string& s, int length, char fill = ' ');
  * C++ ostream manipulators such as setw(int), left, and right, as defined in
  * the iomanip library.
  */
-std::string padRight(const std::string& s, int length);
+std::string padRight(const std::string &s, int length);
 
 /**
  * Returns a hexadecimal string for the given pointer, such as "0x3f0427b".
  * Returns "nullptr" if p is a null pointer.
  */
-std::string pointerToString(void* p);
+std::string pointerToString(void *p);
 
 /**
  * Converts a floating-point number into the corresponding string form.
@@ -174,23 +174,23 @@ std::string realToString(double d);
  * Returns <code>true</code> if the string <code>str</code> starts with
  * the specified prefix.
  */
-bool startsWith(const std::string& str, char prefix);
+bool startsWith(const std::string &str, char prefix);
 
 /**
  * Returns <code>true</code> if the string <code>str</code> starts with
  * the specified character.
  */
-bool startsWith(const std::string& str, const std::string& prefix);
+bool startsWith(const std::string &str, const std::string &prefix);
 
 /**
  * Returns true if the given character occurs somewhere in s.
  */
-bool stringContains(const std::string& s, char ch);
+bool stringContains(const std::string &s, char ch);
 
 /**
  * Returns true if the given substring occurs somewhere in s.
  */
-bool stringContains(const std::string& s, const std::string& substring);
+bool stringContains(const std::string &s, const std::string &substring);
 
 /**
  * Returns the index of the start of the first occurrence of the given character
@@ -198,7 +198,7 @@ bool stringContains(const std::string& s, const std::string& substring);
  * This function is very similar to string.find, but find returns string::npos
  * when the string is not found.
  */
-int stringIndexOf(const std::string& s, char ch, int startIndex = 0);
+int stringIndexOf(const std::string &s, char ch, int startIndex = 0);
 
 /**
  * Returns the index of the start of the first occurrence of the given substring
@@ -206,12 +206,12 @@ int stringIndexOf(const std::string& s, char ch, int startIndex = 0);
  * This function is very similar to string.find, but find returns string::npos
  * when the string is not found.
  */
-int stringIndexOf(const std::string& s, const std::string& substring, int startIndex = 0);
+int stringIndexOf(const std::string &s, const std::string &substring, int startIndex = 0);
 
 /**
  * Returns true if the given string is either "true" or "false".
  */
-bool stringIsBool(const std::string& str);
+bool stringIsBool(const std::string &str);
 
 /**
  * Returns true if the given string could be converted to an real number
@@ -219,7 +219,7 @@ bool stringIsBool(const std::string& str);
  * the string has the format of a real number such as "3.14" or "-46".
  * Equivalent to stringIsReal.
  */
-bool stringIsDouble(const std::string& str);   // alias
+bool stringIsDouble(const std::string &str);   // alias
 
 /**
  * Returns true if the given string could be converted to an integer
@@ -227,7 +227,7 @@ bool stringIsDouble(const std::string& str);   // alias
  * the string has the format of an integer such as "1234" or "-8".
  * Optionally accepts a radix (base) parameter if base-10 is not desired.
  */
-bool stringIsInteger(const std::string& str, int radix = 10);
+bool stringIsInteger(const std::string &str, int radix = 10);
 
 /**
  * Returns true if the given string could be converted to a long
@@ -235,14 +235,14 @@ bool stringIsInteger(const std::string& str, int radix = 10);
  * the string has the format of an integer such as "1234" or "-8".
  * Optionally accepts a radix (base) parameter if base-10 is not desired.
  */
-bool stringIsLong(const std::string& str, int radix = 10);
+bool stringIsLong(const std::string &str, int radix = 10);
 
 /**
  * Returns true if the given string could be converted to an real number
  * successfully by the stringToReal function, which will be true if
  * the string has the format of a real number such as "3.14" or "-46".
  */
-bool stringIsReal(const std::string& str);
+bool stringIsReal(const std::string &str);
 
 /**
  * Combines the elements of the given vector into a single string,
@@ -250,7 +250,7 @@ bool stringIsReal(const std::string& str);
  * For example, joining the elements of the vector
  * {"Hi", "there", "", "Jim"} with the delimiter '?' returns "Hi?there??Jim".
  */
-std::string stringJoin(const Vector<std::string>& v, char delimiter = '\n');
+std::string stringJoin(const Vector<std::string> &v, char delimiter = '\n');
 
 /**
  * Combines the elements of the given STL vector into a single string,
@@ -258,7 +258,7 @@ std::string stringJoin(const Vector<std::string>& v, char delimiter = '\n');
  * For example, joining the elements of the vector
  * {"Hi", "there", "", "Jim"} with the delimiter "??" returns "Hi??there????Jim".
  */
-std::string stringJoin(const Vector<std::string>& v, const std::string& delimiter = "\n");
+std::string stringJoin(const Vector<std::string> &v, const std::string &delimiter = "\n");
 
 /**
  * Returns the index of the start of the last occurrence of the given character
@@ -266,7 +266,7 @@ std::string stringJoin(const Vector<std::string>& v, const std::string& delimite
  * This function is very similar to string.rfind, but rfind returns string::npos
  * when the string is not found.
  */
-int stringLastIndexOf(const std::string& s, char ch, int startIndex = (int) std::string::npos);
+int stringLastIndexOf(const std::string &s, char ch, int startIndex = (int) std::string::npos);
 
 /**
  * Returns the index of the start of the last occurrence of the given substring
@@ -274,7 +274,7 @@ int stringLastIndexOf(const std::string& s, char ch, int startIndex = (int) std:
  * This function is very similar to string.rfind, but rfind returns string::npos
  * when the string is not found.
  */
-int stringLastIndexOf(const std::string& s, const std::string& substring, int startIndex = (int) std::string::npos);
+int stringLastIndexOf(const std::string &s, const std::string &substring, int startIndex = (int) std::string::npos);
 
 /**
  * Returns a new string formed by replacing any occurrences of the given 'old'
@@ -284,7 +284,7 @@ int stringLastIndexOf(const std::string& s, const std::string& substring, int st
  * The 'inPlace' variant modifies an existing string rather than returning a new one,
  * and returns the number of occurrences of 'old' were replaced.
  */
-std::string stringReplace(const std::string& str, char old, char replacement, int limit = -1);
+std::string stringReplace(const std::string &str, char old, char replacement, int limit = -1);
 
 /**
  * Returns a new string formed by replacing any occurrences of the given 'old'
@@ -294,19 +294,20 @@ std::string stringReplace(const std::string& str, char old, char replacement, in
  * The 'inPlace' variant modifies an existing string rather than returning a new one,
  * and returns the number of occurrences of 'old' were replaced.
  */
-std::string stringReplace(const std::string& str, const std::string& old, const std::string& replacement, int limit = -1);
+std::string
+stringReplace(const std::string &str, const std::string &old, const std::string &replacement, int limit = -1);
 
 /**
  * A variant of stringReplace, except that it accepts the string as a reference
  * and modifies it in-place rather than returning a new string.
  */
-int stringReplaceInPlace(std::string& str, char old, char replacement, int limit = -1);
+int stringReplaceInPlace(std::string &str, char old, char replacement, int limit = -1);
 
 /**
  * A variant of stringReplace, except that it accepts the string as a reference
  * and modifies it in-place rather than returning a new string.
  */
-int stringReplaceInPlace(std::string& str, const std::string& old, const std::string& replacement, int limit = -1);
+int stringReplaceInPlace(std::string &str, const std::string &old, const std::string &replacement, int limit = -1);
 
 /**
  * Returns a vector whose elements are strings formed by splitting the
@@ -314,7 +315,7 @@ int stringReplaceInPlace(std::string& str, const std::string& old, const std::st
  * For example, splitting "Hi there  Jim!" on " " returns
  * {"Hi", "there", "", "Jim!"}.
  */
-Vector<std::string> stringSplit(const std::string& str, char delimiter, int limit = -1);
+Vector<std::string> stringSplit(const std::string &str, char delimiter, int limit = -1);
 
 /**
  * Returns a vector whose elements are strings formed by splitting the
@@ -322,21 +323,21 @@ Vector<std::string> stringSplit(const std::string& str, char delimiter, int limi
  * For example, splitting "Hi there  Jim!" on " " returns
  * {"Hi", "there", "", "Jim!"}.
  */
-Vector<std::string> stringSplit(const std::string& str, const std::string& delimiter, int limit = -1);
+Vector<std::string> stringSplit(const std::string &str, const std::string &delimiter, int limit = -1);
 
 /**
  * If str is "true", returns the bool value true.
  * If str is "false", returns the bool value false.
  * @throw ErrorException if str is any other value than "true" or "false"
  */
-bool stringToBool(const std::string& str);
+bool stringToBool(const std::string &str);
 
 /**
  * Converts a single-character string into its corresponding char value.
  * For example, stringToChar("hello") returns the char 'h'.
  * @throw ErrorException if the given string does not contain exactly 1 character
  */
-char stringToChar(const std::string& str);
+char stringToChar(const std::string &str);
 
 /**
  * Converts a string representing a real number into its corresponding
@@ -345,7 +346,7 @@ char stringToChar(const std::string& str);
  * @throw ErrorException if the string is not a legal floating-point number
  *        or contains extraneous characters other than whitespace
  */
-double stringToDouble(const std::string& str);   // alias
+double stringToDouble(const std::string &str);   // alias
 
 /**
  * Converts a string of digits into an integer.
@@ -355,7 +356,7 @@ double stringToDouble(const std::string& str);   // alias
  * @throw ErrorException if the string is not a legal integer or contains
  *        extraneous characters other than whitespace
  */
-int stringToInteger(const std::string& str, int radix = 10);
+int stringToInteger(const std::string &str, int radix = 10);
 
 /**
  * Converts a string of digits into a long.
@@ -365,7 +366,7 @@ int stringToInteger(const std::string& str, int radix = 10);
  * @throw ErrorException if the string is not a legal long or contains
  *        extraneous characters other than whitespace
  */
-long stringToLong(const std::string& str, int radix = 10);
+long stringToLong(const std::string &str, int radix = 10);
 
 /**
  * Converts a string representing a real number into its corresponding
@@ -374,7 +375,7 @@ long stringToLong(const std::string& str, int radix = 10);
  * @throw ErrorException if the string is not a legal floating-point number or
  * contains extraneous characters other than whitespace
  */
-double stringToReal(const std::string& str);
+double stringToReal(const std::string &str);
 
 /**
  * Returns a new character in which the given uppercase character has been
@@ -386,13 +387,13 @@ char toLowerCase(char ch);
  * Returns a new string in which all uppercase characters have been converted
  * into their lowercase equivalents.
  */
-std::string toLowerCase(const std::string& str);
+std::string toLowerCase(const std::string &str);
 
 /**
  * Modifies the given string in-place such that all uppercase characters have
  * been converted into their lowercase equivalents.
  */
-void toLowerCaseInPlace(std::string& str);
+void toLowerCaseInPlace(std::string &str);
 
 /**
  * Returns a new character in which the given lowercase character has been
@@ -404,73 +405,73 @@ char toUpperCase(char ch);
  * Returns a new string in which all lowercase characters have been converted
  * into their uppercase equivalents.
  */
-std::string toUpperCase(const std::string& str);
+std::string toUpperCase(const std::string &str);
 
 /**
  * Modifies the given string in-place such that all lowercase characters have
  * been converted into their uppercase equivalents.
  */
-void toUpperCaseInPlace(std::string& str);
+void toUpperCaseInPlace(std::string &str);
 
 /**
  * Returns a new string after removing any whitespace characters
  * from the beginning and end of the argument.
  */
-std::string trim(const std::string& str);
+std::string trim(const std::string &str);
 
 /**
  * Modifies the given string in-place where any whitespace characters
  * from the beginning and end of the argument are removed.
  */
-void trimInPlace(std::string& str);
+void trimInPlace(std::string &str);
 
 /**
  * Returns a new string after removing any whitespace characters
  * from the end of the argument.
  */
-std::string trimEnd(const std::string& str);
+std::string trimEnd(const std::string &str);
 
 /**
  * Modifies the given string in-place to remove any whitespace characters
  * from its end.
  */
-void trimEndInPlace(std::string& str);
+void trimEndInPlace(std::string &str);
 
 /**
  * Returns a new string after removing any whitespace characters
  * from the beginning of the argument.
  */
-std::string trimStart(const std::string& str);
+std::string trimStart(const std::string &str);
 
 /**
  * Modifies the given string in-place to remove removing any whitespace characters
  * from the beginning of it.
  */
-void trimStartInPlace(std::string& str);
+void trimStartInPlace(std::string &str);
 
 /**
  * Returns a URL-decoded version of the given string, where any %xx character
  * codes are converted back to the equivalent characters.
  */
-std::string urlDecode(const std::string& str);
+std::string urlDecode(const std::string &str);
 
 /**
  * Modifies the given string in-place into a URL-decoded version of itself,
  * where any %xx character codes are converted back to the equivalent characters.
  */
-void urlDecodeInPlace(std::string& str);
+void urlDecodeInPlace(std::string &str);
 
 /**
  * Returns a URL-encoded version of the given string, where most non-
  * alphabetic characters are replaced by %xx character codes.
  */
-std::string urlEncode(const std::string& str);
+std::string urlEncode(const std::string &str);
 
 /**
  * Modifies the given string in-place into a URL-encoded version of itself,
  * where most non- alphabetic characters are replaced by %xx character codes.
  */
-void urlEncodeInPlace(std::string& str);
+void urlEncodeInPlace(std::string &str);
 
 // add to_string overloads for some common types missing from C++ standard
 namespace std {
@@ -480,7 +481,7 @@ namespace std {
  * If str is "false", returns the bool value false.
  * @throw ErrorException if str is any other value than "true" or "false"
  */
-bool stob(const std::string& str);
+    bool stob(const std::string &str);
 
 /**
  * String-to-char conversion function.
@@ -488,34 +489,34 @@ bool stob(const std::string& str);
  * For example, stringToChar("hello") returns the char 'h'.
  * @throw ErrorException if the given string does not contain exactly 1 character
  */
-char stoc(const std::string& str);
+    char stoc(const std::string &str);
 
 /**
  * Returns the string "true" if b is true, or "false" if b is false.
  */
-std::string to_string(bool b);
+    std::string to_string(bool b);
 
 /**
  * Returns a single-character string containing the given character.
  * For example, charToString('Q') returns the string "Q".
  */
-std::string to_string(char c);
+    std::string to_string(char c);
 
 /**
  * Returns a hexadecimal string for the given pointer, such as "0x3f0427b".
  * Returns "nullptr" if p is a null pointer.
  */
-std::string to_string(void* p);
+    std::string to_string(void *p);
 
 /**
  * Generic to_string function for any type that has an operator <<.
  */
-template <typename T>
-std::string to_string(const T& value) {
-    std::ostringstream out;
-    out << value;   // if you get an error here, your type might not have a << operator
-    return out.str();
-}
+    template<typename T>
+    std::string to_string(const T &value) {
+        std::ostringstream out;
+        out << value;   // if you get an error here, your type might not have a << operator
+        return out.str();
+    }
 } // namespace std
 
 #endif // _strlib_h

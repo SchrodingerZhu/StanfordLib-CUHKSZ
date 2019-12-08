@@ -30,19 +30,32 @@
  * all of the primitive types and the C++ <code>string</code> type.
  */
 int hashCode(bool key);
+
 int hashCode(char key);
+
 int hashCode(double key);
+
 int hashCode(float key);
+
 int hashCode(long double key);
+
 int hashCode(int key);
+
 int hashCode(unsigned int key);
+
 int hashCode(long key);
+
 int hashCode(unsigned long key);
+
 int hashCode(short key);
+
 int hashCode(unsigned short key);
-int hashCode(const char* str);
-int hashCode(const std::string& str);
-int hashCode(void* key);
+
+int hashCode(const char *str);
+
+int hashCode(const std::string &str);
+
+int hashCode(void *key);
 
 /*
  * Constants that are used to help implement these functions
@@ -58,8 +71,8 @@ int hashMask();         // All 1 bits except the sign
  * and reduce collisions.
  * The type of each value passed must have a suitable hashCode() function.
  */
-template <typename T1, typename T2, typename... Others>
-int hashCode(T1&& first, T2&& second, Others&&... remaining) {
+template<typename T1, typename T2, typename... Others>
+int hashCode(T1 &&first, T2 &&second, Others &&... remaining) {
     int result = hashSeed();
 
     /* Compute the hash code for the last n - 1 arguments. */

@@ -30,7 +30,7 @@ void GObservable::clearEventListeners() {
     _eventMap.clear();
 }
 
-void GObservable::ensureThreadSafety(const std::string& memberName) {
+void GObservable::ensureThreadSafety(const std::string &memberName) {
     GThread::ensureThatThisIsTheQtGuiThread(memberName);
 }
 
@@ -38,7 +38,7 @@ bool GObservable::eventsEnabled() const {
     return _eventsEnabled;
 }
 
-void GObservable::fireEvent(GEvent& event) {
+void GObservable::fireEvent(GEvent &event) {
     if (eventsEnabled()) {
         event.setSource(this);
         if (hasEventListener(event.getName())) {
@@ -50,41 +50,41 @@ void GObservable::fireEvent(GEvent& event) {
     }
 }
 
-void GObservable::fireGEvent(QEvent* event,
+void GObservable::fireGEvent(QEvent *event,
                              EventType eventType,
-                             const std::string& eventName) {
+                             const std::string &eventName) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent generalEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ this);
     generalEvent.setInternalEvent(event);
     fireEvent(generalEvent);
 }
 
-void GObservable::fireGEvent(QCloseEvent* event,
+void GObservable::fireGEvent(QCloseEvent *event,
                              EventType eventType,
-                             const std::string& eventName) {
+                             const std::string &eventName) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent windowEvent(
-                /* class  */ WINDOW_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ WINDOW_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ this);
     windowEvent.setInternalEvent(event);
     fireEvent(windowEvent);
 }
 
-void GObservable::fireGEvent(QKeyEvent* event,
+void GObservable::fireGEvent(QKeyEvent *event,
                              EventType eventType,
-                             const std::string& eventName) {
+                             const std::string &eventName) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent keyEvent(
-                /* class  */ KEY_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ KEY_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ this);
     keyEvent.setKeyCode(event->key());
     std::string text = event->text().toStdString();
     if (!text.empty()) {
@@ -98,16 +98,16 @@ void GObservable::fireGEvent(QKeyEvent* event,
     fireEvent(keyEvent);
 }
 
-void GObservable::fireGEvent(QMouseEvent* event,
+void GObservable::fireGEvent(QMouseEvent *event,
                              EventType eventType,
-                             const std::string& eventName,
-                             const std::string& actionCommand) {
+                             const std::string &eventName,
+                             const std::string &actionCommand) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent mouseEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ this);
     mouseEvent.setButton((int) event->button());
     mouseEvent.setX(event->x());
     mouseEvent.setY(event->y());
@@ -117,41 +117,41 @@ void GObservable::fireGEvent(QMouseEvent* event,
     fireEvent(mouseEvent);
 }
 
-void GObservable::fireGEvent(QResizeEvent* event,
+void GObservable::fireGEvent(QResizeEvent *event,
                              EventType /* eventType */,
-                             const std::string& eventName) {
+                             const std::string &eventName) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent windowEvent(
-                /* class  */ WINDOW_EVENT,
-                /* type   */ WINDOW_RESIZED,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ WINDOW_EVENT,
+            /* type   */ WINDOW_RESIZED,
+            /* name   */ eventName,
+            /* source */ this);
     windowEvent.setInternalEvent(event);
     fireEvent(windowEvent);
 }
 
-void GObservable::fireGEvent(QTimerEvent* event,
+void GObservable::fireGEvent(QTimerEvent *event,
                              EventType /* eventType */,
-                             const std::string& /* eventName */) {
+                             const std::string & /* eventName */) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent timerEvent(
-                /* class  */ TIMER_EVENT,
-                /* type   */ TIMER_TICKED,
-                /* name   */ "timer",
-                /* source */ this);
+            /* class  */ TIMER_EVENT,
+            /* type   */ TIMER_TICKED,
+            /* name   */ "timer",
+            /* source */ this);
     timerEvent.setInternalEvent(event);
     fireEvent(timerEvent);
 }
 
-void GObservable::fireGEvent(QWheelEvent* event,
+void GObservable::fireGEvent(QWheelEvent *event,
                              EventType eventType,
-                             const std::string& eventName) {
+                             const std::string &eventName) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent wheelEvent(
-                /* class  */ MOUSE_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ MOUSE_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ this);
     wheelEvent.setButton((int) event->buttons());
     wheelEvent.setX(event->x());
     wheelEvent.setY(event->y());
@@ -160,20 +160,20 @@ void GObservable::fireGEvent(QWheelEvent* event,
     fireEvent(wheelEvent);
 }
 
-void GObservable::fireGEvent(QWindowStateChangeEvent* event,
+void GObservable::fireGEvent(QWindowStateChangeEvent *event,
                              EventType eventType,
-                             const std::string& eventName) {
+                             const std::string &eventName) {
     require::nonNull(event, "GObservable::fireGEvent", "event");
     GEvent windowEvent(
-                /* class  */ WINDOW_EVENT,
-                /* type   */ eventType,
-                /* name   */ eventName,
-                /* source */ this);
+            /* class  */ WINDOW_EVENT,
+            /* type   */ eventType,
+            /* name   */ eventName,
+            /* source */ this);
     windowEvent.setInternalEvent(event);
     fireEvent(windowEvent);
 }
 
-bool GObservable::isAcceptingEvent(const std::string& eventType) const {
+bool GObservable::isAcceptingEvent(const std::string &eventType) const {
     if (hasEventListener(eventType)) {
         return true;
     }
@@ -198,11 +198,11 @@ bool GObservable::isAcceptingEvent(const std::string& eventType) const {
     return isAcceptingEvent(eventMask);
 }
 
-bool GObservable::isAcceptingEvent(const GEvent& event) const {
+bool GObservable::isAcceptingEvent(const GEvent &event) const {
     return isAcceptingEvent(event.getName());
 }
 
-bool GObservable::hasEventListener(const std::string& eventName) const {
+bool GObservable::hasEventListener(const std::string &eventName) const {
     return _eventMap.containsKey(eventName);
 }
 
@@ -210,7 +210,7 @@ bool GObservable::isAcceptingEvent(int eventMask) const {
     return GEventQueue::instance()->isAcceptingEvent(eventMask);
 }
 
-void GObservable::removeEventListener(const std::string& eventName) {
+void GObservable::removeEventListener(const std::string &eventName) {
     _eventMap.remove(eventName);
 }
 
@@ -220,14 +220,14 @@ void GObservable::removeEventListeners(std::initializer_list<std::string> eventN
     }
 }
 
-void GObservable::setEventListener(const std::string& eventName, GEventListener func) {
+void GObservable::setEventListener(const std::string &eventName, GEventListener func) {
     GEvent::EventListenerWrapper wrapper;
     wrapper.type = GEvent::HANDLER_EVENT;
     wrapper.handler = func;
     _eventMap[eventName] = wrapper;
 }
 
-void GObservable::setEventListener(const std::string& eventName, GEventListenerVoid func) {
+void GObservable::setEventListener(const std::string &eventName, GEventListenerVoid func) {
     GEvent::EventListenerWrapper wrapper;
     wrapper.type = GEvent::HANDLER_VOID;
     wrapper.handlerVoid = func;

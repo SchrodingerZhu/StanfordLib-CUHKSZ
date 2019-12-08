@@ -14,15 +14,17 @@
 
 // If standard library is disabled, user must provide implementations of required functions and typedefs
 #if !defined(RAPIDXML_NO_STDLIB)
-    #include <cstdlib>      // For std::size_t
-    #include <cassert>      // For assert
-    #include <new>          // For placement new
+
+#include <cstdlib>      // For std::size_t
+#include <cassert>      // For assert
+#include <new>          // For placement new
+
 #endif
 
 // On MSVC, disable "conditional expression is constant" warning (level 4).
 // This warning is almost impossible to avoid with certain types of templated code
 #ifdef _MSC_VER
-    #pragma warning(push)
+                                                                                                                        #pragma warning(push)
     #pragma warning(disable:4127)   // Conditional expression is constant
 #endif
 
@@ -31,7 +33,7 @@
 
 #if defined(RAPIDXML_NO_EXCEPTIONS)
 
-#define RAPIDXML_PARSE_ERROR(what, where) { parse_error_handler(what, where); assert(0); }
+                                                                                                                        #define RAPIDXML_PARSE_ERROR(what, where) { parse_error_handler(what, where); assert(0); }
 
 namespace rapidxml
 {
@@ -60,8 +62,7 @@ namespace rapidxml
 
 #define RAPIDXML_PARSE_ERROR(what, where) throw parse_error(what, where)
 
-namespace rapidxml
-{
+namespace rapidxml {
 
     //! Parse error exception.
     //! This exception is thrown by the parser when an error occurs.
@@ -74,22 +75,18 @@ namespace rapidxml
     //! This function must be defined by the user.
     //! <br><br>
     //! This class derives from <code>std::exception</code> class.
-    class parse_error: public std::exception
-    {
+    class parse_error : public std::exception {
 
     public:
 
         //! Constructs parse error
         parse_error(const char *what, void *where)
-            : m_what(what)
-            , m_where(where)
-        {
+                : m_what(what), m_where(where) {
         }
 
         //! Gets human readable description of error.
         //! \return Pointer to null terminated description of the error.
-        virtual const char *what() const throw()
-        {
+        virtual const char *what() const throw() {
             return m_what;
         }
 
@@ -97,8 +94,7 @@ namespace rapidxml
         //! Ch should be the same as char type of xml_document that produced the error.
         //! \return Pointer to location within the parsed string where error occured.
         template<class Ch>
-        Ch *where() const
-        {
+        Ch *where() const {
             return reinterpret_cast<Ch *>(m_where);
         }
 
@@ -116,38 +112,41 @@ namespace rapidxml
 // Pool sizes
 
 #ifndef RAPIDXML_STATIC_POOL_SIZE
-    // Size of static memory block of memory_pool.
-    // Define RAPIDXML_STATIC_POOL_SIZE before including rapidxml.h if you want to override the default value.
-    // No dynamic memory allocations are performed by memory_pool until static memory is exhausted.
-    #define RAPIDXML_STATIC_POOL_SIZE (64 * 1024)
+// Size of static memory block of memory_pool.
+// Define RAPIDXML_STATIC_POOL_SIZE before including rapidxml.h if you want to override the default value.
+// No dynamic memory allocations are performed by memory_pool until static memory is exhausted.
+#define RAPIDXML_STATIC_POOL_SIZE (64 * 1024)
 #endif
 
 #ifndef RAPIDXML_DYNAMIC_POOL_SIZE
-    // Size of dynamic memory block of memory_pool.
-    // Define RAPIDXML_DYNAMIC_POOL_SIZE before including rapidxml.h if you want to override the default value.
-    // After the static block is exhausted, dynamic blocks with approximately this size are allocated by memory_pool.
-    #define RAPIDXML_DYNAMIC_POOL_SIZE (64 * 1024)
+// Size of dynamic memory block of memory_pool.
+// Define RAPIDXML_DYNAMIC_POOL_SIZE before including rapidxml.h if you want to override the default value.
+// After the static block is exhausted, dynamic blocks with approximately this size are allocated by memory_pool.
+#define RAPIDXML_DYNAMIC_POOL_SIZE (64 * 1024)
 #endif
 
 #ifndef RAPIDXML_ALIGNMENT
-    // Memory allocation alignment.
-    // Define RAPIDXML_ALIGNMENT before including rapidxml.h if you want to override the default value, which is the size of pointer.
-    // All memory allocations for nodes, attributes and strings will be aligned to this value.
-    // This must be a power of 2 and at least 1, otherwise memory_pool will not work.
-    #define RAPIDXML_ALIGNMENT sizeof(void *)
+// Memory allocation alignment.
+// Define RAPIDXML_ALIGNMENT before including rapidxml.h if you want to override the default value, which is the size of pointer.
+// All memory allocations for nodes, attributes and strings will be aligned to this value.
+// This must be a power of 2 and at least 1, otherwise memory_pool will not work.
+#define RAPIDXML_ALIGNMENT sizeof(void *)
 #endif
 
-namespace rapidxml
-{
+namespace rapidxml {
     // Forward declarations
-    template<class Ch> class xml_node;
-    template<class Ch> class xml_attribute;
-    template<class Ch> class xml_document;
+    template<class Ch>
+    class xml_node;
+
+    template<class Ch>
+    class xml_attribute;
+
+    template<class Ch>
+    class xml_document;
 
     //! Enumeration listing all node types produced by the parser.
     //! Use xml_node::type() function to query node type.
-    enum node_type
-    {
+    enum node_type {
         node_document,      //!< A document node. Name and value are empty.
         node_element,       //!< An element node. Name contains element name. Value contains text of first data node.
         node_data,          //!< A data node. Name is empty. Value contains data text.
@@ -283,20 +282,19 @@ namespace rapidxml
     //! This usually results in slowest parsing.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes | parse_validate_closing_tags;
+    const int parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes |
+                           parse_validate_closing_tags;
 
     ///////////////////////////////////////////////////////////////////////
     // Internals
 
     //! \cond internal
-    namespace internal
-    {
+    namespace internal {
 
         // Struct that contains lookup tables for the parser
         // It must be a template to allow correct linking (because it has static data members, which are defined in a header file).
         template<int Dummy>
-        struct lookup_tables
-        {
+        struct lookup_tables {
             static const unsigned char lookup_whitespace[256];              // Whitespace table
             static const unsigned char lookup_node_name[256];               // Node name table
             static const unsigned char lookup_text[256];                    // Text table
@@ -313,8 +311,7 @@ namespace rapidxml
 
         // Find length of the string
         template<class Ch>
-        inline std::size_t measure(const Ch *p)
-        {
+        inline std::size_t measure(const Ch *p) {
             const Ch *tmp = p;
             while (*tmp)
                 ++tmp;
@@ -323,20 +320,17 @@ namespace rapidxml
 
         // Compare strings for equality
         template<class Ch>
-        inline bool compare(const Ch *p1, std::size_t size1, const Ch *p2, std::size_t size2, bool case_sensitive)
-        {
+        inline bool compare(const Ch *p1, std::size_t size1, const Ch *p2, std::size_t size2, bool case_sensitive) {
             if (size1 != size2)
                 return false;
-            if (case_sensitive)
-            {
+            if (case_sensitive) {
                 for (const Ch *end = p1 + size1; p1 < end; ++p1, ++p2)
                     if (*p1 != *p2)
                         return false;
-            }
-            else
-            {
+            } else {
                 for (const Ch *end = p1 + size1; p1 < end; ++p1, ++p2)
-                    if (lookup_tables<0>::lookup_upcase[static_cast<unsigned char>(*p1)] != lookup_tables<0>::lookup_upcase[static_cast<unsigned char>(*p2)])
+                    if (lookup_tables<0>::lookup_upcase[static_cast<unsigned char>(*p1)] !=
+                        lookup_tables<0>::lookup_upcase[static_cast<unsigned char>(*p2)])
                         return false;
             }
             return true;
@@ -382,8 +376,7 @@ namespace rapidxml
     //! To do it, define their values before rapidxml.h file is included.
     //! \param Ch Character type of created nodes.
     template<class Ch = char>
-    class memory_pool
-    {
+    class memory_pool {
 
     public:
 
@@ -394,17 +387,14 @@ namespace rapidxml
 
         //! Constructs empty pool with default allocator functions.
         memory_pool()
-            : m_alloc_func(nullptr)
-            , m_free_func(nullptr)
-        {
+                : m_alloc_func(nullptr), m_free_func(nullptr) {
             init();
         }
 
         //! Destroys pool and frees all the memory.
         //! This causes memory occupied by nodes allocated by the pool to be freed.
         //! Nodes allocated from the pool are no longer valid.
-        ~memory_pool()
-        {
+        ~memory_pool() {
             clear();
         }
 
@@ -420,19 +410,16 @@ namespace rapidxml
         //! \return Pointer to allocated node. This pointer will never be NULL.
         xml_node<Ch> *allocate_node(node_type type,
                                     const Ch *name = nullptr, const Ch *value = nullptr,
-                                    std::size_t name_size = 0, std::size_t value_size = 0)
-        {
+                                    std::size_t name_size = 0, std::size_t value_size = 0) {
             void *memory = allocate_aligned(sizeof(xml_node<Ch>));
             xml_node<Ch> *node = new(memory) xml_node<Ch>(type);
-            if (name)
-            {
+            if (name) {
                 if (name_size > 0)
                     node->name(name, name_size);
                 else
                     node->name(name);
             }
-            if (value)
-            {
+            if (value) {
                 if (value_size > 0)
                     node->value(value, value_size);
                 else
@@ -451,19 +438,16 @@ namespace rapidxml
         //! \param value_size Size of value to assign, or 0 to automatically calculate size from value string.
         //! \return Pointer to allocated attribute. This pointer will never be NULL.
         xml_attribute<Ch> *allocate_attribute(const Ch *name = nullptr, const Ch *value = nullptr,
-                                              std::size_t name_size = 0, std::size_t value_size = 0)
-        {
+                                              std::size_t name_size = 0, std::size_t value_size = 0) {
             void *memory = allocate_aligned(sizeof(xml_attribute<Ch>));
             xml_attribute<Ch> *attribute = new(memory) xml_attribute<Ch>;
-            if (name)
-            {
+            if (name) {
                 if (name_size > 0)
                     attribute->name(name, name_size);
                 else
                     attribute->name(name);
             }
-            if (value)
-            {
+            if (value) {
                 if (value_size > 0)
                     attribute->value(value, value_size);
                 else
@@ -479,8 +463,7 @@ namespace rapidxml
         //! \param source String to initialize the allocated memory with, or 0 to not initialize it.
         //! \param size Number of characters to allocate, or zero to calculate it automatically from source string length; if size is 0, source string must be specified and null terminated.
         //! \return Pointer to allocated char array. This pointer will never be NULL.
-        Ch *allocate_string(const Ch *source = nullptr, std::size_t size = 0)
-        {
+        Ch *allocate_string(const Ch *source = nullptr, std::size_t size = 0) {
             assert(source || size);     // Either source or size (or both) must be specified
             if (size == 0)
                 size = internal::measure(source) + 1;
@@ -500,16 +483,13 @@ namespace rapidxml
         //! \param source Node to clone.
         //! \param result Node to put results in, or 0 to automatically allocate result node
         //! \return Pointer to cloned node. This pointer will never be NULL.
-        xml_node<Ch> *clone_node(const xml_node<Ch> *source, xml_node<Ch> *result = nullptr)
-        {
+        xml_node<Ch> *clone_node(const xml_node<Ch> *source, xml_node<Ch> *result = nullptr) {
             // Prepare result node
-            if (result)
-            {
+            if (result) {
                 result->remove_all_attributes();
                 result->remove_all_nodes();
                 result->type(source->type());
-            }
-            else
+            } else
                 result = allocate_node(source->type());
 
             // Clone name and value
@@ -520,7 +500,8 @@ namespace rapidxml
             for (xml_node<Ch> *child = source->first_node(); child; child = child->next_sibling())
                 result->append_node(clone_node(child));
             for (xml_attribute<Ch> *attr = source->first_attribute(); attr; attr = attr->next_attribute())
-                result->append_attribute(allocate_attribute(attr->name(), attr->value(), attr->name_size(), attr->value_size()));
+                result->append_attribute(
+                        allocate_attribute(attr->name(), attr->value(), attr->name_size(), attr->value_size()));
 
             return result;
         }
@@ -528,10 +509,8 @@ namespace rapidxml
         //! Clears the pool.
         //! This causes memory occupied by nodes allocated by the pool to be freed.
         //! Any nodes or strings allocated from the pool will no longer be valid.
-        void clear()
-        {
-            while (m_begin != m_static_memory)
-            {
+        void clear() {
+            while (m_begin != m_static_memory) {
                 char *previous_begin = reinterpret_cast<header *>(align(m_begin))->previous_begin;
                 if (m_free_func)
                     m_free_func(m_begin);
@@ -555,8 +534,7 @@ namespace rapidxml
         //! </code><br>
         //! \param af Allocation function, or 0 to restore default function
         //! \param ff Free function, or 0 to restore default function
-        void set_allocator(alloc_func *af, free_func *ff)
-        {
+        void set_allocator(alloc_func *af, free_func *ff) {
             assert(m_begin == m_static_memory && m_ptr == align(m_begin));    // Verify that no memory is allocated yet
             m_alloc_func = af;
             m_free_func = ff;
@@ -564,59 +542,53 @@ namespace rapidxml
 
     private:
 
-        struct header
-        {
+        struct header {
             char *previous_begin;
         };
 
-        void init()
-        {
+        void init() {
             m_begin = m_static_memory;
             m_ptr = align(m_begin);
             m_end = m_static_memory + sizeof(m_static_memory);
         }
 
-        char *align(char *ptr)
-        {
-            std::size_t alignment = ((RAPIDXML_ALIGNMENT - (std::size_t(ptr) & (RAPIDXML_ALIGNMENT - 1))) & (RAPIDXML_ALIGNMENT - 1));
+        char *align(char *ptr) {
+            std::size_t alignment = ((RAPIDXML_ALIGNMENT - (std::size_t(ptr) & (RAPIDXML_ALIGNMENT - 1))) &
+                                     (RAPIDXML_ALIGNMENT - 1));
             return ptr + alignment;
         }
 
-        char *allocate_raw(std::size_t size)
-        {
+        char *allocate_raw(std::size_t size) {
             // Allocate
             void *memory;
             if (m_alloc_func)   // Allocate memory using either user-specified allocation function or global operator new[]
             {
                 memory = m_alloc_func(size);
                 assert(memory); // Allocator is not allowed to return 0, on failure it must either throw, stop the program or use longjmp
-            }
-            else
-            {
+            } else {
                 memory = new char[size]();
 #ifdef RAPIDXML_NO_EXCEPTIONS
-                if (!memory)            // If exceptions are disabled, verify memory allocation, because new will not be able to throw bad_alloc
+                                                                                                                                        if (!memory)            // If exceptions are disabled, verify memory allocation, because new will not be able to throw bad_alloc
                     RAPIDXML_PARSE_ERROR("out of memory", 0);
 #endif
             }
             return static_cast<char *>(memory);
         }
 
-        void *allocate_aligned(std::size_t size)
-        {
+        void *allocate_aligned(std::size_t size) {
             // Calculate aligned pointer
             char *result = align(m_ptr);
 
             // If not enough memory left in current pool, allocate a new pool
-            if (result + size > m_end)
-            {
+            if (result + size > m_end) {
                 // Calculate required pool size (may be bigger than RAPIDXML_DYNAMIC_POOL_SIZE)
                 std::size_t pool_size = RAPIDXML_DYNAMIC_POOL_SIZE;
                 if (pool_size < size)
                     pool_size = size;
 
                 // Allocate
-                std::size_t alloc_size = sizeof(header) + (2 * RAPIDXML_ALIGNMENT - 2) + pool_size;     // 2 alignments required in worst case: one for header, one for actual allocation
+                std::size_t alloc_size = sizeof(header) + (2 * RAPIDXML_ALIGNMENT - 2) +
+                                         pool_size;     // 2 alignments required in worst case: one for header, one for actual allocation
                 char *raw_memory = allocate_raw(alloc_size);
 
                 // Setup new pool in allocated memory
@@ -651,8 +623,7 @@ namespace rapidxml
     //! name(), name_size(), value(), value_size() and parent().
     //! \param Ch Character type to use
     template<class Ch = char>
-    class xml_base
-    {
+    class xml_base {
 
     public:
 
@@ -661,12 +632,7 @@ namespace rapidxml
 
         // Construct a base with empty name, value and parent
         xml_base()
-            : m_name(nullptr)
-            , m_value(nullptr)
-            , m_name_size(0)
-            , m_value_size(0)
-            , m_parent(nullptr)
-        {
+                : m_name(nullptr), m_value(nullptr), m_name_size(0), m_value_size(0), m_parent(nullptr) {
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -678,16 +644,14 @@ namespace rapidxml
         //! <br><br>
         //! Use name_size() function to determine length of the name.
         //! \return Name of node, or empty string if node has no name.
-        Ch *name() const
-        {
+        Ch *name() const {
             return m_name ? m_name : nullstr();
         }
 
         //! Gets size of node name, not including terminator character.
         //! This function works correctly irrespective of whether name is or is not zero terminated.
         //! \return Size of node name, in characters.
-        std::size_t name_size() const
-        {
+        std::size_t name_size() const {
             return m_name ? m_name_size : 0;
         }
 
@@ -697,16 +661,14 @@ namespace rapidxml
         //! <br><br>
         //! Use value_size() function to determine length of the value.
         //! \return Value of node, or empty string if node has no value.
-        Ch *value() const
-        {
+        Ch *value() const {
             return m_value ? m_value : nullstr();
         }
 
         //! Gets size of node value, not including terminator character.
         //! This function works correctly irrespective of whether value is or is not zero terminated.
         //! \return Size of node value, in characters.
-        std::size_t value_size() const
-        {
+        std::size_t value_size() const {
             return m_value ? m_value_size : 0;
         }
 
@@ -726,8 +688,7 @@ namespace rapidxml
         //! Use name(const Ch *) function to have the length automatically calculated (string must be zero terminated).
         //! \param name Name of node to set. Does not have to be zero terminated.
         //! \param size Size of name, in characters. This does not include zero terminator, if one is present.
-        void name(const Ch *name, std::size_t size)
-        {
+        void name(const Ch *name, std::size_t size) {
             m_name = const_cast<Ch *>(name);
             m_name_size = size;
         }
@@ -735,8 +696,7 @@ namespace rapidxml
         //! Sets name of node to a zero-terminated string.
         //! See also \ref ownership_of_strings and xml_node::name(const Ch *, std::size_t).
         //! \param name Name of node to set. Must be zero terminated.
-        void name(const Ch *name)
-        {
+        void name(const Ch *name) {
             this->name(name, internal::measure(name));
         }
 
@@ -756,8 +716,7 @@ namespace rapidxml
         //! If you want to manipulate data of elements using values, use parser flag rapidxml::parse_no_data_nodes to prevent creation of data nodes by the parser.
         //! \param value value of node to set. Does not have to be zero terminated.
         //! \param size Size of value, in characters. This does not include zero terminator, if one is present.
-        void value(const Ch *value, std::size_t size)
-        {
+        void value(const Ch *value, std::size_t size) {
             m_value = const_cast<Ch *>(value);
             m_value_size = size;
         }
@@ -765,8 +724,7 @@ namespace rapidxml
         //! Sets value of node to a zero-terminated string.
         //! See also \ref ownership_of_strings and xml_node::value(const Ch *, std::size_t).
         //! \param value Vame of node to set. Must be zero terminated.
-        void value(const Ch *value)
-        {
+        void value(const Ch *value) {
             this->value(value, internal::measure(value));
         }
 
@@ -775,16 +733,14 @@ namespace rapidxml
 
         //! Gets node parent.
         //! \return Pointer to parent node, or 0 if there is no parent.
-        xml_node<Ch> *parent() const
-        {
+        xml_node<Ch> *parent() const {
             return m_parent;
         }
 
     protected:
 
         // Return empty string
-        static Ch *nullstr()
-        {
+        static Ch *nullstr() {
             static Ch zero = Ch('\0');
             return &zero;
         }
@@ -803,8 +759,7 @@ namespace rapidxml
     //! Thus, this text must persist in memory for the lifetime of attribute.
     //! \param Ch Character type to use.
     template<class Ch = char>
-    class xml_attribute: public xml_base<Ch>
-    {
+    class xml_attribute : public xml_base<Ch> {
 
         friend class xml_node<Ch>;
 
@@ -815,8 +770,7 @@ namespace rapidxml
 
         //! Constructs an empty attribute with the specified type.
         //! Consider using memory_pool of appropriate xml_document if allocating attributes manually.
-        xml_attribute()
-        {
+        xml_attribute() {
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -824,15 +778,12 @@ namespace rapidxml
 
         //! Gets document of which attribute is a child.
         //! \return Pointer to document that contains this attribute, or 0 if there is no parent document.
-        xml_document<Ch> *document() const
-        {
-            if (xml_node<Ch> *node = this->parent())
-            {
+        xml_document<Ch> *document() const {
+            if (xml_node<Ch> *node = this->parent()) {
                 while (node->parent())
                     node = node->parent();
                 return node->type() == node_document ? static_cast<xml_document<Ch> *>(node) : 0;
-            }
-            else
+            } else
                 return 0;
         }
 
@@ -841,18 +792,16 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found attribute, or 0 if not found.
-        xml_attribute<Ch> *previous_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
-            if (name)
-            {
+        xml_attribute<Ch> *
+        previous_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_attribute<Ch> *attribute = m_prev_attribute; attribute; attribute = attribute->m_prev_attribute)
                     if (internal::compare(attribute->name(), attribute->name_size(), name, name_size, case_sensitive))
                         return attribute;
                 return 0;
-            }
-            else
+            } else
                 return this->m_parent ? m_prev_attribute : 0;
         }
 
@@ -861,18 +810,16 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found attribute, or 0 if not found.
-        xml_attribute<Ch> *next_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
-            if (name)
-            {
+        xml_attribute<Ch> *
+        next_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_attribute<Ch> *attribute = m_next_attribute; attribute; attribute = attribute->m_next_attribute)
                     if (internal::compare(attribute->name(), attribute->name_size(), name, name_size, case_sensitive))
                         return attribute;
                 return 0;
-            }
-            else
+            } else
                 return this->m_parent ? m_next_attribute : 0;
         }
 
@@ -895,8 +842,7 @@ namespace rapidxml
     //! Thus, this text must persist in the memory for the lifetime of node.
     //! \param Ch Character type to use.
     template<class Ch = char>
-    class xml_node: public xml_base<Ch>
-    {
+    class xml_node : public xml_base<Ch> {
 
     public:
 
@@ -907,10 +853,7 @@ namespace rapidxml
         //! Consider using memory_pool of appropriate document to allocate nodes manually.
         //! \param type Type of node to construct.
         xml_node(node_type type)
-            : m_type(type)
-            , m_first_node(nullptr)
-            , m_first_attribute(nullptr)
-        {
+                : m_type(type), m_first_node(nullptr), m_first_attribute(nullptr) {
         }
 
         ///////////////////////////////////////////////////////////////////////////
@@ -918,8 +861,7 @@ namespace rapidxml
 
         //! Gets type of node.
         //! \return Type of node.
-        node_type type() const
-        {
+        node_type type() const {
             return m_type;
         }
 
@@ -928,8 +870,7 @@ namespace rapidxml
 
         //! Gets document of which node is a child.
         //! \return Pointer to document that contains this node, or 0 if there is no parent document.
-        xml_document<Ch> *document() const
-        {
+        xml_document<Ch> *document() const {
             xml_node<Ch> *node = const_cast<xml_node<Ch> *>(this);
             while (node->parent())
                 node = node->parent();
@@ -941,18 +882,16 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found child, or 0 if not found.
-        xml_node<Ch> *first_node(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
-            if (name)
-            {
+        xml_node<Ch> *
+        first_node(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_node<Ch> *child = m_first_node; child; child = child->next_sibling())
                     if (internal::compare(child->name(), child->name_size(), name, name_size, case_sensitive))
                         return child;
                 return nullptr;
-            }
-            else
+            } else
                 return m_first_node;
         }
 
@@ -963,19 +902,16 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found child, or 0 if not found.
-        xml_node<Ch> *last_node(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
+        xml_node<Ch> *last_node(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
             assert(m_first_node);  // Cannot query for last child if node has no children
-            if (name)
-            {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_node<Ch> *child = m_last_node; child; child = child->previous_sibling())
                     if (internal::compare(child->name(), child->name_size(), name, name_size, case_sensitive))
                         return child;
                 return 0;
-            }
-            else
+            } else
                 return m_last_node;
         }
 
@@ -986,19 +922,17 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found sibling, or 0 if not found.
-        xml_node<Ch> *previous_sibling(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
+        xml_node<Ch> *
+        previous_sibling(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
             assert(this->m_parent);     // Cannot query for siblings if node has no parent
-            if (name)
-            {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_node<Ch> *sibling = m_prev_sibling; sibling; sibling = sibling->m_prev_sibling)
                     if (internal::compare(sibling->name(), sibling->name_size(), name, name_size, case_sensitive))
                         return sibling;
                 return 0;
-            }
-            else
+            } else
                 return m_prev_sibling;
         }
 
@@ -1009,19 +943,17 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found sibling, or 0 if not found.
-        xml_node<Ch> *next_sibling(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
+        xml_node<Ch> *
+        next_sibling(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
             assert(this->m_parent);     // Cannot query for siblings if node has no parent
-            if (name)
-            {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_node<Ch> *sibling = m_next_sibling; sibling; sibling = sibling->m_next_sibling)
                     if (internal::compare(sibling->name(), sibling->name_size(), name, name_size, case_sensitive))
                         return sibling;
                 return nullptr;
-            }
-            else
+            } else
                 return m_next_sibling;
         }
 
@@ -1030,18 +962,16 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found attribute, or 0 if not found.
-        xml_attribute<Ch> *first_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
-            if (name)
-            {
+        xml_attribute<Ch> *
+        first_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_attribute<Ch> *attribute = m_first_attribute; attribute; attribute = attribute->m_next_attribute)
                     if (internal::compare(attribute->name(), attribute->name_size(), name, name_size, case_sensitive))
                         return attribute;
                 return nullptr;
-            }
-            else
+            } else
                 return m_first_attribute;
         }
 
@@ -1050,18 +980,16 @@ namespace rapidxml
         //! \param name_size Size of name, in characters, or 0 to have size calculated automatically from string
         //! \param case_sensitive Should name comparison be case-sensitive; non case-sensitive comparison works properly only for ASCII characters
         //! \return Pointer to found attribute, or 0 if not found.
-        xml_attribute<Ch> *last_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const
-        {
-            if (name)
-            {
+        xml_attribute<Ch> *
+        last_attribute(const Ch *name = nullptr, std::size_t name_size = 0, bool case_sensitive = true) const {
+            if (name) {
                 if (name_size == 0)
                     name_size = internal::measure(name);
                 for (xml_attribute<Ch> *attribute = m_last_attribute; attribute; attribute = attribute->m_prev_attribute)
                     if (internal::compare(attribute->name(), attribute->name_size(), name, name_size, case_sensitive))
                         return attribute;
                 return 0;
-            }
-            else
+            } else
                 return m_first_attribute ? m_last_attribute : 0;
         }
 
@@ -1070,8 +998,7 @@ namespace rapidxml
 
         //! Sets type of node.
         //! \param type Type of node to set.
-        void type(node_type type)
-        {
+        void type(node_type type) {
             m_type = type;
         }
 
@@ -1081,16 +1008,12 @@ namespace rapidxml
         //! Prepends a new child node.
         //! The prepended child becomes the first child, and all existing children are moved one position back.
         //! \param child Node to prepend.
-        void prepend_node(xml_node<Ch> *child)
-        {
+        void prepend_node(xml_node<Ch> *child) {
             assert(child && !child->parent() && child->type() != node_document);
-            if (first_node())
-            {
+            if (first_node()) {
                 child->m_next_sibling = m_first_node;
                 m_first_node->m_prev_sibling = child;
-            }
-            else
-            {
+            } else {
                 child->m_next_sibling = nullptr;
                 m_last_node = child;
             }
@@ -1102,16 +1025,12 @@ namespace rapidxml
         //! Appends a new child node.
         //! The appended child becomes the last child.
         //! \param child Node to append.
-        void append_node(xml_node<Ch> *child)
-        {
+        void append_node(xml_node<Ch> *child) {
             assert(child && !child->parent() && child->type() != node_document);
-            if (first_node())
-            {
+            if (first_node()) {
                 child->m_prev_sibling = m_last_node;
                 m_last_node->m_next_sibling = child;
-            }
-            else
-            {
+            } else {
                 child->m_prev_sibling = nullptr;
                 m_first_node = child;
             }
@@ -1124,16 +1043,14 @@ namespace rapidxml
         //! All children after and including the specified node are moved one position back.
         //! \param where Place where to insert the child, or 0 to insert at the back.
         //! \param child Node to insert.
-        void insert_node(xml_node<Ch> *where, xml_node<Ch> *child)
-        {
+        void insert_node(xml_node<Ch> *where, xml_node<Ch> *child) {
             assert(!where || where->parent() == this);
             assert(child && !child->parent() && child->type() != node_document);
             if (where == m_first_node)
                 prepend_node(child);
             else if (where == 0)
                 append_node(child);
-            else
-            {
+            else {
                 child->m_prev_sibling = where->m_prev_sibling;
                 child->m_next_sibling = where;
                 where->m_prev_sibling->m_next_sibling = child;
@@ -1145,8 +1062,7 @@ namespace rapidxml
         //! Removes first child node.
         //! If node has no children, behaviour is undefined.
         //! Use first_node() to test if node has children.
-        void remove_first_node()
-        {
+        void remove_first_node() {
             assert(first_node());
             xml_node<Ch> *child = m_first_node;
             m_first_node = child->m_next_sibling;
@@ -1160,32 +1076,27 @@ namespace rapidxml
         //! Removes last child of the node.
         //! If node has no children, behaviour is undefined.
         //! Use first_node() to test if node has children.
-        void remove_last_node()
-        {
+        void remove_last_node() {
             assert(first_node());
             xml_node<Ch> *child = m_last_node;
-            if (child->m_prev_sibling)
-            {
+            if (child->m_prev_sibling) {
                 m_last_node = child->m_prev_sibling;
                 child->m_prev_sibling->m_next_sibling = nullptr;
-            }
-            else
+            } else
                 m_first_node = nullptr;
             child->m_parent = nullptr;
         }
 
         //! Removes specified child from the node
         // \param where Pointer to child to be removed.
-        void remove_node(xml_node<Ch> *where)
-        {
+        void remove_node(xml_node<Ch> *where) {
             assert(where && where->parent() == this);
             assert(first_node());
             if (where == m_first_node)
                 remove_first_node();
             else if (where == m_last_node)
                 remove_last_node();
-            else
-            {
+            else {
                 where->m_prev_sibling->m_next_sibling = where->m_next_sibling;
                 where->m_next_sibling->m_prev_sibling = where->m_prev_sibling;
                 where->m_parent = nullptr;
@@ -1193,8 +1104,7 @@ namespace rapidxml
         }
 
         //! Removes all child nodes (but not attributes).
-        void remove_all_nodes()
-        {
+        void remove_all_nodes() {
             for (xml_node<Ch> *node = first_node(); node; node = node->m_next_sibling)
                 node->m_parent = nullptr;
             m_first_node = nullptr;
@@ -1202,16 +1112,12 @@ namespace rapidxml
 
         //! Prepends a new attribute to the node.
         //! \param attribute Attribute to prepend.
-        void prepend_attribute(xml_attribute<Ch> *attribute)
-        {
+        void prepend_attribute(xml_attribute<Ch> *attribute) {
             assert(attribute && !attribute->parent());
-            if (first_attribute())
-            {
+            if (first_attribute()) {
                 attribute->m_next_attribute = m_first_attribute;
                 m_first_attribute->m_prev_attribute = attribute;
-            }
-            else
-            {
+            } else {
                 attribute->m_next_attribute = nullptr;
                 m_last_attribute = attribute;
             }
@@ -1222,16 +1128,12 @@ namespace rapidxml
 
         //! Appends a new attribute to the node.
         //! \param attribute Attribute to append.
-        void append_attribute(xml_attribute<Ch> *attribute)
-        {
+        void append_attribute(xml_attribute<Ch> *attribute) {
             assert(attribute && !attribute->parent());
-            if (first_attribute())
-            {
+            if (first_attribute()) {
                 attribute->m_prev_attribute = m_last_attribute;
                 m_last_attribute->m_next_attribute = attribute;
-            }
-            else
-            {
+            } else {
                 attribute->m_prev_attribute = nullptr;
                 m_first_attribute = attribute;
             }
@@ -1244,16 +1146,14 @@ namespace rapidxml
         //! All attributes after and including the specified attribute are moved one position back.
         //! \param where Place where to insert the attribute, or 0 to insert at the back.
         //! \param attribute Attribute to insert.
-        void insert_attribute(xml_attribute<Ch> *where, xml_attribute<Ch> *attribute)
-        {
+        void insert_attribute(xml_attribute<Ch> *where, xml_attribute<Ch> *attribute) {
             assert(!where || where->parent() == this);
             assert(attribute && !attribute->parent());
             if (where == m_first_attribute)
                 prepend_attribute(attribute);
             else if (where == 0)
                 append_attribute(attribute);
-            else
-            {
+            else {
                 attribute->m_prev_attribute = where->m_prev_attribute;
                 attribute->m_next_attribute = where;
                 where->m_prev_attribute->m_next_attribute = attribute;
@@ -1265,15 +1165,12 @@ namespace rapidxml
         //! Removes first attribute of the node.
         //! If node has no attributes, behaviour is undefined.
         //! Use first_attribute() to test if node has attributes.
-        void remove_first_attribute()
-        {
+        void remove_first_attribute() {
             assert(first_attribute());
             xml_attribute<Ch> *attribute = m_first_attribute;
-            if (attribute->m_next_attribute)
-            {
+            if (attribute->m_next_attribute) {
                 attribute->m_next_attribute->m_prev_attribute = nullptr;
-            }
-            else
+            } else
                 m_last_attribute = nullptr;
             attribute->m_parent = nullptr;
             m_first_attribute = attribute->m_next_attribute;
@@ -1282,31 +1179,26 @@ namespace rapidxml
         //! Removes last attribute of the node.
         //! If node has no attributes, behaviour is undefined.
         //! Use first_attribute() to test if node has attributes.
-        void remove_last_attribute()
-        {
+        void remove_last_attribute() {
             assert(first_attribute());
             xml_attribute<Ch> *attribute = m_last_attribute;
-            if (attribute->m_prev_attribute)
-            {
+            if (attribute->m_prev_attribute) {
                 attribute->m_prev_attribute->m_next_attribute = nullptr;
                 m_last_attribute = attribute->m_prev_attribute;
-            }
-            else
+            } else
                 m_first_attribute = nullptr;
             attribute->m_parent = nullptr;
         }
 
         //! Removes specified attribute from node.
         //! \param where Pointer to attribute to be removed.
-        void remove_attribute(xml_attribute<Ch> *where)
-        {
+        void remove_attribute(xml_attribute<Ch> *where) {
             assert(first_attribute() && where->parent() == this);
             if (where == m_first_attribute)
                 remove_first_attribute();
             else if (where == m_last_attribute)
                 remove_last_attribute();
-            else
-            {
+            else {
                 where->m_prev_attribute->m_next_attribute = where->m_next_attribute;
                 where->m_next_attribute->m_prev_attribute = where->m_prev_attribute;
                 where->m_parent = nullptr;
@@ -1314,8 +1206,7 @@ namespace rapidxml
         }
 
         //! Removes all attributes of node.
-        void remove_all_attributes()
-        {
+        void remove_all_attributes() {
             for (xml_attribute<Ch> *attribute = first_attribute(); attribute; attribute = attribute->m_next_attribute)
                 attribute->m_parent = nullptr;
             m_first_attribute = nullptr;
@@ -1328,7 +1219,8 @@ namespace rapidxml
 
         // No copying
         xml_node(const xml_node &);
-        void operator =(const xml_node &);
+
+        void operator=(const xml_node &);
 
         ///////////////////////////////////////////////////////////////////////////
         // Data members
@@ -1363,15 +1255,13 @@ namespace rapidxml
     //! To access root node of the document, use the document itself, as if it was an xml_node.
     //! \param Ch Character type to use.
     template<class Ch = char>
-    class xml_document: public xml_node<Ch>, public memory_pool<Ch>
-    {
+    class xml_document : public xml_node<Ch>, public memory_pool<Ch> {
 
     public:
 
         //! Constructs empty XML document
         xml_document()
-            : xml_node<Ch>(node_document)
-        {
+                : xml_node<Ch>(node_document) {
         }
 
         //! Parses zero-terminated XML string according to given flags.
@@ -1386,8 +1276,7 @@ namespace rapidxml
         //! Each new call to parse removes previous nodes and attributes (if any), but does not clear memory pool.
         //! \param text XML data to parse; pointer is non-const to denote fact that this data may be modified by the parser.
         template<int Flags>
-        void parse(Ch *text)
-        {
+        void parse(Ch *text) {
             assert(text);
 
             // Remove current contents
@@ -1398,21 +1287,18 @@ namespace rapidxml
             parse_bom<Flags>(text);
 
             // Parse children
-            while (1)
-            {
+            while (1) {
                 // Skip whitespace before node
                 skip<whitespace_pred, Flags>(text);
                 if (*text == 0)
                     break;
 
                 // Parse and append new child
-                if (*text == Ch('<'))
-                {
+                if (*text == Ch('<')) {
                     ++text;     // Skip '<'
                     if (xml_node<Ch> *node = parse_node<Flags>(text))
                         this->append_node(node);
-                }
-                else
+                } else
                     RAPIDXML_PARSE_ERROR("expected <", text);
             }
 
@@ -1420,8 +1306,7 @@ namespace rapidxml
 
         //! Clears the document by deleting all nodes and clearing the memory pool.
         //! All nodes owned by document pool are destroyed.
-        void clear()
-        {
+        void clear() {
             this->remove_all_nodes();
             this->remove_all_attributes();
             memory_pool<Ch>::clear();
@@ -1433,65 +1318,51 @@ namespace rapidxml
         // Internal character utility functions
 
         // Detect whitespace character
-        struct whitespace_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct whitespace_pred {
+            static unsigned char test(Ch ch) {
                 return internal::lookup_tables<0>::lookup_whitespace[static_cast<unsigned char>(ch)];
             }
         };
 
         // Detect node name character
-        struct node_name_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct node_name_pred {
+            static unsigned char test(Ch ch) {
                 return internal::lookup_tables<0>::lookup_node_name[static_cast<unsigned char>(ch)];
             }
         };
 
         // Detect attribute name character
-        struct attribute_name_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct attribute_name_pred {
+            static unsigned char test(Ch ch) {
                 return internal::lookup_tables<0>::lookup_attribute_name[static_cast<unsigned char>(ch)];
             }
         };
 
         // Detect text character (PCDATA)
-        struct text_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct text_pred {
+            static unsigned char test(Ch ch) {
                 return internal::lookup_tables<0>::lookup_text[static_cast<unsigned char>(ch)];
             }
         };
 
         // Detect text character (PCDATA) that does not require processing
-        struct text_pure_no_ws_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct text_pure_no_ws_pred {
+            static unsigned char test(Ch ch) {
                 return internal::lookup_tables<0>::lookup_text_pure_no_ws[static_cast<unsigned char>(ch)];
             }
         };
 
         // Detect text character (PCDATA) that does not require processing
-        struct text_pure_with_ws_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct text_pure_with_ws_pred {
+            static unsigned char test(Ch ch) {
                 return internal::lookup_tables<0>::lookup_text_pure_with_ws[static_cast<unsigned char>(ch)];
             }
         };
 
         // Detect attribute value character
         template<Ch Quote>
-        struct attribute_value_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct attribute_value_pred {
+            static unsigned char test(Ch ch) {
                 if (Quote == Ch('\''))
                     return internal::lookup_tables<0>::lookup_attribute_data_1[static_cast<unsigned char>(ch)];
                 if (Quote == Ch('\"'))
@@ -1502,10 +1373,8 @@ namespace rapidxml
 
         // Detect attribute value character
         template<Ch Quote>
-        struct attribute_value_pure_pred
-        {
-            static unsigned char test(Ch ch)
-            {
+        struct attribute_value_pure_pred {
+            static unsigned char test(Ch ch) {
                 if (Quote == Ch('\''))
                     return internal::lookup_tables<0>::lookup_attribute_data_1_pure[static_cast<unsigned char>(ch)];
                 if (Quote == Ch('\"'))
@@ -1516,45 +1385,43 @@ namespace rapidxml
 
         // Insert coded character, using UTF8 or 8-bit ASCII
         template<int Flags>
-        static void insert_coded_character(Ch *&text, unsigned long code)
-        {
-            if (Flags & parse_no_utf8)
-            {
+        static void insert_coded_character(Ch *&text, unsigned long code) {
+            if (Flags & parse_no_utf8) {
                 // Insert 8-bit ASCII character
                 // Todo: possibly verify that code is less than 256 and use replacement char otherwise?
                 text[0] = static_cast<unsigned char>(code);
                 text += 1;
-            }
-            else
-            {
+            } else {
                 // Insert UTF8 sequence
                 if (code < 0x80)    // 1 byte sequence
                 {
                     text[0] = static_cast<unsigned char>(code);
                     text += 1;
-                }
-                else if (code < 0x800)  // 2 byte sequence
+                } else if (code < 0x800)  // 2 byte sequence
                 {
-                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF); code >>= 6;
+                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF);
+                    code >>= 6;
                     text[0] = static_cast<unsigned char>(code | 0xC0);
                     text += 2;
-                }
-                else if (code < 0x10000)    // 3 byte sequence
+                } else if (code < 0x10000)    // 3 byte sequence
                 {
-                    text[2] = static_cast<unsigned char>((code | 0x80) & 0xBF); code >>= 6;
-                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF); code >>= 6;
+                    text[2] = static_cast<unsigned char>((code | 0x80) & 0xBF);
+                    code >>= 6;
+                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF);
+                    code >>= 6;
                     text[0] = static_cast<unsigned char>(code | 0xE0);
                     text += 3;
-                }
-                else if (code < 0x110000)   // 4 byte sequence
+                } else if (code < 0x110000)   // 4 byte sequence
                 {
-                    text[3] = static_cast<unsigned char>((code | 0x80) & 0xBF); code >>= 6;
-                    text[2] = static_cast<unsigned char>((code | 0x80) & 0xBF); code >>= 6;
-                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF); code >>= 6;
+                    text[3] = static_cast<unsigned char>((code | 0x80) & 0xBF);
+                    code >>= 6;
+                    text[2] = static_cast<unsigned char>((code | 0x80) & 0xBF);
+                    code >>= 6;
+                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF);
+                    code >>= 6;
                     text[0] = static_cast<unsigned char>(code | 0xF0);
                     text += 4;
-                }
-                else    // Invalid, only codes up to 0x10FFFF are allowed in Unicode
+                } else    // Invalid, only codes up to 0x10FFFF are allowed in Unicode
                 {
                     RAPIDXML_PARSE_ERROR("invalid numeric character entity", text);
                 }
@@ -1563,8 +1430,7 @@ namespace rapidxml
 
         // Skip characters until predicate evaluates to true
         template<class StopPred, int Flags>
-        static void skip(Ch *&text)
-        {
+        static void skip(Ch *&text) {
             Ch *tmp = text;
             while (StopPred::test(*tmp))
                 ++tmp;
@@ -1575,13 +1441,11 @@ namespace rapidxml
         // - replacing XML character entity references with proper characters (&apos; &amp; &quot; &lt; &gt; &#...;)
         // - condensing whitespace sequences to single space character
         template<class StopPred, class StopPredPure, int Flags>
-        static Ch *skip_and_expand_character_refs(Ch *&text)
-        {
+        static Ch *skip_and_expand_character_refs(Ch *&text) {
             // If entity translation, whitespace condense and whitespace trimming is disabled, use plain skip
             if (Flags & parse_no_entity_translation &&
                 !(Flags & parse_normalize_whitespace) &&
-                !(Flags & parse_trim_whitespace))
-            {
+                !(Flags & parse_trim_whitespace)) {
                 skip<StopPred, Flags>(text);
                 return text;
             }
@@ -1592,120 +1456,105 @@ namespace rapidxml
             // Use translation skip
             Ch *src = text;
             Ch *dest = src;
-            while (StopPred::test(*src))
-            {
+            while (StopPred::test(*src)) {
                 // If entity translation is enabled
-                if (!(Flags & parse_no_entity_translation))
-                {
+                if (!(Flags & parse_no_entity_translation)) {
                     // Test if replacement is needed
-                    if (src[0] == Ch('&'))
-                    {
-                        switch (src[1])
-                        {
+                    if (src[0] == Ch('&')) {
+                        switch (src[1]) {
 
-                        // &amp; &apos;
-                        case Ch('a'):
-                            if (src[2] == Ch('m') && src[3] == Ch('p') && src[4] == Ch(';'))
-                            {
-                                *dest = Ch('&');
-                                ++dest;
-                                src += 5;
-                                continue;
-                            }
-                            if (src[2] == Ch('p') && src[3] == Ch('o') && src[4] == Ch('s') && src[5] == Ch(';'))
-                            {
-                                *dest = Ch('\'');
-                                ++dest;
-                                src += 6;
-                                continue;
-                            }
-                            break;
-
-                        // &quot;
-                        case Ch('q'):
-                            if (src[2] == Ch('u') && src[3] == Ch('o') && src[4] == Ch('t') && src[5] == Ch(';'))
-                            {
-                                *dest = Ch('"');
-                                ++dest;
-                                src += 6;
-                                continue;
-                            }
-                            break;
-
-                        // &gt;
-                        case Ch('g'):
-                            if (src[2] == Ch('t') && src[3] == Ch(';'))
-                            {
-                                *dest = Ch('>');
-                                ++dest;
-                                src += 4;
-                                continue;
-                            }
-                            break;
-
-                        // &lt;
-                        case Ch('l'):
-                            if (src[2] == Ch('t') && src[3] == Ch(';'))
-                            {
-                                *dest = Ch('<');
-                                ++dest;
-                                src += 4;
-                                continue;
-                            }
-                            break;
-
-                        // &#...; - assumes ASCII
-                        case Ch('#'):
-                            if (src[2] == Ch('x'))
-                            {
-                                unsigned long code = 0;
-                                src += 3;   // Skip &#x
-                                while (1)
-                                {
-                                    unsigned char digit = internal::lookup_tables<0>::lookup_digits[static_cast<unsigned char>(*src)];
-                                    if (digit == 0xFF)
-                                        break;
-                                    code = code * 16 + digit;
-                                    ++src;
+                            // &amp; &apos;
+                            case Ch('a'):
+                                if (src[2] == Ch('m') && src[3] == Ch('p') && src[4] == Ch(';')) {
+                                    *dest = Ch('&');
+                                    ++dest;
+                                    src += 5;
+                                    continue;
                                 }
-                                insert_coded_character<Flags>(dest, code);    // Put character in output
-                            }
-                            else
-                            {
-                                unsigned long code = 0;
-                                src += 2;   // Skip &#
-                                while (1)
-                                {
-                                    unsigned char digit = internal::lookup_tables<0>::lookup_digits[static_cast<unsigned char>(*src)];
-                                    if (digit == 0xFF)
-                                        break;
-                                    code = code * 10 + digit;
-                                    ++src;
+                                if (src[2] == Ch('p') && src[3] == Ch('o') && src[4] == Ch('s') && src[5] == Ch(';')) {
+                                    *dest = Ch('\'');
+                                    ++dest;
+                                    src += 6;
+                                    continue;
                                 }
-                                insert_coded_character<Flags>(dest, code);    // Put character in output
-                            }
-                            if (*src == Ch(';'))
-                                ++src;
-                            else
-                                RAPIDXML_PARSE_ERROR("expected ;", src);
-                            continue;
+                                break;
 
-                        // Something else
-                        default:
-                            // Ignore, just copy '&' verbatim
-                            break;
+                                // &quot;
+                            case Ch('q'):
+                                if (src[2] == Ch('u') && src[3] == Ch('o') && src[4] == Ch('t') && src[5] == Ch(';')) {
+                                    *dest = Ch('"');
+                                    ++dest;
+                                    src += 6;
+                                    continue;
+                                }
+                                break;
+
+                                // &gt;
+                            case Ch('g'):
+                                if (src[2] == Ch('t') && src[3] == Ch(';')) {
+                                    *dest = Ch('>');
+                                    ++dest;
+                                    src += 4;
+                                    continue;
+                                }
+                                break;
+
+                                // &lt;
+                            case Ch('l'):
+                                if (src[2] == Ch('t') && src[3] == Ch(';')) {
+                                    *dest = Ch('<');
+                                    ++dest;
+                                    src += 4;
+                                    continue;
+                                }
+                                break;
+
+                                // &#...; - assumes ASCII
+                            case Ch('#'):
+                                if (src[2] == Ch('x')) {
+                                    unsigned long code = 0;
+                                    src += 3;   // Skip &#x
+                                    while (1) {
+                                        unsigned char digit = internal::lookup_tables<0>::lookup_digits[static_cast<unsigned char>(*src)];
+                                        if (digit == 0xFF)
+                                            break;
+                                        code = code * 16 + digit;
+                                        ++src;
+                                    }
+                                    insert_coded_character<Flags>(dest, code);    // Put character in output
+                                } else {
+                                    unsigned long code = 0;
+                                    src += 2;   // Skip &#
+                                    while (1) {
+                                        unsigned char digit = internal::lookup_tables<0>::lookup_digits[static_cast<unsigned char>(*src)];
+                                        if (digit == 0xFF)
+                                            break;
+                                        code = code * 10 + digit;
+                                        ++src;
+                                    }
+                                    insert_coded_character<Flags>(dest, code);    // Put character in output
+                                }
+                                if (*src == Ch(';'))
+                                    ++src;
+                                else
+                                    RAPIDXML_PARSE_ERROR("expected ;", src);
+                                continue;
+
+                                // Something else
+                            default:
+                                // Ignore, just copy '&' verbatim
+                                break;
 
                         }
                     }
                 }
 
                 // If whitespace condensing is enabled
-                if (Flags & parse_normalize_whitespace)
-                {
+                if (Flags & parse_normalize_whitespace) {
                     // Test if condensing is needed
-                    if (whitespace_pred::test(*src))
-                    {
-                        *dest = Ch(' '); ++dest;    // Put single space in dest
+                    if (whitespace_pred::test(*src)) {
+                        *dest = Ch(' ');
+                        ++dest;    // Put single space in dest
                         ++src;                      // Skip first whitespace char
                         // Skip remaining whitespace chars
                         while (whitespace_pred::test(*src))
@@ -1730,27 +1579,22 @@ namespace rapidxml
 
         // Parse BOM, if any
         template<int Flags>
-        void parse_bom(Ch *&text)
-        {
+        void parse_bom(Ch *&text) {
             // UTF-8?
             if (static_cast<unsigned char>(text[0]) == 0xEF &&
                 static_cast<unsigned char>(text[1]) == 0xBB &&
-                static_cast<unsigned char>(text[2]) == 0xBF)
-            {
+                static_cast<unsigned char>(text[2]) == 0xBF) {
                 text += 3;      // Skup utf-8 bom
             }
         }
 
         // Parse XML declaration (<?xml...)
         template<int Flags>
-        xml_node<Ch> *parse_xml_declaration(Ch *&text)
-        {
+        xml_node<Ch> *parse_xml_declaration(Ch *&text) {
             // If parsing of declaration is disabled
-            if (!(Flags & parse_declaration_node))
-            {
+            if (!(Flags & parse_declaration_node)) {
                 // Skip until end of declaration
-                while (text[0] != Ch('?') || text[1] != Ch('>'))
-                {
+                while (text[0] != Ch('?') || text[1] != Ch('>')) {
                     if (!text[0])
                         RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                     ++text;
@@ -1778,14 +1622,11 @@ namespace rapidxml
 
         // Parse XML comment (<!--...)
         template<int Flags>
-        xml_node<Ch> *parse_comment(Ch *&text)
-        {
+        xml_node<Ch> *parse_comment(Ch *&text) {
             // If parsing of comments is disabled
-            if (!(Flags & parse_comment_nodes))
-            {
+            if (!(Flags & parse_comment_nodes)) {
                 // Skip until end of comment
-                while (text[0] != Ch('-') || text[1] != Ch('-') || text[2] != Ch('>'))
-                {
+                while (text[0] != Ch('-') || text[1] != Ch('-') || text[2] != Ch('>')) {
                     if (!text[0])
                         RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                     ++text;
@@ -1798,8 +1639,7 @@ namespace rapidxml
             Ch *value = text;
 
             // Skip until end of comment
-            while (text[0] != Ch('-') || text[1] != Ch('-') || text[2] != Ch('>'))
-            {
+            while (text[0] != Ch('-') || text[1] != Ch('-') || text[2] != Ch('>')) {
                 if (!text[0])
                     RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                 ++text;
@@ -1819,51 +1659,49 @@ namespace rapidxml
 
         // Parse DOCTYPE
         template<int Flags>
-        xml_node<Ch> *parse_doctype(Ch *&text)
-        {
+        xml_node<Ch> *parse_doctype(Ch *&text) {
             // Remember value start
             Ch *value = text;
 
             // Skip to >
-            while (*text != Ch('>'))
-            {
+            while (*text != Ch('>')) {
                 // Determine character type
-                switch (*text)
-                {
+                switch (*text) {
 
-                // If '[' encountered, scan for matching ending ']' using naive algorithm with depth
-                // This works for all W3C test files except for 2 most wicked
-                case Ch('['):
-                {
-                    ++text;     // Skip '['
-                    int depth = 1;
-                    while (depth > 0)
-                    {
-                        switch (*text)
-                        {
-                            case Ch('['): ++depth; break;
-                            case Ch(']'): --depth; break;
-                            case 0: RAPIDXML_PARSE_ERROR("unexpected end of data", text);
+                    // If '[' encountered, scan for matching ending ']' using naive algorithm with depth
+                    // This works for all W3C test files except for 2 most wicked
+                    case Ch('['): {
+                        ++text;     // Skip '['
+                        int depth = 1;
+                        while (depth > 0) {
+                            switch (*text) {
+                                case Ch('['):
+                                    ++depth;
+                                    break;
+                                case Ch(']'):
+                                    --depth;
+                                    break;
+                                case 0:
+                                    RAPIDXML_PARSE_ERROR("unexpected end of data", text);
+                            }
+                            ++text;
                         }
-                        ++text;
+                        break;
                     }
-                    break;
-                }
 
-                // Error on end of text
-                case Ch('\0'):
-                    RAPIDXML_PARSE_ERROR("unexpected end of data", text);
+                        // Error on end of text
+                    case Ch('\0'):
+                        RAPIDXML_PARSE_ERROR("unexpected end of data", text);
 
-                // Other character, skip it
-                default:
-                    ++text;
+                        // Other character, skip it
+                    default:
+                        ++text;
 
                 }
             }
 
             // If DOCTYPE nodes enabled
-            if (Flags & parse_doctype_node)
-            {
+            if (Flags & parse_doctype_node) {
                 // Create a new doctype node
                 xml_node<Ch> *doctype = this->allocate_node(node_doctype);
                 doctype->value(value, text - value);
@@ -1874,9 +1712,7 @@ namespace rapidxml
 
                 text += 1;      // skip '>'
                 return doctype;
-            }
-            else
-            {
+            } else {
                 text += 1;      // skip '>'
                 return nullptr;
             }
@@ -1885,11 +1721,9 @@ namespace rapidxml
 
         // Parse PI
         template<int Flags>
-        xml_node<Ch> *parse_pi(Ch *&text)
-        {
+        xml_node<Ch> *parse_pi(Ch *&text) {
             // If creation of PI nodes is enabled
-            if (Flags & parse_pi_nodes)
-            {
+            if (Flags & parse_pi_nodes) {
                 // Create pi node
                 xml_node<Ch> *pi = this->allocate_node(node_pi);
 
@@ -1907,8 +1741,7 @@ namespace rapidxml
                 Ch *value = text;
 
                 // Skip to '?>'
-                while (text[0] != Ch('?') || text[1] != Ch('>'))
-                {
+                while (text[0] != Ch('?') || text[1] != Ch('>')) {
                     if (*text == Ch('\0'))
                         RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                     ++text;
@@ -1918,20 +1751,16 @@ namespace rapidxml
                 pi->value(value, text - value);
 
                 // Place zero terminator after name and value
-                if (!(Flags & parse_no_string_terminators))
-                {
+                if (!(Flags & parse_no_string_terminators)) {
                     pi->name()[pi->name_size()] = Ch('\0');
                     pi->value()[pi->value_size()] = Ch('\0');
                 }
 
                 text += 2;                          // Skip '?>'
                 return pi;
-            }
-            else
-            {
+            } else {
                 // Skip to '?>'
-                while (text[0] != Ch('?') || text[1] != Ch('>'))
-                {
+                while (text[0] != Ch('?') || text[1] != Ch('>')) {
                     if (*text == Ch('\0'))
                         RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                     ++text;
@@ -1945,8 +1774,7 @@ namespace rapidxml
         // Return character that ends data.
         // This is necessary because this character might have been overwritten by a terminating 0
         template<int Flags>
-        Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start)
-        {
+        Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start) {
             // Backup to contents start if whitespace trimming is disabled
             if (!(Flags & parse_trim_whitespace))
                 text = contents_start;
@@ -1959,16 +1787,12 @@ namespace rapidxml
                 end = skip_and_expand_character_refs<text_pred, text_pure_no_ws_pred, Flags>(text);
 
             // Trim trailing whitespace if flag is set; leading was already trimmed by whitespace skip after >
-            if (Flags & parse_trim_whitespace)
-            {
-                if (Flags & parse_normalize_whitespace)
-                {
+            if (Flags & parse_trim_whitespace) {
+                if (Flags & parse_normalize_whitespace) {
                     // Whitespace is already condensed to single space characters by skipping function, so just trim 1 char off the end
                     if (*(end - 1) == Ch(' '))
                         --end;
-                }
-                else
-                {
+                } else {
                     // Backup until non-whitespace character is found
                     while (whitespace_pred::test(*(end - 1)))
                         --end;
@@ -1977,8 +1801,7 @@ namespace rapidxml
 
             // If characters are still left between end and value (this test is only necessary if normalization is enabled)
             // Create new data node
-            if (!(Flags & parse_no_data_nodes))
-            {
+            if (!(Flags & parse_no_data_nodes)) {
                 xml_node<Ch> *data = this->allocate_node(node_data);
                 data->value(value, end - value);
                 node->append_node(data);
@@ -1990,8 +1813,7 @@ namespace rapidxml
                     node->value(value, end - value);
 
             // Place zero terminator after value
-            if (!(Flags & parse_no_string_terminators))
-            {
+            if (!(Flags & parse_no_string_terminators)) {
                 Ch ch = *text;
                 *end = Ch('\0');
                 return ch;      // Return character that ends data; this is required because zero terminator overwritten it
@@ -2003,14 +1825,11 @@ namespace rapidxml
 
         // Parse CDATA
         template<int Flags>
-        xml_node<Ch> *parse_cdata(Ch *&text)
-        {
+        xml_node<Ch> *parse_cdata(Ch *&text) {
             // If CDATA is disabled
-            if (Flags & parse_no_data_nodes)
-            {
+            if (Flags & parse_no_data_nodes) {
                 // Skip until end of cdata
-                while (text[0] != Ch(']') || text[1] != Ch(']') || text[2] != Ch('>'))
-                {
+                while (text[0] != Ch(']') || text[1] != Ch(']') || text[2] != Ch('>')) {
                     if (!text[0])
                         RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                     ++text;
@@ -2021,8 +1840,7 @@ namespace rapidxml
 
             // Skip until end of cdata
             Ch *value = text;
-            while (text[0] != Ch(']') || text[1] != Ch(']') || text[2] != Ch('>'))
-            {
+            while (text[0] != Ch(']') || text[1] != Ch(']') || text[2] != Ch('>')) {
                 if (!text[0])
                     RAPIDXML_PARSE_ERROR("unexpected end of data", text);
                 ++text;
@@ -2042,8 +1860,7 @@ namespace rapidxml
 
         // Parse element node
         template<int Flags>
-        xml_node<Ch> *parse_element(Ch *&text)
-        {
+        xml_node<Ch> *parse_element(Ch *&text) {
             // Create element node
             xml_node<Ch> *element = this->allocate_node(node_element);
 
@@ -2061,19 +1878,15 @@ namespace rapidxml
             parse_node_attributes<Flags>(text, element);
 
             // Determine ending type
-            if (*text == Ch('>'))
-            {
+            if (*text == Ch('>')) {
                 ++text;
                 parse_node_contents<Flags>(text, element);
-            }
-            else if (*text == Ch('/'))
-            {
+            } else if (*text == Ch('/')) {
                 ++text;
                 if (*text != Ch('>'))
                     RAPIDXML_PARSE_ERROR("expected >", text);
                 ++text;
-            }
-            else
+            } else
                 RAPIDXML_PARSE_ERROR("expected >", text);
 
             // Place zero terminator after name
@@ -2086,155 +1899,137 @@ namespace rapidxml
 
         // Determine node type, and parse it
         template<int Flags>
-        xml_node<Ch> *parse_node(Ch *&text)
-        {
+        xml_node<Ch> *parse_node(Ch *&text) {
             // Parse proper node type
-            switch (text[0])
-            {
+            switch (text[0]) {
 
-            // <...
-            default:
-                // Parse and append element node
-                return parse_element<Flags>(text);
+                // <...
+                default:
+                    // Parse and append element node
+                    return parse_element<Flags>(text);
 
-            // <?...
-            case Ch('?'):
-                ++text;     // Skip ?
-                if ((text[0] == Ch('x') || text[0] == Ch('X')) &&
-                    (text[1] == Ch('m') || text[1] == Ch('M')) &&
-                    (text[2] == Ch('l') || text[2] == Ch('L')) &&
-                    whitespace_pred::test(text[3]))
-                {
-                    // '<?xml ' - xml declaration
-                    text += 4;      // Skip 'xml '
-                    return parse_xml_declaration<Flags>(text);
-                }
-                else
-                {
-                    // Parse PI
-                    return parse_pi<Flags>(text);
-                }
-
-            // <!...
-            case Ch('!'):
-
-                // Parse proper subset of <! node
-                switch (text[1])
-                {
-
-                // <!-
-                case Ch('-'):
-                    if (text[2] == Ch('-'))
-                    {
-                        // '<!--' - xml comment
-                        text += 3;     // Skip '!--'
-                        return parse_comment<Flags>(text);
-                    }
-                    break;
-
-                // <![
-                case Ch('['):
-                    if (text[2] == Ch('C') && text[3] == Ch('D') && text[4] == Ch('A') &&
-                        text[5] == Ch('T') && text[6] == Ch('A') && text[7] == Ch('['))
-                    {
-                        // '<![CDATA[' - cdata
-                        text += 8;     // Skip '![CDATA['
-                        return parse_cdata<Flags>(text);
-                    }
-                    break;
-
-                // <!D
-                case Ch('D'):
-                    if (text[2] == Ch('O') && text[3] == Ch('C') && text[4] == Ch('T') &&
-                        text[5] == Ch('Y') && text[6] == Ch('P') && text[7] == Ch('E') &&
-                        whitespace_pred::test(text[8]))
-                    {
-                        // '<!DOCTYPE ' - doctype
-                        text += 9;      // skip '!DOCTYPE '
-                        return parse_doctype<Flags>(text);
+                    // <?...
+                case Ch('?'):
+                    ++text;     // Skip ?
+                    if ((text[0] == Ch('x') || text[0] == Ch('X')) &&
+                        (text[1] == Ch('m') || text[1] == Ch('M')) &&
+                        (text[2] == Ch('l') || text[2] == Ch('L')) &&
+                        whitespace_pred::test(text[3])) {
+                        // '<?xml ' - xml declaration
+                        text += 4;      // Skip 'xml '
+                        return parse_xml_declaration<Flags>(text);
+                    } else {
+                        // Parse PI
+                        return parse_pi<Flags>(text);
                     }
 
-                }   // switch
+                    // <!...
+                case Ch('!'):
 
-                // Attempt to skip other, unrecognized node types starting with <!
-                ++text;     // Skip !
-                while (*text != Ch('>'))
-                {
-                    if (*text == 0)
-                        RAPIDXML_PARSE_ERROR("unexpected end of data", text);
-                    ++text;
-                }
-                ++text;     // Skip '>'
-                return nullptr;   // No node recognized
+                    // Parse proper subset of <! node
+                    switch (text[1]) {
+
+                        // <!-
+                        case Ch('-'):
+                            if (text[2] == Ch('-')) {
+                                // '<!--' - xml comment
+                                text += 3;     // Skip '!--'
+                                return parse_comment<Flags>(text);
+                            }
+                            break;
+
+                            // <![
+                        case Ch('['):
+                            if (text[2] == Ch('C') && text[3] == Ch('D') && text[4] == Ch('A') &&
+                                text[5] == Ch('T') && text[6] == Ch('A') && text[7] == Ch('[')) {
+                                // '<![CDATA[' - cdata
+                                text += 8;     // Skip '![CDATA['
+                                return parse_cdata<Flags>(text);
+                            }
+                            break;
+
+                            // <!D
+                        case Ch('D'):
+                            if (text[2] == Ch('O') && text[3] == Ch('C') && text[4] == Ch('T') &&
+                                text[5] == Ch('Y') && text[6] == Ch('P') && text[7] == Ch('E') &&
+                                whitespace_pred::test(text[8])) {
+                                // '<!DOCTYPE ' - doctype
+                                text += 9;      // skip '!DOCTYPE '
+                                return parse_doctype<Flags>(text);
+                            }
+
+                    }   // switch
+
+                    // Attempt to skip other, unrecognized node types starting with <!
+                    ++text;     // Skip !
+                    while (*text != Ch('>')) {
+                        if (*text == 0)
+                            RAPIDXML_PARSE_ERROR("unexpected end of data", text);
+                        ++text;
+                    }
+                    ++text;     // Skip '>'
+                    return nullptr;   // No node recognized
 
             }
         }
 
         // Parse contents of the node - children, data etc.
         template<int Flags>
-        void parse_node_contents(Ch *&text, xml_node<Ch> *node)
-        {
+        void parse_node_contents(Ch *&text, xml_node<Ch> *node) {
             // For all children and text
-            while (1)
-            {
+            while (1) {
                 // Skip whitespace between > and node contents
                 Ch *contents_start = text;      // Store start of node contents before whitespace is skipped
                 skip<whitespace_pred, Flags>(text);
                 Ch next_char = *text;
 
-            // After data nodes, instead of continuing the loop, control jumps here.
-            // This is because zero termination inside parse_and_append_data() function
-            // would wreak havoc with the above code.
-            // Also, skipping whitespace after data nodes is unnecessary.
-            after_data_node:
+                // After data nodes, instead of continuing the loop, control jumps here.
+                // This is because zero termination inside parse_and_append_data() function
+                // would wreak havoc with the above code.
+                // Also, skipping whitespace after data nodes is unnecessary.
+                after_data_node:
 
                 // Determine what comes next: node closing, child node, data node, or 0?
-                switch (next_char)
-                {
+                switch (next_char) {
 
-                // Node closing or child node
-                case Ch('<'):
-                    if (text[1] == Ch('/'))
-                    {
-                        // Node closing
-                        text += 2;      // Skip '</'
-                        if (Flags & parse_validate_closing_tags)
-                        {
-                            // Skip and validate closing tag name
-                            Ch *closing_name = text;
-                            skip<node_name_pred, Flags>(text);
-                            if (!internal::compare(node->name(), node->name_size(), closing_name, text - closing_name, true))
-                                RAPIDXML_PARSE_ERROR("invalid closing tag name", text);
+                    // Node closing or child node
+                    case Ch('<'):
+                        if (text[1] == Ch('/')) {
+                            // Node closing
+                            text += 2;      // Skip '</'
+                            if (Flags & parse_validate_closing_tags) {
+                                // Skip and validate closing tag name
+                                Ch *closing_name = text;
+                                skip<node_name_pred, Flags>(text);
+                                if (!internal::compare(node->name(), node->name_size(), closing_name,
+                                                       text - closing_name, true))
+                                    RAPIDXML_PARSE_ERROR("invalid closing tag name", text);
+                            } else {
+                                // No validation, just skip name
+                                skip<node_name_pred, Flags>(text);
+                            }
+                            // Skip remaining whitespace after node name
+                            skip<whitespace_pred, Flags>(text);
+                            if (*text != Ch('>'))
+                                RAPIDXML_PARSE_ERROR("expected >", text);
+                            ++text;     // Skip '>'
+                            return;     // Node closed, finished parsing contents
+                        } else {
+                            // Child node
+                            ++text;     // Skip '<'
+                            if (xml_node<Ch> *child = parse_node<Flags>(text))
+                                node->append_node(child);
                         }
-                        else
-                        {
-                            // No validation, just skip name
-                            skip<node_name_pred, Flags>(text);
-                        }
-                        // Skip remaining whitespace after node name
-                        skip<whitespace_pred, Flags>(text);
-                        if (*text != Ch('>'))
-                            RAPIDXML_PARSE_ERROR("expected >", text);
-                        ++text;     // Skip '>'
-                        return;     // Node closed, finished parsing contents
-                    }
-                    else
-                    {
-                        // Child node
-                        ++text;     // Skip '<'
-                        if (xml_node<Ch> *child = parse_node<Flags>(text))
-                            node->append_node(child);
-                    }
-                    break;
+                        break;
 
-                // End of data - error
-                case Ch('\0'):
-                    RAPIDXML_PARSE_ERROR("unexpected end of data", text);
+                        // End of data - error
+                    case Ch('\0'):
+                        RAPIDXML_PARSE_ERROR("unexpected end of data", text);
 
-                // Data node
-                default:
-                    next_char = parse_and_append_data<Flags>(node, text, contents_start);
-                    goto after_data_node;   // Bypass regular processing after data nodes
+                        // Data node
+                    default:
+                        next_char = parse_and_append_data<Flags>(node, text, contents_start);
+                        goto after_data_node;   // Bypass regular processing after data nodes
 
                 }
             }
@@ -2242,11 +2037,9 @@ namespace rapidxml
 
         // Parse XML attributes of the node
         template<int Flags>
-        void parse_node_attributes(Ch *&text, xml_node<Ch> *node)
-        {
+        void parse_node_attributes(Ch *&text, xml_node<Ch> *node) {
             // For all attributes
-            while (attribute_name_pred::test(*text))
-            {
+            while (attribute_name_pred::test(*text)) {
                 // Extract attribute name
                 Ch *name = text;
                 ++text;     // Skip first character of attribute name
@@ -2284,9 +2077,11 @@ namespace rapidxml
                 Ch *value = text, *end;
                 const int AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
                 if (quote == Ch('\''))
-                    end = skip_and_expand_character_refs<attribute_value_pred<Ch('\'')>, attribute_value_pure_pred<Ch('\'')>, AttFlags>(text);
+                    end = skip_and_expand_character_refs<attribute_value_pred<Ch('\'')>, attribute_value_pure_pred<Ch(
+                            '\'')>, AttFlags>(text);
                 else
-                    end = skip_and_expand_character_refs<attribute_value_pred<Ch('"')>, attribute_value_pure_pred<Ch('"')>, AttFlags>(text);
+                    end = skip_and_expand_character_refs<attribute_value_pred<Ch('"')>, attribute_value_pure_pred<Ch(
+                            '"')>, AttFlags>(text);
 
                 // Set attribute value
                 attribute->value(value, end - value);
@@ -2308,286 +2103,285 @@ namespace rapidxml
     };
 
     //! \cond internal
-    namespace internal
-    {
+    namespace internal {
 
         // Whitespace (space \n \r \t)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_whitespace[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1,  0,  0,  // 0
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 1
-             1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 2
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 3
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 4
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 5
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 6
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 7
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 8
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 9
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // A
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // B
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // C
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // D
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // E
-             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0,  // 0
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 1
+                        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 2
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 3
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 4
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 5
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 6
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 7
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 8
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // 9
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // A
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // B
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // C
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // D
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  // E
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0   // F
+                };
 
         // Node name (anything but space \n \r \t / > ? \0)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_node_name[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  0,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Text (i.e. PCDATA) (anything but < \0)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_text[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Text (i.e. PCDATA) that does not require processing when ws normalization is disabled
         // (anything but < \0 &)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_text_pure_no_ws[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Text (i.e. PCDATA) that does not require processing when ws normalizationis is enabled
         // (anything but < \0 & space \n \r \t)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_text_pure_with_ws[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  0,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             0,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Attribute name (anything but space \n \r \t / < > = ? ! \0)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_attribute_name[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  0,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Attribute data with single quote (anything but ' \0)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_attribute_data_1[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Attribute data with single quote that does not require processing (anything but ' \0 &)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_attribute_data_1_pure[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Attribute data with double quote (anything but " \0)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_attribute_data_2[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Attribute data with double quote that does not require processing (anything but " \0 &)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_attribute_data_2_pure[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-             0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 0
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 1
-             1,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 2
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 3
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 4
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 5
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 6
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 7
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 8
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // 9
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // A
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // B
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // C
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // D
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  // E
-             1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 1
+                        1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 2
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 3
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 4
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 5
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 6
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 7
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 8
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 9
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // A
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // B
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // C
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // D
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // E
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1   // F
+                };
 
         // Digits (dec and hex, 255 denotes end of numeric character reference)
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_digits[256] =
-        {
-          // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 0
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 1
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 2
-             0,  1,  2,  3,  4,  5,  6,  7,  8,  9,255,255,255,255,255,255,  // 3
-           255, 10, 11, 12, 13, 14, 15,255,255,255,255,255,255,255,255,255,  // 4
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 5
-           255, 10, 11, 12, 13, 14, 15,255,255,255,255,255,255,255,255,255,  // 6
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 7
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 8
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // 9
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // A
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // B
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // C
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // D
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  // E
-           255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255   // F
-        };
+                {
+                        // 0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 0
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 1
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 2
+                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 255, 255, 255, 255, 255, 255,  // 3
+                        255, 10, 11, 12, 13, 14, 15, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 4
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 5
+                        255, 10, 11, 12, 13, 14, 15, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 6
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 7
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 8
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // 9
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // A
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // B
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // C
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // D
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,  // E
+                        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255   // F
+                };
 
         // Upper case conversion
         template<int Dummy>
         const unsigned char lookup_tables<Dummy>::lookup_upcase[256] =
-        {
-          // 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  A   B   C   D   E   F
-           0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,   // 0
-           16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,   // 1
-           32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,   // 2
-           48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,   // 3
-           64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,   // 4
-           80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95,   // 5
-           96, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,   // 6
-           80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 123,124,125,126,127,  // 7
-           128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,  // 8
-           144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,  // 9
-           160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,  // A
-           176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,  // B
-           192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,  // C
-           208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,  // D
-           224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,  // E
-           240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255   // F
-        };
+                {
+                        // 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  A   B   C   D   E   F
+                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,   // 0
+                        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,   // 1
+                        32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,   // 2
+                        48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,   // 3
+                        64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,   // 4
+                        80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95,   // 5
+                        96, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,   // 6
+                        80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 123, 124, 125, 126, 127,  // 7
+                        128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,  // 8
+                        144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159,  // 9
+                        160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,  // A
+                        176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191,  // B
+                        192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207,  // C
+                        208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223,  // D
+                        224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239,  // E
+                        240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255   // F
+                };
     }
     //! \endcond
 
@@ -2598,13 +2392,13 @@ namespace rapidxml
 
 // On MSVC, restore warnings state
 #ifdef _MSC_VER
-    #pragma warning(pop)
+#pragma warning(pop)
 #endif
 
 #endif
 
 #ifndef RAPIDXML_H_INCLUDED
-#define RAPIDXML_H_INCLUDED
+                                                                                                                        #define RAPIDXML_H_INCLUDED
 
 // Copyright (C) 2006, 2009 Marcin Kalicinski
 // Version 1.13
@@ -5202,7 +4996,7 @@ const unsigned char lookup_tables<Dummy>::lookup_upcase[256] =
 
 #endif
 #ifndef RAPIDXML_H_INCLUDED
-#define RAPIDXML_H_INCLUDED
+                                                                                                                        #define RAPIDXML_H_INCLUDED
 
 // Copyright (C) 2006, 2009 Marcin Kalicinski
 // Version 1.13

@@ -26,13 +26,21 @@
 #include "private/static.h"
 
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETCHAR_DEFAULT_PROMPT, "Enter a character: ")
+
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETCHAR_DEFAULT_REPROMPT, "You must type a single character. Try again.")
+
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETINTEGER_DEFAULT_PROMPT, "Enter an integer: ")
+
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETINTEGER_DEFAULT_REPROMPT, "Illegal integer format. Try again.")
+
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETREAL_DEFAULT_PROMPT, "Enter a number: ")
+
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETREAL_DEFAULT_REPROMPT, "Illegal numeric format. Try again.")
+
 STATIC_CONST_VARIABLE_DECLARE(std::string, GETYESORNO_DEFAULT_PROMPT, "Try again: ")
-STATIC_CONST_VARIABLE_DECLARE(std::string, GETYESORNO_DEFAULT_REPROMPT, "Please type a word that starts with 'Y' or 'N'.")
+
+STATIC_CONST_VARIABLE_DECLARE(std::string, GETYESORNO_DEFAULT_REPROMPT,
+                              "Please type a word that starts with 'Y' or 'N'.")
 
 /*
  * Implementation notes: getChar, getDouble, getInteger, getReal
@@ -42,8 +50,8 @@ STATIC_CONST_VARIABLE_DECLARE(std::string, GETYESORNO_DEFAULT_REPROMPT, "Please 
  * If that fails, the implementation asks the user for a new value.
  */
 
-char getChar(const std::string& prompt,
-             const std::string& reprompt) {
+char getChar(const std::string &prompt,
+             const std::string &reprompt) {
     std::string promptCopy = prompt;
     appendSpace(promptCopy);
     char value = '\0';
@@ -68,17 +76,17 @@ char getChar(const std::string& prompt,
     return value;
 }
 
-double getDouble(const std::string& prompt,
-                 const std::string& reprompt) {
+double getDouble(const std::string &prompt,
+                 const std::string &reprompt) {
     return getReal(prompt, reprompt);
 }
 
-double getDoubleBetween(const std::string& prompt, double min, double max) {
+double getDoubleBetween(const std::string &prompt, double min, double max) {
     return getRealBetween(prompt, min, max);
 }
 
-int getInteger(const std::string& prompt,
-               const std::string& reprompt) {
+int getInteger(const std::string &prompt,
+               const std::string &reprompt) {
     std::string promptCopy = prompt;
     appendSpace(promptCopy);
     int value = 0;
@@ -104,7 +112,7 @@ int getInteger(const std::string& prompt,
     return value;
 }
 
-int getIntegerBetween(const std::string& prompt, int min, int max) {
+int getIntegerBetween(const std::string &prompt, int min, int max) {
     int value = 0;
     while (true) {
         value = getInteger(prompt);
@@ -129,14 +137,14 @@ int getIntegerBetween(const std::string& prompt, int min, int max) {
  * that the process of reading integers, floating-point numbers, and
  * strings remains as consistent as possible.
  */
-std::string getLine(const std::string& prompt) {
+std::string getLine(const std::string &prompt) {
     std::string line;
     getLine(prompt, line);
     return line;
 }
 
-void getLine(const std::string& prompt,
-             std::string& out) {
+void getLine(const std::string &prompt,
+             std::string &out) {
     std::string promptCopy = prompt;
     appendSpace(promptCopy);
     std::cout << promptCopy;
@@ -145,15 +153,15 @@ void getLine(const std::string& prompt,
     }
 }
 
-void getLine(std::istream& input,
-             std::string& out) {
+void getLine(std::istream &input,
+             std::string &out) {
     if (!getline(input, out)) {
         error("getLine: End of input reached while waiting for line.");
     }
 }
 
-double getReal(const std::string& prompt,
-               const std::string& reprompt) {
+double getReal(const std::string &prompt,
+               const std::string &reprompt) {
     std::string promptCopy = prompt;
     appendSpace(promptCopy);
     double value = 0.0;
@@ -179,7 +187,7 @@ double getReal(const std::string& prompt,
     return value;
 }
 
-double getRealBetween(const std::string& prompt, double min, double max) {
+double getRealBetween(const std::string &prompt, double min, double max) {
     double value = 0;
     while (true) {
         value = getReal(prompt);
@@ -195,9 +203,9 @@ double getRealBetween(const std::string& prompt, double min, double max) {
     return value;
 }
 
-bool getYesOrNo(const std::string& prompt,
-                const std::string& reprompt,
-                const std::string& defaultValue) {
+bool getYesOrNo(const std::string &prompt,
+                const std::string &reprompt,
+                const std::string &defaultValue) {
     std::string promptCopy = prompt;
     appendSpace(promptCopy);
     bool value = false;
@@ -230,7 +238,7 @@ bool getYesOrNo(const std::string& prompt,
     return value;
 }
 
-void appendSpace(std::string& prompt) {
+void appendSpace(std::string &prompt) {
     if (!prompt.empty() && !isspace(prompt[prompt.length() - 1])) {
         prompt += ' ';
     }

@@ -23,30 +23,32 @@
 #include <string>
 
 namespace diff {
-const std::string NO_DIFFS_MESSAGE = "No differences found";
+    const std::string NO_DIFFS_MESSAGE = "No differences found";
 
-enum DiffFlags {
-    IGNORE_NONE         = 0x0,
-    IGNORE_LEADING      = 0x1,
-    IGNORE_TRAILING     = 0x2,
-    IGNORE_WHITESPACE   = 0x4,
-    IGNORE_BLANKLINES   = 0x8,
-    IGNORE_CASE         = 0x10,
-    IGNORE_NUMBERS      = 0x20,
-    IGNORE_NONNUMBERS   = 0x40,
-    IGNORE_PUNCTUATION  = 0x80,
-    IGNORE_AFTERDECIMAL = 0x100,
-    IGNORE_CHARORDER    = 0x200,
-    IGNORE_LINEORDER    = 0x400,
-    IGNORE_EVERYTHING   = 0x100000
-};
+    enum DiffFlags {
+        IGNORE_NONE = 0x0,
+        IGNORE_LEADING = 0x1,
+        IGNORE_TRAILING = 0x2,
+        IGNORE_WHITESPACE = 0x4,
+        IGNORE_BLANKLINES = 0x8,
+        IGNORE_CASE = 0x10,
+        IGNORE_NUMBERS = 0x20,
+        IGNORE_NONNUMBERS = 0x40,
+        IGNORE_PUNCTUATION = 0x80,
+        IGNORE_AFTERDECIMAL = 0x100,
+        IGNORE_CHARORDER = 0x200,
+        IGNORE_LINEORDER = 0x400,
+        IGNORE_EVERYTHING = 0x100000
+    };
 
-const int DIFF_STRICT_FLAGS = IGNORE_TRAILING;
-const int DIFF_DEFAULT_FLAGS = IGNORE_CASE | IGNORE_TRAILING | IGNORE_WHITESPACE | IGNORE_PUNCTUATION;
+    const int DIFF_STRICT_FLAGS = IGNORE_TRAILING;
+    const int DIFF_DEFAULT_FLAGS = IGNORE_CASE | IGNORE_TRAILING | IGNORE_WHITESPACE | IGNORE_PUNCTUATION;
 
-std::string diff(std::string s1, std::string s2, int flags = DIFF_DEFAULT_FLAGS);
-bool diffPass(const std::string& s1, const std::string& s2, int flags = DIFF_DEFAULT_FLAGS);
-bool isDiffMatch(const std::string& diffs);
+    std::string diff(std::string s1, std::string s2, int flags = DIFF_DEFAULT_FLAGS);
+
+    bool diffPass(const std::string &s1, const std::string &s2, int flags = DIFF_DEFAULT_FLAGS);
+
+    bool isDiffMatch(const std::string &diffs);
 } // namespace diff
 
 #endif // _diff_h

@@ -90,14 +90,14 @@
  * to each other mutually.
  * @private
  */
-template <typename V = void*, typename E = void*>
+template<typename V = void *, typename E = void *>
 class EdgeGen;
 
 /**
  * Canonical Vertex (Node) structure implementation needed by Graph class template.
  * Each Vertex structure represents a single vertex in the graph.
  */
-template <typename V = void*, typename E = void*>
+template<typename V = void *, typename E = void *>
 class VertexGen : public Observable<int> {
 public:
     /**
@@ -108,13 +108,13 @@ public:
     /**
      * The edges outbound from this vertex to its neighbors.
      */
-    Set<EdgeGen<V, E>*> arcs;     // required by Stanford Graph;
+    Set<EdgeGen<V, E> *> arcs;     // required by Stanford Graph;
 
     /**
      * The edges outbound from this vertex to its neighbors;
      * an alias of the 'arcs' member.
      */
-    Set<EdgeGen<V, E>*>& edges;
+    Set<EdgeGen<V, E> *> &edges;
 
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
     /**
@@ -147,17 +147,17 @@ public:
     /**
      * @private
      */
-    V& extraData;       // alias of data; they are the same field
+    V &extraData;       // alias of data; they are the same field
 
     /**
      * Constructs a vertex with the given name.
      */
-    VertexGen(const std::string& name = "");
+    VertexGen(const std::string &name = "");
 
     /**
      * Copy constructor.
      */
-    VertexGen(const VertexGen& other);
+    VertexGen(const VertexGen &other);
 
     /**
      * Frees up any memory dynamically allocated by this vertex.
@@ -191,12 +191,12 @@ public:
     /**
      * Copy assignment operator.
      */
-    VertexGen& operator =(const VertexGen& other);
+    VertexGen &operator=(const VertexGen &other);
 
     /**
      * Move assignment operator.
      */
-    VertexGen& operator =(VertexGen&& other);
+    VertexGen &operator=(VertexGen &&other);
 
 private:
     /* Color */ int _color;   // vertex's color as passed to setColor
@@ -208,30 +208,30 @@ private:
  * Note that printing a vertex is not the same as printing a vertex pointer.
  * If you try to print a pointer, you will just see its address in hex.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const VertexGen<V, E>& v);
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const VertexGen<V, E> &v);
 
 /**
  * Canonical Edge (Arc) structure implementation needed by Graph class template.
  * Each Edge structure represents a single edge in the graph.
  */
-template <typename V, typename E>
+template<typename V, typename E>
 class EdgeGen {
 public:
     /**
      * The edge's starting vertex.
      */
-    VertexGen<V, E>* start;
+    VertexGen<V, E> *start;
 
     /**
      * The edge's ending vertex.
      */
-    VertexGen<V, E>* finish;   // required by Stanford Graph;
+    VertexGen<V, E> *finish;   // required by Stanford Graph;
 
     /**
      * An alias of finish; they are the same field.
      */
-    VertexGen<V, E>*& end;
+    VertexGen<V, E> *&end;
 
     /**
      * The edge's weight; default 0.
@@ -241,7 +241,7 @@ public:
     /**
      * An alias for the 'cost' member.
      */
-    double& weight;
+    double &weight;
 
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
     /**
@@ -254,18 +254,18 @@ public:
      * A pointer that can point to any extra data needed by the vertex.
      * This field is generally not necessary and can be ignored.
      */
-    void* data;
+    void *data;
 
     /**
      * An alias for the 'data' member.
      */
-    void*& extraData;
+    void *&extraData;
 
     /**
      * Constructs a new edge between the given start/end vertices with
      * the given cost.
      */
-    EdgeGen(VertexGen<V, E>* start = nullptr, VertexGen<V, E>* finish = nullptr, double cost = 0.0);
+    EdgeGen(VertexGen<V, E> *start = nullptr, VertexGen<V, E> *finish = nullptr, double cost = 0.0);
 
     /**
      * Frees up any memory dynamically allocated by this edge.
@@ -286,12 +286,12 @@ public:
     /**
      * Copy assignment operator.
      */
-    EdgeGen& operator =(const EdgeGen& other);
+    EdgeGen &operator=(const EdgeGen &other);
 
     /**
      * Move assignment operator.
      */
-    EdgeGen& operator =(EdgeGen&& other);
+    EdgeGen &operator=(EdgeGen &&other);
 };
 
 /**
@@ -300,8 +300,8 @@ public:
  * Note that printing an edge is not the same as printing an edge pointer.
  * If you try to print a pointer, you will just see its address in hex.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const EdgeGen<V, E>& edge);
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const EdgeGen<V, E> &edge);
 
 
 /**
@@ -318,7 +318,7 @@ std::ostream& operator <<(std::ostream& out, const EdgeGen<V, E>& edge);
  * getEdge(v1, v2) to get the edge between a given pair of vertices,
  * and getInverseEdge(edge) to get the edge v2 -> v1 for a given edge v1 -> v2.
  */
-template <typename V = void*, typename E = void*>
+template<typename V = void *, typename E = void *>
 class BasicGraphGen : public Graph<VertexGen<V, E>, EdgeGen<V, E>> {
 public:
     /**
@@ -345,7 +345,7 @@ public:
      * @return a pointer to the edge created
      * @bigoh O(log V + log E)
      */
-    EdgeGen<V, E>* addEdge(const std::string& v1, const std::string& v2, double cost = 0.0, bool directed = true);
+    EdgeGen<V, E> *addEdge(const std::string &v1, const std::string &v2, double cost = 0.0, bool directed = true);
 
     /**
      * Adds a directed edge to the graph from vertex v1 to vertex v2.
@@ -361,7 +361,7 @@ public:
      * @throw ErrorException if either vertex is null
      * @bigoh O(log V + log E)
      */
-    EdgeGen<V, E>* addEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2, double cost = 0.0, bool directed = true);
+    EdgeGen<V, E> *addEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2, double cost = 0.0, bool directed = true);
 
     /**
      * Adds the given directed edge to the graph from vertex v1 to vertex v2.
@@ -377,7 +377,7 @@ public:
      * @throw ErrorException if either vertex is null
      * @bigoh O(log V + log E)
      */
-    EdgeGen<V, E>* addEdge(EdgeGen<V, E>* e, bool directed = true);
+    EdgeGen<V, E> *addEdge(EdgeGen<V, E> *e, bool directed = true);
 
     /**
      * Adds a vertex to the graph, if no vertex with that name already exists in the graph.
@@ -395,7 +395,7 @@ public:
      * @return a pointer to the vertex created
      * @bigoh O(log V)
      */
-    VertexGen<V, E>* addVertex(const std::string& name);
+    VertexGen<V, E> *addVertex(const std::string &name);
 
     /**
      * Adds a vertex to the graph, if no vertex with that name already exists in the graph.
@@ -418,7 +418,7 @@ public:
      * @throws ErrorException if vertex is null
      * @bigoh O(log V)
      */
-    VertexGen<V, E>* addVertex(VertexGen<V, E>* v);
+    VertexGen<V, E> *addVertex(VertexGen<V, E> *v);
 
     /**
      * Removes all edges from the graph.
@@ -438,7 +438,7 @@ public:
      * @bigoh O(E log E)
      * @bigoh O(log V + E)
      */
-    void clearEdges(VertexGen<V, E>* v);
+    void clearEdges(VertexGen<V, E> *v);
 
     /**
      * Removes all outbound edges of the given vertex from the graph.
@@ -448,7 +448,7 @@ public:
      * Equivalent to clearArcs.
      * @bigoh O(E log E)
      */
-    void clearEdges(const std::string& v);
+    void clearEdges(const std::string &v);
 
     /**
      * Returns true if the graph has an edge from v1 to v2 in the graph.
@@ -457,7 +457,7 @@ public:
      * Equivalent to containsArc.
      * @bigoh O(log E)
      */
-    bool containsEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2) const;
+    bool containsEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2) const;
 
     /**
      * Returns true if the graph has an edge from v1 to v2 in the graph.
@@ -466,7 +466,7 @@ public:
      * Equivalent to containsArc.
      * @bigoh O(log E)
      */
-    bool containsEdge(const std::string& v1, const std::string& v2) const;
+    bool containsEdge(const std::string &v1, const std::string &v2) const;
 
     /**
      * Returns true if the graph contains the given edge.
@@ -475,7 +475,7 @@ public:
      * Equivalent to containsArc.
      * @bigoh O(log E)
      */
-    bool containsEdge(EdgeGen<V, E>* edge) const;
+    bool containsEdge(EdgeGen<V, E> *edge) const;
 
     /**
      * Returns whether the graph contains a vertex with the given name.
@@ -483,7 +483,7 @@ public:
      * Equivalent to containsNode.
      * @bigoh O(log V)
      */
-    bool containsVertex(const std::string& name) const;
+    bool containsVertex(const std::string &name) const;
 
     /**
      * Returns whether the graph contains the given vertex.
@@ -492,7 +492,7 @@ public:
      * Equivalent to containsNode.
      * @bigoh O(log V)
      */
-    bool containsVertex(VertexGen<V, E>* v) const;
+    bool containsVertex(VertexGen<V, E> *v) const;
 
     /**
      * Returns the number of edges in the graph.
@@ -514,7 +514,7 @@ public:
      * @return edge from v1 to v2, or nullptr if there is no such edge
      * @bigoh O(log V + log E)
      */
-    EdgeGen<V, E>* getEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2) const;
+    EdgeGen<V, E> *getEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2) const;
 
     /**
      * Returns the structure representing the edge from v1 to v2 in the graph.
@@ -528,7 +528,7 @@ public:
      * @return edge from v1 to v2, or nullptr if there is no such edge
      * @bigoh O(log V + log E)
      */
-    EdgeGen<V, E>* getEdge(const std::string& v1, const std::string& v2) const;
+    EdgeGen<V, E> *getEdge(const std::string &v1, const std::string &v2) const;
 
     /**
      * Returns the set of all edges in the graph.
@@ -536,7 +536,7 @@ public:
      * Equivalent to getArcSet.
      * @bigoh O(1)
      */
-    const Set<EdgeGen<V, E>*>& getEdgeSet() const;
+    const Set<EdgeGen<V, E> *> &getEdgeSet() const;
 
     /**
      * Returns the set of all edges that start at the specified vertex.
@@ -546,7 +546,7 @@ public:
      * Equivalent to getArcSet.
      * @bigoh O(1)
      */
-    const Set<EdgeGen<V, E>*>& getEdgeSet(VertexGen<V, E>* v) const;
+    const Set<EdgeGen<V, E> *> &getEdgeSet(VertexGen<V, E> *v) const;
 
     /**
      * Returns the set of all edges that start at the specified vertex.
@@ -556,7 +556,7 @@ public:
      * Equivalent to getArcSet.
      * @bigoh O(1)
      */
-    const Set<EdgeGen<V, E>*>& getEdgeSet(const std::string& v) const;
+    const Set<EdgeGen<V, E> *> &getEdgeSet(const std::string &v) const;
 
     /**
      * Returns the edge that is the opposite of the given edge;
@@ -573,7 +573,7 @@ public:
      * Equivalent to getInverseEdge.
      * @bigoh O(E)
      */
-    EdgeGen<V, E>* getInverseArc(EdgeGen<V, E>* edge) const;
+    EdgeGen<V, E> *getInverseArc(EdgeGen<V, E> *edge) const;
 
     /**
      * Returns the edge that is the opposite of the given edge;
@@ -590,7 +590,7 @@ public:
      * Equivalent to getInverseArc.
      * @bigoh O(E)
      */
-    EdgeGen<V, E>* getInverseEdge(EdgeGen<V, E>* edge) const;
+    EdgeGen<V, E> *getInverseEdge(EdgeGen<V, E> *edge) const;
 
     /**
      * Returns the set of all edges in the graph that end at the specified vertex.
@@ -600,7 +600,7 @@ public:
      * Equivalent to getInverseArcSet.
      * @bigoh O(E)
      */
-    const Set<EdgeGen<V, E>*> getInverseEdgeSet(VertexGen<V, E>* v) const;
+    const Set<EdgeGen<V, E> *> getInverseEdgeSet(VertexGen<V, E> *v) const;
 
     /**
      * Returns the set of all edges in the graph that end at the specified vertex.
@@ -610,7 +610,7 @@ public:
      * Equivalent to getInverseArcSet.
      * @bigoh O(E)
      */
-    const Set<EdgeGen<V, E>*> getInverseEdgeSet(const std::string& v) const;
+    const Set<EdgeGen<V, E> *> getInverseEdgeSet(const std::string &v) const;
 
     /**
      * Looks up a vertex in the graph by name and returns a pointer to
@@ -618,7 +618,7 @@ public:
      * If no vertex with the specified name exists, returns nullptr.
      * @bigoh O(log V)
      */
-    VertexGen<V, E>* getVertex(const std::string& name) const;
+    VertexGen<V, E> *getVertex(const std::string &name) const;
 
     /**
      * Returns a set of the names of all vertexes in the graph.
@@ -632,7 +632,7 @@ public:
      * The vertexes will be sorted by name in case-sensitive alphabetical order.
      * @bigoh O(V log V)
      */
-    const Set<VertexGen<V, E>*>& getVertexSet() const;
+    const Set<VertexGen<V, E> *> &getVertexSet() const;
 
     /**
      * Removes the edge from v1 to v2 from the graph.
@@ -641,7 +641,7 @@ public:
      * calling this function will have no effect on the graph.
      * @bigoh O(E + log V)
      */
-    void removeEdge(const std::string& v1, const std::string& v2, bool directed = true);
+    void removeEdge(const std::string &v1, const std::string &v2, bool directed = true);
 
     /**
      * Removes the edge from v1 to v2 from the graph.
@@ -650,7 +650,7 @@ public:
      * calling this function will have no effect on the graph.
      * @bigoh O(E + log V)
      */
-    void removeEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2, bool directed = true);
+    void removeEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2, bool directed = true);
 
     /**
      * Removes the given edge from the graph.
@@ -658,21 +658,21 @@ public:
      * calling this function will have no effect on the graph.
      * @bigoh O(log E + log V)
      */
-    void removeEdge(EdgeGen<V, E>* e, bool directed = true);
+    void removeEdge(EdgeGen<V, E> *e, bool directed = true);
 
     /**
      * Removes the given vertex from the graph.
      * If the vertex is not found in the graph, the call has no effect.
      * @bigoh O(E + log V)
      */
-    void removeVertex(const std::string& name);
+    void removeVertex(const std::string &name);
 
     /**
      * Removes the given vertex from the graph.
      * If the vertex is null or is not found in the graph, the call has no effect.
      * @bigoh O(E + log V)
      */
-    void removeVertex(VertexGen<V, E>* v);
+    void removeVertex(VertexGen<V, E> *v);
 
     /**
      * Sets the data stored in each vertex and edge back to its original value
@@ -690,10 +690,10 @@ public:
     void setResetEnabled(bool enabled);
 
     /* @inherit */
-    virtual void scanArcData(TokenScanner& scanner, EdgeGen<V, E>* edge, EdgeGen<V, E>* inverse);
+    virtual void scanArcData(TokenScanner &scanner, EdgeGen<V, E> *edge, EdgeGen<V, E> *inverse);
 
     /* @inherit */
-    virtual void writeArcData(std::ostream& out, EdgeGen<V, E>* edge) const;
+    virtual void writeArcData(std::ostream &out, EdgeGen<V, E> *edge) const;
 
     /**
      * Returns a Map representing an adjacency list equivalent to this graph.
@@ -716,13 +716,13 @@ public:
      * Overloads <code>[]</code> to return vertex pointers by vertex name.
      * @bigoh O(log V)
      */
-    VertexGen<V, E>* operator [](const std::string& name);
+    VertexGen<V, E> *operator[](const std::string &name);
 
     /**
      * Overloads <code>[]</code> to return vertex pointers by vertex name.
      * @bigoh O(log V)
      */
-    const VertexGen<V, E>* operator [](const std::string& name) const;
+    const VertexGen<V, E> *operator[](const std::string &name) const;
 
 private:
     bool m_resetEnabled;
@@ -731,14 +731,14 @@ private:
 /**
  * Hash function for BasicGraphGen.
  */
-template <typename V, typename E>
-int hashCode(const BasicGraphGen<V, E>& graph);
+template<typename V, typename E>
+int hashCode(const BasicGraphGen<V, E> &graph);
 
 /*
  * Defines a Vertex to be a VertexGen with its data bound to be a void*.
  * Retained for backward compatibility.
  */
-typedef VertexGen<void*, void*> Vertex;
+typedef VertexGen<void *, void *> Vertex;
 #define VertexV VertexGen
 
 /*
@@ -750,7 +750,7 @@ typedef VertexGen<void*, void*> Vertex;
  * Defines an Edge to be an EdgeGen with its data bound to be a void*.
  * Retained for backward compatibility.
  */
-typedef EdgeGen<void*, void*> Edge;
+typedef EdgeGen<void *, void *> Edge;
 #define EdgeV EdgeGen
 
 /*
@@ -762,58 +762,58 @@ typedef EdgeGen<void*, void*> Edge;
  * Defines a BasicGraph to be a BasicGraphGen with its data bound to be a void*.
  * Retained for backward compatibility.
  */
-typedef BasicGraphGen<void*, void*> BasicGraph;
+typedef BasicGraphGen<void *, void *> BasicGraph;
 #define BasicGraphV BasicGraphGen
 
 /**
  * Hash function for BasicGraph.
  */
-int hashCode(const BasicGraph& graph);
+int hashCode(const BasicGraph &graph);
 
 
 /*
  * Vertex member implementations
  */
-template <typename V, typename E>
-VertexGen<V, E>::VertexGen(const std::string& theName)
+template<typename V, typename E>
+VertexGen<V, E>::VertexGen(const std::string &theName)
         : name(theName),
           edges(arcs),
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
-          weight(cost),
+        weight(cost),
 #endif // SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
           data(V()),
           extraData(data) {
     resetData();
 }
 
-template <typename V, typename E>
-VertexGen<V, E>::VertexGen(const VertexGen& other)
-    : name(other.name),
-      arcs(other.arcs),
-      edges(arcs),
+template<typename V, typename E>
+VertexGen<V, E>::VertexGen(const VertexGen &other)
+        : name(other.name),
+          arcs(other.arcs),
+          edges(arcs),
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
-      cost(other.cost),
-      weight(cost),
-      visited(other.visited),
-      previous(other.previous),
+cost(other.cost),
+weight(cost),
+visited(other.visited),
+previous(other.previous),
 #endif // SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
-      data(other.data),
-      extraData(data),
-      _color(other._color) {
+          data(other.data),
+          extraData(data),
+          _color(other._color) {
     // empty
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 VertexGen<V, E>::~VertexGen() {
     // empty
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 int VertexGen<V, E>::getColor() const {
     return _color;
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 void VertexGen<V, E>::resetData() {
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
     cost = 0.0;
@@ -823,21 +823,21 @@ void VertexGen<V, E>::resetData() {
     _color = /* UNCOLORED */ 0;
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 void VertexGen<V, E>::setColor(int c) {
     _color = c;
     notifyObservers();
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 std::string VertexGen<V, E>::toString() const {
     std::ostringstream out;
     out << *this;
     return out.str();
 }
 
-template <typename V, typename E>
-VertexGen<V, E>& VertexGen<V, E>::operator =(const VertexGen& other) {
+template<typename V, typename E>
+VertexGen<V, E> &VertexGen<V, E>::operator=(const VertexGen &other) {
     if (this != &other) {
         name = other.name;
         arcs = other.arcs;
@@ -852,8 +852,8 @@ VertexGen<V, E>& VertexGen<V, E>::operator =(const VertexGen& other) {
     return *this;
 }
 
-template <typename V, typename E>
-VertexGen<V, E>& VertexGen<V, E>::operator =(VertexGen&& other) {
+template<typename V, typename E>
+VertexGen<V, E> &VertexGen<V, E>::operator=(VertexGen &&other) {
     if (this != &other) {
         name = other.name;
         arcs = other.arcs;
@@ -868,8 +868,8 @@ VertexGen<V, E>& VertexGen<V, E>::operator =(VertexGen&& other) {
     return *this;
 }
 
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const VertexGen<V, E>& v) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const VertexGen<V, E> &v) {
     out << "Vertex{name=" << v.name;
 
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
@@ -883,7 +883,7 @@ std::ostream& operator <<(std::ostream& out, const VertexGen<V, E>& v) {
     // print neighbors
     out << ", neighbors={";
     int i = 0;
-    for (EdgeGen<V, E>* edge : v.edges) {
+    for (EdgeGen<V, E> *edge : v.edges) {
         if (i > 0) {
             out << ", ";
         }
@@ -904,8 +904,8 @@ std::ostream& operator <<(std::ostream& out, const VertexGen<V, E>& v) {
 /*
  * Edge member implementations
  */
-template <typename V, typename E>
-EdgeGen<V, E>::EdgeGen(VertexGen<V, E>* theStart, VertexGen<V, E>* theFinish, double theCost)
+template<typename V, typename E>
+EdgeGen<V, E>::EdgeGen(VertexGen<V, E> *theStart, VertexGen<V, E> *theFinish, double theCost)
         : start(theStart),
           finish(theFinish),
           end(this->finish),
@@ -919,7 +919,7 @@ EdgeGen<V, E>::EdgeGen(VertexGen<V, E>* theStart, VertexGen<V, E>* theFinish, do
     this->resetData();
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 EdgeGen<V, E>::~EdgeGen() {
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
     if (this->extraData != nullptr) {
@@ -929,22 +929,22 @@ EdgeGen<V, E>::~EdgeGen() {
 #endif // SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 void EdgeGen<V, E>::resetData() {
 #ifdef SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
     this->visited = false;
 #endif // SPL_BASICGRAPH_VERTEX_EDGE_RICH_MEMBERS
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 std::string EdgeGen<V, E>::toString() const {
     std::ostringstream out;
     out << *this;
     return out.str();
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>& EdgeGen<V, E>::operator =(const EdgeGen& other) {
+template<typename V, typename E>
+EdgeGen<V, E> &EdgeGen<V, E>::operator=(const EdgeGen &other) {
     if (this != &other) {
         start = other.start;
         finish = other.finish;
@@ -956,8 +956,8 @@ EdgeGen<V, E>& EdgeGen<V, E>::operator =(const EdgeGen& other) {
     return *this;
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>& EdgeGen<V, E>::operator =(EdgeGen&& other) {
+template<typename V, typename E>
+EdgeGen<V, E> &EdgeGen<V, E>::operator=(EdgeGen &&other) {
     start = other.start;
     finish = other.finish;
     cost = other.cost;
@@ -970,8 +970,8 @@ EdgeGen<V, E>& EdgeGen<V, E>::operator =(EdgeGen&& other) {
 /**
  * Writes the given edge structure to the given output stream.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const EdgeGen<V, E>& edge) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const EdgeGen<V, E> &edge) {
     out << "Edge{start=";
     if (!edge.start) {
         out << "nullptr";
@@ -1000,104 +1000,104 @@ std::ostream& operator <<(std::ostream& out, const EdgeGen<V, E>& edge) {
 /*
  * BasicGraph member implementations
  */
-template <typename V, typename E>
+template<typename V, typename E>
 BasicGraphGen<V, E>::BasicGraphGen() : Graph<VertexGen<V, E>, EdgeGen<V, E>>() {
     m_resetEnabled = true;
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 BasicGraphGen<V, E>::BasicGraphGen(std::initializer_list<std::string> vertexList)
         : Graph<VertexGen<V, E>, EdgeGen<V, E>>() {
     m_resetEnabled = true;
-    for (const std::string& vertexName : vertexList) {
+    for (const std::string &vertexName : vertexList) {
         this->addVertex(vertexName);
     }
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 void BasicGraphGen<V, E>::clearEdges() {
     this->clearArcs();
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::clearEdges(VertexGen<V, E>* v) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::clearEdges(VertexGen<V, E> *v) {
     this->clearArcs(v);
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::clearEdges(const std::string& v) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::clearEdges(const std::string &v) {
     this->clearArcs(v);
 }
 
-template <typename V, typename E>
-bool BasicGraphGen<V, E>::containsEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2) const {
+template<typename V, typename E>
+bool BasicGraphGen<V, E>::containsEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2) const {
     return this->containsArc(v1, v2);
 }
 
-template <typename V, typename E>
-bool BasicGraphGen<V, E>::containsEdge(const std::string& v1, const std::string& v2) const {
+template<typename V, typename E>
+bool BasicGraphGen<V, E>::containsEdge(const std::string &v1, const std::string &v2) const {
     return this->containsArc(v1, v2);
 }
 
-template <typename V, typename E>
-bool BasicGraphGen<V, E>::containsEdge(EdgeGen<V, E>* edge) const {
+template<typename V, typename E>
+bool BasicGraphGen<V, E>::containsEdge(EdgeGen<V, E> *edge) const {
     return this->containsArc(edge);
 }
 
-template <typename V, typename E>
-bool BasicGraphGen<V, E>::containsVertex(const std::string& name) const {
+template<typename V, typename E>
+bool BasicGraphGen<V, E>::containsVertex(const std::string &name) const {
     return this->containsNode(name);
 }
 
-template <typename V, typename E>
-bool BasicGraphGen<V, E>::containsVertex(VertexGen<V, E>* v) const {
+template<typename V, typename E>
+bool BasicGraphGen<V, E>::containsVertex(VertexGen<V, E> *v) const {
     return this->containsNode(v);
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 int BasicGraphGen<V, E>::edgeCount() const {
     return this->arcCount();
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::getEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2) const {
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::getEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2) const {
     return this->getArc(v1, v2);
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::getEdge(const std::string& v1, const std::string& v2) const {
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::getEdge(const std::string &v1, const std::string &v2) const {
     return this->getArc(v1, v2);
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::getInverseArc(EdgeGen<V, E>* edge) const {
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::getInverseArc(EdgeGen<V, E> *edge) const {
     return this->getArc(edge->finish, edge->start);
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::getInverseEdge(EdgeGen<V, E>* edge) const {
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::getInverseEdge(EdgeGen<V, E> *edge) const {
     return this->getInverseArc(edge);
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 void BasicGraphGen<V, E>::resetData() {
     if (m_resetEnabled) {
-        for (VertexGen<V, E>* v : this->getVertexSet()) {
+        for (VertexGen<V, E> *v : this->getVertexSet()) {
             v->resetData();
         }
-        for (EdgeGen<V, E>* e : this->getEdgeSet()) {
+        for (EdgeGen<V, E> *e : this->getEdgeSet()) {
             e->resetData();
         }
     }
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 void BasicGraphGen<V, E>::setResetEnabled(bool enabled) {
     m_resetEnabled = enabled;
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::addEdge(const std::string& v1, const std::string& v2, double cost, bool directed) {
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::addEdge(const std::string &v1, const std::string &v2, double cost, bool directed) {
     if (!this->containsVertex(v1)) {
         this->addVertex(v1);
     }
@@ -1107,111 +1107,111 @@ EdgeGen<V, E>* BasicGraphGen<V, E>::addEdge(const std::string& v1, const std::st
     return this->addEdge(this->getVertex(v1), this->getVertex(v2), cost, directed);
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::addEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2, double cost, bool directed) {
-    EdgeGen<V, E>* e = new EdgeGen<V, E>(v1, v2, cost);
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::addEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2, double cost, bool directed) {
+    EdgeGen<V, E> *e = new EdgeGen<V, E>(v1, v2, cost);
     return this->addEdge(e, directed);
 }
 
-template <typename V, typename E>
-EdgeGen<V, E>* BasicGraphGen<V, E>::addEdge(EdgeGen<V, E>* e, bool directed) {
-    EdgeGen<V, E>* result = this->addArc(e);
+template<typename V, typename E>
+EdgeGen<V, E> *BasicGraphGen<V, E>::addEdge(EdgeGen<V, E> *e, bool directed) {
+    EdgeGen<V, E> *result = this->addArc(e);
     if (!directed) {
-        EdgeGen<V, E>* result2 = this->addArc(e->finish, e->start);
+        EdgeGen<V, E> *result2 = this->addArc(e->finish, e->start);
         result2->cost = e->cost;
     }
     return result;
 }
 
-template <typename V, typename E>
-VertexGen<V, E>* BasicGraphGen<V, E>::addVertex(const std::string& name) {
+template<typename V, typename E>
+VertexGen<V, E> *BasicGraphGen<V, E>::addVertex(const std::string &name) {
     return this->addNode(name);
 }
 
-template <typename V, typename E>
-VertexGen<V, E>* BasicGraphGen<V, E>::addVertex(VertexGen<V, E>* v) {
+template<typename V, typename E>
+VertexGen<V, E> *BasicGraphGen<V, E>::addVertex(VertexGen<V, E> *v) {
     return this->addNode(v);
 }
 
-template <typename V, typename E>
-const Set<EdgeGen<V, E>*>& BasicGraphGen<V, E>::getEdgeSet() const {
+template<typename V, typename E>
+const Set<EdgeGen<V, E> *> &BasicGraphGen<V, E>::getEdgeSet() const {
     return this->getArcSet();
 }
 
-template <typename V, typename E>
-const Set<EdgeGen<V, E>*>& BasicGraphGen<V, E>::getEdgeSet(VertexGen<V, E>* v) const {
+template<typename V, typename E>
+const Set<EdgeGen<V, E> *> &BasicGraphGen<V, E>::getEdgeSet(VertexGen<V, E> *v) const {
     return this->getArcSet(v);
 }
 
-template <typename V, typename E>
-const Set<EdgeGen<V, E>*>& BasicGraphGen<V, E>::getEdgeSet(const std::string& v) const {
+template<typename V, typename E>
+const Set<EdgeGen<V, E> *> &BasicGraphGen<V, E>::getEdgeSet(const std::string &v) const {
     return this->getArcSet(v);
 }
 
-template <typename V, typename E>
-const Set<EdgeGen<V, E>*> BasicGraphGen<V, E>::getInverseEdgeSet(VertexGen<V, E>* v) const {
+template<typename V, typename E>
+const Set<EdgeGen<V, E> *> BasicGraphGen<V, E>::getInverseEdgeSet(VertexGen<V, E> *v) const {
     return this->getInverseArcSet(v);
 }
 
-template <typename V, typename E>
-const Set<EdgeGen<V, E>*> BasicGraphGen<V, E>::getInverseEdgeSet(const std::string& v) const {
+template<typename V, typename E>
+const Set<EdgeGen<V, E> *> BasicGraphGen<V, E>::getInverseEdgeSet(const std::string &v) const {
     return this->getInverseArcSet(v);
 }
 
 
-template <typename V, typename E>
-VertexGen<V, E>* BasicGraphGen<V, E>::getVertex(const std::string& name) const {
+template<typename V, typename E>
+VertexGen<V, E> *BasicGraphGen<V, E>::getVertex(const std::string &name) const {
     return this->getNode(name);
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 Set<std::string> BasicGraphGen<V, E>::getVertexNames() const {
     return this->getNodeNames();
 }
 
 
-template <typename V, typename E>
-const Set<VertexGen<V, E>*>& BasicGraphGen<V, E>::getVertexSet() const {
+template<typename V, typename E>
+const Set<VertexGen<V, E> *> &BasicGraphGen<V, E>::getVertexSet() const {
     return this->getNodeSet();
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::removeEdge(const std::string& v1, const std::string& v2, bool directed) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::removeEdge(const std::string &v1, const std::string &v2, bool directed) {
     this->removeEdge(this->getVertex(v1), this->getVertex(v2), directed);
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::removeEdge(VertexGen<V, E>* v1, VertexGen<V, E>* v2, bool directed) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::removeEdge(VertexGen<V, E> *v1, VertexGen<V, E> *v2, bool directed) {
     this->removeArc(v1, v2);
     if (!directed) {
         this->removeArc(v2, v1);
     }
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::removeEdge(EdgeGen<V, E>* e, bool directed) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::removeEdge(EdgeGen<V, E> *e, bool directed) {
     this->removeArc(e);
     if (!directed) {
         this->removeArc(e->finish, e->start);
     }
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::removeVertex(const std::string& name) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::removeVertex(const std::string &name) {
     this->removeNode(name);
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::removeVertex(VertexGen<V, E>* v) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::removeVertex(VertexGen<V, E> *v) {
     this->removeNode(v);
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 Map<std::string, Set<std::string>> BasicGraphGen<V, E>::toMap() const {
     Map<std::string, Set<std::string>> result;
-    for (Vertex* v : this->getVertexSet()) {
+    for (Vertex *v : this->getVertexSet()) {
         Set<std::string> neighborSet;
-        for (Vertex* neighbor : this->getNeighbors(v)) {
+        for (Vertex *neighbor : this->getNeighbors(v)) {
             neighborSet += neighbor->name;
         }
         result[v->name] = neighborSet;
@@ -1219,23 +1219,23 @@ Map<std::string, Set<std::string>> BasicGraphGen<V, E>::toMap() const {
     return result;
 }
 
-template <typename V, typename E>
+template<typename V, typename E>
 int BasicGraphGen<V, E>::vertexCount() const {
     return this->nodeCount();
 }
 
-template <typename V, typename E>
-VertexGen<V, E>* BasicGraphGen<V, E>::operator [](const std::string& name) {
+template<typename V, typename E>
+VertexGen<V, E> *BasicGraphGen<V, E>::operator[](const std::string &name) {
     return this->getVertex(name);
 }
 
-template <typename V, typename E>
-const VertexGen<V, E>* BasicGraphGen<V, E>::operator [](const std::string& name) const {
+template<typename V, typename E>
+const VertexGen<V, E> *BasicGraphGen<V, E>::operator[](const std::string &name) const {
     return this->getVertex(name);
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::scanArcData(TokenScanner& scanner, EdgeGen<V, E>* edge, EdgeGen<V, E>* inverse) {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::scanArcData(TokenScanner &scanner, EdgeGen<V, E> *edge, EdgeGen<V, E> *inverse) {
     std::string colon = scanner.nextToken();   // ":", skip over
     if (colon == ":") {
         std::string costStr = scanner.nextToken();
@@ -1250,8 +1250,8 @@ void BasicGraphGen<V, E>::scanArcData(TokenScanner& scanner, EdgeGen<V, E>* edge
     }
 }
 
-template <typename V, typename E>
-void BasicGraphGen<V, E>::writeArcData(std::ostream& out, EdgeGen<V, E>* edge) const {
+template<typename V, typename E>
+void BasicGraphGen<V, E>::writeArcData(std::ostream &out, EdgeGen<V, E> *edge) const {
     if (!floatingPointEqual(edge->cost, 0.0)) {
         out << " : ";
         out << edge->cost;
@@ -1261,13 +1261,13 @@ void BasicGraphGen<V, E>::writeArcData(std::ostream& out, EdgeGen<V, E>* edge) c
 /**
  * Template hash function for graphs.
  */
-template <typename V, typename E>
-int hashCode(const BasicGraphGen<V, E>& graph) {
+template<typename V, typename E>
+int hashCode(const BasicGraphGen<V, E> &graph) {
     int code = hashSeed();
-    for (VertexGen<V, E>* v : graph) {
+    for (VertexGen<V, E> *v : graph) {
         code = hashMultiplier() * code + hashCode(v->name);
     }
-    for (EdgeGen<V, E>* e : graph.getEdgeSet()) {
+    for (EdgeGen<V, E> *e : graph.getEdgeSet()) {
         code = hashMultiplier() * code + hashCode(e->start->name);
         code = hashMultiplier() * code + hashCode(e->finish->name);
     }
@@ -1281,12 +1281,12 @@ int hashCode(const BasicGraphGen<V, E>& graph) {
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const HashSet<EdgeGen<V, E>*>& sete) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const HashSet<EdgeGen<V, E> *> &sete) {
     out << "{";
     if (!sete.isEmpty()) {
         bool first = true;
-        for (EdgeGen<V, E>* e : sete) {
+        for (EdgeGen<V, E> *e : sete) {
             if (!first) {
                 out << ", ";
             }
@@ -1319,12 +1319,12 @@ std::ostream& operator <<(std::ostream& out, const HashSet<EdgeGen<V, E>*>& sete
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const HashSet<VertexGen<V, E>*>& setv) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const HashSet<VertexGen<V, E> *> &setv) {
     out << "{";
     if (!setv.isEmpty()) {
         bool first = true;
-        for (VertexGen<V, E>* v : setv) {
+        for (VertexGen<V, E> *v : setv) {
             if (!first) {
                 out << ", ";
             }
@@ -1347,12 +1347,12 @@ std::ostream& operator <<(std::ostream& out, const HashSet<VertexGen<V, E>*>& se
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const LinkedList<EdgeGen<V, E>*>& liste) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const LinkedList<EdgeGen<V, E> *> &liste) {
     out << "{";
     if (!liste.isEmpty()) {
         bool first = true;
-        for (EdgeGen<V, E>* e : liste) {
+        for (EdgeGen<V, E> *e : liste) {
             if (!first) {
                 out << ", ";
             }
@@ -1385,12 +1385,12 @@ std::ostream& operator <<(std::ostream& out, const LinkedList<EdgeGen<V, E>*>& l
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const LinkedList<VertexGen<V, E>*>& lst) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const LinkedList<VertexGen<V, E> *> &lst) {
     out << "{";
     if (!lst.isEmpty()) {
         bool first = true;
-        for (VertexGen<V, E>* v : lst) {
+        for (VertexGen<V, E> *v : lst) {
             if (!first) {
                 out << ", ";
             }
@@ -1413,12 +1413,12 @@ std::ostream& operator <<(std::ostream& out, const LinkedList<VertexGen<V, E>*>&
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const Set<EdgeGen<V, E>*>& sete) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const Set<EdgeGen<V, E> *> &sete) {
     out << "{";
     if (!sete.isEmpty()) {
         bool first = true;
-        for (EdgeGen<V, E>* e : sete) {
+        for (EdgeGen<V, E> *e : sete) {
             if (!first) {
                 out << ", ";
             }
@@ -1451,12 +1451,12 @@ std::ostream& operator <<(std::ostream& out, const Set<EdgeGen<V, E>*>& sete) {
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const Set<VertexGen<V, E>*>& setv) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const Set<VertexGen<V, E> *> &setv) {
     out << "{";
     if (!setv.isEmpty()) {
         bool first = true;
-        for (VertexGen<V, E>* v : setv) {
+        for (VertexGen<V, E> *v : setv) {
             if (!first) {
                 out << ", ";
             }
@@ -1479,12 +1479,12 @@ std::ostream& operator <<(std::ostream& out, const Set<VertexGen<V, E>*>& setv) 
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const Vector<EdgeGen<V, E>*>& vece) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const Vector<EdgeGen<V, E> *> &vece) {
     out << "{";
     if (!vece.isEmpty()) {
         bool first = true;
-        for (EdgeGen<V, E>* e : vece) {
+        for (EdgeGen<V, E> *e : vece) {
             if (!first) {
                 out << ", ";
             }
@@ -1517,12 +1517,12 @@ std::ostream& operator <<(std::ostream& out, const Vector<EdgeGen<V, E>*>& vece)
  * But in this case we have decided that it is better for students if their
  * attempts to print collections of vertexes and edges are easy to read.
  */
-template <typename V, typename E>
-std::ostream& operator <<(std::ostream& out, const Vector<VertexGen<V, E>*>& vec) {
+template<typename V, typename E>
+std::ostream &operator<<(std::ostream &out, const Vector<VertexGen<V, E> *> &vec) {
     out << "{";
     if (!vec.isEmpty()) {
         bool first = true;
-        for (VertexGen<V, E>* v : vec) {
+        for (VertexGen<V, E> *v : vec) {
             if (!first) {
                 out << ", ";
             }

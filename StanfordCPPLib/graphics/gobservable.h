@@ -23,6 +23,7 @@
 #include <collections/map.h>
 
 class GInteractor;
+
 class _Internal_QWidget;
 
 /**
@@ -78,66 +79,67 @@ protected:
     /**
      * Ensures that we are currently in the Qt GUI thread.
      */
-    virtual void ensureThreadSafety(const std::string& memberName = "");
+    virtual void ensureThreadSafety(const std::string &memberName = "");
 
     /**
      * Sends out the given event to any attached listeners.
      */
-    virtual void fireEvent(GEvent& event);
+    virtual void fireEvent(GEvent &event);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QCloseEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QCloseEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QKeyEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QKeyEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QMouseEvent* event, EventType eventType, const std::string& eventName, const std::string& actionCommand = "");
+    virtual void fireGEvent(QMouseEvent *event, EventType eventType, const std::string &eventName,
+                            const std::string &actionCommand = "");
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QResizeEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QResizeEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QTimerEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QTimerEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QWheelEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QWheelEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Creates an event of the given type, then sends it out to any
      * attached listeners.
      */
-    virtual void fireGEvent(QWindowStateChangeEvent* event, EventType eventType, const std::string& eventName);
+    virtual void fireGEvent(QWindowStateChangeEvent *event, EventType eventType, const std::string &eventName);
 
     /**
      * Returns true if the observable object has a listener for the given type
      * of event.
      */
-    virtual bool hasEventListener(const std::string& eventName) const;
+    virtual bool hasEventListener(const std::string &eventName) const;
 
     /**
      * Returns true if the observable object has a listener for the given type
@@ -150,19 +152,19 @@ protected:
      * Returns true if the observable object has a listener for the given type
      * of event.
      */
-    virtual bool isAcceptingEvent(const GEvent& event) const;
+    virtual bool isAcceptingEvent(const GEvent &event) const;
 
     /**
      * Returns true if the observable object has a listener for the given type
      * of event.
      */
-    virtual bool isAcceptingEvent(const std::string& eventType) const;
+    virtual bool isAcceptingEvent(const std::string &eventType) const;
 
     /**
      * Removes any event listener from this observable object that would respond
      * to the given type of event, such as "click" or "keydown".
      */
-    virtual void removeEventListener(const std::string& eventName);
+    virtual void removeEventListener(const std::string &eventName);
 
     /**
      * Removes any event listener from this observable object that would respond
@@ -175,14 +177,14 @@ protected:
      * to the given type of event, such as "click" or "keydown".
      * Any prior listener for that type of event is replaced.
      */
-    virtual void setEventListener(const std::string& eventName, GEventListener func);
+    virtual void setEventListener(const std::string &eventName, GEventListener func);
 
     /**
      * Adds an event listener from this observable object to respond
      * to the given type of event, such as "click" or "keydown".
      * Any prior listener for that type of event is replaced.
      */
-    virtual void setEventListener(const std::string& eventName, GEventListenerVoid func);
+    virtual void setEventListener(const std::string &eventName, GEventListenerVoid func);
 
     /**
      * Adds an event listener from this observable object to respond
@@ -204,6 +206,7 @@ private:
 
     // allow all interactors and their inner QWidgets to call observable methods
     friend class GInteractor;
+
     friend class _Internal_QWidget;
 };
 

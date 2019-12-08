@@ -34,11 +34,11 @@ GDrawingSurface::~GDrawingSurface() {
     _forwardTarget = nullptr;
 }
 
-void GDrawingSurface::checkBounds(const std::string& member, double x, double y, double width, double height) const {
+void GDrawingSurface::checkBounds(const std::string &member, double x, double y, double width, double height) const {
     require::inRange2D(x, y, width - 1, height - 1, member);
 }
 
-void GDrawingSurface::checkColor(const std::string& /* member */, int /* rgb */) const {
+void GDrawingSurface::checkColor(const std::string & /* member */, int /* rgb */) const {
     // I think this code is wrong; it ignores the possibility of alpha values
     // or of the top bits being set to 255 (all 1) by default by Qt libraries
 //    if (rgb < 0x0 || rgb > 0xffffff) {
@@ -46,7 +46,7 @@ void GDrawingSurface::checkColor(const std::string& /* member */, int /* rgb */)
 //    }
 }
 
-void GDrawingSurface::checkSize(const std::string& /* member */, double /* width */, double /* height */) const {
+void GDrawingSurface::checkSize(const std::string & /* member */, double /* width */, double /* height */) const {
 //    if (width < 0 || height < 0) {
 //        error(member + ": width/height cannot be negative");
 //    }
@@ -73,23 +73,23 @@ void GDrawingSurface::conditionalRepaintRegion(int x, int y, int width, int heig
     }
 }
 
-void GDrawingSurface::conditionalRepaintRegion(const GRectangle& bounds) {
+void GDrawingSurface::conditionalRepaintRegion(const GRectangle &bounds) {
     if (isAutoRepaint()) {
         repaintRegion(bounds);
     }
 }
 
-void GDrawingSurface::draw(GObject* gobj, double x, double y) {
+void GDrawingSurface::draw(GObject *gobj, double x, double y) {
     require::nonNull(gobj, "GDrawingSurface::draw");
     gobj->setLocation(x, y);
     draw(gobj);
 }
 
-void GDrawingSurface::draw(GObject& gobj) {
+void GDrawingSurface::draw(GObject &gobj) {
     draw(&gobj);
 }
 
-void GDrawingSurface::draw(GObject& gobj, double x, double y) {
+void GDrawingSurface::draw(GObject &gobj, double x, double y) {
     gobj.setLocation(x, y);
     draw(&gobj);
 }
@@ -100,12 +100,12 @@ void GDrawingSurface::drawArc(double x, double y, double width, double height, d
     draw(arc);
 }
 
-void GDrawingSurface::drawImage(const std::string& filename, double x, double y) {
+void GDrawingSurface::drawImage(const std::string &filename, double x, double y) {
     GImage image(filename, x, y);
     draw(image);
 }
 
-void GDrawingSurface::drawLine(const GPoint& p0, const GPoint& p1) {
+void GDrawingSurface::drawLine(const GPoint &p0, const GPoint &p1) {
     drawLine(p0.getX(), p0.getY(), p1.getX(), p1.getY());
 }
 
@@ -115,7 +115,7 @@ void GDrawingSurface::drawLine(double x0, double y0, double x1, double y1) {
     draw(line);
 }
 
-void GDrawingSurface::drawOval(const GRectangle& bounds) {
+void GDrawingSurface::drawOval(const GRectangle &bounds) {
     drawOval(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 }
 
@@ -125,7 +125,7 @@ void GDrawingSurface::drawOval(double x, double y, double width, double height) 
     draw(oval);
 }
 
-GPoint GDrawingSurface::drawPolarLine(const GPoint& p0, double r, double theta) {
+GPoint GDrawingSurface::drawPolarLine(const GPoint &p0, double r, double theta) {
     return drawPolarLine(p0.getX(), p0.getY(), r, theta);
 }
 
@@ -144,7 +144,7 @@ void GDrawingSurface::drawPixel(double x, double y, int color) {
     setPixel(x, y, color);
 }
 
-void GDrawingSurface::drawPixel(double x, double y, const std::string& color) {
+void GDrawingSurface::drawPixel(double x, double y, const std::string &color) {
     setPixel(x, y, color);
 }
 
@@ -160,7 +160,7 @@ void GDrawingSurface::drawPolygon(std::initializer_list<GPoint> points) {
     draw(polygon);
 }
 
-void GDrawingSurface::drawRect(const GRectangle& bounds) {
+void GDrawingSurface::drawRect(const GRectangle &bounds) {
     drawRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 }
 
@@ -170,7 +170,7 @@ void GDrawingSurface::drawRect(double x, double y, double width, double height) 
     draw(rect);
 }
 
-void GDrawingSurface::drawString(const std::string& text, double x, double y) {
+void GDrawingSurface::drawString(const std::string &text, double x, double y) {
     GText str(text, x, y);
     initializeGObject(str);
     draw(str);
@@ -182,7 +182,7 @@ void GDrawingSurface::fillArc(double x, double y, double width, double height, d
     draw(arc);
 }
 
-void GDrawingSurface::fillOval(const GRectangle& bounds) {
+void GDrawingSurface::fillOval(const GRectangle &bounds) {
     fillOval(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 }
 
@@ -198,7 +198,7 @@ void GDrawingSurface::fillPolygon(std::initializer_list<double> coords) {
     draw(polygon);
 }
 
-void GDrawingSurface::fillRect(const GRectangle& bounds) {
+void GDrawingSurface::fillRect(const GRectangle &bounds) {
     fillRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
 }
 
@@ -304,11 +304,11 @@ std::string GDrawingSurface::getRGBString(double x, double y) const {
     return GColor::convertRGBToColor(getPixel(x, y));
 }
 
-void GDrawingSurface::initializeGObject(GObject& obj, bool fill) {
+void GDrawingSurface::initializeGObject(GObject &obj, bool fill) {
     initializeGObject(&obj, fill);
 }
 
-void GDrawingSurface::initializeGObject(GObject* obj, bool fill) {
+void GDrawingSurface::initializeGObject(GObject *obj, bool fill) {
     if (!obj) {
         return;
     }
@@ -334,7 +334,7 @@ bool GDrawingSurface::isRepaintImmediately() const {
     return isAutoRepaint();
 }
 
-void GDrawingSurface::repaintRegion(const GRectangle& bounds) {
+void GDrawingSurface::repaintRegion(const GRectangle &bounds) {
     repaintRegion((int) bounds.getX(), (int) bounds.getY(),
                   (int) bounds.getWidth(), (int) bounds.getHeight());
 }
@@ -356,7 +356,7 @@ void GDrawingSurface::setBackground(int color) {
     }
 }
 
-void GDrawingSurface::setBackground(const std::string& color) {
+void GDrawingSurface::setBackground(const std::string &color) {
     if (_forwardTarget) {
         _forwardTarget->setBackground(color);
     } else {
@@ -378,7 +378,7 @@ void GDrawingSurface::setColor(int color) {
     }
 }
 
-void GDrawingSurface::setColor(const std::string& color) {
+void GDrawingSurface::setColor(const std::string &color) {
     // sets both color and fillColor
     if (_forwardTarget) {
         _forwardTarget->setColor(color);
@@ -391,7 +391,7 @@ void GDrawingSurface::setColor(const std::string& color) {
     }
 }
 
-void GDrawingSurface::setDrawingForwardTarget(GDrawingSurface* forwardTarget) {
+void GDrawingSurface::setDrawingForwardTarget(GDrawingSurface *forwardTarget) {
     _forwardTarget = forwardTarget;
 }
 
@@ -404,7 +404,7 @@ void GDrawingSurface::setFillColor(int color) {
     }
 }
 
-void GDrawingSurface::setFillColor(const std::string& color) {
+void GDrawingSurface::setFillColor(const std::string &color) {
     if (_forwardTarget) {
         _forwardTarget->setFillColor(color);
     } else {
@@ -413,7 +413,7 @@ void GDrawingSurface::setFillColor(const std::string& color) {
     }
 }
 
-void GDrawingSurface::setFont(const QFont& font) {
+void GDrawingSurface::setFont(const QFont &font) {
     if (_forwardTarget) {
         _forwardTarget->setFont(font);
     } else {
@@ -421,7 +421,7 @@ void GDrawingSurface::setFont(const QFont& font) {
     }
 }
 
-void GDrawingSurface::setFont(const std::string& font) {
+void GDrawingSurface::setFont(const std::string &font) {
     if (_forwardTarget) {
         _forwardTarget->setFont(font);
     } else {
@@ -433,7 +433,7 @@ void GDrawingSurface::setForeground(int color) {
     setColor(color);
 }
 
-void GDrawingSurface::setForeground(const std::string& color) {
+void GDrawingSurface::setForeground(const std::string &color) {
     setColor(color);
 }
 
@@ -457,7 +457,7 @@ void GDrawingSurface::setPixel(double x, double y, int r, int g, int b) {
     setPixel(x, y, GColor::convertRGBToRGB(r, g, b));
 }
 
-void GDrawingSurface::setPixel(double x, double y, const std::string& color) {
+void GDrawingSurface::setPixel(double x, double y, const std::string &color) {
     setPixel(x, y, GColor::convertColorToRGB(color));
 }
 
@@ -477,7 +477,7 @@ void GDrawingSurface::setRGB(double x, double y, int r, int g, int b) {
     this->setPixel(x, y, r, g, b);
 }
 
-void GDrawingSurface::setRGB(double x, double y, const std::string& color) {
+void GDrawingSurface::setRGB(double x, double y, const std::string &color) {
     setPixel(x, y, GColor::convertColorToRGB(color));
 }
 
@@ -488,27 +488,27 @@ void GForwardDrawingSurface::clear() {
     }
 }
 
-void GForwardDrawingSurface::draw(GObject* obj) {
+void GForwardDrawingSurface::draw(GObject *obj) {
     ensureForwardTarget();
     _forwardTarget->draw(obj);
 }
 
-void GForwardDrawingSurface::draw(GObject* obj, double x, double y) {
+void GForwardDrawingSurface::draw(GObject *obj, double x, double y) {
     ensureForwardTarget();
     _forwardTarget->draw(obj, x, y);
 }
 
-void GForwardDrawingSurface::draw(GObject& obj) {
+void GForwardDrawingSurface::draw(GObject &obj) {
     ensureForwardTarget();
     _forwardTarget->draw(obj);
 }
 
-void GForwardDrawingSurface::draw(GObject& obj, double x, double y) {
+void GForwardDrawingSurface::draw(GObject &obj, double x, double y) {
     ensureForwardTarget();
     _forwardTarget->draw(obj, x, y);
 }
 
-void GForwardDrawingSurface::draw(QPainter* painter) {
+void GForwardDrawingSurface::draw(QPainter *painter) {
     ensureForwardTarget();
     _forwardTarget->draw(painter);
 }
@@ -517,7 +517,7 @@ void GForwardDrawingSurface::ensureForwardTargetConstHack() const {
     if (!_forwardTarget) {
         // Your whole life has been a lie.
         // Also, this code is bad and I should feel bad.
-        GForwardDrawingSurface* hack = (GForwardDrawingSurface*) this;
+        GForwardDrawingSurface *hack = (GForwardDrawingSurface *) this;
         hack->ensureForwardTarget();
     }
 }
@@ -569,7 +569,7 @@ void GForwardDrawingSurface::setBackground(int color) {
     _forwardTarget->setBackground(color);
 }
 
-void GForwardDrawingSurface::setBackground(const std::string& color) {
+void GForwardDrawingSurface::setBackground(const std::string &color) {
     ensureForwardTarget();
     _forwardTarget->setBackground(color);
 }
@@ -579,7 +579,7 @@ void GForwardDrawingSurface::setColor(int color) {
     _forwardTarget->setColor(color);
 }
 
-void GForwardDrawingSurface::setColor(const std::string& color) {
+void GForwardDrawingSurface::setColor(const std::string &color) {
     ensureForwardTarget();
     _forwardTarget->setColor(color);
 }
@@ -589,17 +589,17 @@ void GForwardDrawingSurface::setFillColor(int color) {
     _forwardTarget->setFillColor(color);
 }
 
-void GForwardDrawingSurface::setFillColor(const std::string& color) {
+void GForwardDrawingSurface::setFillColor(const std::string &color) {
     ensureForwardTarget();
     _forwardTarget->setFillColor(color);
 }
 
-void GForwardDrawingSurface::setFont(const QFont& font) {
+void GForwardDrawingSurface::setFont(const QFont &font) {
     ensureForwardTarget();
     _forwardTarget->setFont(font);
 }
 
-void GForwardDrawingSurface::setFont(const std::string& font) {
+void GForwardDrawingSurface::setFont(const std::string &font) {
     ensureForwardTarget();
     _forwardTarget->setFont(font);
 }
@@ -629,12 +629,12 @@ void GForwardDrawingSurface::setPixelARGB(double x, double y, int a, int r, int 
     _forwardTarget->setPixelARGB(x, y, a, r, g, b);
 }
 
-void GForwardDrawingSurface::setPixels(const Grid<int>& pixels) {
+void GForwardDrawingSurface::setPixels(const Grid<int> &pixels) {
     ensureForwardTarget();
     _forwardTarget->setPixels(pixels);
 }
 
-void GForwardDrawingSurface::setPixelsARGB(const Grid<int>& pixelsARGB) {
+void GForwardDrawingSurface::setPixelsARGB(const Grid<int> &pixelsARGB) {
     ensureForwardTarget();
     _forwardTarget->setPixelsARGB(pixelsARGB);
 }

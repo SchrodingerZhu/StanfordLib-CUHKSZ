@@ -65,7 +65,7 @@
  * specified using templates, which makes it possible to use
  * this structure with any data type.
  */
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 class Map {
 public:
     /*
@@ -87,7 +87,7 @@ public:
      * The function can accept the two keys to compare either by value
      * or by const reference.
      */
-    Map(std::function<bool (const KeyType&, const KeyType&)> lessFunc);
+    Map(std::function<bool(const KeyType &, const KeyType &)> lessFunc);
 
     /*
      * Constructor: Map
@@ -110,7 +110,7 @@ public:
      * or by const reference.
      */
     Map(std::initializer_list<std::pair<const KeyType, ValueType>> list,
-        std::function<bool (const KeyType&, const KeyType&)> lessFunc);
+        std::function<bool(const KeyType &, const KeyType &)> lessFunc);
 
     /*
      * Destructor: ~Map
@@ -118,7 +118,7 @@ public:
      * Frees any heap storage associated with this map.
      */
     virtual ~Map() = default;
-    
+
     /*
      * Method: add
      * Usage: map.add(key, value);
@@ -126,7 +126,7 @@ public:
      * Associates <code>key</code> with <code>value</code> in this map.
      * A synonym for the put method.
      */
-    void add(const KeyType& key, const ValueType& value);
+    void add(const KeyType &key, const ValueType &value);
 
     /*
      * Method: addAll
@@ -139,7 +139,7 @@ public:
      * Returns a reference to this map.
      * Identical in behavior to putAll.
      */
-    Map& addAll(const Map& map2);
+    Map &addAll(const Map &map2);
 
     /*
      * Method: back
@@ -157,7 +157,7 @@ public:
      * Removes all entries from this map.
      */
     void clear();
-    
+
     /*
      * Method: containsKey
      * Usage: if (map.containsKey(key)) ...
@@ -165,7 +165,7 @@ public:
      * Returns <code>true</code> if there is an entry for <code>key</code>
      * in this map.
      */
-    bool containsKey(const KeyType& key) const;
+    bool containsKey(const KeyType &key) const;
 
     /*
      * Method: equals
@@ -174,7 +174,7 @@ public:
      * Returns <code>true</code> if the two maps contain exactly the same
      * key/value pairs, and <code>false</code> otherwise.
      */
-    bool equals(const Map& map2) const;
+    bool equals(const Map &map2) const;
 
     /*
      * Method: front
@@ -193,7 +193,7 @@ public:
      * If <code>key</code> is not found, <code>get</code> returns the
      * default value for <code>ValueType</code>.
      */
-    ValueType get(const KeyType& key) const;
+    ValueType get(const KeyType &key) const;
 
     /*
      * Method: isEmpty
@@ -202,7 +202,7 @@ public:
      * Returns <code>true</code> if this map contains no entries.
      */
     bool isEmpty() const;
-    
+
     /*
      * Method: keys
      * Usage: Vector<KeyType> keys = map.keys();
@@ -212,7 +212,7 @@ public:
      * so it is inefficient to call on large maps.
      */
     Vector<KeyType> keys() const;
-    
+
     /*
      * Method: mapAll
      * Usage: map.mapAll(fn);
@@ -221,7 +221,7 @@ public:
      * for each one.  The keys are processed in ascending order, as defined
      * by the comparison function.
      */
-    void mapAll(std::function<void (const KeyType&, const ValueType&)> fn) const;
+    void mapAll(std::function<void(const KeyType &, const ValueType &)> fn) const;
 
     /*
      * Method: put
@@ -231,7 +231,7 @@ public:
      * Any previous value associated with <code>key</code> is replaced
      * by the new value.
      */
-    void put(const KeyType& key, const ValueType& value);
+    void put(const KeyType &key, const ValueType &value);
 
     /*
      * Method: putAll
@@ -244,7 +244,7 @@ public:
      * Returns a reference to this map.
      * Identical in behavior to addAll.
      */
-    Map& putAll(const Map& map2);
+    Map &putAll(const Map &map2);
 
     /*
      * Method: remove
@@ -252,7 +252,7 @@ public:
      * -----------------------
      * Removes any entry for <code>key</code> from this map.
      */
-    void remove(const KeyType& key);
+    void remove(const KeyType &key);
 
     /*
      * Method: removeAll
@@ -264,7 +264,7 @@ public:
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      * Returns a reference to this map.
      */
-    Map& removeAll(const Map& map2);
+    Map &removeAll(const Map &map2);
 
     /*
      * Method: retainAll
@@ -276,7 +276,7 @@ public:
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      * Returns a reference to this map.
      */
-    Map& retainAll(const Map& map2);
+    Map &retainAll(const Map &map2);
 
     /*
      * Method: size
@@ -285,7 +285,7 @@ public:
      * Returns the number of entries in this map.
      */
     int size() const;
-    
+
     /*
      * Method: toString
      * Usage: string str = map.toString();
@@ -315,8 +315,9 @@ public:
      * value.  If key is not present in the map, a new entry is created
      * whose value is set to the default for the value type.
      */
-    ValueType& operator [](const KeyType& key);
-    ValueType operator [](const KeyType& key) const;
+    ValueType &operator[](const KeyType &key);
+
+    ValueType operator[](const KeyType &key) const;
 
     /*
      * Operator: ==
@@ -324,7 +325,7 @@ public:
      * ----------------------------
      * Compares two maps for equality.
      */
-    bool operator ==(const Map& map2) const;
+    bool operator==(const Map &map2) const;
 
     /*
      * Operator: !=
@@ -332,7 +333,7 @@ public:
      * ----------------------------
      * Compares two maps for inequality.
      */
-    bool operator !=(const Map& map2) const;
+    bool operator!=(const Map &map2) const;
 
     /*
      * Operators: <, <=, >, >=
@@ -342,10 +343,13 @@ public:
      * The <, >, <=, >= operators require that the ValueType has a < operator
      * so that the elements can be compared pairwise.
      */
-    bool operator <(const Map& map2) const;
-    bool operator <=(const Map& map2) const;
-    bool operator >(const Map& map2) const;
-    bool operator >=(const Map& map2) const;
+    bool operator<(const Map &map2) const;
+
+    bool operator<=(const Map &map2) const;
+
+    bool operator>(const Map &map2) const;
+
+    bool operator>=(const Map &map2) const;
 
     /*
      * Operator: +
@@ -357,7 +361,7 @@ public:
      * from the second map is favored.
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    Map operator +(const Map& map2) const;
+    Map operator+(const Map &map2) const;
 
     /*
      * Operator: +=
@@ -367,7 +371,7 @@ public:
      * Equivalent to calling addAll(map2).
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    Map& operator +=(const Map& map2);
+    Map &operator+=(const Map &map2);
 
     /*
      * Operator: -
@@ -377,7 +381,7 @@ public:
      * with removeAll called on it passing the second map as a parameter.
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    Map operator -(const Map& map2) const;
+    Map operator-(const Map &map2) const;
 
     /*
      * Operator: -=
@@ -387,7 +391,7 @@ public:
      * Equivalent to calling removeAll(map2).
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    Map& operator -=(const Map& map2);
+    Map &operator-=(const Map &map2);
 
     /*
      * Operator: *
@@ -397,7 +401,7 @@ public:
      * with retainAll called on it passing the second map as a parameter.
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    Map operator *(const Map& map2) const;
+    Map operator*(const Map &map2) const;
 
     /*
      * Operator: *=
@@ -407,7 +411,7 @@ public:
      * Equivalent to calling retainAll(map2).
      * You can also pass an initializer list of pairs such as {{"a", 1}, {"b", 2}, {"c", 3}}.
      */
-    Map& operator *=(const Map& map2);
+    Map &operator*=(const Map &map2);
 
     /*
      * Additional Map operations
@@ -432,7 +436,7 @@ public:
     /**********************************************************************/
 
 private:
-    using MapType = std::map<KeyType, ValueType, std::function<bool(const KeyType&, const KeyType&)>>;
+    using MapType = std::map<KeyType, ValueType, std::function<bool(const KeyType &, const KeyType &)>>;
     MapType _elements;
     stanfordcpplib::collections::VersionTracker _version;
 
@@ -450,43 +454,44 @@ public:
     using iterator = const_iterator;
 
     const_iterator begin() const;
+
     const_iterator end() const;
 };
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 Map<KeyType, ValueType>::Map() : _elements(stanfordcpplib::collections::checkedLess<KeyType>()) {
     // Handled in initializer
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>::Map(std::function<bool(const KeyType&, const KeyType&)> lessFunc)
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType>::Map(std::function<bool(const KeyType &, const KeyType &)> lessFunc)
         : _elements(lessFunc) {
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 Map<KeyType, ValueType>::Map(std::initializer_list<std::pair<const KeyType, ValueType>> list)
         : _elements(list, stanfordcpplib::collections::checkedLess<KeyType>()) {
     // Handled in initializer
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 Map<KeyType, ValueType>::Map(std::initializer_list<std::pair<const KeyType, ValueType>> list,
-                             std::function<bool(const KeyType&, const KeyType&)> lessFunc)
+                             std::function<bool(const KeyType &, const KeyType &)> lessFunc)
         : _elements(list, lessFunc) {
 }
 
-template <typename KeyType, typename ValueType>
-void Map<KeyType, ValueType>::add(const KeyType& key,
-                                  const ValueType& value) {
+template<typename KeyType, typename ValueType>
+void Map<KeyType, ValueType>::add(const KeyType &key,
+                                  const ValueType &value) {
     put(key, value);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::addAll(const Map& map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::addAll(const Map &map2) {
     return putAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 KeyType Map<KeyType, ValueType>::back() const {
     if (isEmpty()) {
         error("Map::back: map is empty");
@@ -494,23 +499,23 @@ KeyType Map<KeyType, ValueType>::back() const {
     return _elements.rbegin()->first;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 void Map<KeyType, ValueType>::clear() {
     _elements.clear();
     _version.update();
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::containsKey(const KeyType& key) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::containsKey(const KeyType &key) const {
     return !!_elements.count(key);
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::equals(const Map<KeyType, ValueType>& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::equals(const Map<KeyType, ValueType> &map2) const {
     return stanfordcpplib::collections::equalsMap(*this, map2);
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 KeyType Map<KeyType, ValueType>::front() const {
     if (isEmpty()) {
         error("Map::front: map is empty");
@@ -518,58 +523,58 @@ KeyType Map<KeyType, ValueType>::front() const {
     return _elements.begin()->first;
 }
 
-template <typename KeyType, typename ValueType>
-ValueType Map<KeyType, ValueType>::get(const KeyType& key) const {
+template<typename KeyType, typename ValueType>
+ValueType Map<KeyType, ValueType>::get(const KeyType &key) const {
     auto itr = _elements.find(key);
-    return itr == _elements.end()? ValueType() : itr->second;
+    return itr == _elements.end() ? ValueType() : itr->second;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 bool Map<KeyType, ValueType>::isEmpty() const {
     return _elements.empty();
 }
 
-template <typename KeyType,typename ValueType>
+template<typename KeyType, typename ValueType>
 Vector<KeyType> Map<KeyType, ValueType>::keys() const {
     Vector<KeyType> keyset;
-    for (const auto& entry: _elements) {
+    for (const auto &entry: _elements) {
         keyset.add(entry.first);
     }
     return keyset;
 }
 
-template <typename KeyType, typename ValueType>
-void Map<KeyType, ValueType>::mapAll(std::function<void (const KeyType&, const ValueType&)> fn) const {
-    for (const auto& entry: _elements) {
+template<typename KeyType, typename ValueType>
+void Map<KeyType, ValueType>::mapAll(std::function<void(const KeyType &, const ValueType &)> fn) const {
+    for (const auto &entry: _elements) {
         fn(entry.first, entry.second);
     }
 }
 
-template <typename KeyType, typename ValueType>
-void Map<KeyType, ValueType>::put(const KeyType& key,
-                                  const ValueType& value) {
+template<typename KeyType, typename ValueType>
+void Map<KeyType, ValueType>::put(const KeyType &key,
+                                  const ValueType &value) {
     int presize = size();
     _elements[key] = value;
     if (presize != size()) _version.update();
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::putAll(const Map& map2) {
-    for (const KeyType& key : map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::putAll(const Map &map2) {
+    for (const KeyType &key : map2) {
         put(key, map2.get(key));
     }
     return *this;
 }
 
-template <typename KeyType, typename ValueType>
-void Map<KeyType, ValueType>::remove(const KeyType& key) {
+template<typename KeyType, typename ValueType>
+void Map<KeyType, ValueType>::remove(const KeyType &key) {
     _elements.erase(key);
     _version.update();
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::removeAll(const Map& map2) {
-    for (const KeyType& key : map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::removeAll(const Map &map2) {
+    for (const KeyType &key : map2) {
         if (containsKey(key) && get(key) == map2.get(key)) {
             remove(key);
         }
@@ -577,127 +582,127 @@ Map<KeyType, ValueType>& Map<KeyType, ValueType>::removeAll(const Map& map2) {
     return *this;
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::retainAll(const Map& map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::retainAll(const Map &map2) {
     Vector<KeyType> toRemove;
-    for (const KeyType& key : *this) {
+    for (const KeyType &key : *this) {
         if (!map2.containsKey(key) || get(key) != map2.get(key)) {
             toRemove.add(key);
         }
     }
-    for (const KeyType& key : toRemove) {
+    for (const KeyType &key : toRemove) {
         remove(key);
     }
     return *this;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 int Map<KeyType, ValueType>::size() const {
     return _elements.size();
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 std::string Map<KeyType, ValueType>::toString() const {
     std::ostringstream os;
     os << *this;
     return os.str();
 }
 
-template <typename KeyType,typename ValueType>
+template<typename KeyType, typename ValueType>
 Vector<ValueType> Map<KeyType, ValueType>::values() const {
     Vector<ValueType> values;
-    for (const auto& entry: _elements) {
+    for (const auto &entry: _elements) {
         values.add(entry.second);
     }
     return values;
 }
 
-template <typename KeyType, typename ValueType>
-ValueType& Map<KeyType, ValueType>::operator [](const KeyType& key) {
+template<typename KeyType, typename ValueType>
+ValueType &Map<KeyType, ValueType>::operator[](const KeyType &key) {
     auto presize = size();
-    auto& result = _elements[key];
+    auto &result = _elements[key];
 
     /* If the size was updated, we must have inserted something. */
     if (presize != size()) _version.update();
     return result;
 }
 
-template <typename KeyType, typename ValueType>
-ValueType Map<KeyType, ValueType>::operator [](const KeyType& key) const {
+template<typename KeyType, typename ValueType>
+ValueType Map<KeyType, ValueType>::operator[](const KeyType &key) const {
     return get(key);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType> Map<KeyType, ValueType>::operator +(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> Map<KeyType, ValueType>::operator+(const Map &map2) const {
     Map<KeyType, ValueType> result = *this;
     return result.putAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::operator +=(const Map& map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::operator+=(const Map &map2) {
     return putAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType> Map<KeyType, ValueType>::operator -(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> Map<KeyType, ValueType>::operator-(const Map &map2) const {
     Map<KeyType, ValueType> result = *this;
     return result.removeAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::operator -=(const Map& map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::operator-=(const Map &map2) {
     return removeAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType> Map<KeyType, ValueType>::operator *(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> Map<KeyType, ValueType>::operator*(const Map &map2) const {
     Map<KeyType, ValueType> result = *this;
     return result.retainAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::operator *=(const Map& map2) {
+template<typename KeyType, typename ValueType>
+Map<KeyType, ValueType> &Map<KeyType, ValueType>::operator*=(const Map &map2) {
     return retainAll(map2);
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::operator ==(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::operator==(const Map &map2) const {
     return equals(map2);
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::operator !=(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::operator!=(const Map &map2) const {
     return !equals(map2);   // BUGFIX 2016/01/27, thanks to O. Zeng
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::operator <(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::operator<(const Map &map2) const {
     return stanfordcpplib::collections::compareMaps(*this, map2) < 0;
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::operator <=(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::operator<=(const Map &map2) const {
     return stanfordcpplib::collections::compareMaps(*this, map2) <= 0;
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::operator >(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::operator>(const Map &map2) const {
     return stanfordcpplib::collections::compareMaps(*this, map2) > 0;
 }
 
-template <typename KeyType, typename ValueType>
-bool Map<KeyType, ValueType>::operator >=(const Map& map2) const {
+template<typename KeyType, typename ValueType>
+bool Map<KeyType, ValueType>::operator>=(const Map &map2) const {
     return stanfordcpplib::collections::compareMaps(*this, map2) >= 0;
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 typename Map<KeyType, ValueType>::iterator Map<KeyType, ValueType>::begin() const {
-    return iterator({ &_version, _elements.begin(), _elements });
+    return iterator({&_version, _elements.begin(), _elements});
 }
 
-template <typename KeyType, typename ValueType>
+template<typename KeyType, typename ValueType>
 typename Map<KeyType, ValueType>::iterator Map<KeyType, ValueType>::end() const {
-    return iterator({ &_version, _elements.end(), _elements });
+    return iterator({&_version, _elements.end(), _elements});
 }
 
 /*
@@ -707,14 +712,14 @@ typename Map<KeyType, ValueType>::iterator Map<KeyType, ValueType>::end() const 
  * strlib.h to read and write generic values in a way that treats strings
  * specially.
  */
-template <typename KeyType, typename ValueType>
-std::ostream& operator <<(std::ostream& os,
-                          const Map<KeyType, ValueType>& map) {
+template<typename KeyType, typename ValueType>
+std::ostream &operator<<(std::ostream &os,
+                         const Map<KeyType, ValueType> &map) {
     return stanfordcpplib::collections::writeMap(os, map);
 }
 
-template <typename KeyType, typename ValueType>
-std::istream& operator >>(std::istream& is, Map<KeyType,ValueType>& map) {
+template<typename KeyType, typename ValueType>
+std::istream &operator>>(std::istream &is, Map<KeyType, ValueType> &map) {
     KeyType key;
     ValueType value;
     return stanfordcpplib::collections::readMap(is, map, key, value, /* descriptor */ std::string("Map::operator >>"));
@@ -724,8 +729,8 @@ std::istream& operator >>(std::istream& is, Map<KeyType,ValueType>& map) {
  * Template hash function for maps.
  * Requires the key and value types in the Map to have a hashCode function.
  */
-template <typename K, typename V>
-int hashCode(const Map<K, V>& map) {
+template<typename K, typename V>
+int hashCode(const Map<K, V> &map) {
     return stanfordcpplib::collections::hashCodeMap(map);
 }
 
@@ -736,8 +741,8 @@ int hashCode(const Map<K, V>& map) {
  * Returns a randomly chosen key of the given map.
  * Throws an error if the map is empty.
  */
-template <typename K, typename V>
-const K& randomKey(const Map<K, V>& map) {
+template<typename K, typename V>
+const K &randomKey(const Map<K, V> &map) {
     return stanfordcpplib::collections::randomElement(map);
 }
 

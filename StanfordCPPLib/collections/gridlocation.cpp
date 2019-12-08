@@ -28,40 +28,40 @@ std::string GridLocation::toString() const {
     return out.str();
 }
 
-int hashCode(const GridLocation& loc) {
+int hashCode(const GridLocation &loc) {
     return hashCode(loc.row, loc.col);
 }
 
-bool operator <(const GridLocation& loc1, const GridLocation& loc2) {
+bool operator<(const GridLocation &loc1, const GridLocation &loc2) {
     return loc1.row < loc2.row ||
-            (loc1.row == loc2.row && loc1.col < loc2.col);
+           (loc1.row == loc2.row && loc1.col < loc2.col);
 }
 
-bool operator <=(const GridLocation& loc1, const GridLocation& loc2) {
+bool operator<=(const GridLocation &loc1, const GridLocation &loc2) {
     return loc1 < loc2 || loc1 == loc2;
 }
 
-bool operator ==(const GridLocation& loc1, const GridLocation& loc2) {
+bool operator==(const GridLocation &loc1, const GridLocation &loc2) {
     return loc1.row == loc2.row && loc1.col == loc2.col;
 }
 
-bool operator !=(const GridLocation& loc1, const GridLocation& loc2) {
+bool operator!=(const GridLocation &loc1, const GridLocation &loc2) {
     return !(loc1 == loc2);
 }
 
-bool operator >(const GridLocation& loc1, const GridLocation& loc2) {
+bool operator>(const GridLocation &loc1, const GridLocation &loc2) {
     return loc2 < loc1;
 }
 
-bool operator >=(const GridLocation& loc1, const GridLocation& loc2) {
+bool operator>=(const GridLocation &loc1, const GridLocation &loc2) {
     return !(loc1 < loc2);
 }
 
-std::ostream& operator <<(std::ostream& out, const GridLocation& loc) {
+std::ostream &operator<<(std::ostream &out, const GridLocation &loc) {
     return out << "r" << loc.row << "c" << loc.col;
 }
 
-std::istream& operator >>(std::istream& input, GridLocation& loc) {
+std::istream &operator>>(std::istream &input, GridLocation &loc) {
     // read 'r'
     input.get();
     if (!input) {
@@ -103,7 +103,7 @@ GridLocationRange::GridLocationRange(int startRow, int startCol, int endRow, int
     // empty
 }
 
-GridLocationRange::GridLocationRange(const GridLocation& startLoc, const GridLocation& endLoc, bool isRowMajor)
+GridLocationRange::GridLocationRange(const GridLocation &startLoc, const GridLocation &endLoc, bool isRowMajor)
         : _start(startLoc),
           _end(endLoc),
           _isRowMajor(isRowMajor) {
@@ -114,7 +114,7 @@ GridLocationRange::GridLocationRangeIterator GridLocationRange::begin() const {
     return GridLocationRangeIterator(this, /* end */ false);
 }
 
-bool GridLocationRange::contains(const GridLocation& loc) const {
+bool GridLocationRange::contains(const GridLocation &loc) const {
     return _start <= loc && loc <= _end;
 }
 
@@ -126,7 +126,7 @@ int GridLocationRange::endCol() const {
     return _end.col;
 }
 
-const GridLocation& GridLocationRange::endLocation() const {
+const GridLocation &GridLocationRange::endLocation() const {
     return _end;
 }
 
@@ -146,7 +146,7 @@ int GridLocationRange::startCol() const {
     return _start.col;
 }
 
-const GridLocation& GridLocationRange::startLocation() const {
+const GridLocation &GridLocationRange::startLocation() const {
     return _start;
 }
 
@@ -160,6 +160,6 @@ std::string GridLocationRange::toString() const {
     return out.str();
 }
 
-std::ostream& operator <<(std::ostream& out, const GridLocationRange& range) {
+std::ostream &operator<<(std::ostream &out, const GridLocationRange &range) {
     return out << range.startLocation() << " .. " << range.endLocation();
 }

@@ -37,28 +37,31 @@ static void initRandomSeed();
 
 /* internal buffer of fixed random numbers to return; used by autograders */
 STATIC_VARIABLE_DECLARE_COLLECTION_EMPTY(std::queue<bool>, fixedBools)
+
 STATIC_VARIABLE_DECLARE_COLLECTION_EMPTY(std::queue<int>, fixedInts)
+
 STATIC_VARIABLE_DECLARE_COLLECTION_EMPTY(std::queue<double>, fixedReals)
 
 namespace autograder {
-void randomFeedBool(bool value) {
-    STATIC_VARIABLE(fixedBools).push(value);
+    void randomFeedBool(bool value) {
+        STATIC_VARIABLE(fixedBools).push(value);
+    }
+
+    void randomFeedClear() {
+        STATIC_VARIABLE(fixedBools) = std::queue<bool>();
+        STATIC_VARIABLE(fixedInts) = std::queue<int>();
+        STATIC_VARIABLE(fixedReals) = std::queue<double>();
+    }
+
+    void randomFeedInteger(int value) {
+        STATIC_VARIABLE(fixedInts).push(value);
+    }
+
+    void randomFeedReal(double value) {
+        STATIC_VARIABLE(fixedReals).push(value);
+    }
 }
 
-void randomFeedClear() {
-    STATIC_VARIABLE(fixedBools) = std::queue<bool>();
-    STATIC_VARIABLE(fixedInts) = std::queue<int>();
-    STATIC_VARIABLE(fixedReals) = std::queue<double>();
-}
-
-void randomFeedInteger(int value) {
-    STATIC_VARIABLE(fixedInts).push(value);
-}
-
-void randomFeedReal(double value) {
-    STATIC_VARIABLE(fixedReals).push(value);
-}
-}
 /* end 'fixed' internal stuff */
 
 bool randomBool() {
@@ -96,7 +99,7 @@ int randomColor(int minRGB, int maxRGB) {
         return randomColor();
     }
     if (minRGB < 0 || minRGB > 255 || maxRGB < 0 || maxRGB > 255
-            || minRGB > maxRGB) {
+        || minRGB > maxRGB) {
         error("randomColor: min/max values out of range");
     }
     int r = randomInteger(minRGB, maxRGB);

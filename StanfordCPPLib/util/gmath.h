@@ -24,7 +24,9 @@
 #include <limits>
 
 #ifndef SPL_HEADLESS_MODE
+
 #include <graphics/gtypes.h>
+
 #endif // SPL_HEADLESS_MODE
 
 #include <util/point.h>
@@ -83,7 +85,8 @@ bool floatingPointEqual(T f1, T f2, T tolerance) {
  */
 template<typename T>
 bool floatingPointEqual(T f1, T f2) {
-    return floatingPointEqual(f1, f2, /* tolerance */ (T) std::numeric_limits<T>::epsilon() * std::fmax(fabs(f1), fabs(f2)));
+    return floatingPointEqual(f1, f2, /* tolerance */
+                              (T) std::numeric_limits<T>::epsilon() * std::fmax(fabs(f1), fabs(f2)));
 }
 
 /**
@@ -175,9 +178,12 @@ double vectorAngle(double x, double y);
  * Cartesian plane.
  */
 #ifndef SPL_HEADLESS_MODE
-double vectorAngle(const GPoint& pt);
+
+double vectorAngle(const GPoint &pt);
+
 #endif // SPL_HEADLESS_MODE
-double vectorAngle(const Point& pt);
+
+double vectorAngle(const Point &pt);
 
 /**
  * Computes the distance between the origin and the specified point.
@@ -188,8 +194,11 @@ double vectorDistance(double x, double y);
  * Computes the distance between the origin and the specified point.
  */
 #ifndef SPL_HEADLESS_MODE
-double vectorDistance(const GPoint& pt);
+
+double vectorDistance(const GPoint &pt);
+
 #endif // SPL_HEADLESS_MODE
-double vectorDistance(const Point& pt);
+
+double vectorDistance(const Point &pt);
 
 #endif // _gmath_h

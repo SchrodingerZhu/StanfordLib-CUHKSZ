@@ -36,42 +36,42 @@ public:
      * with the given initial color selected.
      * Returns the color that was chosen as a color string such as "#ff0077" or "blue".
      */
-    static std::string showDialog(const std::string& title, int initialColor);
+    static std::string showDialog(const std::string &title, int initialColor);
 
     /**
      * Pops up a color chooser dialog with the given top title text,
      * with the given initial color selected.
      * Returns the color that was chosen as a color string such as "#ff0077" or "blue".
      */
-    static std::string showDialog(GWindow* parent, const std::string& title, int initialColor);
+    static std::string showDialog(GWindow *parent, const std::string &title, int initialColor);
 
     /**
      * Pops up a color chooser dialog with the given top title text,
      * with the given initial color selected.
      * Returns the color that was chosen as a color string such as "#ff0077" or "blue".
      */
-    static std::string showDialog(QWidget* parent, const std::string& title, int initialColor);
+    static std::string showDialog(QWidget *parent, const std::string &title, int initialColor);
 
     /**
      * Pops up a color chooser dialog with the given top title text,
      * with the given initial color selected.
      * Returns the color that was chosen as a color string such as "#ff0077" or "blue".
      */
-    static std::string showDialog(const std::string& title = "", const std::string& initialColor = "");
+    static std::string showDialog(const std::string &title = "", const std::string &initialColor = "");
 
     /**
      * Pops up a color chooser dialog with the given top title text,
      * with the given initial color selected.
      * Returns the color that was chosen as a color string such as "#ff0077" or "blue".
      */
-    static std::string showDialog(GWindow* parent, const std::string& title = "", const std::string& initialColor = "");
+    static std::string showDialog(GWindow *parent, const std::string &title = "", const std::string &initialColor = "");
 
     /**
      * Pops up a color chooser dialog with the given top title text,
      * with the given initial color selected.
      * Returns the color that was chosen as a color string such as "#ff0077" or "blue".
      */
-    static std::string showDialog(QWidget* parent, const std::string& title = "", const std::string& initialColor = "");
+    static std::string showDialog(QWidget *parent, const std::string &title = "", const std::string &initialColor = "");
 
 private:
     GColorChooser();   // prevent construction

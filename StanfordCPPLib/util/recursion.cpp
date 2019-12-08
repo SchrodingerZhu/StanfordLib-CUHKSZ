@@ -19,8 +19,8 @@ int getRecursionIndentLevel() {
     for (int i = 0; i < entries.size(); ++i) {
         // remove references to std:: namespace
         if (exceptions::shouldFilterOutFromStackTrace(entries[i].function)
-                || entries[i].function.find("recursionIndent(") != std::string::npos
-                || entries[i].function.find("getRecursionIndentLevel(") != std::string::npos) {
+            || entries[i].function.find("recursionIndent(") != std::string::npos
+            || entries[i].function.find("getRecursionIndentLevel(") != std::string::npos) {
             continue;
         } else if (currentFunction.empty()) {
             currentFunction = entries[i].function;
@@ -34,7 +34,7 @@ int getRecursionIndentLevel() {
     return currentFunctionCount;
 }
 
-std::string recursionIndent(const std::string& indenter) {
+std::string recursionIndent(const std::string &indenter) {
     int indent = getRecursionIndentLevel();
     std::string result = "";
     for (int i = 0; i < indent - 1; i++) {

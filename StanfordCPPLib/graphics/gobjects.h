@@ -39,7 +39,9 @@
 #include <collections/vector.h>
 
 class GCanvas;
+
 class GCompound;
+
 class GDiffImage;
 
 /**
@@ -85,14 +87,14 @@ public:
     /**
      * Returns <code>true</code> if the specified point is inside the object.
      */
-    virtual bool contains(const GPoint& pt) const;
+    virtual bool contains(const GPoint &pt) const;
 
     /**
      * Draws this object onto the given surface.
      * Each GObject subclass must override this method.
      * @private
      */
-    virtual void draw(QPainter* painter) = 0;
+    virtual void draw(QPainter *painter) = 0;
 
     /**
      * Returns the x/y coordinates of the bottom/right corner of the object.
@@ -187,7 +189,7 @@ public:
      * Calling <code>getParent</code> on the top-level <code>GCompound</code>
      * returns <code>nullptr</code>.
      */
-    virtual GCompound* getParent() const;
+    virtual GCompound *getParent() const;
 
     /**
      * Returns the <i>x</i>-coordinate of the right side of the object.
@@ -336,7 +338,7 @@ public:
     /**
      * Changes the bounds of this object to the specified rectangle.
      */
-    virtual void setBounds(const GRectangle& size);
+    virtual void setBounds(const GRectangle &size);
 
     /**
      * Sets the location of the bottom y-coordinate of this object.
@@ -356,7 +358,7 @@ public:
     /**
      * Sets the location of the bottom/right of this object.
      */
-    virtual void setBottomRightLocation(const GPoint& pt);
+    virtual void setBottomRightLocation(const GPoint &pt);
 
     /**
      * Sets the x-coordinate of the center of this object.
@@ -376,7 +378,7 @@ public:
     /**
      * Sets the location of the center of this object.
      */
-    virtual void setCenterLocation(const GPoint& pt);
+    virtual void setCenterLocation(const GPoint &pt);
 
     /**
      * Sets the color used to display this object.
@@ -408,7 +410,7 @@ public:
      *
      * @color a color string such as "#7700ff" or "purple"
      */
-    virtual void setColor(const std::string& color);
+    virtual void setColor(const std::string &color);
 
     /**
      * Sets the color used to display the filled region of this object, if any.
@@ -439,7 +441,7 @@ public:
      *
      * @color a color string such as "#7700ff" or "purple"
      */
-    virtual void setFillColor(const std::string& color);
+    virtual void setFillColor(const std::string &color);
 
     /**
      * Sets the fill status for the object, where <code>false</code> is
@@ -452,7 +454,7 @@ public:
      * the given Qt font.
      * See gfont.h for more detail about how to specify fonts.
      */
-    virtual void setFont(const QFont& font);
+    virtual void setFont(const QFont &font);
 
     /**
      * Changes the font used to display the object as specified by
@@ -467,7 +469,7 @@ public:
      * the existing value is retained.
      * See gfont.h for more detail about how to specify fonts.
      */
-    virtual void setFont(const std::string& font);
+    virtual void setFont(const std::string &font);
 
     /**
      * Sets the color used to display this object.
@@ -499,7 +501,7 @@ public:
      *
      * @color a color string such as "#7700ff" or "purple"
      */
-    virtual void setForeground(const std::string& color);
+    virtual void setForeground(const std::string &color);
 
     /**
      * Changes the height of this object to the specified height
@@ -529,7 +531,7 @@ public:
      * Sets the location of the top-left corner of this object to the
      * specified point.
      */
-    virtual void setLocation(const GPoint& pt);
+    virtual void setLocation(const GPoint &pt);
 
     /**
      * Sets how opaque (non-transparent) this object will appear from 0.0
@@ -546,7 +548,7 @@ public:
     /**
      * Changes the size of this object to the specified width and height.
      */
-    virtual void setSize(const GDimension& size);
+    virtual void setSize(const GDimension &size);
 
     /**
      * Sets whether this object is visible.
@@ -578,12 +580,12 @@ public:
 // Private section
 private:
     // forbid assignment between objects
-    const GObject& operator =(const GObject&) {
+    const GObject &operator=(const GObject &) {
         return *this;
     }
 
     // forbid copy construction
-    GObject(const GObject&) {
+    GObject(const GObject &) {
         // empty
     }
 
@@ -607,7 +609,7 @@ protected:
     bool _fillFlag;                  // indicates whether the object is filled
     bool _visible;                   // indicates if object is visible
     bool _transformed;               // indicates if object is transformed
-    GCompound* _parent;             // pointer to the parent
+    GCompound *_parent;             // pointer to the parent
     QPen _pen;                       // for outlines
     QBrush _brush;                   // for filling
     QTransform _transform;           // for transformations (rotate, scale)
@@ -624,7 +626,7 @@ protected:
      * the given painter.
      * @private
      */
-    virtual void initializeBrushAndPen(QPainter* painter = nullptr);
+    virtual void initializeBrushAndPen(QPainter *painter = nullptr);
 
     /**
      * Converts our line style enums into Qt pen styles for drawing.
@@ -639,14 +641,23 @@ protected:
     virtual std::string toStringExtra() const;
 
     friend class GArc;
+
     friend class GCompound;
+
     friend class GImage;
+
     friend class GInteractor;
+
     friend class GLine;
+
     friend class GOval;
+
     friend class GPolygon;
+
     friend class GRect;
+
     friend class GRoundRect;
+
     friend class GText;
 };
 
@@ -689,7 +700,7 @@ public:
      * Draws this arc on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     GRectangle getBounds() const override;
@@ -725,7 +736,7 @@ public:
     /**
      * Changes the boundaries of the rectangle used to frame the arc.
      */
-    virtual void setFrameRectangle(const GRectangle& rect);
+    virtual void setFrameRectangle(const GRectangle &rect);
 
     /**
      * Changes the boundaries of the rectangle used to frame the arc.
@@ -747,6 +758,7 @@ public:
 
 private:
     virtual bool containsAngle(double theta) const;
+
     virtual GPoint getArcPoint(double theta) const;
 
     /* Instance variables */
@@ -773,7 +785,7 @@ public:
      * If the object is already stored in this compound, has no effect.
      * @throw ErrorException if the object is null
      */
-    virtual void add(GObject* gobj);
+    virtual void add(GObject *gobj);
 
     /**
      * Adds a new graphical object to the compound, if that object was not
@@ -782,12 +794,12 @@ public:
      * If the object is already stored in this compound, has no effect.
      * @throw ErrorException if the object is null
      */
-    virtual void add(GObject* gobj, double x, double y);
+    virtual void add(GObject *gobj, double x, double y);
 
     /**
      * Adds a new graphical object to the compound.
      */
-    virtual void add(GObject& gobj);
+    virtual void add(GObject &gobj);
 
     /**
      * Adds a new graphical object to the compound, if that object was not
@@ -795,7 +807,7 @@ public:
      * This form moves the object to the point (<code>x</code>, <code>y</code>) first.
      * If the object is already stored in this compound, has no effect.
      */
-    virtual void add(GObject& gobj, double x, double y);
+    virtual void add(GObject &gobj, double x, double y);
 
     /**
      * Removes all graphical objects from the compound.
@@ -819,16 +831,16 @@ public:
      * Repaints the given rectangular region of the compound only if it needs
      * to be repainted (if any of its contents have changed).
      */
-    virtual void conditionalRepaintRegion(const GRectangle& bounds);
+    virtual void conditionalRepaintRegion(const GRectangle &bounds);
 
     /* @inherit */
-   bool contains(double x, double y) const override;
+    bool contains(double x, double y) const override;
 
     /**
      * Draws all objects stored in this compound using the given painter pen.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     GRectangle getBounds() const override;
@@ -838,13 +850,13 @@ public:
      * numbering from back to front in the <i>z</i> dimension.
      * @throw ErrorException if the index is out of range
      */
-    virtual GObject* getElement(int index) const;
+    virtual GObject *getElement(int index) const;
 
     /**
      * Returns a pointer to the first graphical object that contains the given
      * (x, y) point, or a null pointer if no object in this compound touches it.
      */
-    virtual GObject* getElementAt(double x, double y) const;
+    virtual GObject *getElementAt(double x, double y) const;
 
     /**
      * Returns the number of graphical objects stored in the compound.
@@ -862,7 +874,7 @@ public:
      * Clients generally do not need to use this method.
      * @private
      */
-    virtual QWidget* getWidget() const;
+    virtual QWidget *getWidget() const;
 
     /**
      * Returns whether the compound automatically repaints itself when its
@@ -879,12 +891,12 @@ public:
      * Removes the specified object from the compound.
      * @throw ErrorException if the object is null
      */
-    virtual void remove(GObject* gobj);
+    virtual void remove(GObject *gobj);
 
     /**
      * Removes the specified object from the compound.
      */
-    virtual void remove(GObject& gobj);
+    virtual void remove(GObject &gobj);
 
     /**
      * Removes all graphical objects from the compound.
@@ -907,7 +919,7 @@ public:
      * Instructs the compound to redraw the given rectangular region within itself,
      * including any graphical objects that touch that region.
      */
-    virtual void repaintRegion(const GRectangle& bounds);
+    virtual void repaintRegion(const GRectangle &bounds);
 
     /**
      * Sets whether the compound automatically repaints itself when its
@@ -923,23 +935,28 @@ public:
      * Clients generally do not need to use this method.
      * @private
      */
-    virtual void setWidget(QWidget* widget);
+    virtual void setWidget(QWidget *widget);
 
     /* @inherit */
     std::string toString() const override;
 
 private:
     // methods to move an object in the z-ordering
-    void sendBackward(GObject* gobj);
-    void sendForward(GObject* gobj);
-    void sendToBack(GObject* gobj);
-    void sendToFront(GObject* gobj);
-    virtual int findGObject(GObject* gobj) const;
+    void sendBackward(GObject *gobj);
+
+    void sendForward(GObject *gobj);
+
+    void sendToBack(GObject *gobj);
+
+    void sendToFront(GObject *gobj);
+
+    virtual int findGObject(GObject *gobj) const;
+
     virtual void removeAt(int index);
 
     // instance variables
-    Vector<GObject*> _contents;
-    QWidget* _widget = nullptr;    // widget containing this compound
+    Vector<GObject *> _contents;
+    QWidget *_widget = nullptr;    // widget containing this compound
     bool _autoRepaint;   // automatically repaint on any change; default true
 
     friend class GObject;
@@ -958,7 +975,7 @@ public:
      * @throw ErrorException if the given file is not found or cannot be loaded
      *        as a valid image file
      */
-    GImage(const std::string& filename = "", double x = 0, double y = 0);
+    GImage(const std::string &filename = "", double x = 0, double y = 0);
 
     /**
      * Constructs a new image by loading the image from the specified input stream.
@@ -968,7 +985,7 @@ public:
      * @throw ErrorException if the given file is not found or cannot be loaded
      *        as a valid image file
      */
-    GImage(std::istream& source, double x = 0, double y = 0);
+    GImage(std::istream &source, double x = 0, double y = 0);
 
     /**
      * Creates a blank GImage of the given width and height.
@@ -982,12 +999,11 @@ public:
     virtual ~GImage();
 
 
-
     /**
      * Draws this image on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /**
      * Returns the file name used to load the image,
@@ -1019,30 +1035,31 @@ protected:
      * Creates a GImage wrapping the given Qt image.
      * Called by GCanvas when converting canvas to an image.
      */
-    GImage(QImage* qimage);
+    GImage(QImage *qimage);
 
     /**
      * Returns the inner Qt QImage object being wrapped.
      */
-    QImage* getQImage() const;
+    QImage *getQImage() const;
 
 private:
     /**
      * Reads the image's pixel contents from the given file.
      * @return true if loaded successfully and false if the load failed
      */
-    bool load(const std::string& filename);
+    bool load(const std::string &filename);
 
     /**
      * Reads the image's pixel contents from the given stream.
      * @return true if loaded successfully and false if the load failed
      */
-    bool loadFromStream(std::istream& input);
+    bool loadFromStream(std::istream &input);
 
     std::string _filename;
-    QImage* _qimage;
+    QImage *_qimage;
 
     friend class GCanvas;
+
     friend class GDiffImage;
 };
 
@@ -1064,7 +1081,7 @@ public:
      * The point <code>p0</code> defines the start of the line and
      * the point <code>p1</code> defines the end.
      */
-    GLine(const GPoint& p0, const GPoint& p1);
+    GLine(const GPoint &p0, const GPoint &p1);
 
     /* @inherit */
     bool contains(double x, double y) const override;
@@ -1073,7 +1090,7 @@ public:
      * Draws this line on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     GRectangle getBounds() const override;
@@ -1132,7 +1149,7 @@ public:
      * leaving the start point unchanged.  This method is therefore different from
      * <code>setLocation</code>, which moves both components of the line segment.
      */
-    virtual void setEndPoint(const GPoint& p);
+    virtual void setEndPoint(const GPoint &p);
 
     /**
      * Sets this line's two end points to (x0, y0) and (x1, y1).
@@ -1148,7 +1165,7 @@ public:
      * x1 < x0 or (x1 == x0 and y1 < y0), the points are swapped.
      * This is done to improve consistency when drawing lines.
      */
-    virtual void setPoints(const GPoint& p0, const GPoint& p1);
+    virtual void setPoints(const GPoint &p0, const GPoint &p1);
 
     /**
      * Sets the initial point in the line to (<code>x0</code>,&nbsp;<code>y0</code>),
@@ -1162,7 +1179,7 @@ public:
      * leaving the end point unchanged.  This method is therefore different from
      * <code>setLocation</code>, which moves both components of the line segment.
      */
-    virtual void setStartPoint(const GPoint& p);
+    virtual void setStartPoint(const GPoint &p);
 
     /* @inherit */
     std::string toStringExtra() const override;
@@ -1187,13 +1204,13 @@ public:
     GOval(double x = 0, double y = 0, double width = 0, double height = 0);
 
     /* @inherit */
-   bool contains(double x, double y) const override;
+    bool contains(double x, double y) const override;
 
     /**
      * Draws this oval on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     std::string getType() const override;
@@ -1217,6 +1234,7 @@ public:
      * Constructs a new polygon with the given vertex coordinates.
      */
     GPolygon(std::initializer_list<double> coords);
+
     GPolygon(std::initializer_list<GPoint> points);
 
     /**
@@ -1229,7 +1247,7 @@ public:
      * Adds an edge to the polygon where the displacements from the last vertex
      * are specified as the x/y values of the given point.
      */
-    virtual void addEdge(const GPoint& pt);
+    virtual void addEdge(const GPoint &pt);
 
     /**
      * Adds multiple edges to the polygon whose components are given by the
@@ -1261,7 +1279,7 @@ public:
      * Adds a vertex at the given (<code>x</code>, <code>y</code>) point
      * relative to the polygon origin.
      */
-    virtual void addVertex(const GPoint& pt);
+    virtual void addVertex(const GPoint &pt);
 
     /**
      * Adds multiple edges to the polygon whose components are given by the
@@ -1289,7 +1307,7 @@ public:
      * Draws this polygon on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     GRectangle getBounds() const override;
@@ -1353,7 +1371,7 @@ public:
      * Draws this rectangle on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     std::string getType() const override;
@@ -1394,7 +1412,7 @@ public:
      * Draws this rectangle on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /**
      * Returns the diameter of the arc forming the corner of this rounded
@@ -1450,13 +1468,13 @@ public:
      * the second form automatically resets the location of the
      * <code>GText</code> to the point (<code>x</code>, <code>y</code>).
      */
-    GText(const std::string& str = "", double x = 0, double y = 0);
+    GText(const std::string &str = "", double x = 0, double y = 0);
 
     /**
      * Draws this text label on screen using the given Qt painter.
      * @private
      */
-    void draw(QPainter* painter) override;
+    void draw(QPainter *painter) override;
 
     /* @inherit */
     GRectangle getBounds() const override;
@@ -1494,24 +1512,24 @@ public:
     std::string getType() const override;
 
     /* @inherit */
-    void setFont(const QFont& font) override;
+    void setFont(const QFont &font) override;
 
     /* @inherit */
-    void setFont(const std::string& font) override;
+    void setFont(const std::string &font) override;
 
     /**
      * Changes the string stored within the text label, so that
      * a new text string appears on the display.
      * Equivalent to setText.
      */
-    virtual void setLabel(const std::string& str);
+    virtual void setLabel(const std::string &str);
 
     /**
      * Changes the string stored within the text label, so that
      * a new text string appears on the display.
      * Equivalent to setText.
      */
-    virtual void setText(const std::string& str);
+    virtual void setText(const std::string &str);
 
     /* @inherit */
     std::string toStringExtra() const override;
@@ -1528,6 +1546,6 @@ private:
 /**
  * Prints the given graphical object to an output stream.
  */
-std::ostream& operator <<(std::ostream& out, const GObject& obj);
+std::ostream &operator<<(std::ostream &out, const GObject &obj);
 
 #endif // _gobjects_h

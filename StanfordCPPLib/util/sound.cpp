@@ -16,7 +16,7 @@
 #include <graphics/gthread.h>
 #include <util/require.h>
 
-/*static*/ QMediaPlayer* Sound::_qmediaPlayer = nullptr;
+/*static*/ QMediaPlayer *Sound::_qmediaPlayer = nullptr;
 
 /*static*/ long Sound::getDuration() {
     initialize();
@@ -43,7 +43,7 @@
     _qmediaPlayer->pause();
 }
 
-/*static*/ void Sound::playSound(const std::string& filename) {
+/*static*/ void Sound::playSound(const std::string &filename) {
     initialize();
     std::string absPath = getAbsolutePath(filename);
     if (!fileExists(absPath)) {

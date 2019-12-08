@@ -27,163 +27,163 @@ namespace plainconsole {
  * Used to (sometimes) echo console input when redirected in from a file.
  * http://www.cplusplus.com/reference/streambuf/streambuf/
  */
-class EchoingStreambuf : public std::streambuf {
-private:
-    /* Constants */
-    static const int BUFFER_SIZE = 4096;
+    class EchoingStreambuf : public std::streambuf {
+    private:
+        /* Constants */
+        static const int BUFFER_SIZE = 4096;
 
-    /* Instance variables */
-    char inBuffer[BUFFER_SIZE];
-    char outBuffer[BUFFER_SIZE];
-    std::istream instream;
-    std::ostream& outstream;
-    int outputLimit;
-    int outputPrinted;
+        /* Instance variables */
+        char inBuffer[BUFFER_SIZE];
+        char outBuffer[BUFFER_SIZE];
+        std::istream instream;
+        std::ostream &outstream;
+        int outputLimit;
+        int outputPrinted;
 
-public:
-    EchoingStreambuf(std::streambuf& buf, std::ostream& out)
-            : instream(&buf),
-              outstream(out),
-              outputLimit(0),
-              outputPrinted(0) {
-        // outstream.rdbuf(&buf);
-        setg(inBuffer, inBuffer, inBuffer);
-        setp(outBuffer, outBuffer + BUFFER_SIZE);
-    }
-
-    ~EchoingStreambuf() {
-        /* Empty */
-    }
-    
-    virtual void setOutputLimit(int limit) {
-        outputLimit = limit;
-    }
-
-    virtual int underflow() {
-        // 'return 0' handles end-of-input from stdin redirect
-        std::string line;
-        if (!getline(instream, line)) {
-            return 0;
+    public:
+        EchoingStreambuf(std::streambuf &buf, std::ostream &out)
+                : instream(&buf),
+                  outstream(out),
+                  outputLimit(0),
+                  outputPrinted(0) {
+            // outstream.rdbuf(&buf);
+            setg(inBuffer, inBuffer, inBuffer);
+            setp(outBuffer, outBuffer + BUFFER_SIZE);
         }
-        
-        int n = line.length();
-        if (n + 1 >= BUFFER_SIZE) {
-            error("EchoingStreambuf::underflow: String too long");
-        }
-        for (int i = 0; i < n; i++) {
-            inBuffer[i] = line[i];
-        }
-        inBuffer[n++] = '\n';
-        inBuffer[n] = '\0';
-        setg(inBuffer, inBuffer, inBuffer + n);
-        
-        // this is the place to echo the input
-        // fprintf(stdout, "inBuffer: \"%s\"\n", inBuffer);
-        // fflush(stdout);
-        outstream << inBuffer;
-        outstream.flush();
-        
-        return inBuffer[0];
-    }
 
-    virtual int overflow(int ch = EOF) {
-        std::string line = "";
-        for (char *cp = pbase(); cp < pptr(); cp++) {
-            if (*cp == '\n') {
+        ~EchoingStreambuf() {
+            /* Empty */
+        }
+
+        virtual void setOutputLimit(int limit) {
+            outputLimit = limit;
+        }
+
+        virtual int underflow() {
+            // 'return 0' handles end-of-input from stdin redirect
+            std::string line;
+            if (!getline(instream, line)) {
+                return 0;
+            }
+
+            int n = line.length();
+            if (n + 1 >= BUFFER_SIZE) {
+                error("EchoingStreambuf::underflow: String too long");
+            }
+            for (int i = 0; i < n; i++) {
+                inBuffer[i] = line[i];
+            }
+            inBuffer[n++] = '\n';
+            inBuffer[n] = '\0';
+            setg(inBuffer, inBuffer, inBuffer + n);
+
+            // this is the place to echo the input
+            // fprintf(stdout, "inBuffer: \"%s\"\n", inBuffer);
+            // fflush(stdout);
+            outstream << inBuffer;
+            outstream.flush();
+
+            return inBuffer[0];
+        }
+
+        virtual int overflow(int ch = EOF) {
+            std::string line = "";
+            for (char *cp = pbase(); cp < pptr(); cp++) {
+                if (*cp == '\n') {
+                    // puts(line.c_str());
+                    outputPrinted += line.length();
+                    if (outputLimit > 0 && outputPrinted > outputLimit) {
+                        error("excessive output printed");
+                    }
+                    line = "";
+                } else {
+                    line += *cp;
+                }
+            }
+            if (line != "") {
                 // puts(line.c_str());
                 outputPrinted += line.length();
                 if (outputLimit > 0 && outputPrinted > outputLimit) {
                     error("excessive output printed");
                 }
-                line = "";
-            } else {
-                line += *cp;
             }
-        }
-        if (line != "") {
-            // puts(line.c_str());
-            outputPrinted += line.length();
-            if (outputLimit > 0 && outputPrinted > outputLimit) {
-                error("excessive output printed");
+            setp(outBuffer, outBuffer + BUFFER_SIZE);
+            if (ch != EOF) {
+                outBuffer[0] = ch;
+                pbump(1);
             }
+            return ch != EOF;
         }
-        setp(outBuffer, outBuffer + BUFFER_SIZE);
-        if (ch != EOF) {
-            outBuffer[0] = ch;
-            pbump(1);
+
+        virtual int sync() {
+            return overflow();
         }
-        return ch != EOF;
-    }
-    
-    virtual int sync() {
-        return overflow();
-    }
-};
+    };
 
 /*
  * A stream buffer that limits how many characters you can print to it.
  * If you exceed that many, it throws an ErrorException.
  */
-class LimitedStreambuf : public std::streambuf {
-private:
-    std::ostream outstream;
-    int outputLimit;
-    int outputPrinted;
+    class LimitedStreambuf : public std::streambuf {
+    private:
+        std::ostream outstream;
+        int outputLimit;
+        int outputPrinted;
 
-public:
-    LimitedStreambuf(std::streambuf& buf, int limit)
-            : outstream(&buf),
-              outputLimit(limit),
-              outputPrinted(0) {
-        setp(nullptr, nullptr);   // // no buffering, overflow on every char
-    }
-
-    virtual void setOutputLimit(int limit) {
-        outputLimit = limit;
-    }
-
-    virtual int overflow(int ch = EOF) {
-        outputPrinted++;
-        if (outputLimit > 0 && outputPrinted > outputLimit) {
-            // error("excessive output printed");
-            // outstream.setstate(std::ios::failbit | std::ios::badbit | std::ios::eofbit);
-            // kill the program
-            // (use a signal rather than error/exception
-            // so student won't try to catch it)
-            // error("Excessive output printed; you may have an infinite loop in your code.");
-            raise(SIGUSR1);
-        } else {
-            outstream.put(ch);
+    public:
+        LimitedStreambuf(std::streambuf &buf, int limit)
+                : outstream(&buf),
+                  outputLimit(limit),
+                  outputPrinted(0) {
+            setp(nullptr, nullptr);   // // no buffering, overflow on every char
         }
-        return ch;
-    }
-};
 
-void setOutputLimit(int limit) {
-    if (limit <= 0) {
-        error("Platform::setConsoleOutputLimit: limit must be a positive integer");
-    }
-    LimitedStreambuf* limitedbufOut = new LimitedStreambuf(*std::cout.rdbuf(), limit);
-    LimitedStreambuf* limitedbufErr = new LimitedStreambuf(*std::cerr.rdbuf(), limit);
-    std::cout.rdbuf(limitedbufOut);
-    std::cerr.rdbuf(limitedbufErr);
-}
+        virtual void setOutputLimit(int limit) {
+            outputLimit = limit;
+        }
 
-void setEcho(bool value) {
-    static EchoingStreambuf* echobufIn = nullptr;
-    static std::streambuf* oldBuf = nullptr;
-    
-    if (!echobufIn && value) {
-        // start to echo user input pulled from cin
-        oldBuf = std::cin.rdbuf();
-        echobufIn = new EchoingStreambuf(*std::cin.rdbuf(), std::cout);
-        std::cin.rdbuf(echobufIn);
-    } else if (echobufIn && !value) {
-        // stop echo
-        std::cin.rdbuf(oldBuf);
-        oldBuf = nullptr;
-        echobufIn = nullptr;
+        virtual int overflow(int ch = EOF) {
+            outputPrinted++;
+            if (outputLimit > 0 && outputPrinted > outputLimit) {
+                // error("excessive output printed");
+                // outstream.setstate(std::ios::failbit | std::ios::badbit | std::ios::eofbit);
+                // kill the program
+                // (use a signal rather than error/exception
+                // so student won't try to catch it)
+                // error("Excessive output printed; you may have an infinite loop in your code.");
+                raise(SIGUSR1);
+            } else {
+                outstream.put(ch);
+            }
+            return ch;
+        }
+    };
+
+    void setOutputLimit(int limit) {
+        if (limit <= 0) {
+            error("Platform::setConsoleOutputLimit: limit must be a positive integer");
+        }
+        LimitedStreambuf *limitedbufOut = new LimitedStreambuf(*std::cout.rdbuf(), limit);
+        LimitedStreambuf *limitedbufErr = new LimitedStreambuf(*std::cerr.rdbuf(), limit);
+        std::cout.rdbuf(limitedbufOut);
+        std::cerr.rdbuf(limitedbufErr);
     }
-}
+
+    void setEcho(bool value) {
+        static EchoingStreambuf *echobufIn = nullptr;
+        static std::streambuf *oldBuf = nullptr;
+
+        if (!echobufIn && value) {
+            // start to echo user input pulled from cin
+            oldBuf = std::cin.rdbuf();
+            echobufIn = new EchoingStreambuf(*std::cin.rdbuf(), std::cout);
+            std::cin.rdbuf(echobufIn);
+        } else if (echobufIn && !value) {
+            // stop echo
+            std::cin.rdbuf(oldBuf);
+            oldBuf = nullptr;
+            echobufIn = nullptr;
+        }
+    }
 
 } // namespace plainconsole

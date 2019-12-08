@@ -46,38 +46,40 @@ public:
     /**
      * Pops up a diff GUI window to display
      */
-    static void showDialog(const std::string& name1,
-                           const std::string& text1,
-                           const std::string& name2,
-                           const std::string& text2,
+    static void showDialog(const std::string &name1,
+                           const std::string &text1,
+                           const std::string &name2,
+                           const std::string &text2,
                            int diffFlags = diff::DIFF_DEFAULT_FLAGS,
                            bool showCheckBoxes = false);
 
 private:
     static const bool LINE_NUMBERS;
 
-    GDiffGui(const std::string& name1,
-             const std::string& text1,
-             const std::string& name2,
-             const std::string& text2,
+    GDiffGui(const std::string &name1,
+             const std::string &text1,
+             const std::string &name2,
+             const std::string &text2,
              int diffFlags = diff::DIFF_DEFAULT_FLAGS,
              bool showCheckBoxes = false);   // forbid construction
     virtual ~GDiffGui();
 
     Q_DISABLE_COPY(GDiffGui)
 
-    void setupDiffText(const std::string& diffs);
-    void setupLeftRightText(GTextArea* textArea, const std::string& text);
+    void setupDiffText(const std::string &diffs);
+
+    void setupLeftRightText(GTextArea *textArea, const std::string &text);
+
     void syncScrollBars(bool left);
 
-    GWindow* _window;
-    QSplitter* _hsplitter;
-    QSplitter* _vsplitter;
-    GTextArea* _textAreaLeft;
-    GTextArea* _textAreaRight;
-    GTextArea* _textAreaBottom;
-    GGenericInteractor<QSplitter>* _hsplitterInteractor;
-    GGenericInteractor<QSplitter>* _vsplitterInteractor;
+    GWindow *_window;
+    QSplitter *_hsplitter;
+    QSplitter *_vsplitter;
+    GTextArea *_textAreaLeft;
+    GTextArea *_textAreaRight;
+    GTextArea *_textAreaBottom;
+    GGenericInteractor<QSplitter> *_hsplitterInteractor;
+    GGenericInteractor<QSplitter> *_vsplitterInteractor;
 };
 
 #endif // _gdiffgui_h

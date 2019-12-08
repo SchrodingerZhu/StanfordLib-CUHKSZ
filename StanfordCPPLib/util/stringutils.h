@@ -25,34 +25,48 @@
  * @private
  */
 namespace stringutils {
-int charsDifferent(const std::string& s1, const std::string& s2);
-std::string collapseSpaces(const std::string& s);
-Vector<std::string> explodeLines(const std::string& s);
-int height(const std::string& s);
-std::string implode(const Vector<std::string>& v, const std::string& delimiter = "\n");
-std::string indent(const std::string& s, int spaces);
+    int charsDifferent(const std::string &s1, const std::string &s2);
+
+    std::string collapseSpaces(const std::string &s);
+
+    Vector<std::string> explodeLines(const std::string &s);
+
+    int height(const std::string &s);
+
+    std::string implode(const Vector<std::string> &v, const std::string &delimiter = "\n");
+
+    std::string indent(const std::string &s, int spaces);
 
 /*
  * Removes blank lines and collapses multiple spaces into one.
  * Used to facilitate approximate output matching.
  */
-std::string makeSloppy(const std::string& s);
-std::string removeBlankLines(const std::string& s);
-std::string toLowerCase(const std::string& s);
-std::string trimR(const std::string& s);
-std::string trimToHeight(const std::string& s, int height, const std::string& suffix = "...");
-std::string trimToSize(const std::string& s, int width, int height, const std::string& suffix = " ...");
-std::string trimToWidth(const std::string& s, int width, const std::string& suffix = " ...");
-std::string stripWhitespace(const std::string& s);
-std::string truncate(const std::string& s, int length, const std::string& suffix = " ...");
-int width(const std::string& s);
+    std::string makeSloppy(const std::string &s);
+
+    std::string removeBlankLines(const std::string &s);
+
+    std::string toLowerCase(const std::string &s);
+
+    std::string trimR(const std::string &s);
+
+    std::string trimToHeight(const std::string &s, int height, const std::string &suffix = "...");
+
+    std::string trimToSize(const std::string &s, int width, int height, const std::string &suffix = " ...");
+
+    std::string trimToWidth(const std::string &s, int width, const std::string &suffix = " ...");
+
+    std::string stripWhitespace(const std::string &s);
+
+    std::string truncate(const std::string &s, int length, const std::string &suffix = " ...");
+
+    int width(const std::string &s);
 
 /**
  * Returns a printable string for the given character.
  * @example toPrintable('c') returns "c"
  * @example toPrintable('\n') returns "\\n"
  */
-std::string toPrintable(int ch);
+    std::string toPrintable(int ch);
 
 /**
  * Returns a string with each non-printable character in the given string
@@ -62,7 +76,7 @@ std::string toPrintable(int ch);
  * ASCII numeric representation, such as \255.
  * @example toPrintable("hi \0 there\n') returns "hi \\0 there\\n"
  */
-std::string toPrintable(const std::string& s);
+    std::string toPrintable(const std::string &s);
 
 } // namespace stringutils
 

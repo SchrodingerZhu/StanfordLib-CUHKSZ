@@ -73,8 +73,8 @@ public:
      * GOptionPaneResult enumeration constants is returned.
      * The caller can supply an optional window title; if none is passed, a default is used.
      */
-    static ConfirmResult showConfirmDialog(const std::string& message,
-                                           const std::string& title = "",
+    static ConfirmResult showConfirmDialog(const std::string &message,
+                                           const std::string &title = "",
                                            ConfirmType type = CONFIRM_YES_NO);
 
     /**
@@ -83,9 +83,9 @@ public:
      * GOptionPaneResult enumeration constants is returned.
      * The caller can supply an optional window title; if none is passed, a default is used.
      */
-    static ConfirmResult showConfirmDialog(GWindow* parent,
-                                           const std::string& message,
-                                           const std::string& title = "",
+    static ConfirmResult showConfirmDialog(GWindow *parent,
+                                           const std::string &message,
+                                           const std::string &title = "",
                                            ConfirmType type = CONFIRM_YES_NO);
 
     /**
@@ -94,9 +94,9 @@ public:
      * GOptionPaneResult enumeration constants is returned.
      * The caller can supply an optional window title; if none is passed, a default is used.
      */
-    static ConfirmResult showConfirmDialog(QWidget* parent,
-                                           const std::string& message,
-                                           const std::string& title = "",
+    static ConfirmResult showConfirmDialog(QWidget *parent,
+                                           const std::string &message,
+                                           const std::string &title = "",
                                            ConfirmType type = CONFIRM_YES_NO);
 
     /**
@@ -105,9 +105,9 @@ public:
      * The caller can supply an optional window title; if none is passed, a default is used.
      * If the user cancels the box, an empty string is returned.
      */
-    static std::string showInputDialog(const std::string& message,
-                                       const std::string& title = "",
-                                       const std::string& initialValue = "");
+    static std::string showInputDialog(const std::string &message,
+                                       const std::string &title = "",
+                                       const std::string &initialValue = "");
 
     /**
      * Pops up an input box with a text field where the user can type a
@@ -115,10 +115,10 @@ public:
      * The caller can supply an optional window title; if none is passed, a default is used.
      * If the user cancels the box, an empty string is returned.
      */
-    static std::string showInputDialog(GWindow* parent,
-                                       const std::string& message,
-                                       const std::string& title = "",
-                                       const std::string& initialValue = "");
+    static std::string showInputDialog(GWindow *parent,
+                                       const std::string &message,
+                                       const std::string &title = "",
+                                       const std::string &initialValue = "");
 
     /**
      * Pops up an input box with a text field where the user can type a
@@ -126,10 +126,10 @@ public:
      * The caller can supply an optional window title; if none is passed, a default is used.
      * If the user cancels the box, an empty string is returned.
      */
-    static std::string showInputDialog(QWidget* parent,
-                                       const std::string& message,
-                                       const std::string& title = "",
-                                       const std::string& initialValue = "");
+    static std::string showInputDialog(QWidget *parent,
+                                       const std::string &message,
+                                       const std::string &title = "",
+                                       const std::string &initialValue = "");
 
     /**
      * Displays an output message dialog to the user.
@@ -139,8 +139,8 @@ public:
      * WARNING_MESSAGE, or QUESTION_MESSAGE; this slightly affects the dialog's
      * appearance.  The default is PLAIN_MESSAGE.
      */
-    static void showMessageDialog(const std::string& message,
-                                  const std::string& title = "",
+    static void showMessageDialog(const std::string &message,
+                                  const std::string &title = "",
                                   MessageType type = MESSAGE_PLAIN);
 
     /**
@@ -151,9 +151,9 @@ public:
      * WARNING_MESSAGE, or QUESTION_MESSAGE; this slightly affects the dialog's
      * appearance.  The default is PLAIN_MESSAGE.
      */
-    static void showMessageDialog(GWindow* parent,
-                                  const std::string& message,
-                                  const std::string& title = "",
+    static void showMessageDialog(GWindow *parent,
+                                  const std::string &message,
+                                  const std::string &title = "",
                                   MessageType type = MESSAGE_PLAIN);
 
     /**
@@ -164,9 +164,9 @@ public:
      * WARNING_MESSAGE, or QUESTION_MESSAGE; this slightly affects the dialog's
      * appearance.  The default is PLAIN_MESSAGE.
      */
-    static void showMessageDialog(QWidget* parent,
-                                  const std::string& message,
-                                  const std::string& title = "",
+    static void showMessageDialog(QWidget *parent,
+                                  const std::string &message,
+                                  const std::string &title = "",
                                   MessageType type = MESSAGE_PLAIN);
 
     /**
@@ -176,10 +176,10 @@ public:
      * The caller can supply an optional window title; if none is passed, a default is used.
      * The caller can supply an optional initially selected value from the list.
      */
-    static std::string showOptionDialog(const std::string& message,
-                                        const Vector<std::string>& options,
-                                        const std::string& title = "",
-                                        const std::string& initiallySelected = "");
+    static std::string showOptionDialog(const std::string &message,
+                                        const Vector<std::string> &options,
+                                        const std::string &title = "",
+                                        const std::string &initiallySelected = "");
 
     /**
      * Shows a general input box with a set of buttons from which the user may
@@ -188,11 +188,11 @@ public:
      * The caller can supply an optional window title; if none is passed, a default is used.
      * The caller can supply an optional initially selected value from the list.
      */
-    static std::string showOptionDialog(GWindow* parent,
-                                        const std::string& message,
-                                        const Vector<std::string>& options,
-                                        const std::string& title = "",
-                                        const std::string& initiallySelected = "");
+    static std::string showOptionDialog(GWindow *parent,
+                                        const std::string &message,
+                                        const Vector<std::string> &options,
+                                        const std::string &title = "",
+                                        const std::string &initiallySelected = "");
 
     /**
      * Shows a general input box with a set of buttons from which the user may
@@ -201,36 +201,36 @@ public:
      * The caller can supply an optional window title; if none is passed, a default is used.
      * The caller can supply an optional initially selected value from the list.
      */
-    static std::string showOptionDialog(QWidget* parent,
-                                        const std::string& message,
-                                        const Vector<std::string>& options,
-                                        const std::string& title = "",
-                                        const std::string& initiallySelected = "");
+    static std::string showOptionDialog(QWidget *parent,
+                                        const std::string &message,
+                                        const Vector<std::string> &options,
+                                        const std::string &title = "",
+                                        const std::string &initiallySelected = "");
 
     /**
      * Displays the given text in a scrolling monospaced text area.
      * rows/cols parameters control size to show; set to <= 0 for a default limit.
      */
-    static void showTextFileDialog(const std::string& fileText,
-                                   const std::string& title = "",
+    static void showTextFileDialog(const std::string &fileText,
+                                   const std::string &title = "",
                                    int rows = -1, int cols = -1);
 
     /**
      * Displays the given text in a scrolling monospaced text area.
      * rows/cols parameters control size to show; set to <= 0 for a default limit.
      */
-    static void showTextFileDialog(GWindow* parent,
-                                   const std::string& fileText,
-                                   const std::string& title = "",
+    static void showTextFileDialog(GWindow *parent,
+                                   const std::string &fileText,
+                                   const std::string &title = "",
                                    int rows = -1, int cols = -1);
 
     /**
      * Displays the given text in a scrolling monospaced text area.
      * rows/cols parameters control size to show; set to <= 0 for a default limit.
      */
-    static void showTextFileDialog(QWidget* parent,
-                                   const std::string& fileText,
-                                   const std::string& title = "",
+    static void showTextFileDialog(QWidget *parent,
+                                   const std::string &fileText,
+                                   const std::string &title = "",
                                    int rows = -1, int cols = -1);
 
 private:

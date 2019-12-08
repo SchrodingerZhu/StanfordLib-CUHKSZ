@@ -22,7 +22,7 @@
 #include <graphics/gwindow.h>
 #include <util/require.h>
 
-GTextArea::GTextArea(int rows, int columns, QWidget* parent)
+GTextArea::GTextArea(int rows, int columns, QWidget *parent)
         : _contextMenuEnabled(true) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqtextedit = new _Internal_QTextEdit(this, getInternalParent(parent));
@@ -31,7 +31,7 @@ GTextArea::GTextArea(int rows, int columns, QWidget* parent)
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GTextArea::GTextArea(const std::string& text, QWidget* parent)
+GTextArea::GTextArea(const std::string &text, QWidget *parent)
         : _contextMenuEnabled(true) {
     GThread::runOnQtGuiThread([this, parent]() {
         _iqtextedit = new _Internal_QTextEdit(this, getInternalParent(parent));
@@ -46,7 +46,7 @@ GTextArea::~GTextArea() {
     _iqtextedit = nullptr;
 }
 
-void GTextArea::appendFormattedText(const std::string& text, const std::string& color, const std::string& font) {
+void GTextArea::appendFormattedText(const std::string &text, const std::string &color, const std::string &font) {
     moveCursorToEnd();
 
     // create a formatted block with the font and color
@@ -73,12 +73,12 @@ void GTextArea::appendFormattedText(const std::string& text, const std::string& 
     moveCursorToEnd();
 }
 
-void GTextArea::appendHtml(const std::string& html) {
+void GTextArea::appendHtml(const std::string &html) {
     // TODO: use insertHtml for speed?
     setHtml(getHtml() + html);
 }
 
-void GTextArea::appendText(const std::string& text) {
+void GTextArea::appendText(const std::string &text) {
     QTextCursor cursor = _iqtextedit->textCursor();
     cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor, 1);
     cursor.insertText(QString::fromStdString(text));
@@ -111,7 +111,7 @@ std::string GTextArea::getHtml() const {
     return _iqtextedit->toHtml().toStdString();
 }
 
-_Internal_QWidget* GTextArea::getInternalWidget() const {
+_Internal_QWidget *GTextArea::getInternalWidget() const {
     return _iqtextedit;
 }
 
@@ -121,7 +121,8 @@ std::string GTextArea::getPlaceholder() const {
 
 GDimension GTextArea::getRowColumnSize() const {
     QFontMetrics metrics(_iqtextedit->font());
-    return GDimension(metrics.horizontalAdvance(QString::fromStdString("mmmmmmmmmm")) / 10.0, metrics.lineSpacing() + 2);
+    return GDimension(metrics.horizontalAdvance(QString::fromStdString("mmmmmmmmmm")) / 10.0,
+                      metrics.lineSpacing() + 2);
 }
 
 int GTextArea::getRows() const {
@@ -177,8 +178,8 @@ std::string GTextArea::getType() const {
     return "GTextArea";
 }
 
-QWidget* GTextArea::getWidget() const {
-    return static_cast<QWidget*>(_iqtextedit);
+QWidget *GTextArea::getWidget() const {
+    return static_cast<QWidget *>(_iqtextedit);
 }
 
 bool GTextArea::isContextMenuEnabled() const {
@@ -217,7 +218,7 @@ void GTextArea::removeTextChangeListener() {
 
 void GTextArea::scrollToBottom() {
     GThread::runOnQtGuiThread([this]() {
-        QScrollBar* scrollbar = _iqtextedit->verticalScrollBar();
+        QScrollBar *scrollbar = _iqtextedit->verticalScrollBar();
         scrollbar->setValue(scrollbar->maximum());
         scrollbar->setSliderPosition(scrollbar->maximum());
     });
@@ -225,7 +226,7 @@ void GTextArea::scrollToBottom() {
 
 void GTextArea::scrollToTop() {
     GThread::runOnQtGuiThread([this]() {
-        QScrollBar* scrollbar = _iqtextedit->verticalScrollBar();
+        QScrollBar *scrollbar = _iqtextedit->verticalScrollBar();
         scrollbar->setValue(0);
         scrollbar->setSliderPosition(0);
     });
@@ -275,7 +276,7 @@ void GTextArea::setEditable(bool value) {
     });
 }
 
-void GTextArea::setHtml(const std::string& html) {
+void GTextArea::setHtml(const std::string &html) {
     GThread::runOnQtGuiThread([this, html]() {
         _iqtextedit->setHtml(QString::fromStdString(html));
     });
@@ -297,7 +298,7 @@ void GTextArea::setMouseListener(GEventListenerVoid func) {
                        "mouserelease"}, func);
 }
 
-void GTextArea::setPlaceholder(const std::string& text) {
+void GTextArea::setPlaceholder(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         _iqtextedit->setPlaceholderText(QString::fromStdString(text));
     });
@@ -318,7 +319,7 @@ void GTextArea::setRowsColumns(int rows, int columns) {
     setSize(desiredWidth, desiredHeight);
 }
 
-void GTextArea::setText(const std::string& text) {
+void GTextArea::setText(const std::string &text) {
     GThread::runOnQtGuiThread([this, text]() {
         _iqtextedit->setText(QString::fromStdString(text));
     });
@@ -333,7 +334,7 @@ void GTextArea::setTextChangeListener(GEventListenerVoid func) {
 }
 
 
-_Internal_QTextEdit::_Internal_QTextEdit(GTextArea* gtextArea, QWidget* parent)
+_Internal_QTextEdit::_Internal_QTextEdit(GTextArea *gtextArea, QWidget *parent)
         : QTextEdit(parent),
           _gtextarea(gtextArea) {
     require::nonNull(gtextArea, "_Internal_QTextEdit::constructor");
@@ -346,7 +347,7 @@ _Internal_QTextEdit::_Internal_QTextEdit(GTextArea* gtextArea, QWidget* parent)
     connect(this->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(handleScroll(int)));
 }
 
-void _Internal_QTextEdit::contextMenuEvent(QContextMenuEvent* event) {
+void _Internal_QTextEdit::contextMenuEvent(QContextMenuEvent *event) {
     if (!_gtextarea) {
         QTextEdit::contextMenuEvent(event);   // call super
         return;
@@ -365,10 +366,10 @@ void _Internal_QTextEdit::detach() {
 void _Internal_QTextEdit::handleScroll(int value) {
     if (_gtextarea && _gtextarea->isAcceptingEvent("scroll")) {
         GEvent scrollEvent(
-                    /* class  */ SCROLL_EVENT,
-                    /* type   */ SCROLL_SCROLLED,
-                    /* name   */ "scroll",
-                    /* source */ _gtextarea);
+                /* class  */ SCROLL_EVENT,
+                /* type   */ SCROLL_SCROLLED,
+                /* name   */ "scroll",
+                /* source */ _gtextarea);
         scrollEvent.setActionCommand(_gtextarea->getActionCommand());
         scrollEvent.setY(value);   // approximate
         _gtextarea->fireEvent(scrollEvent);
@@ -378,16 +379,16 @@ void _Internal_QTextEdit::handleScroll(int value) {
 void _Internal_QTextEdit::handleTextChange() {
     if (_gtextarea && _gtextarea->isAcceptingEvent("textchange")) {
         GEvent textChangeEvent(
-                    /* class  */ KEY_EVENT,
-                    /* type   */ KEY_TYPED,
-                    /* name   */ "textchange",
-                    /* source */ _gtextarea);
+                /* class  */ KEY_EVENT,
+                /* type   */ KEY_TYPED,
+                /* name   */ "textchange",
+                /* source */ _gtextarea);
         textChangeEvent.setActionCommand(_gtextarea->getActionCommand());
         _gtextarea->fireEvent(textChangeEvent);
     }
 }
 
-void _Internal_QTextEdit::keyPressEvent(QKeyEvent* event) {
+void _Internal_QTextEdit::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QTextEdit::keyPressEvent", "event");
     if (_gtextarea && _gtextarea->isAcceptingEvent("keypress")) {
         event->accept();
@@ -400,7 +401,7 @@ void _Internal_QTextEdit::keyPressEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QTextEdit::keyReleaseEvent(QKeyEvent* event) {
+void _Internal_QTextEdit::keyReleaseEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QTextEdit::keyReleaseEvent", "event");
     if (_gtextarea && _gtextarea->isAcceptingEvent("keyrelease")) {
         event->accept();
@@ -413,7 +414,7 @@ void _Internal_QTextEdit::keyReleaseEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QTextEdit::mousePressEvent(QMouseEvent* event) {
+void _Internal_QTextEdit::mousePressEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QTextEdit::mousePressEvent", "event");
     if (_gtextarea && _gtextarea->isAcceptingEvent("mousepress")) {
         event->accept();
@@ -426,7 +427,7 @@ void _Internal_QTextEdit::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-void _Internal_QTextEdit::mouseReleaseEvent(QMouseEvent* event) {
+void _Internal_QTextEdit::mouseReleaseEvent(QMouseEvent *event) {
     require::nonNull(event, "_Internal_QTextEdit::mouseReleaseEvent", "event");
     if (_gtextarea && _gtextarea->isAcceptingEvent("mouserelease")) {
         event->accept();

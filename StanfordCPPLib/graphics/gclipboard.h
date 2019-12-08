@@ -33,25 +33,25 @@ public:
      * Returns true if the given event represents a "copy" operation.
      * @throw ErrorException if the event is null
      */
-    static bool isCopy(QKeyEvent* event);
+    static bool isCopy(QKeyEvent *event);
 
     /**
      * Returns true if the given event represents a "cut" operation.
      * @throw ErrorException if the event is null
      */
-    static bool isCut(QKeyEvent* event);
+    static bool isCut(QKeyEvent *event);
 
     /**
      * Returns true if the given event represents a "paste" operation.
      * @throw ErrorException if the event is null
      */
-    static bool isPaste(QKeyEvent* event);
+    static bool isPaste(QKeyEvent *event);
 
     /**
      * Sets the system clipboard to store the given text.
      * Equivalent to a "copy" operation.
      */
-    static void set(const std::string& text);
+    static void set(const std::string &text);
 
 private:
     GClipboard();   // prevent construction

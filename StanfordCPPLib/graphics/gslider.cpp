@@ -22,8 +22,9 @@ const int GSlider::DEFAULT_MIN_VALUE = 0;
 const int GSlider::DEFAULT_MAX_VALUE = 100;
 const int GSlider::DEFAULT_INITIAL_VALUE = 50;
 
-GSlider::GSlider(int min, int max, int value, QWidget* parent) {
-    require::require(min <= max, "GSlider::constructor", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+GSlider::GSlider(int min, int max, int value, QWidget *parent) {
+    require::require(min <= max, "GSlider::constructor",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     require::inRange(value, min, max, "GSlider::constructor", "value");
     GThread::runOnQtGuiThread([this, min, max, value, parent]() {
         _iqslider = new _Internal_QSlider(this,
@@ -35,8 +36,9 @@ GSlider::GSlider(int min, int max, int value, QWidget* parent) {
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
-GSlider::GSlider(Orientation orientation, int min, int max, int value, QWidget* parent) {
-    require::require(min <= max, "GSlider::constructor", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+GSlider::GSlider(Orientation orientation, int min, int max, int value, QWidget *parent) {
+    require::require(min <= max, "GSlider::constructor",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     require::inRange(value, min, max, "GSlider::constructor", "value");
     GThread::runOnQtGuiThread([this, orientation, min, max, value, parent]() {
         _iqslider = new _Internal_QSlider(this,
@@ -58,7 +60,7 @@ std::string GSlider::getActionEventType() const {
     return "change";
 }
 
-_Internal_QWidget* GSlider::getInternalWidget() const {
+_Internal_QWidget *GSlider::getInternalWidget() const {
     return _iqslider;
 }
 
@@ -105,8 +107,8 @@ int GSlider::getValue() const {
     return _iqslider->value();
 }
 
-QWidget* GSlider::getWidget() const {
-    return static_cast<QWidget*>(_iqslider);
+QWidget *GSlider::getWidget() const {
+    return static_cast<QWidget *>(_iqslider);
 }
 
 void GSlider::setMajorTickSpacing(int value) {
@@ -117,7 +119,8 @@ void GSlider::setMajorTickSpacing(int value) {
 
 void GSlider::setMax(int max) {
     int min = getMin();
-    require::require(min <= max, "GSlider::setMax", "max (" + std::to_string(max) + ") cannot be less than min (" + std::to_string(min) + ")");
+    require::require(min <= max, "GSlider::setMax",
+                     "max (" + std::to_string(max) + ") cannot be less than min (" + std::to_string(min) + ")");
     GThread::runOnQtGuiThread([this, max]() {
         _iqslider->setMaximum(max);
     });
@@ -125,7 +128,8 @@ void GSlider::setMax(int max) {
 
 void GSlider::setMin(int min) {
     int max = getMax();
-    require::require(min <= max, "GSlider::setMin", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+    require::require(min <= max, "GSlider::setMin",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     GThread::runOnQtGuiThread([this, min]() {
         _iqslider->setMinimum(min);
     });
@@ -148,7 +152,8 @@ void GSlider::setPaintTicks(bool value) {
 }
 
 void GSlider::setRange(int min, int max) {
-    require::require(min <= max, "GSlider::setRange", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+    require::require(min <= max, "GSlider::setRange",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     GThread::runOnQtGuiThread([this, min, max]() {
         _iqslider->setRange(min, max);
     });
@@ -159,7 +164,8 @@ void GSlider::setSnapToTicks(bool /* value */) {
 }
 
 void GSlider::setState(int min, int max, int value) {
-    require::require(min <= max, "GSlider::setState", "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
+    require::require(min <= max, "GSlider::setState",
+                     "min (" + std::to_string(min) + ") cannot be greater than max (" + std::to_string(max) + ")");
     require::inRange(value, min, max, "GSlider::setState", "value");
     GThread::runOnQtGuiThread([this, min, max, value]() {
         _iqslider->setRange(min, max);
@@ -175,7 +181,7 @@ void GSlider::setValue(int value) {
 }
 
 
-_Internal_QSlider::_Internal_QSlider(GSlider* gslider, Qt::Orientation orientation, QWidget* parent)
+_Internal_QSlider::_Internal_QSlider(GSlider *gslider, Qt::Orientation orientation, QWidget *parent)
         : QSlider(orientation, parent),
           _gslider(gslider) {
     require::nonNull(gslider, "_Internal_QSlider::constructor");
@@ -192,15 +198,15 @@ void _Internal_QSlider::handleChange(int /* value */) {
         return;
     }
     GEvent changeEvent(
-                /* class  */ CHANGE_EVENT,
-                /* type   */ STATE_CHANGED,
-                /* name   */ "change",
-                /* source */ _gslider);
+            /* class  */ CHANGE_EVENT,
+            /* type   */ STATE_CHANGED,
+            /* name   */ "change",
+            /* source */ _gslider);
     changeEvent.setActionCommand(_gslider->getActionCommand());
     _gslider->fireEvent(changeEvent);
 }
 
-void _Internal_QSlider::keyPressEvent(QKeyEvent* event) {
+void _Internal_QSlider::keyPressEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QSlider::keyPressEvent", "event");
     if (_gslider && _gslider->isAcceptingEvent("keypress")) {
         event->accept();
@@ -213,7 +219,7 @@ void _Internal_QSlider::keyPressEvent(QKeyEvent* event) {
     }
 }
 
-void _Internal_QSlider::keyReleaseEvent(QKeyEvent* event) {
+void _Internal_QSlider::keyReleaseEvent(QKeyEvent *event) {
     require::nonNull(event, "_Internal_QSlider::keyPressEvent", "event");
     if (_gslider && _gslider->isAcceptingEvent("keyrelease")) {
         event->accept();

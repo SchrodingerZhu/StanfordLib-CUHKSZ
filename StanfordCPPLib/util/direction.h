@@ -19,7 +19,9 @@
 /**
  * This enumerated type is used to represent the four compass directions.
  */
-enum Direction { NORTH, EAST, SOUTH, WEST };
+enum Direction {
+    NORTH, EAST, SOUTH, WEST
+};
 
 /**
  * Returns the direction that is to the left of the argument.
@@ -45,13 +47,13 @@ std::string directionToString(Direction dir);
  * Overloads the <code>&lt;&lt;</code> operator so that it is able
  * to display <code>Direction</code> values.
  */
-std::ostream& operator <<(std::ostream& os, const Direction& dir);
+std::ostream &operator<<(std::ostream &os, const Direction &dir);
 
 /**
  * Overloads the <code>&gt;&gt;</code> operator so that it is able
  * to read <code>Direction</code> values.
  */
-std::istream& operator >>(std::istream& os, Direction& dir);
+std::istream &operator>>(std::istream &os, Direction &dir);
 
 /**
  * Overloads the suffix version of the <code>++</code> operator to
@@ -62,6 +64,6 @@ std::istream& operator >>(std::istream& os, Direction& dir);
  *    for (Direction dir = NORTH; dir &lt;= WEST; dir++) ...
  *</pre>
  */
-Direction operator ++(Direction& dir, int);
+Direction operator++(Direction &dir, int);
 
 #endif // _direction_h

@@ -27,10 +27,12 @@ Point::Point(int x, int y) {
 }
 
 #ifndef SPL_HEADLESS_MODE
-Point::Point(const GPoint& point) {
+
+Point::Point(const GPoint &point) {
     this->x = (int) point.getX();
     this->y = (int) point.getY();
 }
+
 #endif // SPL_HEADLESS_MODE
 
 int Point::getX() const {
@@ -45,18 +47,18 @@ std::string Point::toString() const {
     return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
 }
 
-bool Point::operator ==(const Point& p2) const {
+bool Point::operator==(const Point &p2) const {
     return (x == p2.x) && (y == p2.y);
 }
 
-bool Point::operator !=(const Point& p2) const {
+bool Point::operator!=(const Point &p2) const {
     return (x != p2.x) || (y != p2.y);
 }
 
-std::ostream& operator <<(std::ostream& os, const Point& pt) {
+std::ostream &operator<<(std::ostream &os, const Point &pt) {
     return os << pt.toString();
 }
 
-int hashCode(const Point& pt) {
+int hashCode(const Point &pt) {
     return hashCode(pt.getX(), pt.getY());
 }

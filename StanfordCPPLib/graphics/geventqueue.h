@@ -24,7 +24,9 @@
 #include <collections/queue.h>
 
 class GObservable;
+
 class GThread;
+
 class QtGui;
 
 /**
@@ -40,7 +42,7 @@ class QtGui;
  * @private
  */
 class GEventQueue : public QObject {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     /**
@@ -48,7 +50,7 @@ public:
      * If no instance yet exists, one is created.
      * @return
      */
-    static GEventQueue* instance();
+    static GEventQueue *instance();
 
     /**
      * Returns the current event mask used by the semi-deprecated global
@@ -66,7 +68,8 @@ public:
      * Returns true if the given event would be accepted by the current
      * event mask, as per setEventMask.
      */
-    bool isAcceptingEvent(const GEvent& event) const;
+    bool isAcceptingEvent(const GEvent &event) const;
+
     bool isAcceptingEvent(int type) const;
 
     /**
@@ -85,6 +88,7 @@ public:
     GEvent waitForEvent(int mask = ANY_EVENT);
 
 signals:
+
     /**
      * Fires when an event is present in the queue and ready to be processed.
      */
@@ -99,13 +103,18 @@ private:
     GEventQueue();
 
     GThunk dequeue();
-    void enqueueEvent(const GEvent& event);
+
+    void enqueueEvent(const GEvent &event);
+
     bool isEmpty() const;
+
     GThunk peek();
+
     void runOnQtGuiThreadAsync(GThunk thunk);
+
     void runOnQtGuiThreadSync(GThunk thunk);
 
-    static GEventQueue* _instance;
+    static GEventQueue *_instance;
     Queue<GThunk> _functionQueue;
     Queue<GEvent> _eventQueue;
     QReadWriteLock _eventQueueMutex;
@@ -113,7 +122,9 @@ private:
     int _eventMask;
 
     friend class GObservable;
+
     friend class GThread;
+
     friend class QtGui;
 };
 

@@ -1,5 +1,6 @@
 #include "private/init.h"
 #include <graphics/qtgui.h>
+
 #define run(argc, argv, studentMain) \
     stanfordcpplib::initializeLibrary(argc, argv); \
     QtGui::instance()->startBackgroundEventLoop(studentMain); \

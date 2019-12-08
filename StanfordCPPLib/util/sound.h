@@ -59,7 +59,7 @@ public:
      * Starts playing the sound if not playing, or unpauses if paused.
      * This call returns immediately without waiting for the sound to finish.
      */
-    static void playSound(const std::string& filename);
+    static void playSound(const std::string &filename);
 
     /**
      * Sets the overall audio volume from 0 (silence) to 100 (full volume).
@@ -93,7 +93,7 @@ public:
     void play();
 
 private:
-    static QMediaPlayer* _qmediaPlayer;
+    static QMediaPlayer *_qmediaPlayer;
 
     static void initialize();
 

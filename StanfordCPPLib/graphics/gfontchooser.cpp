@@ -22,15 +22,15 @@ GFontChooser::GFontChooser() {
     // empty
 }
 
-std::string GFontChooser::showDialog(const std::string& title, const std::string& initialFont) {
-    return showDialog(/* parent */ (QWidget*) nullptr, title, initialFont);
+std::string GFontChooser::showDialog(const std::string &title, const std::string &initialFont) {
+    return showDialog(/* parent */ (QWidget *) nullptr, title, initialFont);
 }
 
-std::string GFontChooser::showDialog(GWindow* parent, const std::string& title, const std::string& initialFont) {
+std::string GFontChooser::showDialog(GWindow *parent, const std::string &title, const std::string &initialFont) {
     return showDialog(parent ? parent->getWidget() : nullptr, title, initialFont);
 }
 
-std::string GFontChooser::showDialog(QWidget* parent, const std::string& title, const std::string& initialFont) {
+std::string GFontChooser::showDialog(QWidget *parent, const std::string &title, const std::string &initialFont) {
     QFont initialQFont = GFont::toQFont(initialFont);
     std::string result = "";
     GThread::runOnQtGuiThread([parent, title, initialQFont, &result]() {

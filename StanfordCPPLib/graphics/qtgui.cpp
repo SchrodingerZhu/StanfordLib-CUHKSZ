@@ -22,12 +22,12 @@
 #include "private/static.h"
 
 // QSPLApplication members
-QSPLApplication::QSPLApplication(int& argc, char *argv[])
+QSPLApplication::QSPLApplication(int &argc, char *argv[])
         : QApplication(argc, argv) {
     // empty
 }
 
-bool QSPLApplication::notify(QObject* receiver, QEvent* e) {
+bool QSPLApplication::notify(QObject *receiver, QEvent *e) {
 #if defined(SPL_CONSOLE_PRINT_EXCEPTIONS)
     try {
         return QApplication::notify(receiver, e);
@@ -42,8 +42,8 @@ bool QSPLApplication::notify(QObject* receiver, QEvent* e) {
 
 
 // QtGui members
-QSPLApplication* QtGui::_app = nullptr;
-QtGui* QtGui::_instance = nullptr;
+QSPLApplication *QtGui::_app = nullptr;
+QtGui *QtGui::_instance = nullptr;
 
 QtGui::QtGui()
         : _initialized(false) {
@@ -64,7 +64,7 @@ void QtGui::exitGraphics(int exitCode) {
     }
 }
 
-QSPLApplication* QtGui::getApplication() {
+QSPLApplication *QtGui::getApplication() {
     return _app;
 }
 
@@ -76,7 +76,7 @@ int QtGui::getArgc() const {
     return _argc;
 }
 
-char** QtGui::getArgv() const {
+char **QtGui::getArgv() const {
     return _argv;
 }
 
@@ -91,7 +91,7 @@ void QtGui::initializeQt() {
                     "  - thread: %{threadid}\n"
 
                     // backtrace doesn't work on windows and some other builds
-#ifndef _WIN32
+                    #ifndef _WIN32
                     "  - stack:\n"
                     "      %{backtrace depth=20 separator=\"\n      \"}"
 #endif // _WIN32
@@ -102,7 +102,7 @@ void QtGui::initializeQt() {
     });
 }
 
-QtGui* QtGui::instance() {
+QtGui *QtGui::instance() {
     if (!_instance) {
         _instance = new QtGui();
         GEventQueue::instance();   // create event queue on Qt GUI main thread
@@ -118,7 +118,7 @@ void QtGui::processEventFromQueue() {
     }
 }
 
-void QtGui::setArgs(int argc, char** argv) {
+void QtGui::setArgs(int argc, char **argv) {
     _argc = argc;
     _argv = argv;
 }
@@ -160,34 +160,33 @@ void QtGui::startEventLoop(bool exitAfter) {
 }
 
 
-
 namespace stanfordcpplib {
-void endOfLibraryStudentThread() {
-    // briefly wait for the console to finish printing any/all output
-    GThread::getCurrentThread()->yield();
-    GThread::getCurrentThread()->sleep(1);
+    void endOfLibraryStudentThread() {
+        // briefly wait for the console to finish printing any/all output
+        GThread::getCurrentThread()->yield();
+        GThread::getCurrentThread()->sleep(1);
 
-    int result = 0;
-    if (GThread::getStudentThread() != nullptr) {
-        result = GThread::getStudentThread()->getResult();
-    }
-    static_cast<void>(result);   // so it won't be unused
-
-    // if I get here, student's main() has finished running;
-    // indicate this by showing a completed title on the graphical console
-    if (getConsoleEnabled()) {
-#ifndef SPL_HEADLESS_MODE
-        GConsoleWindow* console = getConsoleWindow();
-        if (console) {
-            console->shutdown();
+        int result = 0;
+        if (GThread::getStudentThread() != nullptr) {
+            result = GThread::getStudentThread()->getResult();
         }
+        static_cast<void>(result);   // so it won't be unused
+
+        // if I get here, student's main() has finished running;
+        // indicate this by showing a completed title on the graphical console
+        if (getConsoleEnabled()) {
+#ifndef SPL_HEADLESS_MODE
+            GConsoleWindow *console = getConsoleWindow();
+            if (console) {
+                console->shutdown();
+            }
 #endif // SPL_HEADLESS_MODE
-    } else {
-        // need to exit here else program will not terminate
-        // BUGFIX: no, this is not needed and is bad; it exits the window too soon; disable
-        // QtGui::instance()->exitGraphics(result);
+        } else {
+            // need to exit here else program will not terminate
+            // BUGFIX: no, this is not needed and is bad; it exits the window too soon; disable
+            // QtGui::instance()->exitGraphics(result);
+        }
     }
-}
 } // namespace stanfordcpplib
 
 

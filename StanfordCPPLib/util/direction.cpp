@@ -46,15 +46,15 @@ Direction opposite(Direction dir) {
 
 std::string directionToString(Direction dir) {
     switch (dir) {
-    case NORTH:
-        return "NORTH";
-    case EAST:
-        return "EAST";
-    case SOUTH:
-        return "SOUTH";
-    default:
-    // case WEST:
-        return "WEST";   // BUGFIX 2014/07/09: removed unreachable 'default' case
+        case NORTH:
+            return "NORTH";
+        case EAST:
+            return "EAST";
+        case SOUTH:
+            return "SOUTH";
+        default:
+            // case WEST:
+            return "WEST";   // BUGFIX 2014/07/09: removed unreachable 'default' case
     }
 }
 
@@ -66,7 +66,7 @@ std::string directionToString(Direction dir) {
  * can be implemented as a single line.
  */
 
-std::ostream& operator <<(std::ostream& os, const Direction& dir) {
+std::ostream &operator<<(std::ostream &os, const Direction &dir) {
     return os << directionToString(dir);
 }
 
@@ -77,7 +77,7 @@ std::ostream& operator <<(std::ostream& os, const Direction& dir) {
  * stream.
  */
 
-std::istream& operator >>(std::istream& is, Direction& dir) {
+std::istream &operator>>(std::istream &is, Direction &dir) {
     TokenScanner scanner(is);
     scanner.ignoreWhitespace();
     std::string token = toUpperCase(scanner.nextToken());
@@ -111,7 +111,7 @@ std::istream& operator >>(std::istream& is, Direction& dir) {
  * this operator is used only in the for loop idiom for which it is defined.
  */
 
-Direction operator ++(Direction& dir, int) {
+Direction operator++(Direction &dir, int) {
     Direction old = dir;
     dir = Direction(dir + 1);
     return old;

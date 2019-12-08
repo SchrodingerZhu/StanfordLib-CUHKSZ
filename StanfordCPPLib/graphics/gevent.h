@@ -24,39 +24,46 @@
 #include <graphics/gtypes.h>
 
 class QEvent;
+
 class GEvent;
+
 class GInteractor;
+
 class GObservable;
+
 class _Internal_QCanvas;
+
 class _Internal_QCheckBox;
+
 class _Internal_QPushButton;
+
 class _Internal_QWidget;
 
 /** Types for the event listener functions to be passed to various interactors. */
 typedef std::function<void(GEvent)> GEventListener;
 
 /** Types for the event listener functions to be passed to various interactors. */
-typedef std::function<void()>       GEventListenerVoid;
+typedef std::function<void()> GEventListenerVoid;
 
 /**
  * Represents all major categories of events.
  */
 enum EventClass {
-    NULL_EVENT      = 0x0000,
-    ACTION_EVENT    = 0x0010,
-    KEY_EVENT       = 0x0020,
-    TIMER_EVENT     = 0x0040,
-    WINDOW_EVENT    = 0x0080,
-    MOUSE_EVENT     = 0x0100,
-    CLICK_EVENT     = 0x0200,
-    TABLE_EVENT     = 0x0400,
-    SERVER_EVENT    = 0x0800,
-    CHANGE_EVENT    = 0x1000,
+    NULL_EVENT = 0x0000,
+    ACTION_EVENT = 0x0010,
+    KEY_EVENT = 0x0020,
+    TIMER_EVENT = 0x0040,
+    WINDOW_EVENT = 0x0080,
+    MOUSE_EVENT = 0x0100,
+    CLICK_EVENT = 0x0200,
+    TABLE_EVENT = 0x0400,
+    SERVER_EVENT = 0x0800,
+    CHANGE_EVENT = 0x1000,
     HYPERLINK_EVENT = 0x2000,
-    SCROLL_EVENT    = 0x4000,
-    ANY_EVENT       = ACTION_EVENT | KEY_EVENT | TIMER_EVENT | WINDOW_EVENT
-                    | MOUSE_EVENT | CLICK_EVENT | TABLE_EVENT | SERVER_EVENT
-                    | CHANGE_EVENT | HYPERLINK_EVENT | SCROLL_EVENT
+    SCROLL_EVENT = 0x4000,
+    ANY_EVENT = ACTION_EVENT | KEY_EVENT | TIMER_EVENT | WINDOW_EVENT
+                | MOUSE_EVENT | CLICK_EVENT | TABLE_EVENT | SERVER_EVENT
+                | CHANGE_EVENT | HYPERLINK_EVENT | SCROLL_EVENT
 };
 // Note: If you add any new classes of events, you must also add logic to the
 // GEvent::classToString function in gevent.cpp.
@@ -67,52 +74,53 @@ enum EventClass {
  * An event type is a subcategory within an event class.
  */
 enum EventType {
-    NULL_TYPE            = 0,
+    NULL_TYPE = 0,
 
-    WINDOW_CLOSED        = WINDOW_EVENT + 1,
-    WINDOW_RESIZED       = WINDOW_EVENT + 2,
-    CONSOLE_CLOSED       = WINDOW_EVENT + 3,
-    WINDOW_CLOSING       = WINDOW_EVENT + 4,
-    WINDOW_MINIMIZED     = WINDOW_EVENT + 5,
-    WINDOW_RESTORED      = WINDOW_EVENT + 6,
-    WINDOW_MAXIMIZED     = WINDOW_EVENT + 7,
+    WINDOW_CLOSED = WINDOW_EVENT + 1,
+    WINDOW_RESIZED = WINDOW_EVENT + 2,
+    CONSOLE_CLOSED = WINDOW_EVENT + 3,
+    WINDOW_CLOSING = WINDOW_EVENT + 4,
+    WINDOW_MINIMIZED = WINDOW_EVENT + 5,
+    WINDOW_RESTORED = WINDOW_EVENT + 6,
+    WINDOW_MAXIMIZED = WINDOW_EVENT + 7,
 
-    ACTION_PERFORMED     = ACTION_EVENT + 1,
-    ACTION_MENU          = ACTION_EVENT + 2,
+    ACTION_PERFORMED = ACTION_EVENT + 1,
+    ACTION_MENU = ACTION_EVENT + 2,
 
-    MOUSE_CLICKED        = MOUSE_EVENT + 1,
-    MOUSE_PRESSED        = MOUSE_EVENT + 2,
-    MOUSE_RELEASED       = MOUSE_EVENT + 3,
-    MOUSE_MOVED          = MOUSE_EVENT + 4,
-    MOUSE_DRAGGED        = MOUSE_EVENT + 5,
-    MOUSE_ENTERED        = MOUSE_EVENT + 6,
-    MOUSE_EXITED         = MOUSE_EVENT + 7,
-    MOUSE_WHEEL_DOWN     = MOUSE_EVENT + 8,
-    MOUSE_WHEEL_UP       = MOUSE_EVENT + 9,
+    MOUSE_CLICKED = MOUSE_EVENT + 1,
+    MOUSE_PRESSED = MOUSE_EVENT + 2,
+    MOUSE_RELEASED = MOUSE_EVENT + 3,
+    MOUSE_MOVED = MOUSE_EVENT + 4,
+    MOUSE_DRAGGED = MOUSE_EVENT + 5,
+    MOUSE_ENTERED = MOUSE_EVENT + 6,
+    MOUSE_EXITED = MOUSE_EVENT + 7,
+    MOUSE_WHEEL_DOWN = MOUSE_EVENT + 8,
+    MOUSE_WHEEL_UP = MOUSE_EVENT + 9,
     MOUSE_DOUBLE_CLICKED = MOUSE_EVENT + 10,
 
-    KEY_PRESSED          = KEY_EVENT + 1,
-    KEY_RELEASED         = KEY_EVENT + 2,
-    KEY_TYPED            = KEY_EVENT + 3,
+    KEY_PRESSED = KEY_EVENT + 1,
+    KEY_RELEASED = KEY_EVENT + 2,
+    KEY_TYPED = KEY_EVENT + 3,
 
-    TIMER_TICKED         = TIMER_EVENT + 1,
+    TIMER_TICKED = TIMER_EVENT + 1,
 
-    TABLE_UPDATED        = TABLE_EVENT + 1,   // when a cell's value gets set
-    TABLE_SELECTED       = TABLE_EVENT + 2,   // cursor moves onto a cell
-    TABLE_EDIT_BEGIN     = TABLE_EVENT + 3,   // user presses F2 or double clicks to start editing a cell
-    TABLE_REPLACE_BEGIN  = TABLE_EVENT + 4,   // user starts typing on a cell; like TABLE_EDIT_BEGIN but wipes out previous value
-    TABLE_EDIT_CANCEL    = TABLE_EVENT + 5,   // user presses Esc or otherwise stops editing a cell
-    TABLE_CUT            = TABLE_EVENT + 6,   // user cuts cell value to clipboard
-    TABLE_COPY           = TABLE_EVENT + 7,   // user copies cell value to clipboard
-    TABLE_PASTE          = TABLE_EVENT + 8,   // user pastes cell value from clipboard
+    TABLE_UPDATED = TABLE_EVENT + 1,   // when a cell's value gets set
+    TABLE_SELECTED = TABLE_EVENT + 2,   // cursor moves onto a cell
+    TABLE_EDIT_BEGIN = TABLE_EVENT + 3,   // user presses F2 or double clicks to start editing a cell
+    TABLE_REPLACE_BEGIN =
+    TABLE_EVENT + 4,   // user starts typing on a cell; like TABLE_EDIT_BEGIN but wipes out previous value
+    TABLE_EDIT_CANCEL = TABLE_EVENT + 5,   // user presses Esc or otherwise stops editing a cell
+    TABLE_CUT = TABLE_EVENT + 6,   // user cuts cell value to clipboard
+    TABLE_COPY = TABLE_EVENT + 7,   // user copies cell value to clipboard
+    TABLE_PASTE = TABLE_EVENT + 8,   // user pastes cell value from clipboard
 
-    SERVER_REQUEST       = SERVER_EVENT + 1,
+    SERVER_REQUEST = SERVER_EVENT + 1,
 
-    STATE_CHANGED        = CHANGE_EVENT + 1,
+    STATE_CHANGED = CHANGE_EVENT + 1,
 
-    HYPERLINK_CLICKED    = HYPERLINK_EVENT + 1,
+    HYPERLINK_CLICKED = HYPERLINK_EVENT + 1,
 
-    SCROLL_SCROLLED      = SCROLL_EVENT + 1
+    SCROLL_SCROLLED = SCROLL_EVENT + 1
 };
 // Note: If you add any new classes of events, you must also add logic to the
 // GEvent::typeToString function in gevent.cpp.
@@ -122,14 +130,14 @@ enum EventType {
  * These constants can be combined in a single modifier int using bitwise operators.
  */
 enum Modifier {
-    SHIFT_DOWN     = 1 << 0,
-    CTRL_DOWN      = 1 << 1,
-    META_DOWN      = 1 << 2,
-    ALT_DOWN       = 1 << 3,
+    SHIFT_DOWN = 1 << 0,
+    CTRL_DOWN = 1 << 1,
+    META_DOWN = 1 << 2,
+    ALT_DOWN = 1 << 3,
     ALT_GRAPH_DOWN = 1 << 4,
-    BUTTON1_DOWN   = 1 << 5,
-    BUTTON2_DOWN   = 1 << 6,
-    BUTTON3_DOWN   = 1 << 7
+    BUTTON1_DOWN = 1 << 5,
+    BUTTON2_DOWN = 1 << 6,
+    BUTTON3_DOWN = 1 << 7
 };
 
 /**
@@ -215,9 +223,9 @@ public:
      * Creates a new event of the given type.
      */
     GEvent(EventClass eventClass = NULL_EVENT,
-            EventType eventType = NULL_TYPE,
-            const std::string& eventName = "",
-            GObservable* source = nullptr);
+           EventType eventType = NULL_TYPE,
+           const std::string &eventName = "",
+           GObservable *source = nullptr);
 
     /**
      * Frees memory allocated internally by the event.
@@ -279,13 +287,13 @@ public:
     /**
      * Returns the source interactor that generated this event.
      */
-    virtual GInteractor* getInteractor() const;
+    virtual GInteractor *getInteractor() const;
 
     /**
      * Returns the Qt event being wrapped by this event, if any.
      * If this event does not wrap a Qt event, returns nullptr.
      */
-    virtual QEvent* getInternalEvent() const;
+    virtual QEvent *getInternalEvent() const;
 
     /**
      * Returns the key character that was typed, if this is a key event.
@@ -333,7 +341,7 @@ public:
     /**
      * Returns the source object that generated this event.
      */
-    virtual GObservable* getSource() const;
+    virtual GObservable *getSource() const;
 
     /**
      * Returns this event's timestamp, as a number of milliseconds elapsed
@@ -435,7 +443,7 @@ public:
     /**
      * @private
      */
-    virtual void setActionCommand(const std::string& actionCommand);
+    virtual void setActionCommand(const std::string &actionCommand);
 
     /**
      * @private
@@ -445,7 +453,7 @@ public:
     /**
      * @private
      */
-    virtual void setInternalEvent(QEvent* event);
+    virtual void setInternalEvent(QEvent *event);
 
     /**
      * @private
@@ -455,7 +463,7 @@ public:
     /**
      * @private
      */
-    virtual void setKeyChar(const std::string& keyCharString);
+    virtual void setKeyChar(const std::string &keyCharString);
 
     /**
      * @private
@@ -470,7 +478,7 @@ public:
     /**
      * @private
      */
-    virtual void setRequestURL(const std::string& requestUrl);
+    virtual void setRequestURL(const std::string &requestUrl);
 
     /**
      * @private
@@ -480,7 +488,7 @@ public:
     /**
      * @private
      */
-    virtual void setSource(GObservable* source);
+    virtual void setSource(GObservable *source);
 
     /**
      * @private
@@ -520,7 +528,7 @@ private:
         GEventListenerVoid handlerVoid;
         EventListenerType type;
 
-        void fireEvent(const GEvent& event) {
+        void fireEvent(const GEvent &event) {
             if (type == HANDLER_EVENT) {
                 handler(event);
             } else {
@@ -538,24 +546,26 @@ private:
     int _modifiers;
     std::string _name;
     std::string _requestUrl;
-    GObservable* _source;
+    GObservable *_source;
     long _time;
     EventType _type;
     double _x;
     double _y;
     int _row;
     int _col;
-    QEvent* _internalQtEvent;
+    QEvent *_internalQtEvent;
 
     friend class GInteractor;
+
     friend class GObservable;
+
     friend class _Internal_QWidget;
 };
 
 /**
  * Writes the given event to the given output stream.
  */
-std::ostream& operator <<(std::ostream& out, const GEvent& event);
+std::ostream &operator<<(std::ostream &out, const GEvent &event);
 
 // alias GEvent to all event types
 typedef GEvent GActionEvent;

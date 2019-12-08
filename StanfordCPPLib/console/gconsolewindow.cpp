@@ -74,7 +74,7 @@ void setConsolePropertiesQt();
 /*static*/ const std::string GConsoleWindow::DEFAULT_ERROR_COLOR_DARK_MODE = "#f47862";
 /*static*/ const std::string GConsoleWindow::DEFAULT_USER_INPUT_COLOR = "#0000cc";
 /*static*/ const std::string GConsoleWindow::DEFAULT_USER_INPUT_COLOR_DARK_MODE = "#2c90e5";
-/*static*/ GConsoleWindow* GConsoleWindow::_instance = nullptr;
+/*static*/ GConsoleWindow *GConsoleWindow::_instance = nullptr;
 /*static*/ bool GConsoleWindow::_consoleEnabled = false;
 
 /*static*/ bool GConsoleWindow::consoleEnabled() {
@@ -85,16 +85,16 @@ void setConsolePropertiesQt();
     if (OS::isMac()) {
         // for some reason, using "Monospace" doesn't work for me on Mac testing
         return "Courier New-"
-                + std::to_string(DEFAULT_FONT_SIZE + 1)
-                + (DEFAULT_FONT_WEIGHT.empty() ? "" : ("-" + DEFAULT_FONT_WEIGHT));
+               + std::to_string(DEFAULT_FONT_SIZE + 1)
+               + (DEFAULT_FONT_WEIGHT.empty() ? "" : ("-" + DEFAULT_FONT_WEIGHT));
     } else {
         return DEFAULT_FONT_FAMILY
-                + "-" + std::to_string(DEFAULT_FONT_SIZE)
-                + (DEFAULT_FONT_WEIGHT.empty() ? "" : ("-" + DEFAULT_FONT_WEIGHT));
+               + "-" + std::to_string(DEFAULT_FONT_SIZE)
+               + (DEFAULT_FONT_WEIGHT.empty() ? "" : ("-" + DEFAULT_FONT_WEIGHT));
     }
 }
 
-/*static*/ GConsoleWindow* GConsoleWindow::instance() {
+/*static*/ GConsoleWindow *GConsoleWindow::instance() {
     if (!_instance) {
         // initialize Qt system and Qt Console window
         GThread::runOnQtGuiThread([]() {
@@ -149,62 +149,62 @@ void GConsoleWindow::_initMenuBar() {
     addMenu("&File");
     addMenuItem("File", "&Save", QPixmap(":/save"),
                 [this]() { this->save(); })
-                ->setShortcut(QKeySequence::Save);
+            ->setShortcut(QKeySequence::Save);
 
     addMenuItem("File", "Save &As...", QPixmap(":/save_as"),
                 [this]() { this->saveAs(); })
-                ->setShortcut(QKeySequence::SaveAs);
+            ->setShortcut(QKeySequence::SaveAs);
     addMenuSeparator("File");
 
     addMenuItem("File", "&Print", QPixmap(":/print"),
                 [this]() { this->showPrintDialog(); })
-                ->setShortcut(QKeySequence::Print);
+            ->setShortcut(QKeySequence::Print);
     setMenuItemEnabled("File", "Print", false);
     addMenuSeparator("File");
 
     addMenuItem("File", "&Load Input Script...", QPixmap(":/load_input_script"),
                 [this]() { this->showInputScriptDialog(); });
     addToolbarItem("Load Input Script...", QPixmap(":/load_input_script"),
-                       [this]() { this->showInputScriptDialog(); });
+                   [this]() { this->showInputScriptDialog(); });
 
-    addMenuItem("File", "&Compare Output...",  QPixmap(":/compare_output"),
+    addMenuItem("File", "&Compare Output...", QPixmap(":/compare_output"),
                 [this]() { this->showCompareOutputDialog(); });
     addToolbarItem("Compare Output...", QPixmap(":/compare_output"),
-                       [this]() { this->showCompareOutputDialog(); });
+                   [this]() { this->showCompareOutputDialog(); });
 
     addMenuItem("File", "&Quit", QPixmap(":/quit"),
                 [this]() { this->close(); /* TODO: exit app */ })
-                ->setShortcut(QKeySequence::Quit);
+            ->setShortcut(QKeySequence::Quit);
     addToolbarSeparator();
 
     // Edit menu
     addMenu("&Edit");
     addMenuItem("Edit", "Cu&t", QPixmap(":/cut"),
                 [this]() { this->clipboardCut(); })
-                ->setShortcut(QKeySequence::Cut);
+            ->setShortcut(QKeySequence::Cut);
     //   no cut operation available for Console, do not add to toolbar
 
     addMenuItem("Edit", "&Copy", QPixmap(":/copy"),
                 [this]() { this->clipboardCopy(); })
-                ->setShortcut(QKeySequence::Copy);
+            ->setShortcut(QKeySequence::Copy);
     addToolbarItem("Copy", QPixmap(":/copy"),
-                       [this]() { this->clipboardCopy(); });
+                   [this]() { this->clipboardCopy(); });
 
     addMenuItem("Edit", "&Paste", QPixmap(":/paste"),
                 [this]() { this->clipboardPaste(); })
-                ->setShortcut(QKeySequence::Paste);
+            ->setShortcut(QKeySequence::Paste);
     addToolbarItem("Paste", QPixmap(":/paste"),
-                       [this]() { this->clipboardPaste(); });
+                   [this]() { this->clipboardPaste(); });
 
     addMenuItem("Edit", "Select &All", QPixmap(":/select_all"),
                 [this]() { this->selectAll(); })
-                ->setShortcut(QKeySequence::SelectAll);
+            ->setShortcut(QKeySequence::SelectAll);
 
     addMenuItem("Edit", "C&lear Console", QPixmap(":/clear_console"),
                 [this]() { this->clearConsole(); })
-                ->setShortcut(QKeySequence(QString::fromStdString("Ctrl+L")));
+            ->setShortcut(QKeySequence(QString::fromStdString("Ctrl+L")));
     addToolbarItem("Clear Console", QPixmap(":/clear_console"),
-                       [this]() { this->clearConsole(); });
+                   [this]() { this->clearConsole(); });
     addToolbarSeparator();
 
     // Options menu
@@ -212,31 +212,31 @@ void GConsoleWindow::_initMenuBar() {
     addMenuItem("Options", "&Font...", QPixmap(":/font"),
                 [this]() { this->showFontDialog(); });
     addToolbarItem("Font...", QPixmap(":/font"),
-                       [this]() { this->showFontDialog(); });
+                   [this]() { this->showFontDialog(); });
 
     addMenuItem("Options", "&Background Color...", QPixmap(":/background_color"),
                 [this]() { this->showColorDialog(/* background */ true); });
     addToolbarItem("Background Color...", QPixmap(":/background_color"),
-                       [this]() { this->showColorDialog(/* background */ true); });
+                   [this]() { this->showColorDialog(/* background */ true); });
 
     addMenuItem("Options", "&Text Color...", QPixmap(":/text_color"),
                 [this]() { this->showColorDialog(/* background */ false); });
     addToolbarItem("Text Color...", QPixmap(":/text_color"),
-                       [this]() { this->showColorDialog(/* background */ false); });
+                   [this]() { this->showColorDialog(/* background */ false); });
     addToolbarSeparator();
 
     // Help menu
     addMenu("&Help");
     addMenuItem("Help", "&About...", QPixmap(":/about"),
                 [this]() { this->showAboutDialog(); })
-                ->setShortcut(QKeySequence::HelpContents);
+            ->setShortcut(QKeySequence::HelpContents);
     addToolbarItem("About...", QPixmap(":/about"),
-                       [this]() { this->showAboutDialog(); });
+                   [this]() { this->showAboutDialog(); });
 
     addMenuItem("Help", "&Check for Updates", QPixmap(":/check_for_updates"),
                 [this]() { this->checkForUpdates(); });
     addToolbarItem("Check for Updates", QPixmap(":/check_for_updates"),
-                       [this]() { this->checkForUpdates(); });
+                   [this]() { this->checkForUpdates(); });
 }
 
 void GConsoleWindow::_initStreams() {
@@ -263,7 +263,7 @@ void GConsoleWindow::_initWidgets() {
     _textArea->setContextMenuEnabled(false);
     _textArea->setLineWrap(true);
     _textArea->setFont(getDefaultFont());
-    QTextEdit* rawTextEdit = static_cast<QTextEdit*>(_textArea->getWidget());
+    QTextEdit *rawTextEdit = static_cast<QTextEdit *>(_textArea->getWidget());
     rawTextEdit->setTabChangesFocus(false);
     _textArea->setKeyListener([this](GEvent event) {
         if (event.getEventType() == KEY_PRESSED) {
@@ -278,7 +278,7 @@ void GConsoleWindow::_initWidgets() {
         // - popping up context menu by right-clicking
         // - Linux-style copy/paste operations using selection plus middle-click
         if (event.getButton() > 1
-                || event.getEventType() == MOUSE_RELEASED) {
+            || event.getEventType() == MOUSE_RELEASED) {
             event.ignore();
         }
     });
@@ -327,17 +327,19 @@ void GConsoleWindow::checkForUpdates() {
 
         std::string message;
         if (currentVersion >= latestVersion) {
-                message = "This project already has the latest version \nof the Stanford libraries (" + currentVersion + ").";
+            message =
+                    "This project already has the latest version \nof the Stanford libraries (" + currentVersion + ").";
         } else {
-                message = "<html>There is an updated version of the Stanford libraries available.\n\n"
-                   "This project's library version: " + currentVersion + "\n"
-                   "Current newest library version: " + latestVersion + "\n\n"
-                   "Go to <a href=\"" + version::getCppLibraryDocsUrl() + "\">"
-                   + version::getCppLibraryDocsUrl() + "</a> to get the new version.</html>";
+            message = "<html>There is an updated version of the Stanford libraries available.\n\n"
+                      "This project's library version: " + currentVersion + "\n"
+                                                                            "Current newest library version: " +
+                      latestVersion + "\n\n"
+                                      "Go to <a href=\"" + version::getCppLibraryDocsUrl() + "\">"
+                      + version::getCppLibraryDocsUrl() + "</a> to get the new version.</html>";
         }
         GOptionPane::showMessageDialog(
-                    /* parent  */ getWidget(),
-                    /* message */ message);
+                /* parent  */ getWidget(),
+                /* message */ message);
     }, "Check for Updates");
 }
 
@@ -371,17 +373,17 @@ void GConsoleWindow::clipboardCut() {
 
     // if selection is entirely within the user input area, cut out of user input area
     int userInputStart = getUserInputStart();
-    int userInputEnd   = getUserInputEnd();
+    int userInputEnd = getUserInputEnd();
     int selectionStart = _textArea->getSelectionStart();
     int selectionEnd = _textArea->getSelectionEnd();
     if (selectionEnd > selectionStart
-            && selectionStart >= userInputStart
-            && selectionEnd <= userInputEnd) {
+        && selectionStart >= userInputStart
+        && selectionEnd <= userInputEnd) {
         // selection is entirely user input! cut it!
         QTextFragment frag = getUserInputFragment();
         if (frag.isValid()) {
             std::string selectedText = _textArea->getSelectedText();
-            QTextEdit* textArea = static_cast<QTextEdit*>(this->_textArea->getWidget());
+            QTextEdit *textArea = static_cast<QTextEdit *>(this->_textArea->getWidget());
             QTextCursor cursor(textArea->textCursor());
 
             int indexStart = selectionStart - userInputStart;
@@ -425,7 +427,7 @@ void GConsoleWindow::close() {
     GWindow::close();   // call super
 }
 
-void GConsoleWindow::compareOutput(const std::string& filename) {
+void GConsoleWindow::compareOutput(const std::string &filename) {
     std::string expectedOutput;
     if (!filename.empty() && fileExists(filename)) {
         expectedOutput = readEntireFile(filename);
@@ -437,11 +439,11 @@ void GConsoleWindow::compareOutput(const std::string& filename) {
 
     GDiffGui::showDialog("Expected Output", expectedOutput,
                          "Your Output", studentOutput,
-                         /* showCheckBoxes */ false);
+            /* showCheckBoxes */ false);
 }
 
 std::string GConsoleWindow::getAllOutput() const {
-    GConsoleWindow* thisHack = const_cast<GConsoleWindow*>(this);
+    GConsoleWindow *thisHack = const_cast<GConsoleWindow *>(this);
     thisHack->_coutMutex.lock();
     std::string allOutput = thisHack->_allOutputBuffer.str();
     thisHack->_coutMutex.unlock();
@@ -498,7 +500,7 @@ std::string GConsoleWindow::getUserInputColor() const {
 
 QTextFragment GConsoleWindow::getUserInputFragment() const {
     if (!_inputBuffer.empty()) {
-        QTextEdit* textArea = static_cast<QTextEdit*>(this->_textArea->getWidget());
+        QTextEdit *textArea = static_cast<QTextEdit *>(this->_textArea->getWidget());
         QTextBlock block = textArea->document()->end().previous();
         while (block.isValid()) {
             QTextBlock::iterator it;
@@ -557,10 +559,10 @@ bool GConsoleWindow::isClearEnabled() const {
 bool GConsoleWindow::isCursorInUserInputArea() const {
     int cursorPosition = _textArea->getCursorPosition();
     int userInputStart = getUserInputStart();
-    int userInputEnd   = getUserInputEnd();
+    int userInputEnd = getUserInputEnd();
     return _promptActive
-            && userInputStart <= cursorPosition
-            && cursorPosition <= userInputEnd;
+           && userInputStart <= cursorPosition
+           && cursorPosition <= userInputEnd;
 }
 
 bool GConsoleWindow::isEcho() const {
@@ -577,12 +579,12 @@ bool GConsoleWindow::isLocked() const {
 
 bool GConsoleWindow::isSelectionInUserInputArea() const {
     int userInputStart = getUserInputStart();
-    int userInputEnd   = getUserInputEnd();
+    int userInputEnd = getUserInputEnd();
     int selectionStart = _textArea->getSelectionStart();
     int selectionEnd = _textArea->getSelectionEnd();
     return userInputStart >= 0 && userInputEnd >= 0
-            && selectionStart >= userInputStart
-            && selectionEnd <= userInputEnd;
+           && selectionStart >= userInputStart
+           && selectionEnd <= userInputEnd;
 }
 
 void GConsoleWindow::loadConfiguration() {
@@ -591,7 +593,7 @@ void GConsoleWindow::loadConfiguration() {
         std::ifstream infile;
         infile.open(configFile.c_str());
         if (!infile) {
-                return;
+            return;
         }
         std::string line;
         while (getline(infile, line)) {
@@ -603,7 +605,7 @@ void GConsoleWindow::loadConfiguration() {
             if (tokens.size() < 2) {
                 continue;
             }
-            std::string key   = toLowerCase(tokens[0]);
+            std::string key = toLowerCase(tokens[0]);
             std::string value = tokens[1];
             if (key == "font") {
                 setFont(value);
@@ -618,7 +620,7 @@ void GConsoleWindow::loadConfiguration() {
 
 void GConsoleWindow::loadInputScript(int number) {
     std::string sep = getDirectoryPathSeparator();
-    static std::initializer_list<std::string> directoriesToCheck {
+    static std::initializer_list<std::string> directoriesToCheck{
             ".",
             "." + sep + "input",
             "." + sep + "output"
@@ -633,8 +635,8 @@ void GConsoleWindow::loadInputScript(int number) {
         for (std::string filename : listDirectory(dir)) {
             filename = dir + sep + filename;
             if (inputFile.empty()
-                    && stringContains(filename, "input-" + std::to_string(number))
-                    && endsWith(filename, ".txt")) {
+                && stringContains(filename, "input-" + std::to_string(number))
+                && endsWith(filename, ".txt")) {
                 inputFile = filename;
             } else if (expectedOutputFile.empty()
                        && stringContains(filename, "expected-output-" + std::to_string(number))
@@ -650,8 +652,8 @@ void GConsoleWindow::loadInputScript(int number) {
     }
     if (!expectedOutputFile.empty()) {
         GThread::runInNewThreadAsync([this, expectedOutputFile]() {
-            GThread* currentThread = GThread::getCurrentThread();
-            GThread* studentThread = GThread::getStudentThread();
+            GThread *currentThread = GThread::getCurrentThread();
+            GThread *studentThread = GThread::getStudentThread();
             if (!studentThread) {
                 return;
             }
@@ -668,7 +670,7 @@ void GConsoleWindow::loadInputScript(int number) {
     }
 }
 
-void GConsoleWindow::loadInputScript(const std::string& filename) {
+void GConsoleWindow::loadInputScript(const std::string &filename) {
     if (_shutdown) {
         return;
     }
@@ -687,7 +689,7 @@ void GConsoleWindow::loadInputScript(const std::string& filename) {
     }
 }
 
-void GConsoleWindow::print(const std::string& str, bool isStdErr) {
+void GConsoleWindow::print(const std::string &str, bool isStdErr) {
     if (_echo) {
         fflush(isStdErr ? stdout : stderr);
         fflush(isStdErr ? stderr : stdout);
@@ -722,7 +724,7 @@ void GConsoleWindow::println(bool isStdErr) {
     print("\n", isStdErr);
 }
 
-void GConsoleWindow::println(const std::string& str, bool isStdErr) {
+void GConsoleWindow::println(const std::string &str, bool isStdErr) {
     print(str + "\n", isStdErr);
 }
 
@@ -881,7 +883,7 @@ void GConsoleWindow::processKeyPress(GEvent event) {
             if (ALLOW_RICH_INPUT_EDITING) {
                 if (isCursorInUserInputArea()) {
                     int cursorPosition = _textArea->getCursorPosition();
-                    int userInputEnd   = getUserInputEnd();
+                    int userInputEnd = getUserInputEnd();
                     if (cursorPosition >= userInputEnd) {
                         event.ignore();
                         if (!event.isShiftKeyDown()) {
@@ -975,7 +977,7 @@ void GConsoleWindow::processBackspace(int key) {
         QTextFragment frag = getUserInputFragment();
         if (frag.isValid()) {
             // remove last char from onscreen document fragment
-            QTextEdit* textArea = static_cast<QTextEdit*>(this->_textArea->getWidget());
+            QTextEdit *textArea = static_cast<QTextEdit *>(this->_textArea->getWidget());
             QTextCursor cursor(textArea->textCursor());
 
             int oldCursorPosition = cursor.position();
@@ -1063,7 +1065,7 @@ void GConsoleWindow::processUserInputKey(int key) {
         if (ALLOW_RICH_INPUT_EDITING && isCursorInUserInputArea()) {
             QTextFragment frag = getUserInputFragment();
             if (frag.isValid()) {
-                QTextEdit* textArea = static_cast<QTextEdit*>(this->_textArea->getWidget());
+                QTextEdit *textArea = static_cast<QTextEdit *>(this->_textArea->getWidget());
                 QTextCursor cursor(textArea->textCursor());
 
                 // BUGFIX: if there is any selected text, remove it first
@@ -1071,8 +1073,8 @@ void GConsoleWindow::processUserInputKey(int key) {
                 int selectionStart = cursor.selectionStart() - fragStart;
                 int selectionEnd = cursor.selectionEnd() - fragStart;
                 if (selectionEnd > selectionStart
-                        && selectionStart >= 0
-                        && selectionEnd <= (int) _inputBuffer.length()) {
+                    && selectionStart >= 0
+                    && selectionEnd <= (int) _inputBuffer.length()) {
                     cursor.removeSelectedText();
                     _inputBuffer.erase(selectionStart, selectionEnd - selectionStart);
                 }
@@ -1099,8 +1101,10 @@ void GConsoleWindow::processUserInputKey(int key) {
                     cursor.beginEditBlock();
 
                     cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1);             // move to index 1
-                    cursor.insertText(QString::fromStdString(keyStr + _inputBuffer.substr(0, 1)));   // insert new char + old first char
-                    cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 2);              // delete old copy of first char
+                    cursor.insertText(QString::fromStdString(
+                            keyStr + _inputBuffer.substr(0, 1)));   // insert new char + old first char
+                    cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor,
+                                        2);              // delete old copy of first char
                     cursor.deletePreviousChar();
                     cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1);             // move to index 1
                     cursor.endEditBlock();
@@ -1193,13 +1197,13 @@ void GConsoleWindow::save() {
     saveAs(_lastSaveFileName);
 }
 
-void GConsoleWindow::saveAs(const std::string& filename) {
+void GConsoleWindow::saveAs(const std::string &filename) {
     std::string filenameToUse;
     if (filename.empty()) {
         filenameToUse = GFileChooser::showSaveDialog(
                 /* parent */ this->getWidget(),
                 /* title */ "",
-                getHead(_lastSaveFileName));
+                             getHead(_lastSaveFileName));
     } else {
         filenameToUse = filename;
     }
@@ -1221,9 +1225,10 @@ void GConsoleWindow::saveConfiguration(bool prompt) {
     }
     std::string configFile = getTempDirectory() + "/" + CONFIG_FILE_NAME;
     std::string configText = "# Stanford C++ library configuration file\n"
-            "background=" + _textArea->getBackground() + "\n"
-            "foreground=" + getOutputColor() + "\n"
-            "font=" + _textArea->getFont() + "\n";
+                             "background=" + _textArea->getBackground() + "\n"
+                                                                          "foreground=" + getOutputColor() + "\n"
+                                                                                                             "font=" +
+                             _textArea->getFont() + "\n";
     writeEntireFile(configFile, configText);
 }
 
@@ -1236,7 +1241,7 @@ void GConsoleWindow::setBackground(int color) {
     _textArea->setBackground(color);
 }
 
-void GConsoleWindow::setBackground(const std::string& color) {
+void GConsoleWindow::setBackground(const std::string &color) {
     GWindow::setBackground(color);   // call super
     _textArea->setBackground(color);
 }
@@ -1259,7 +1264,7 @@ void GConsoleWindow::setColor(int color) {
     setOutputColor(color);
 }
 
-void GConsoleWindow::setColor(const std::string& color) {
+void GConsoleWindow::setColor(const std::string &color) {
     setOutputColor(color);
 }
 
@@ -1270,12 +1275,12 @@ void GConsoleWindow::setEcho(bool echo) {
     _echo = echo;
 }
 
-void GConsoleWindow::setFont(const QFont& font) {
+void GConsoleWindow::setFont(const QFont &font) {
     GWindow::setFont(font);   // call super
     _textArea->setFont(font);
 }
 
-void GConsoleWindow::setFont(const std::string& font) {
+void GConsoleWindow::setFont(const std::string &font) {
     GWindow::setFont(font);   // call super
     _textArea->setFont(font);
 }
@@ -1284,7 +1289,7 @@ void GConsoleWindow::setForeground(int color) {
     setOutputColor(color);
 }
 
-void GConsoleWindow::setForeground(const std::string& color) {
+void GConsoleWindow::setForeground(const std::string &color) {
     setOutputColor(color);
 }
 
@@ -1296,7 +1301,7 @@ void GConsoleWindow::setLocked(bool locked) {
     _locked = locked;
 }
 
-void GConsoleWindow::setErrorColor(const std::string& errorColor) {
+void GConsoleWindow::setErrorColor(const std::string &errorColor) {
     _errorColor = errorColor;
 }
 
@@ -1304,7 +1309,7 @@ void GConsoleWindow::setOutputColor(int rgb) {
     setOutputColor(GColor::convertRGBToColor(rgb));
 }
 
-void GConsoleWindow::setOutputColor(const std::string& outputColor) {
+void GConsoleWindow::setOutputColor(const std::string &outputColor) {
     _outputColor = outputColor;
     _textArea->setForeground(outputColor);
     if (_shutdown) {
@@ -1315,7 +1320,7 @@ void GConsoleWindow::setOutputColor(const std::string& outputColor) {
 
     // select all previous text and change its color
     // (BUG?: also changes user input text to be that color; desired?)
-    QTextEdit* textArea = static_cast<QTextEdit*>(this->_textArea->getWidget());
+    QTextEdit *textArea = static_cast<QTextEdit *>(this->_textArea->getWidget());
     QTextCursor cursor = textArea->textCursor();
     cursor.beginEditBlock();
     cursor.setPosition(0);
@@ -1339,12 +1344,12 @@ void GConsoleWindow::setSize(double width, double height) {
     GWindow::setSize(width, height);
 }
 
-void GConsoleWindow::setUserInput(const std::string& userInput) {
+void GConsoleWindow::setUserInput(const std::string &userInput) {
     if (_shutdown) {
         return;
     }
     _cinMutex.lockForWrite();
-    QTextEdit* textArea = static_cast<QTextEdit*>(_textArea->getWidget());
+    QTextEdit *textArea = static_cast<QTextEdit *>(_textArea->getWidget());
 
     // delete any current user input
     QTextFragment frag = getUserInputFragment();
@@ -1366,7 +1371,7 @@ void GConsoleWindow::setUserInput(const std::string& userInput) {
     }
 }
 
-void GConsoleWindow::setUserInputColor(const std::string& userInputColor) {
+void GConsoleWindow::setUserInputColor(const std::string &userInputColor) {
     _userInputColor = userInputColor;
 }
 
@@ -1375,25 +1380,26 @@ void GConsoleWindow::showAboutDialog() {
     static const std::string ABOUT_MESSAGE =
             "<html><p>"
             "Stanford C++ Library version <b>" + version::getCppLibraryVersion() + "</b><br>\n"
-            "<br>\n"
-            "Libraries originally written by <b>Eric Roberts</b>,<br>\n"
-            "with assistance from Julie Zelenski, Keith Schwarz, et al.<br>\n"
-            "This version of the library is unofficially maintained by <b>Marty Stepp</b>.<br>\n"
-            "<br>\n"
-            "See <a href=\"" + version::getCppLibraryDocsUrl() + "\">" + version::getCppLibraryDocsUrl() + "</a> for documentation."
-            "</p></html>";
+                                                                                   "<br>\n"
+                                                                                   "Libraries originally written by <b>Eric Roberts</b>,<br>\n"
+                                                                                   "with assistance from Julie Zelenski, Keith Schwarz, et al.<br>\n"
+                                                                                   "This version of the library is unofficially maintained by <b>Marty Stepp</b>.<br>\n"
+                                                                                   "<br>\n"
+                                                                                   "See <a href=\"" +
+            version::getCppLibraryDocsUrl() + "\">" + version::getCppLibraryDocsUrl() + "</a> for documentation."
+                                                                                        "</p></html>";
     GOptionPane::showMessageDialog(
-                /* parent */   getWidget(),
-                /* message */  ABOUT_MESSAGE,
-                /* title */    "About Stanford C++ Library",
-                /* type */     GOptionPane::MESSAGE_ABOUT);
+            /* parent */   getWidget(),
+            /* message */  ABOUT_MESSAGE,
+            /* title */    "About Stanford C++ Library",
+            /* type */     GOptionPane::MESSAGE_ABOUT);
 }
 
 void GConsoleWindow::showColorDialog(bool background) {
     std::string color = GColorChooser::showDialog(
-                /* parent */   getWidget(),
-                /* title */    "",
-                /* initial */  background ? _textArea->getBackground() : _textArea->getForeground());
+            /* parent */   getWidget(),
+            /* title */    "",
+            /* initial */  background ? _textArea->getBackground() : _textArea->getForeground());
     if (!color.empty()) {
         if (background) {
             setBackground(color);
@@ -1406,8 +1412,8 @@ void GConsoleWindow::showColorDialog(bool background) {
 
 void GConsoleWindow::showCompareOutputDialog() {
     std::string filename = GFileChooser::showOpenDialog(
-                /* parent */ getWidget(),
-                /* title  */ "Select an expected output file");
+            /* parent */ getWidget(),
+            /* title  */ "Select an expected output file");
     if (!filename.empty() && fileExists(filename)) {
         compareOutput(filename);
     }
@@ -1415,9 +1421,9 @@ void GConsoleWindow::showCompareOutputDialog() {
 
 void GConsoleWindow::showFontDialog() {
     std::string font = GFontChooser::showDialog(
-                /* parent */ getWidget(),
-                /* title  */ "",
-                /* initialFont */ _textArea->getFont());
+            /* parent */ getWidget(),
+            /* title  */ "",
+            /* initialFont */ _textArea->getFont());
     if (!font.empty()) {
         _textArea->setFont(font);
         saveConfiguration();   // prompt to save configuration
@@ -1429,8 +1435,8 @@ void GConsoleWindow::showInputScriptDialog() {
         return;
     }
     std::string filename = GFileChooser::showOpenDialog(
-                /* parent */ getWidget(),
-                /* title  */ "Select an input script file");
+            /* parent */ getWidget(),
+            /* title  */ "Select an input script file");
     if (!filename.empty() && fileExists(filename)) {
         loadInputScript(filename);
     }
@@ -1472,19 +1478,19 @@ void GConsoleWindow::shutdown() {
 // global functions used by ConsoleStreambufQt
 
 namespace stanfordcpplib {
-namespace qtgui {
+    namespace qtgui {
 
-void endLineConsoleQt(bool isStderr) {
-    GConsoleWindow::instance()->println(isStderr);
-}
+        void endLineConsoleQt(bool isStderr) {
+            GConsoleWindow::instance()->println(isStderr);
+        }
 
-std::string getLineConsoleQt() {
-    return GConsoleWindow::instance()->readLine();
-}
+        std::string getLineConsoleQt() {
+            return GConsoleWindow::instance()->readLine();
+        }
 
-void putConsoleQt(const std::string& str, bool isStderr) {
-    GConsoleWindow::instance()->print(str, isStderr);
-}
+        void putConsoleQt(const std::string &str, bool isStderr) {
+            GConsoleWindow::instance()->print(str, isStderr);
+        }
 
-} // namespace qtgui
+    } // namespace qtgui
 } // namespace stanfordcpplib

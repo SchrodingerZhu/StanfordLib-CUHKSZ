@@ -28,17 +28,17 @@
  */
 class GInputPanel {
 public:
-    static GInputPanel* instance();
+    static GInputPanel *instance();
 
     /*
      * Adds an input window button for auto-inserting autograder inputs.
      */
-    void addButton(const std::string& text, const std::string& input);
+    void addButton(const std::string &text, const std::string &input);
 
     /*
      * Adds an input category containing related autograder input buttons.
      */
-    void addCategory(const std::string& name);
+    void addCategory(const std::string &name);
 
     /*
      * Returns true if the input panel has been loaded already.
@@ -59,17 +59,17 @@ public:
      * </inputpanel>
      * The input panel will also immediately be shown on the screen.
      */
-    void load(const std::string& xmlFilename);
+    void load(const std::string &xmlFilename);
 
     /*
      * Removes the given window input button if it is present.
      */
-    void removeButton(const std::string& text);
+    void removeButton(const std::string &text);
 
     /*
      * Removes the given window input category if it is present.
      */
-    void removeCategory(const std::string& name);
+    void removeCategory(const std::string &name);
 
     /*
      * Causes the input panel to become shown or hidden from the screen.
@@ -81,7 +81,7 @@ private:
 
     GInputPanel();   // prevent construction
 
-    static GInputPanel* _instance;
+    static GInputPanel *_instance;
     bool _loaded;
 };
 

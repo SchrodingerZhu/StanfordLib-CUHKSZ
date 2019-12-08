@@ -31,7 +31,7 @@ void ErrorException::dump() const {
     dump(std::cerr);
 }
 
-void ErrorException::dump(std::ostream& out) const {
+void ErrorException::dump(std::ostream &out) const {
     out << std::endl;
     out << "***" << std::endl;
     out << "*** STANFORD C++ LIBRARY" << std::endl;
@@ -64,7 +64,7 @@ std::string ErrorException::getStackTrace() const {
     return _stackTrace;
 }
 
-std::string ErrorException::insertStarsBeforeEachLine(const std::string& s) {
+std::string ErrorException::insertStarsBeforeEachLine(const std::string &s) {
     std::string result;
     for (std::string line : stringSplit(s, "\n")) {
         if (!result.empty()) {
@@ -78,15 +78,15 @@ std::string ErrorException::insertStarsBeforeEachLine(const std::string& s) {
     return result;
 }
 
-void ErrorException::setKind(const std::string& kind) {
+void ErrorException::setKind(const std::string &kind) {
     _kind = kind;
 }
 
-void ErrorException::setStackTrace(const std::string& stackTrace) {
+void ErrorException::setStackTrace(const std::string &stackTrace) {
     _stackTrace = stackTrace;
 }
 
-const char* ErrorException::what() const noexcept {
+const char *ErrorException::what() const noexcept {
     // stepp : The original "Error: " prefix is commented out here,
     // because in many error cases, the attempt to do the string concatenation
     // ends up garbling the string and leading to garbage exception text
@@ -94,7 +94,7 @@ const char* ErrorException::what() const noexcept {
     return _msg.c_str();
 }
 
-std::ostream& operator <<(std::ostream& out, const ErrorException& ex) {
+std::ostream &operator<<(std::ostream &out, const ErrorException &ex) {
     out << "ErrorException: " << ex.what();
     std::string stack = ex.getStackTrace();
     if (!stack.empty()) {
@@ -114,6 +114,6 @@ std::ostream& operator <<(std::ostream& out, const ErrorException& ex) {
  * the errors are catchable.
  */
 
-/* [[noreturn]] */ void error(const std::string& msg) {
+/* [[noreturn]] */ void error(const std::string &msg) {
     throw ErrorException(msg);
 }

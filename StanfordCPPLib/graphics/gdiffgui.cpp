@@ -27,14 +27,14 @@
 /*static*/ const std::string GDiffGui::COLOR_EXPECTED_DARK_MODE = "#55ff44";
 /*static*/ const std::string GDiffGui::COLOR_LINE_NUMBERS = "#888888";
 /*static*/ const std::string GDiffGui::COLOR_LINE_NUMBERS_DARK_MODE = "#aaaaaa";
-/*static*/ const std::string GDiffGui::COLOR_STUDENT  = "#bb0000";
+/*static*/ const std::string GDiffGui::COLOR_STUDENT = "#bb0000";
 /*static*/ const std::string GDiffGui::COLOR_STUDENT_DARK_MODE = "#f47862";
 /*static*/ const bool GDiffGui::LINE_NUMBERS = true;
 
-void GDiffGui::showDialog(const std::string& name1,
-                          const std::string& text1,
-                          const std::string& name2,
-                          const std::string& text2,
+void GDiffGui::showDialog(const std::string &name1,
+                          const std::string &text1,
+                          const std::string &name2,
+                          const std::string &text2,
                           int diffFlags,
                           bool showCheckBoxes) {
     /* GDiffGui* diffGui = */ new GDiffGui(name1, text1, name2, text2, diffFlags, showCheckBoxes);
@@ -43,10 +43,10 @@ void GDiffGui::showDialog(const std::string& name1,
     // work on the window
 }
 
-GDiffGui::GDiffGui(const std::string& name1,
-                   const std::string& text1,
-                   const std::string& name2,
-                   const std::string& text2,
+GDiffGui::GDiffGui(const std::string &name1,
+                   const std::string &text1,
+                   const std::string &name2,
+                   const std::string &text2,
                    int diffFlags,
                    bool /*showCheckBoxes*/) {
     GThread::runOnQtGuiThread([this, name1, text1, name2, text2, diffFlags]() {
@@ -66,7 +66,7 @@ GDiffGui::GDiffGui(const std::string& name1,
         };
 
         std::string font = getConsoleFont();
-        _textAreaLeft  = new GTextArea();
+        _textAreaLeft = new GTextArea();
         setupLeftRightText(_textAreaLeft, name1 + ":\n" + text1);
         _textAreaLeft->setEditable(false);
         _textAreaLeft->setFont(font);
@@ -126,7 +126,7 @@ GDiffGui::~GDiffGui() {
     _vsplitterInteractor = nullptr;
 }
 
-void GDiffGui::setupDiffText(const std::string& diffs) {
+void GDiffGui::setupDiffText(const std::string &diffs) {
     Vector<std::string> lines = stringSplit(diffs, "\n");
     const std::string COLOR_NORMAL = _textAreaBottom->getColor();
     for (std::string line : lines) {
@@ -146,7 +146,7 @@ void GDiffGui::setupDiffText(const std::string& diffs) {
     }
 }
 
-void GDiffGui::setupLeftRightText(GTextArea* textArea, const std::string& text) {
+void GDiffGui::setupLeftRightText(GTextArea *textArea, const std::string &text) {
     if (!LINE_NUMBERS) {
         textArea->setText(text);
         return;
@@ -162,14 +162,15 @@ void GDiffGui::setupLeftRightText(GTextArea* textArea, const std::string& text) 
         int digits = static_cast<int>(std::to_string(lines.size()).length());
         std::string lineNumberString =
                 padLeft(i == 0 ? std::string("") : std::to_string(i), digits) + "  ";
-        textArea->appendFormattedText(lineNumberString, GWindow::chooseLightDarkModeColor(COLOR_LINE_NUMBERS, COLOR_LINE_NUMBERS_DARK_MODE));
+        textArea->appendFormattedText(lineNumberString, GWindow::chooseLightDarkModeColor(COLOR_LINE_NUMBERS,
+                                                                                          COLOR_LINE_NUMBERS_DARK_MODE));
         textArea->appendFormattedText(stringutils::toPrintable(line) + "\n", COLOR_NORMAL);
     }
 }
 
 void GDiffGui::syncScrollBars(bool left) {
-    QTextEdit* qleft  = static_cast<QTextEdit*>(_textAreaLeft->getWidget());
-    QTextEdit* qright = static_cast<QTextEdit*>(_textAreaRight->getWidget());
+    QTextEdit *qleft = static_cast<QTextEdit *>(_textAreaLeft->getWidget());
+    QTextEdit *qright = static_cast<QTextEdit *>(_textAreaRight->getWidget());
     if (left) {
         // adjust the right scrollbar to match the left one
         GThread::runOnQtGuiThreadAsync([qleft, qright]() {

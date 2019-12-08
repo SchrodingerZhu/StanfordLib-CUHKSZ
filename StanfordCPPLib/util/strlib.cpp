@@ -78,11 +78,11 @@ std::string doubleToString(double d) {
     return realToString(d);
 }
 
-bool endsWith(const std::string& str, char suffix) {
+bool endsWith(const std::string &str, char suffix) {
     return str.length() > 0 && str[str.length() - 1] == suffix;
 }
 
-bool endsWith(const std::string& str, const std::string& suffix) {
+bool endsWith(const std::string &str, const std::string &suffix) {
     int nChars = suffix.length();
     int start = str.length() - nChars;
     if (start < 0) return false;
@@ -99,7 +99,7 @@ bool endsWith(const std::string& str, const std::string& suffix) {
  * each string.  Converting each string to uppercase and then comparing
  * the results makes for a shorter but less efficient implementation.
  */
-bool equalsIgnoreCase(const std::string& s1, const std::string& s2) {
+bool equalsIgnoreCase(const std::string &s1, const std::string &s2) {
     if (s1.length() != s2.length()) return false;
     int nChars = s1.length();
     for (int i = 0; i < nChars; i++) {
@@ -108,7 +108,7 @@ bool equalsIgnoreCase(const std::string& s1, const std::string& s2) {
     return true;
 }
 
-std::string htmlDecode(const std::string& s) {
+std::string htmlDecode(const std::string &s) {
     std::string result = s;
     stringReplaceInPlace(result, "&lt;", "<");
     stringReplaceInPlace(result, "&gt;", ">");
@@ -117,7 +117,7 @@ std::string htmlDecode(const std::string& s) {
     return result;
 }
 
-std::string htmlEncode(const std::string& s) {
+std::string htmlEncode(const std::string &s) {
     std::string result = s;
     stringReplaceInPlace(result, "&", "&amp;");
     stringReplaceInPlace(result, "<", "&lt;");
@@ -164,7 +164,7 @@ std::string longToString(long n, int radix) {
     return stream.str();
 }
 
-std::string padLeft(const std::string& s, int length, char fill) {
+std::string padLeft(const std::string &s, int length, char fill) {
     if ((int) s.length() >= length) {
         return s;
     } else {
@@ -177,7 +177,7 @@ std::string padLeft(const std::string& s, int length, char fill) {
     }
 }
 
-std::string padRight(const std::string& s, int length, char fill) {
+std::string padRight(const std::string &s, int length, char fill) {
     if ((int) s.length() >= length) {
         return s;
     } else {
@@ -190,7 +190,7 @@ std::string padRight(const std::string& s, int length, char fill) {
     }
 }
 
-std::string pointerToString(void* p) {
+std::string pointerToString(void *p) {
     if (p) {
         std::ostringstream stream;
         stream << std::hex;
@@ -207,11 +207,11 @@ std::string realToString(double d) {
     return stream.str();
 }
 
-bool startsWith(const std::string& str, char prefix) {
+bool startsWith(const std::string &str, char prefix) {
     return str.length() > 0 && str[0] == prefix;
 }
 
-bool startsWith(const std::string& str, const std::string& prefix) {
+bool startsWith(const std::string &str, const std::string &prefix) {
     if (str.length() < prefix.length()) return false;
     int nChars = prefix.length();
     for (int i = 0; i < nChars; i++) {
@@ -220,15 +220,15 @@ bool startsWith(const std::string& str, const std::string& prefix) {
     return true;
 }
 
-bool stringIsBool(const std::string& str) {
+bool stringIsBool(const std::string &str) {
     return str == "true" || str == "false";
 }
 
-bool stringIsDouble(const std::string& str) {
+bool stringIsDouble(const std::string &str) {
     return stringIsReal(str);
 }
 
-bool stringIsInteger(const std::string& str, int radix) {
+bool stringIsInteger(const std::string &str, int radix) {
     if (radix <= 0) {
         error("stringIsInteger: Illegal radix: " + std::to_string(radix));
     }
@@ -239,7 +239,7 @@ bool stringIsInteger(const std::string& str, int radix) {
     return !(stream.fail() || !stream.eof());
 }
 
-bool stringIsLong(const std::string& str, int radix) {
+bool stringIsLong(const std::string &str, int radix) {
     if (radix <= 0) {
         error("stringIsLong: Illegal radix: " + std::to_string(radix));
     }
@@ -250,22 +250,22 @@ bool stringIsLong(const std::string& str, int radix) {
     return !(stream.fail() || !stream.eof());
 }
 
-bool stringIsReal(const std::string& str) {
+bool stringIsReal(const std::string &str) {
     std::istringstream stream(trim(str));
     double value;
     stream >> value;
     return !(stream.fail() || !stream.eof());
 }
 
-bool stringContains(const std::string& s, char ch) {
+bool stringContains(const std::string &s, char ch) {
     return s.find(ch) != std::string::npos;
 }
 
-bool stringContains(const std::string& s, const std::string& substring) {
+bool stringContains(const std::string &s, const std::string &substring) {
     return s.find(substring) != std::string::npos;
 }
 
-int stringIndexOf(const std::string& s, char ch, int startIndex) {
+int stringIndexOf(const std::string &s, char ch, int startIndex) {
     size_t index = s.find(ch, (size_t) startIndex);
     if (index == std::string::npos) {
         return -1;
@@ -274,7 +274,7 @@ int stringIndexOf(const std::string& s, char ch, int startIndex) {
     }
 }
 
-int stringIndexOf(const std::string& s, const std::string& substring, int startIndex) {
+int stringIndexOf(const std::string &s, const std::string &substring, int startIndex) {
     size_t index = s.find(substring, (size_t) startIndex);
     if (index == std::string::npos) {
         return -1;
@@ -283,12 +283,12 @@ int stringIndexOf(const std::string& s, const std::string& substring, int startI
     }
 }
 
-std::string stringJoin(const Vector<std::string>& v, char delimiter) {
+std::string stringJoin(const Vector<std::string> &v, char delimiter) {
     std::string delim = charToString(delimiter);
     return stringJoin(v, delim);
 }
 
-std::string stringJoin(const Vector<std::string>& v, const std::string& delimiter) {
+std::string stringJoin(const Vector<std::string> &v, const std::string &delimiter) {
     if (v.isEmpty()) {
         return "";
     } else {
@@ -302,7 +302,7 @@ std::string stringJoin(const Vector<std::string>& v, const std::string& delimite
     }
 }
 
-int stringLastIndexOf(const std::string& s, char ch, int startIndex) {
+int stringLastIndexOf(const std::string &s, char ch, int startIndex) {
     size_t index = s.rfind(ch, (size_t) startIndex);
     if (index == std::string::npos) {
         return -1;
@@ -311,7 +311,7 @@ int stringLastIndexOf(const std::string& s, char ch, int startIndex) {
     }
 }
 
-int stringLastIndexOf(const std::string& s, const std::string& substring, int startIndex) {
+int stringLastIndexOf(const std::string &s, const std::string &substring, int startIndex) {
     size_t index = s.rfind(substring, (size_t) startIndex);
     if (index == std::string::npos) {
         return -1;
@@ -320,19 +320,19 @@ int stringLastIndexOf(const std::string& s, const std::string& substring, int st
     }
 }
 
-std::string stringReplace(const std::string& str, char old, char replacement, int limit) {
+std::string stringReplace(const std::string &str, char old, char replacement, int limit) {
     std::string str2 = str;
     stringReplaceInPlace(str2, old, replacement, limit);
     return str2;
 }
 
-std::string stringReplace(const std::string& str, const std::string& old, const std::string& replacement, int limit) {
+std::string stringReplace(const std::string &str, const std::string &old, const std::string &replacement, int limit) {
     std::string str2 = str;
     stringReplaceInPlace(str2, old, replacement, limit);
     return str2;
 }
 
-int stringReplaceInPlace(std::string& str, char old, char replacement, int limit) {
+int stringReplaceInPlace(std::string &str, char old, char replacement, int limit) {
     int count = 0;
     for (size_t i = 0, len = str.length(); i < len; i++) {
         if (str[i] == old) {
@@ -346,7 +346,7 @@ int stringReplaceInPlace(std::string& str, char old, char replacement, int limit
     return count;
 }
 
-int stringReplaceInPlace(std::string& str, const std::string& old, const std::string& replacement, int limit) {
+int stringReplaceInPlace(std::string &str, const std::string &old, const std::string &replacement, int limit) {
     int count = 0;
     size_t startIndex = 0;
     size_t rlen = replacement.length();
@@ -362,12 +362,12 @@ int stringReplaceInPlace(std::string& str, const std::string& old, const std::st
     return count;
 }
 
-Vector<std::string> stringSplit(const std::string& str, char delimiter, int limit) {
+Vector<std::string> stringSplit(const std::string &str, char delimiter, int limit) {
     std::string delim = charToString(delimiter);
     return stringSplit(str, delim, limit);
 }
 
-Vector<std::string> stringSplit(const std::string& str, const std::string& delimiter, int limit) {
+Vector<std::string> stringSplit(const std::string &str, const std::string &delimiter, int limit) {
     std::string str2 = str;
     Vector<std::string> result;
     int count = 0;
@@ -388,7 +388,7 @@ Vector<std::string> stringSplit(const std::string& str, const std::string& delim
     return result;
 }
 
-bool stringToBool(const std::string& str) {
+bool stringToBool(const std::string &str) {
     if (str == "true" || str == "1") {
         return true;
     } else if (str == "false" || str == "0") {
@@ -403,7 +403,7 @@ bool stringToBool(const std::string& str) {
     return value;
 }
 
-char stringToChar(const std::string& str) {
+char stringToChar(const std::string &str) {
     std::string str2 = trim(str);
     if ((int) str2.length() != 1) {
         error("stringToChar: string must contain exactly 1 non-whitespace character");
@@ -411,11 +411,11 @@ char stringToChar(const std::string& str) {
     return str2[0];
 }
 
-double stringToDouble(const std::string& str) {
+double stringToDouble(const std::string &str) {
     return stringToReal(str);
 }
 
-int stringToInteger(const std::string& str, int radix) {
+int stringToInteger(const std::string &str, int radix) {
     if (radix <= 0) {
         error("stringToInteger: Illegal radix: " + std::to_string(radix));
     }
@@ -429,7 +429,7 @@ int stringToInteger(const std::string& str, int radix) {
     return value;
 }
 
-long stringToLong(const std::string& str, int radix) {
+long stringToLong(const std::string &str, int radix) {
     if (radix <= 0) {
         error("stringToLong: Illegal radix: " + std::to_string(radix));
     }
@@ -443,7 +443,7 @@ long stringToLong(const std::string& str, int radix) {
     return value;
 }
 
-double stringToReal(const std::string& str) {
+double stringToReal(const std::string &str) {
     std::istringstream stream(trim(str));
     double value;
     stream >> value;
@@ -457,13 +457,13 @@ char toLowerCase(char ch) {
     return (char) tolower(ch);
 }
 
-std::string toLowerCase(const std::string& str) {
+std::string toLowerCase(const std::string &str) {
     std::string str2 = str;
     toLowerCaseInPlace(str2);
     return str2;
 }
 
-void toLowerCaseInPlace(std::string& str) {
+void toLowerCaseInPlace(std::string &str) {
     int nChars = str.length();
     for (int i = 0; i < nChars; i++) {
         str[i] = tolower(str[i]);
@@ -474,37 +474,37 @@ char toUpperCase(char ch) {
     return (char) toupper(ch);
 }
 
-std::string toUpperCase(const std::string& str) {
+std::string toUpperCase(const std::string &str) {
     std::string str2 = str;
     toUpperCaseInPlace(str2);
     return str2;
 }
 
-void toUpperCaseInPlace(std::string& str) {
+void toUpperCaseInPlace(std::string &str) {
     int nChars = str.length();
     for (int i = 0; i < nChars; i++) {
         str[i] = toupper(str[i]);
     }
 }
 
-std::string trim(const std::string& str) {
+std::string trim(const std::string &str) {
     std::string str2 = str;
     trimInPlace(str2);
     return str2;
 }
 
-void trimInPlace(std::string& str) {
+void trimInPlace(std::string &str) {
     trimEndInPlace(str);
     trimStartInPlace(str);
 }
 
-std::string trimEnd(const std::string& str) {
+std::string trimEnd(const std::string &str) {
     std::string str2 = str;
     trimEndInPlace(str2);
     return str2;
 }
 
-void trimEndInPlace(std::string& str) {
+void trimEndInPlace(std::string &str) {
     int end = (int) str.length();
     int finish = end;
     while (finish > 0 && isspace(str[finish - 1])) {
@@ -515,13 +515,13 @@ void trimEndInPlace(std::string& str) {
     }
 }
 
-std::string trimStart(const std::string& str) {
+std::string trimStart(const std::string &str) {
     std::string str2 = str;
     trimStartInPlace(str2);
     return str2;
 }
 
-void trimStartInPlace(std::string& str) {
+void trimStartInPlace(std::string &str) {
     int start = 0;
     int finish = (int) str.length() - 1;
     while (start <= finish && isspace(str[start])) {
@@ -532,13 +532,13 @@ void trimStartInPlace(std::string& str) {
     }
 }
 
-std::string urlDecode(const std::string& str) {
+std::string urlDecode(const std::string &str) {
     std::ostringstream unescaped;
     for (std::string::const_iterator i = str.begin(), n = str.end(); i != n; ++i) {
         std::string::value_type c = (*i);
         if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~' || c == '*') {
             unescaped << c;
-        } else if (c == '+')  {
+        } else if (c == '+') {
             unescaped << ' ';
         } else if (c == '%') {
             // throw error if string is invalid and doesn't have 2 char after,
@@ -566,11 +566,11 @@ std::string urlDecode(const std::string& str) {
     return unescaped.str();
 }
 
-void urlDecodeInPlace(std::string& str) {
+void urlDecodeInPlace(std::string &str) {
     str = urlDecode(str);   // no real efficiency gain here
 }
 
-std::string urlEncode(const std::string& str) {
+std::string urlEncode(const std::string &str) {
     std::ostringstream escaped;
     escaped.fill('0');
     escaped << std::hex << std::uppercase;
@@ -579,7 +579,7 @@ std::string urlEncode(const std::string& str) {
         std::string::value_type c = (*i);
         if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~' || c == '*') {
             escaped << c;
-        } else if (c == ' ')  {
+        } else if (c == ' ') {
             escaped << '+';
         } else {
             escaped << '%' << std::setw(2) << ((int) c) << std::setw(0);
@@ -589,28 +589,28 @@ std::string urlEncode(const std::string& str) {
     return escaped.str();
 }
 
-void urlEncodeInPlace(std::string& str) {
+void urlEncodeInPlace(std::string &str) {
     str = urlEncode(str);   // no real efficiency gain here
 }
 
 namespace std {
-bool stob(const std::string& str) {
-    return ::stringToBool(str);
-}
+    bool stob(const std::string &str) {
+        return ::stringToBool(str);
+    }
 
-char stoc(const std::string& str) {
-    return ::stringToChar(str);
-}
+    char stoc(const std::string &str) {
+        return ::stringToChar(str);
+    }
 
-std::string to_string(bool b) {
-    return ::boolToString(b);
-}
+    std::string to_string(bool b) {
+        return ::boolToString(b);
+    }
 
-std::string to_string(char c) {
-    return ::charToString(c);
-}
+    std::string to_string(char c) {
+        return ::charToString(c);
+    }
 
-std::string to_string(void* p) {
-    return ::pointerToString(p);
-}
+    std::string to_string(void *p) {
+        return ::pointerToString(p);
+    }
 } // namespace std

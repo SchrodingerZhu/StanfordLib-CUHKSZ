@@ -19,9 +19,13 @@
  */
 
 #include "regexpr.h"
+
 #ifndef SPL_HEADLESS_MODE
+
 #include <QtGlobal>
+
 #endif // SPL_HEADLESS_MODE
+
 #include <system/error.h>
 #include <util/stringutils.h>
 
@@ -49,21 +53,21 @@ std::string regexReplace(const std::string& s, const std::string& /*regexp*/, co
 #include <iterator>
 #include <regex>
 
-bool regexMatch(const std::string& s, const std::string& regexp) {
+bool regexMatch(const std::string &s, const std::string &regexp) {
     std::regex reg(regexp);
     std::smatch match;
     return std::regex_search(s, match, reg);
 }
 
-int regexMatchCount(const std::string& s, const std::string& regexp) {
+int regexMatchCount(const std::string &s, const std::string &regexp) {
     std::regex reg(regexp);
     auto it1 = std::sregex_iterator(s.begin(), s.end(), reg);
     auto it2 = std::sregex_iterator();
     return std::distance(it1, it2);
 }
 
-void regexMatchCountWithLines(const std::string& s, const std::string& regexp,
-                             Vector<int>& linesOut) {
+void regexMatchCountWithLines(const std::string &s, const std::string &regexp,
+                              Vector<int> &linesOut) {
     linesOut.clear();
 
     // keep a running index and line#, and each time we find a regex match,
@@ -74,9 +78,9 @@ void regexMatchCountWithLines(const std::string& s, const std::string& regexp,
     // get all regex matches by character position/index
     std::regex reg(regexp);
     for (std::sregex_iterator itr = std::sregex_iterator(s.begin(), s.end(), reg),
-            end = std::sregex_iterator();
-            itr != end;
-            ++itr) {
+                 end = std::sregex_iterator();
+         itr != end;
+         ++itr) {
         std::smatch match = *itr;
         int matchIndex = (int) match.position();
         while (currentIndex < (int) s.length() && currentIndex < matchIndex) {
@@ -89,7 +93,7 @@ void regexMatchCountWithLines(const std::string& s, const std::string& regexp,
     }
 }
 
-std::string regexReplace(const std::string& s, const std::string& regexp, const std::string& replacement, int limit) {
+std::string regexReplace(const std::string &s, const std::string &regexp, const std::string &replacement, int limit) {
     std::regex reg(regexp);
     std::string result;
     if (limit == 1) {
@@ -104,10 +108,11 @@ std::string regexReplace(const std::string& s, const std::string& regexp, const 
     }
     return result;
 }
+
 #endif // QT_VERSION
 
 // this function can be implemented the same way whether regexes are available or not
-int regexMatchCountWithLines(const std::string& s, const std::string& regexp, std::string& linesOut) {
+int regexMatchCountWithLines(const std::string &s, const std::string &regexp, std::string &linesOut) {
     Vector<int> linesOutVec;
     regexMatchCountWithLines(s, regexp, linesOutVec);
 

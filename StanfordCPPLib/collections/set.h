@@ -49,9 +49,11 @@
 /* Traits type for the Set, which wraps an underlying Map. */
 namespace stanfordcpplib {
     namespace collections {
-        template <typename T> struct SetTraits {
+        template<typename T>
+        struct SetTraits {
             using ValueType = T;
             using MapType   = Map<T, bool>;
+
             static std::string name() {
                 return "Set";
             }
@@ -59,10 +61,11 @@ namespace stanfordcpplib {
             /* The Set type does allow you to construct the underlying Map by handing
              * along a std::function.
              */
-            template <typename Function>
+            template<typename Function>
             static MapType construct(Function comparator) {
-                static_assert(std::is_assignable<std::function<bool(const ValueType&, const ValueType&)>, Function>::value,
-                              "Oops! Seems like you tried to initialize a Set incorrectly. Click here for details.");
+                static_assert(
+                        std::is_assignable<std::function<bool(const ValueType &, const ValueType &)>, Function>::value,
+                        "Oops! Seems like you tried to initialize a Set incorrectly. Click here for details.");
                 /*
                  * Hello student! If you are reading this message, it means that you tried to
                  * initialize a Set improperly. For example, you might have tried to write
@@ -101,9 +104,10 @@ namespace stanfordcpplib {
             }
 
             /* However, you can't pass in any other arguments. */
-            template <typename... Args>
-            static void construct(MapType &, Args&&...) {
-                static_assert(Fail<Args...>::value, "Oops! Seems like you tried to initialize a Set incorrectly. Click here for details.");
+            template<typename... Args>
+            static void construct(MapType &, Args &&...) {
+                static_assert(Fail<Args...>::value,
+                              "Oops! Seems like you tried to initialize a Set incorrectly. Click here for details.");
 
                 /*
                  * Hello student! If you are reading this message, it means that you tried to
@@ -144,7 +148,7 @@ namespace stanfordcpplib {
  * A set of elements stored in sorted order. The elements must be comparable
  * using the < operator in order to be stored here.
  */
-template <typename ValueType>
-    using Set = stanfordcpplib::collections::GenericSet<stanfordcpplib::collections::SetTraits<ValueType>>;
+template<typename ValueType>
+using Set = stanfordcpplib::collections::GenericSet<stanfordcpplib::collections::SetTraits<ValueType>>;
 
 #endif // _set_h

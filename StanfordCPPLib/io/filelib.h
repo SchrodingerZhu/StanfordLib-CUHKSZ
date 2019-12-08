@@ -42,14 +42,14 @@
  * along the path.
  * @throw ErrorException if some component of <code>path</code> does not exist
  */
-void createDirectory(const std::string& path);
+void createDirectory(const std::string &path);
 
 /**
  * Creates a new directory for the specified path.   If intermediate
  * components of <code>path</code> do not exist, this function creates
  * them as needed.
  */
-void createDirectoryPath(const std::string& path);
+void createDirectoryPath(const std::string &path);
 
 /**
  * Adds an extension to a file name if none already exists.  If the
@@ -57,29 +57,29 @@ void createDirectoryPath(const std::string& path);
  * any existing extension in <code>filename</code> is replaced by
  * <code>ext</code>.
  */
-std::string defaultExtension(const std::string& filename, const std::string& ext);
+std::string defaultExtension(const std::string &filename, const std::string &ext);
 
 /**
  * Deletes the specified file.
  * @throw ErrorException if the file does not exist or cannot be deleted
  */
-void deleteFile(const std::string& filename);
+void deleteFile(const std::string &filename);
 
 /**
  * Expands a filename into a canonical name for the platform.
  */
-std::string expandPathname(const std::string& filename);
+std::string expandPathname(const std::string &filename);
 
 /**
  * Returns <code>true</code> if the specified file exists.
  */
-bool fileExists(const std::string& filename);
+bool fileExists(const std::string &filename);
 
 /**
  * Returns the size of the given file in bytes.
  * Returns -1 if the file does not exist or cannot be read.
  */
-int fileSize(const std::string& filename);
+int fileSize(const std::string &filename);
 
 /**
  * Returns the canonical name of a file found using a search path.
@@ -88,13 +88,13 @@ int fileSize(const std::string& filename);
  * return an open stream.  If no matching file is found,
  * <code>findOnPath</code> returns the empty string.
  */
-std::string findOnPath(const std::string& path, const std::string& filename);
+std::string findOnPath(const std::string &path, const std::string &filename);
 
 /**
  * Returns an absolute filename for the given file or directory.
  * This converts from, for example, "temp/foo.txt" to "/Users/jsmith12/Documents/temp/foo.txt".
  */
-std::string getAbsolutePath(const std::string& path);
+std::string getAbsolutePath(const std::string &path);
 
 /**
  * Returns an absolute filename for the current directory.
@@ -113,7 +113,7 @@ std::string getDirectoryPathSeparator();
  * returns the empty string.  These semantics ensure that concatenating
  * the root and the extension always returns the original filename.
  */
-std::string getExtension(const std::string& filename);
+std::string getExtension(const std::string &filename);
 
 /**
  * Returns all but the last component of a path name.  The components
@@ -128,7 +128,7 @@ std::string getExtension(const std::string& filename);
  *    getHead("/")    = "/"     getTail("/")     = ""
  *</pre>
  */
-std::string getHead(const std::string& filename);
+std::string getHead(const std::string &filename);
 
 /**
  * Returns the root of <code>filename</code>.  The root consists
@@ -136,7 +136,7 @@ std::string getHead(const std::string& filename);
  * the subsequent extension.  If no dot appears in the final component
  * of the filename, <code>getRoot</code> returns the entire name.
  */
-std::string getRoot(const std::string& filename);
+std::string getRoot(const std::string &filename);
 
 /**
  * Returns the standard search path separator used on this platform.
@@ -149,7 +149,7 @@ std::string getSearchPathSeparator();
  * (forward or reverse slashes).  For details on the interpretation of
  * special cases, see the comments for the <code>getHead</code> function.
  */
-std::string getTail(const std::string& filename);
+std::string getTail(const std::string &filename);
 
 /**
  * Returns the operating system's "temp" folder.
@@ -160,39 +160,39 @@ std::string getTempDirectory();
 /**
  * Returns <code>true</code> if the specified file is a directory.
  */
-bool isDirectory(const std::string& filename);
+bool isDirectory(const std::string &filename);
 
 /**
  * Returns <code>true</code> if the specified file is a regular file,
  * not a symbolic link or directory.
  */
-bool isFile(const std::string& filename);
+bool isFile(const std::string &filename);
 
 /**
  * Returns <code>true</code> if the specified file is a symbolic link.
  */
-bool isSymbolicLink(const std::string& filename);
+bool isSymbolicLink(const std::string &filename);
 
 /**
  * Adds an alphabetized list of the files in the specified directory
  * to the string vector <code>list</code>.  This list excludes the
  * names <code>.</code> and <code>..</code> entries.
  */
-void listDirectory(const std::string& path, Vector<std::string>& list);
+void listDirectory(const std::string &path, Vector<std::string> &list);
 
 /**
  * Adds an alphabetized list of the files in the specified directory
  * to the STL string vector <code>list</code>.  This list excludes the
  * names <code>.</code> and <code>..</code> entries.
  */
-void listDirectory(const std::string& path, Vector<std::string>& list);
+void listDirectory(const std::string &path, Vector<std::string> &list);
 
 /**
  * Adds an alphabetized list of the files in the specified directory
  * to a vector that is returned.  This list excludes the
  * names <code>.</code> and <code>..</code> entries.
  */
-Vector<std::string> listDirectory(const std::string& path);
+Vector<std::string> listDirectory(const std::string &path);
 
 /**
  * Determines whether the filename matches the specified pattern.  The
@@ -209,7 +209,7 @@ Vector<std::string> listDirectory(const std::string& path);
  * The last two options allow a range of characters to be specified in the
  * form <code>a-z</code>.
  */
-bool matchFilenamePattern(const std::string& filename, const std::string& pattern);
+bool matchFilenamePattern(const std::string &filename, const std::string &pattern);
 
 /**
  * Opens the file input stream <code>stream</code> using the specified
@@ -220,7 +220,7 @@ bool matchFilenamePattern(const std::string& filename, const std::string& patter
  * if it fails, <code>openFile</code> sets the failure flag in the
  * stream and returns <code>false</code>.
  */
-bool openFile(std::ifstream& stream, const std::string& filename);
+bool openFile(std::ifstream &stream, const std::string &filename);
 
 /**
  * Opens the file output stream <code>stream</code> using the specified
@@ -231,53 +231,53 @@ bool openFile(std::ifstream& stream, const std::string& filename);
  * if it fails, <code>openFile</code> sets the failure flag in the
  * stream and returns <code>false</code>.
  */
-bool openFile(std::ofstream& stream, const std::string& filename);
+bool openFile(std::ofstream &stream, const std::string &filename);
 
 /**
  * Opens a dialog that allows the user to choose a file to read.
  * The dialog begins in the current directory.
  */
-std::string openFileDialog(std::ifstream& stream);
+std::string openFileDialog(std::ifstream &stream);
 
 /**
  * Opens a dialog that allows the user to choose a file to read.
  * The <code>title</code> parameter is displayed in the dialog title.
  * The dialog begins in the current directory.
  */
-std::string openFileDialog(std::ifstream& stream,
-                           const std::string& title);
+std::string openFileDialog(std::ifstream &stream,
+                           const std::string &title);
 
 /**
  * Opens a dialog that allows the user to choose a file to read.
  * The <code>title</code> parameter is displayed in the dialog title.
  * The <code>path</code> parameter is used to set the working directory.
  */
-std::string openFileDialog(std::ifstream& stream,
-                           const std::string& title,
-                           const std::string& path);
+std::string openFileDialog(std::ifstream &stream,
+                           const std::string &title,
+                           const std::string &path);
 
 /**
  * Opens a dialog that allows the user to choose a file to write.
  * The dialog begins in the current directory.
  */
-std::string openFileDialog(std::ofstream& stream);
+std::string openFileDialog(std::ofstream &stream);
 
 /**
  * Opens a dialog that allows the user to choose a file to write.
  * The <code>title</code> parameter is displayed in the dialog title.
  * The dialog begins in the current directory.
  */
-std::string openFileDialog(std::ofstream& stream,
-                           const std::string& title);
+std::string openFileDialog(std::ofstream &stream,
+                           const std::string &title);
 
 /**
  * Opens a dialog that allows the user to choose a file to write.
  * The <code>title</code> parameter is displayed in the dialog title.
  * The <code>path</code> parameter is used to set the working directory.
  */
-std::string openFileDialog(std::ofstream& stream,
-                           const std::string& title,
-                           const std::string& path);
+std::string openFileDialog(std::ofstream &stream,
+                           const std::string &title,
+                           const std::string &path);
 
 /**
  * Opens a dialog that allows the user to choose a file name to read or write.
@@ -285,8 +285,8 @@ std::string openFileDialog(std::ofstream& stream,
  * The <code>path</code> parameter is used to set the working directory.
  * If the <code>path</code> is omitted, the dialog begins in the current directory.
  */
-std::string openFileDialog(const std::string& title = "Open File ...",
-                           const std::string& path = "");
+std::string openFileDialog(const std::string &title = "Open File ...",
+                           const std::string &path = "");
 
 /**
  * Opens a file to read using a search path.  If <code>openOnPath</code>
@@ -301,9 +301,9 @@ std::string openFileDialog(const std::string& title = "Open File ...",
  * parameter, and the <code>openOnPath</code> function returns the
  * empty string.
  */
-std::string openOnPath(std::ifstream& stream,
-                       const std::string& path,
-                       const std::string& filename);
+std::string openOnPath(std::ifstream &stream,
+                       const std::string &path,
+                       const std::string &filename);
 
 /**
  * Opens a file to write using a search path.  If <code>openOnPath</code>
@@ -318,9 +318,9 @@ std::string openOnPath(std::ifstream& stream,
  * parameter, and the <code>openOnPath</code> function returns the
  * empty string.
  */
-std::string openOnPath(std::ofstream& stream,
-                       const std::string& path,
-                       const std::string& filename);
+std::string openOnPath(std::ofstream &stream,
+                       const std::string &path,
+                       const std::string &filename);
 
 /**
  * Asks the user for the name of a file to read.
@@ -336,9 +336,9 @@ std::string openOnPath(std::ofstream& stream,
  * displayed each time if the user types a file that is not found.
  * If no value is passed, defaults to, "Unable to open that file.  Try again.".
  */
-std::string promptUserForFile(std::ifstream& stream,
-                              const std::string& prompt = "",
-                              const std::string& reprompt = "");
+std::string promptUserForFile(std::ifstream &stream,
+                              const std::string &prompt = "",
+                              const std::string &reprompt = "");
 
 /**
  * Asks the user for the name of a file to read.
@@ -354,9 +354,9 @@ std::string promptUserForFile(std::ifstream& stream,
  * displayed each time if the user types a file that is not found.
  * If no value is passed, defaults to, "Unable to open that file.  Try again.".
  */
-std::string promptUserForFile(std::ofstream& stream,
-                              const std::string& prompt = "",
-                              const std::string& reprompt = "");
+std::string promptUserForFile(std::ofstream &stream,
+                              const std::string &prompt = "",
+                              const std::string &reprompt = "");
 
 /**
  * Asks the user for the name of a file to read.
@@ -371,8 +371,8 @@ std::string promptUserForFile(std::ofstream& stream,
  * displayed each time if the user types a file that is not found.
  * If no value is passed, defaults to, "Unable to open that file.  Try again.".
  */
-std::string promptUserForFile(const std::string& prompt = "",
-                              const std::string& reprompt = "");
+std::string promptUserForFile(const std::string &prompt = "",
+                              const std::string &reprompt = "");
 
 /**
  * Reads the entire contents of the specified input stream into the
@@ -381,7 +381,7 @@ std::string promptUserForFile(const std::string& prompt = "",
  * <code>vector</code> or a <code>Vector</code> as defined in the
  * Stanford C++ libraries.
  */
-void readEntireFile(std::istream& is, Vector<std::string>& lines);
+void readEntireFile(std::istream &is, Vector<std::string> &lines);
 
 /**
  * Reads the entire contents of the specified input stream into the
@@ -390,14 +390,14 @@ void readEntireFile(std::istream& is, Vector<std::string>& lines);
  * <code>vector</code> or a <code>Vector</code> as defined in the
  * Stanford C++ libraries.
  */
-void readEntireFile(std::istream& is, Vector<std::string>& lines);
+void readEntireFile(std::istream &is, Vector<std::string> &lines);
 
 /**
  * An overload of readEntireFile that just returns the whole file as a very
  * long single string, rather than a vector of lines.
  * @throw ErrorException if the file is not found or cannot be read.
  */
-std::string readEntireFile(const std::string& filename);
+std::string readEntireFile(const std::string &filename);
 
 /**
  * An overload of readEntireFile that just reads the whole file as a very
@@ -407,19 +407,19 @@ std::string readEntireFile(const std::string& filename);
  * Returns true if the read was successful or false if the file was not found
  * or unable to be opened for reading.
  */
-bool readEntireFile(const std::string& filename, std::string& out);
+bool readEntireFile(const std::string &filename, std::string &out);
 
 /**
  * Reads the contents of the given stream until its end and returns them as
  * a string.
  */
-std::string readEntireStream(std::istream& input);
+std::string readEntireStream(std::istream &input);
 
 /**
  * Reads the contents of the given stream until its end and stores them
  * in the given string 'out' by reference.
  */
-void readEntireStream(std::istream& input, std::string& out);
+void readEntireStream(std::istream &input, std::string &out);
 
 /**
  * Renames a file.
@@ -427,18 +427,18 @@ void readEntireStream(std::istream& input, std::string& out);
  *        the new file name already exists,
  *        or the old file cannot otherwise be renamed to the new file name
  */
-void renameFile(const std::string& oldname, const std::string& newname);
+void renameFile(const std::string &oldname, const std::string &newname);
 
 /**
  * Moves the given input stream back to its beginning, so that it can
  * be read again from start to finish.
  */
-void rewindStream(std::istream& input);
+void rewindStream(std::istream &input);
 
 /**
  * Changes the current directory to the specified path.
  */
-void setCurrentDirectory(const std::string& path);
+void setCurrentDirectory(const std::string &path);
 
 /**
  * Opens the given file and writes the given text into it.
@@ -448,8 +448,8 @@ void setCurrentDirectory(const std::string& path);
  * Returns true if the write was successful and false if the file was unable
  * to be opened for writing.
  */
-bool writeEntireFile(const std::string& filename,
-                     const std::string& text,
+bool writeEntireFile(const std::string &filename,
+                     const std::string &text,
                      bool append = false);
 
 /**
@@ -457,21 +457,35 @@ bool writeEntireFile(const std::string& filename,
  * @private
  */
 namespace platform {
-    std::string file_openFileDialog(const std::string& title, const std::string& mode, const std::string& path);
-    void filelib_createDirectory(const std::string& path);
-    void filelib_deleteFile(const std::string& path);
-    std::string filelib_expandPathname(const std::string& filename);
-    bool filelib_fileExists(const std::string& filename);
-    std::string filelib_getAbsolutePath(const std::string& path);
+    std::string file_openFileDialog(const std::string &title, const std::string &mode, const std::string &path);
+
+    void filelib_createDirectory(const std::string &path);
+
+    void filelib_deleteFile(const std::string &path);
+
+    std::string filelib_expandPathname(const std::string &filename);
+
+    bool filelib_fileExists(const std::string &filename);
+
+    std::string filelib_getAbsolutePath(const std::string &path);
+
     std::string filelib_getCurrentDirectory();
+
     std::string filelib_getDirectoryPathSeparator();
+
     std::string filelib_getSearchPathSeparator();
+
     std::string filelib_getTempDirectory();
-    bool filelib_isDirectory(const std::string& filename);
-    bool filelib_isFile(const std::string& filename);
-    bool filelib_isSymbolicLink(const std::string& filename);
-    void filelib_listDirectory(const std::string& path, Vector<std::string>& list);
-    void filelib_setCurrentDirectory(const std::string& path);
+
+    bool filelib_isDirectory(const std::string &filename);
+
+    bool filelib_isFile(const std::string &filename);
+
+    bool filelib_isSymbolicLink(const std::string &filename);
+
+    void filelib_listDirectory(const std::string &path, Vector<std::string> &list);
+
+    void filelib_setCurrentDirectory(const std::string &path);
 }
 
 #endif // _filelib_h

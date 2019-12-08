@@ -19,39 +19,39 @@ GClipboard::GClipboard() {
     // empty
 }
 
-void GClipboard::set(const std::string& text) {
-    QClipboard* clipboard = QApplication::clipboard();
+void GClipboard::set(const std::string &text) {
+    QClipboard *clipboard = QApplication::clipboard();
     require::nonNull(clipboard, "GClipboard::set", "clipboard");
     clipboard->setText(QString::fromStdString(text));
 }
 
 std::string GClipboard::get() {
-    QClipboard* clipboard = QApplication::clipboard();
+    QClipboard *clipboard = QApplication::clipboard();
     require::nonNull(clipboard, "GClipboard::get", "clipboard");
     return clipboard->text().toStdString();
 }
 
-bool GClipboard::isCopy(QKeyEvent* event) {
+bool GClipboard::isCopy(QKeyEvent *event) {
     require::nonNull(event, "GClipboard::isCopy", "event");
     bool ctrlOrMeta = (event->modifiers() & Qt::ControlModifier) != 0
-            || (event->modifiers() & Qt::MetaModifier) != 0;
+                      || (event->modifiers() & Qt::MetaModifier) != 0;
     return ctrlOrMeta && (event->key() == Qt::Key_C || event->key() == Qt::Key_Insert);
 }
 
-bool GClipboard::isCut(QKeyEvent* event) {
+bool GClipboard::isCut(QKeyEvent *event) {
     require::nonNull(event, "GClipboard::isCopy", "event");
     bool shift = (event->modifiers() & Qt::ShiftModifier) != 0;
     bool ctrlOrMeta = (event->modifiers() & Qt::ControlModifier) != 0
-            || (event->modifiers() & Qt::MetaModifier) != 0;
+                      || (event->modifiers() & Qt::MetaModifier) != 0;
     return (ctrlOrMeta && event->key() == Qt::Key_X)
-            || (shift && event->key() == Qt::Key_Delete);
+           || (shift && event->key() == Qt::Key_Delete);
 }
 
-bool GClipboard::isPaste(QKeyEvent* event) {
+bool GClipboard::isPaste(QKeyEvent *event) {
     require::nonNull(event, "GClipboard::isCopy", "event");
     bool shift = (event->modifiers() & Qt::ShiftModifier) != 0;
     bool ctrlOrMeta = (event->modifiers() & Qt::ControlModifier) != 0
-            || (event->modifiers() & Qt::MetaModifier) != 0;
+                      || (event->modifiers() & Qt::MetaModifier) != 0;
     return (ctrlOrMeta && event->key() == Qt::Key_V)
-            || (shift && event->key() == Qt::Key_Insert);
+           || (shift && event->key() == Qt::Key_Insert);
 }
