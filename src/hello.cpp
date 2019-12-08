@@ -1,17 +1,16 @@
 /*
- * CS 106B/X Sample Project
- * last updated: 2018/09/19 by Marty Stepp
+ * CS 3002 Sample Project
+ * last updated: 2019/12/08 by Yifan ZHU
  *
- * This project helps test that your Qt Creator system is installed correctly.
+ * This project helps test that your cmake + QT5 system is installed correctly.
  * Compile and run this program to see a console and a graphical window.
- * If you see these windows, your Qt Creator is installed correctly.
+ * If you see these windows, your cmake + QT5 is installed correctly.
  */
 
 #include <iostream>
 #include <console/console.h>
 #include <graphics/ginteractors.h> // for GWindow
 #include <graphics/gwindow.h> // for GWindow
-#include <io/simpio.h>  // for getLine
 #include <collections/vector.h>  // for Vector
 #include <macro.h>
 using namespace std;
@@ -24,7 +23,7 @@ int start() {
     cout << "You should see a \"Sample Project\" window with a" << endl;
     cout << "smiley face pop up when you build and run it." << endl;
     cout << endl;
-    cout << "If it doesn't run, please double-check the Qt Creator" << endl;
+    cout << "If it doesn't run, please double-check the Qt5 + Cmake" << endl;
     cout << "installation instructions linked from the class web site." << endl;
     cout << endl;
 
@@ -42,7 +41,7 @@ int start() {
     window->setColor("red");
     window->fillOval( 95, 95,  10,  10);   // nose
     window->setColor("black");
-    window->drawString("Go Stanford!", 180, 30);
+    window->drawString("Go CUHK(SZ)!", 180, 30);
 
     // draw the mouth using a Vector to make sure the Stanford collections work
     Vector<GPoint> mouth;
