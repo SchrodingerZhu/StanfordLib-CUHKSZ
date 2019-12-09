@@ -41,7 +41,7 @@ TokenScanner::~TokenScanner() {
 }
 
 void TokenScanner::addOperator(const std::string &op) {
-    StringCell *cp = new StringCell;
+    auto *cp = new StringCell;
     cp->str = op;
     cp->link = operators;
     operators = cp;
@@ -60,15 +60,11 @@ std::string TokenScanner::getInput() const {
 }
 
 int TokenScanner::getPosition() const {
-    if (!savedTokens) {
-        return int(isp->tellg());
-    } else {
-        return int(isp->tellg()) - savedTokens->str.length();
-    }
+    return !savedTokens ? int(isp->tellg()) : int(isp->tellg()) - (int)savedTokens->str.length();
 }
 
-std::string TokenScanner::getStringValue(const std::string &token) const {
-    std::string str = "";
+std::string TokenScanner::getStringValue(const std::string &token) {
+    std::string str = {};
     int start = 0;
     int finish = token.length();
     if (finish > 1 && (token[0] == '"' || token[0] == '\'')) {
@@ -136,6 +132,8 @@ std::string TokenScanner::getStringValue(const std::string &token) const {
                     case '\\':
                         ch = '\\';
                         break;
+                    default:
+                        throw ErrorException("fall through");
                 }
             }
         }
@@ -232,7 +230,7 @@ std::string TokenScanner::nextToken() {
             isp->unget();
             return scanNumber();
         }
-        if (isWordCharacter(ch)) {
+        if (isWordCharacter((char)ch)) {
             isp->unget();
             return scanWord();
         }
@@ -242,7 +240,7 @@ std::string TokenScanner::nextToken() {
             if (ch == EOF) {
                 break;
             }
-            op += ch;
+            op += (char)ch;
         }
         while (op.length() > 1 && !isOperator(op)) {
             isp->unget();
@@ -253,7 +251,7 @@ std::string TokenScanner::nextToken() {
 }
 
 void TokenScanner::saveToken(const std::string &token) {
-    StringCell *cp = new StringCell;
+    auto *cp = new StringCell;
     cp->str = token;
     cp->link = savedTokens;
     savedTokens = cp;
@@ -342,7 +340,7 @@ bool TokenScanner::isOperatorPrefix(const std::string &op) {
  * determine what characters would be legal at this point in time.
  */
 std::string TokenScanner::scanNumber() {
-    std::string token = "";
+    std::string token = {};
     NumberScannerState state = INITIAL_STATE;
     while (state != FINAL_STATE) {
         int ch = isp->get();
@@ -427,7 +425,7 @@ std::string TokenScanner::scanNumber() {
  * there is no closing quotation mark before the end of the input.
  */
 std::string TokenScanner::scanString() {
-    std::string token = "";
+    std::string token = {};
     char delim = isp->get();
     token += delim;
     bool escape = false;
@@ -440,7 +438,7 @@ std::string TokenScanner::scanString() {
             break;
         }
         escape = (ch == '\\') && !escape;
-        token += ch;
+        token += (char)ch;
     }
     return token + delim;
 }
@@ -452,13 +450,13 @@ std::string TokenScanner::scanString() {
  * of word characters.
  */
 std::string TokenScanner::scanWord() {
-    std::string token = "";
+    std::string token = {};
     while (true) {
         int ch = isp->get();
         if (ch == EOF) {
             break;
         }
-        if (!isWordCharacter(ch)) {
+        if (!isWordCharacter((char)ch)) {
             isp->unget();
             break;
         }
@@ -494,27 +492,22 @@ std::ostream &operator<<(std::ostream &out, const TokenScanner &scanner) {
         first = false;
     }
     out << (first ? "" : ",") << "position=" << scanner.getPosition();
-    first = false;
 
     if (scanner.scanNumbersFlag) {
-        out << (first ? "" : ",") << "scanNumbers";
-        first = false;
+        out << "," << "scanNumbers";
     }
     if (scanner.scanStringsFlag) {
-        out << (first ? "" : ",") << "scanStrings";
-        first = false;
+        out << ", " << "scanStrings";
     }
     if (!scanner.wordChars.empty()) {
-        out << (first ? "" : ",") << "wordChars=[" << scanner.wordChars << "]";
-        first = false;
+        out << "," << "wordChars=[" << scanner.wordChars << "]";
     }
     if (scanner.ignoreWhitespaceFlag) {
-        out << (first ? "" : ",") << "ignoreWhitespace";
-        first = false;
+        out << "," << "ignoreWhitespace";
     }
     if (scanner.ignoreCommentsFlag) {
-        out << (first ? "" : ",") << "ignoreComments";
-        // first = false;
+        out << "," << "ignoreComments";
+        //
     }
     out << "}";
     return out;

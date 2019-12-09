@@ -50,7 +50,7 @@ public:
      * Initializes a new iurlstream that is attached to the given source URL.
      * The data from that URL is downloaded immediately.
      */
-    iurlstream(const std::string &url);
+    explicit iurlstream(const std::string &url);
 
     /**
      * Closes the stream.

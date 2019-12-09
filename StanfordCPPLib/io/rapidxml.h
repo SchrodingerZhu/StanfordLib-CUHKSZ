@@ -86,7 +86,7 @@ namespace rapidxml {
 
         //! Gets human readable description of error.
         //! \return Pointer to null terminated description of the error.
-        virtual const char *what() const throw() {
+        [[nodiscard]] const char *what() const noexcept override {
             return m_what;
         }
 
@@ -165,7 +165,7 @@ namespace rapidxml {
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_data_nodes = 0x1;
+    const unsigned parse_no_data_nodes = 0x1;
 
     //! Parse flag instructing the parser to not use text of first data node as a value of parent element.
     //! Can be combined with other flags by use of | operator.
@@ -174,42 +174,42 @@ namespace rapidxml {
     //! Use rapidxml::parse_no_data_nodes flag to prevent creation of data nodes if you want to manipulate data using values of elements.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_element_values = 0x2;
+    const unsigned parse_no_element_values = 0x2;
 
     //! Parse flag instructing the parser to not place zero terminators after strings in the source text.
     //! By default zero terminators are placed, modifying source text.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_string_terminators = 0x4;
+    const unsigned parse_no_string_terminators = 0x4;
 
     //! Parse flag instructing the parser to not translate entities in the source text.
     //! By default entities are translated, modifying source text.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_entity_translation = 0x8;
+    const unsigned parse_no_entity_translation = 0x8;
 
     //! Parse flag instructing the parser to disable UTF-8 handling and assume plain 8 bit characters.
     //! By default, UTF-8 handling is enabled.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_utf8 = 0x10;
+    const unsigned parse_no_utf8 = 0x10;
 
     //! Parse flag instructing the parser to create XML declaration node.
     //! By default, declaration node is not created.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_declaration_node = 0x20;
+    const unsigned parse_declaration_node = 0x20;
 
     //! Parse flag instructing the parser to create comments nodes.
     //! By default, comment nodes are not created.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_comment_nodes = 0x40;
+    const unsigned parse_comment_nodes = 0x40;
 
     //! Parse flag instructing the parser to create DOCTYPE node.
     //! By default, doctype node is not created.
@@ -217,14 +217,14 @@ namespace rapidxml {
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_doctype_node = 0x80;
+    const unsigned parse_doctype_node = 0x80;
 
     //! Parse flag instructing the parser to create PI nodes.
     //! By default, PI nodes are not created.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_pi_nodes = 0x100;
+    const unsigned parse_pi_nodes = 0x100;
 
     //! Parse flag instructing the parser to validate closing tag names.
     //! If not set, name inside closing tag is irrelevant to the parser.
@@ -232,7 +232,7 @@ namespace rapidxml {
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_validate_closing_tags = 0x200;
+    const unsigned parse_validate_closing_tags = 0x200;
 
     //! Parse flag instructing the parser to trim all leading and trailing whitespace of data nodes.
     //! By default, whitespace is not trimmed.
@@ -240,7 +240,7 @@ namespace rapidxml {
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_trim_whitespace = 0x400;
+    const unsigned parse_trim_whitespace = 0x400;
 
     //! Parse flag instructing the parser to condense all whitespace runs of data nodes to a single space character.
     //! Trimming of leading and trailing whitespace of data is controlled by rapidxml::parse_trim_whitespace flag.
@@ -249,7 +249,7 @@ namespace rapidxml {
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_normalize_whitespace = 0x800;
+    const unsigned parse_normalize_whitespace = 0x800;
 
     // Compound flags
 
@@ -261,7 +261,7 @@ namespace rapidxml {
     //! and using the flag will disable it.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_default = 0;
+    const unsigned parse_default = 0;
 
     //! A combination of parse flags that forbids any modifications of the source text.
     //! This also results in faster parsing. However, note that the following will occur:
@@ -271,18 +271,18 @@ namespace rapidxml {
     //! <li>whitespace will not be normalized</li>
     //! </ul>
     //! See xml_document::parse() function.
-    const int parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;
+    const unsigned parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;
 
     //! A combination of parse flags resulting in fastest possible parsing, without sacrificing important data.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_fastest = parse_non_destructive | parse_no_data_nodes;
+    const unsigned parse_fastest = parse_non_destructive | parse_no_data_nodes;
 
     //! A combination of parse flags resulting in largest amount of data being extracted.
     //! This usually results in slowest parsing.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes |
+    const unsigned parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes |
                            parse_validate_closing_tags;
 
     ///////////////////////////////////////////////////////////////////////
@@ -1275,7 +1275,7 @@ namespace rapidxml {
         //! Document can be parsed into multiple times.
         //! Each new call to parse removes previous nodes and attributes (if any), but does not clear memory pool.
         //! \param text XML data to parse; pointer is non-const to denote fact that this data may be modified by the parser.
-        template<int Flags>
+        template<unsigned Flags>
         void parse(Ch *text) {
             assert(text);
 
@@ -1384,7 +1384,7 @@ namespace rapidxml {
         };
 
         // Insert coded character, using UTF8 or 8-bit ASCII
-        template<int Flags>
+        template<unsigned Flags>
         static void insert_coded_character(Ch *&text, unsigned long code) {
             if (Flags & parse_no_utf8) {
                 // Insert 8-bit ASCII character
@@ -1399,27 +1399,27 @@ namespace rapidxml {
                     text += 1;
                 } else if (code < 0x800)  // 2 byte sequence
                 {
-                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF);
-                    code >>= 6;
-                    text[0] = static_cast<unsigned char>(code | 0xC0);
+                    text[1] = static_cast<unsigned char>((code | 0x80u) & 0xBFu);
+                    code >>= 6u;
+                    text[0] = static_cast<unsigned char>(code | 0xC0u);
                     text += 2;
                 } else if (code < 0x10000)    // 3 byte sequence
                 {
-                    text[2] = static_cast<unsigned char>((code | 0x80) & 0xBF);
-                    code >>= 6;
-                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF);
-                    code >>= 6;
+                    text[2] = static_cast<unsigned char>((code | 0x80u) & 0xBFu);
+                    code >>= 6u;
+                    text[1] = static_cast<unsigned char>((code | 0x80u) & 0xBFu);
+                    code >>= 6u;
                     text[0] = static_cast<unsigned char>(code | 0xE0);
                     text += 3;
                 } else if (code < 0x110000)   // 4 byte sequence
                 {
-                    text[3] = static_cast<unsigned char>((code | 0x80) & 0xBF);
-                    code >>= 6;
-                    text[2] = static_cast<unsigned char>((code | 0x80) & 0xBF);
-                    code >>= 6;
-                    text[1] = static_cast<unsigned char>((code | 0x80) & 0xBF);
-                    code >>= 6;
-                    text[0] = static_cast<unsigned char>(code | 0xF0);
+                    text[3] = static_cast<unsigned char>((code | 0x80u) & 0xBFu);
+                    code >>= 6u;
+                    text[2] = static_cast<unsigned char>((code | 0x80u) & 0xBFu);
+                    code >>= 6u;
+                    text[1] = static_cast<unsigned char>((code | 0x80u) & 0xBFu);
+                    code >>= 6u;
+                    text[0] = static_cast<unsigned char>(code | 0xF0u);
                     text += 4;
                 } else    // Invalid, only codes up to 0x10FFFF are allowed in Unicode
                 {
@@ -1429,7 +1429,7 @@ namespace rapidxml {
         }
 
         // Skip characters until predicate evaluates to true
-        template<class StopPred, int Flags>
+        template<class StopPred, unsigned Flags>
         static void skip(Ch *&text) {
             Ch *tmp = text;
             while (StopPred::test(*tmp))
@@ -1440,7 +1440,7 @@ namespace rapidxml {
         // Skip characters until predicate evaluates to true while doing the following:
         // - replacing XML character entity references with proper characters (&apos; &amp; &quot; &lt; &gt; &#...;)
         // - condensing whitespace sequences to single space character
-        template<class StopPred, class StopPredPure, int Flags>
+        template<class StopPred, class StopPredPure, unsigned Flags>
         static Ch *skip_and_expand_character_refs(Ch *&text) {
             // If entity translation, whitespace condense and whitespace trimming is disabled, use plain skip
             if (Flags & parse_no_entity_translation &&
@@ -1578,7 +1578,7 @@ namespace rapidxml {
         // Internal parsing functions
 
         // Parse BOM, if any
-        template<int Flags>
+        template<unsigned Flags>
         void parse_bom(Ch *&text) {
             // UTF-8?
             if (static_cast<unsigned char>(text[0]) == 0xEF &&
@@ -1589,7 +1589,7 @@ namespace rapidxml {
         }
 
         // Parse XML declaration (<?xml...)
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_xml_declaration(Ch *&text) {
             // If parsing of declaration is disabled
             if (!(Flags & parse_declaration_node)) {
@@ -1621,7 +1621,7 @@ namespace rapidxml {
         }
 
         // Parse XML comment (<!--...)
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_comment(Ch *&text) {
             // If parsing of comments is disabled
             if (!(Flags & parse_comment_nodes)) {
@@ -1658,7 +1658,7 @@ namespace rapidxml {
         }
 
         // Parse DOCTYPE
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_doctype(Ch *&text) {
             // Remember value start
             Ch *value = text;
@@ -1720,7 +1720,7 @@ namespace rapidxml {
         }
 
         // Parse PI
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_pi(Ch *&text) {
             // If creation of PI nodes is enabled
             if (Flags & parse_pi_nodes) {
@@ -1773,7 +1773,7 @@ namespace rapidxml {
         // Parse and append data
         // Return character that ends data.
         // This is necessary because this character might have been overwritten by a terminating 0
-        template<int Flags>
+        template<unsigned Flags>
         Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start) {
             // Backup to contents start if whitespace trimming is disabled
             if (!(Flags & parse_trim_whitespace))
@@ -1824,7 +1824,7 @@ namespace rapidxml {
         }
 
         // Parse CDATA
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_cdata(Ch *&text) {
             // If CDATA is disabled
             if (Flags & parse_no_data_nodes) {
@@ -1859,7 +1859,7 @@ namespace rapidxml {
         }
 
         // Parse element node
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_element(Ch *&text) {
             // Create element node
             xml_node<Ch> *element = this->allocate_node(node_element);
@@ -1898,7 +1898,7 @@ namespace rapidxml {
         }
 
         // Determine node type, and parse it
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_node(Ch *&text) {
             // Parse proper node type
             switch (text[0]) {
@@ -1974,7 +1974,7 @@ namespace rapidxml {
         }
 
         // Parse contents of the node - children, data etc.
-        template<int Flags>
+        template<unsigned Flags>
         void parse_node_contents(Ch *&text, xml_node<Ch> *node) {
             // For all children and text
             while (1) {
@@ -2036,7 +2036,7 @@ namespace rapidxml {
         }
 
         // Parse XML attributes of the node
-        template<int Flags>
+        template<unsigned Flags>
         void parse_node_attributes(Ch *&text, xml_node<Ch> *node) {
             // For all attributes
             while (attribute_name_pred::test(*text)) {
@@ -2075,7 +2075,7 @@ namespace rapidxml {
 
                 // Extract attribute value and expand char refs in it
                 Ch *value = text, *end;
-                const int AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
+                const unsigned AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
                 if (quote == Ch('\''))
                     end = skip_and_expand_character_refs<attribute_value_pred<Ch('\'')>, attribute_value_pure_pred<Ch(
                             '\'')>, AttFlags>(text);
@@ -2559,7 +2559,7 @@ enum node_type
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_no_data_nodes = 0x1;
+const unsigned parse_no_data_nodes = 0x1;
 
 //! Parse flag instructing the parser to not use text of first data node as a value of parent element.
 //! Can be combined with other flags by use of | operator.
@@ -2568,42 +2568,42 @@ const int parse_no_data_nodes = 0x1;
 //! Use rapidxml::parse_no_data_nodes flag to prevent creation of data nodes if you want to manipulate data using values of elements.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_no_element_values = 0x2;
+const unsigned parse_no_element_values = 0x2;
 
 //! Parse flag instructing the parser to not place zero terminators after strings in the source text.
 //! By default zero terminators are placed, modifying source text.
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_no_string_terminators = 0x4;
+const unsigned parse_no_string_terminators = 0x4;
 
 //! Parse flag instructing the parser to not translate entities in the source text.
 //! By default entities are translated, modifying source text.
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_no_entity_translation = 0x8;
+const unsigned parse_no_entity_translation = 0x8;
 
 //! Parse flag instructing the parser to disable UTF-8 handling and assume plain 8 bit characters.
 //! By default, UTF-8 handling is enabled.
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_no_utf8 = 0x10;
+const unsigned parse_no_utf8 = 0x10;
 
 //! Parse flag instructing the parser to create XML declaration node.
 //! By default, declaration node is not created.
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_declaration_node = 0x20;
+const unsigned parse_declaration_node = 0x20;
 
 //! Parse flag instructing the parser to create comments nodes.
 //! By default, comment nodes are not created.
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_comment_nodes = 0x40;
+const unsigned parse_comment_nodes = 0x40;
 
 //! Parse flag instructing the parser to create DOCTYPE node.
 //! By default, doctype node is not created.
@@ -2611,14 +2611,14 @@ const int parse_comment_nodes = 0x40;
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_doctype_node = 0x80;
+const unsigned parse_doctype_node = 0x80;
 
 //! Parse flag instructing the parser to create PI nodes.
 //! By default, PI nodes are not created.
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_pi_nodes = 0x100;
+const unsigned parse_pi_nodes = 0x100;
 
 //! Parse flag instructing the parser to validate closing tag names.
 //! If not set, name inside closing tag is irrelevant to the parser.
@@ -2626,7 +2626,7 @@ const int parse_pi_nodes = 0x100;
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_validate_closing_tags = 0x200;
+const unsigned parse_validate_closing_tags = 0x200;
 
 //! Parse flag instructing the parser to trim all leading and trailing whitespace of data nodes.
 //! By default, whitespace is not trimmed.
@@ -2634,7 +2634,7 @@ const int parse_validate_closing_tags = 0x200;
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_trim_whitespace = 0x400;
+const unsigned parse_trim_whitespace = 0x400;
 
 //! Parse flag instructing the parser to condense all whitespace runs of data nodes to a single space character.
 //! Trimming of leading and trailing whitespace of data is controlled by rapidxml::parse_trim_whitespace flag.
@@ -2643,7 +2643,7 @@ const int parse_trim_whitespace = 0x400;
 //! Can be combined with other flags by use of | operator.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_normalize_whitespace = 0x800;
+const unsigned parse_normalize_whitespace = 0x800;
 
 // Compound flags
 
@@ -2655,7 +2655,7 @@ const int parse_normalize_whitespace = 0x800;
 //! and using the flag will disable it.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_default = 0;
+const unsigned parse_default = 0;
 
 //! A combination of parse flags that forbids any modifications of the source text.
 //! This also results in faster parsing. However, note that the following will occur:
@@ -2665,18 +2665,18 @@ const int parse_default = 0;
 //! <li>whitespace will not be normalized</li>
 //! </ul>
 //! See xml_document::parse() function.
-const int parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;
+const unsigned parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;
 
 //! A combination of parse flags resulting in fastest possible parsing, without sacrificing important data.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_fastest = parse_non_destructive | parse_no_data_nodes;
+const unsigned parse_fastest = parse_non_destructive | parse_no_data_nodes;
 
 //! A combination of parse flags resulting in largest amount of data being extracted.
 //! This usually results in slowest parsing.
 //! <br><br>
 //! See xml_document::parse() function.
-const int parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes | parse_validate_closing_tags;
+const unsigned parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes | parse_validate_closing_tags;
 
 ///////////////////////////////////////////////////////////////////////
 // Internals
@@ -3778,7 +3778,7 @@ public:
     //! Document can be parsed into multiple times.
     //! Each new call to parse removes previous nodes and attributes (if any), but does not clear memory pool.
     //! \param text XML data to parse; pointer is non-const to denote fact that this data may be modified by the parser.
-    template<int Flags>
+    template<unsigned Flags>
     void parse(Ch *text)
     {
         assert(text);
@@ -3908,7 +3908,7 @@ private:
     };
 
     // Insert coded character, using UTF8 or 8-bit ASCII
-    template<int Flags>
+    template<unsigned Flags>
     static void insert_coded_character(Ch *&text, unsigned long code)
     {
         if (Flags & parse_no_utf8)
@@ -3955,7 +3955,7 @@ private:
     }
 
     // Skip characters until predicate evaluates to true
-    template<class StopPred, int Flags>
+    template<class StopPred, unsigned Flags>
     static void skip(Ch *&text)
     {
         Ch *tmp = text;
@@ -3967,7 +3967,7 @@ private:
     // Skip characters until predicate evaluates to true while doing the following:
     // - replacing XML character entity references with proper characters (&apos; &amp; &quot; &lt; &gt; &#...;)
     // - condensing whitespace sequences to single space character
-    template<class StopPred, class StopPredPure, int Flags>
+    template<class StopPred, class StopPredPure, unsigned Flags>
     static Ch *skip_and_expand_character_refs(Ch *&text)
     {
         // If entity translation, whitespace condense and whitespace trimming is disabled, use plain skip
@@ -4122,7 +4122,7 @@ private:
     // Internal parsing functions
 
     // Parse BOM, if any
-    template<int Flags>
+    template<unsigned Flags>
     void parse_bom(Ch *&text)
     {
         // UTF-8?
@@ -4135,7 +4135,7 @@ private:
     }
 
     // Parse XML declaration (<?xml...)
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_xml_declaration(Ch *&text)
     {
         // If parsing of declaration is disabled
@@ -4170,7 +4170,7 @@ private:
     }
 
     // Parse XML comment (<!--...)
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_comment(Ch *&text)
     {
         // If parsing of comments is disabled
@@ -4211,7 +4211,7 @@ private:
     }
 
     // Parse DOCTYPE
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_doctype(Ch *&text)
     {
         // Remember value start
@@ -4277,7 +4277,7 @@ private:
     }
 
     // Parse PI
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_pi(Ch *&text)
     {
         // If creation of PI nodes is enabled
@@ -4337,7 +4337,7 @@ private:
     // Parse and append data
     // Return character that ends data.
     // This is necessary because this character might have been overwritten by a terminating 0
-    template<int Flags>
+    template<unsigned Flags>
     Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start)
     {
         // Backup to contents start if whitespace trimming is disabled
@@ -4395,7 +4395,7 @@ private:
     }
 
     // Parse CDATA
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_cdata(Ch *&text)
     {
         // If CDATA is disabled
@@ -4434,7 +4434,7 @@ private:
     }
 
     // Parse element node
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_element(Ch *&text)
     {
         // Create element node
@@ -4478,7 +4478,7 @@ private:
     }
 
     // Determine node type, and parse it
-    template<int Flags>
+    template<unsigned Flags>
     xml_node<Ch> *parse_node(Ch *&text)
     {
         // Parse proper node type
@@ -4564,7 +4564,7 @@ private:
     }
 
     // Parse contents of the node - children, data etc.
-    template<int Flags>
+    template<unsigned Flags>
     void parse_node_contents(Ch *&text, xml_node<Ch> *node)
     {
         // For all children and text
@@ -4634,7 +4634,7 @@ after_data_node:
     }
 
     // Parse XML attributes of the node
-    template<int Flags>
+    template<unsigned Flags>
     void parse_node_attributes(Ch *&text, xml_node<Ch> *node)
     {
         // For all attributes
@@ -4675,7 +4675,7 @@ after_data_node:
 
             // Extract attribute value and expand char refs in it
             Ch *value = text, *end;
-            const int AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
+            const unsigned AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
             if (quote == Ch('\''))
                 end = skip_and_expand_character_refs<attribute_value_pred<Ch('\'')>, attribute_value_pure_pred<Ch('\'')>, AttFlags>(text);
             else
@@ -5157,7 +5157,7 @@ namespace rapidxml
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_data_nodes = 0x1;            
+    const unsigned parse_no_data_nodes = 0x1;
 
     //! Parse flag instructing the parser to not use text of first data node as a value of parent element.
     //! Can be combined with other flags by use of | operator.
@@ -5166,42 +5166,42 @@ namespace rapidxml
     //! Use rapidxml::parse_no_data_nodes flag to prevent creation of data nodes if you want to manipulate data using values of elements.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_element_values = 0x2;
+    const unsigned parse_no_element_values = 0x2;
     
     //! Parse flag instructing the parser to not place zero terminators after strings in the source text.
     //! By default zero terminators are placed, modifying source text.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_string_terminators = 0x4;
+    const unsigned parse_no_string_terminators = 0x4;
     
     //! Parse flag instructing the parser to not translate entities in the source text.
     //! By default entities are translated, modifying source text.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_entity_translation = 0x8;
+    const unsigned parse_no_entity_translation = 0x8;
     
     //! Parse flag instructing the parser to disable UTF-8 handling and assume plain 8 bit characters.
     //! By default, UTF-8 handling is enabled.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_no_utf8 = 0x10;
+    const unsigned parse_no_utf8 = 0x10;
     
     //! Parse flag instructing the parser to create XML declaration node.
     //! By default, declaration node is not created.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_declaration_node = 0x20;
+    const unsigned parse_declaration_node = 0x20;
     
     //! Parse flag instructing the parser to create comments nodes.
     //! By default, comment nodes are not created.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_comment_nodes = 0x40;
+    const unsigned parse_comment_nodes = 0x40;
     
     //! Parse flag instructing the parser to create DOCTYPE node.
     //! By default, doctype node is not created.
@@ -5209,14 +5209,14 @@ namespace rapidxml
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_doctype_node = 0x80;
+    const unsigned parse_doctype_node = 0x80;
     
     //! Parse flag instructing the parser to create PI nodes.
     //! By default, PI nodes are not created.
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_pi_nodes = 0x100;
+    const unsigned parse_pi_nodes = 0x100;
     
     //! Parse flag instructing the parser to validate closing tag names. 
     //! If not set, name inside closing tag is irrelevant to the parser.
@@ -5224,7 +5224,7 @@ namespace rapidxml
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_validate_closing_tags = 0x200;
+    const unsigned parse_validate_closing_tags = 0x200;
     
     //! Parse flag instructing the parser to trim all leading and trailing whitespace of data nodes.
     //! By default, whitespace is not trimmed. 
@@ -5232,7 +5232,7 @@ namespace rapidxml
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_trim_whitespace = 0x400;
+    const unsigned parse_trim_whitespace = 0x400;
 
     //! Parse flag instructing the parser to condense all whitespace runs of data nodes to a single space character.
     //! Trimming of leading and trailing whitespace of data is controlled by rapidxml::parse_trim_whitespace flag.
@@ -5241,7 +5241,7 @@ namespace rapidxml
     //! Can be combined with other flags by use of | operator.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_normalize_whitespace = 0x800;
+    const unsigned parse_normalize_whitespace = 0x800;
 
     // Compound flags
     
@@ -5253,7 +5253,7 @@ namespace rapidxml
     //! and using the flag will disable it.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_default = 0;
+    const unsigned parse_default = 0;
     
     //! A combination of parse flags that forbids any modifications of the source text. 
     //! This also results in faster parsing. However, note that the following will occur:
@@ -5263,18 +5263,18 @@ namespace rapidxml
     //! <li>whitespace will not be normalized</li>
     //! </ul>
     //! See xml_document::parse() function.
-    const int parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;
+    const unsigned parse_non_destructive = parse_no_string_terminators | parse_no_entity_translation;
     
     //! A combination of parse flags resulting in fastest possible parsing, without sacrificing important data.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_fastest = parse_non_destructive | parse_no_data_nodes;
+    const unsigned parse_fastest = parse_non_destructive | parse_no_data_nodes;
     
     //! A combination of parse flags resulting in largest amount of data being extracted. 
     //! This usually results in slowest parsing.
     //! <br><br>
     //! See xml_document::parse() function.
-    const int parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes | parse_validate_closing_tags;
+    const unsigned parse_full = parse_declaration_node | parse_comment_nodes | parse_doctype_node | parse_pi_nodes | parse_validate_closing_tags;
 
     ///////////////////////////////////////////////////////////////////////
     // Internals
@@ -6376,7 +6376,7 @@ namespace rapidxml
         //! Document can be parsed into multiple times. 
         //! Each new call to parse removes previous nodes and attributes (if any), but does not clear memory pool.
         //! \param text XML data to parse; pointer is non-const to denote fact that this data may be modified by the parser.
-        template<int Flags>
+        template<unsigned Flags>
         void parse(Ch *text)
         {
             assert(text);
@@ -6506,7 +6506,7 @@ namespace rapidxml
         };
 
         // Insert coded character, using UTF8 or 8-bit ASCII
-        template<int Flags>
+        template<unsigned Flags>
         static void insert_coded_character(Ch *&text, unsigned long code)
         {
             if (Flags & parse_no_utf8)
@@ -6553,7 +6553,7 @@ namespace rapidxml
         }
 
         // Skip characters until predicate evaluates to true
-        template<class StopPred, int Flags>
+        template<class StopPred, unsigned Flags>
         static void skip(Ch *&text)
         {
             Ch *tmp = text;
@@ -6565,7 +6565,7 @@ namespace rapidxml
         // Skip characters until predicate evaluates to true while doing the following:
         // - replacing XML character entity references with proper characters (&apos; &amp; &quot; &lt; &gt; &#...;)
         // - condensing whitespace sequences to single space character
-        template<class StopPred, class StopPredPure, int Flags>
+        template<class StopPred, class StopPredPure, unsigned Flags>
         static Ch *skip_and_expand_character_refs(Ch *&text)
         {
             // If entity translation, whitespace condense and whitespace trimming is disabled, use plain skip
@@ -6720,7 +6720,7 @@ namespace rapidxml
         // Internal parsing functions
         
         // Parse BOM, if any
-        template<int Flags>
+        template<unsigned Flags>
         void parse_bom(Ch *&text)
         {
             // UTF-8?
@@ -6733,7 +6733,7 @@ namespace rapidxml
         }
 
         // Parse XML declaration (<?xml...)
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_xml_declaration(Ch *&text)
         {
             // If parsing of declaration is disabled
@@ -6768,7 +6768,7 @@ namespace rapidxml
         }
 
         // Parse XML comment (<!--...)
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_comment(Ch *&text)
         {
             // If parsing of comments is disabled
@@ -6809,7 +6809,7 @@ namespace rapidxml
         }
 
         // Parse DOCTYPE
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_doctype(Ch *&text)
         {
             // Remember value start
@@ -6875,7 +6875,7 @@ namespace rapidxml
         }
 
         // Parse PI
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_pi(Ch *&text)
         {
             // If creation of PI nodes is enabled
@@ -6935,7 +6935,7 @@ namespace rapidxml
         // Parse and append data
         // Return character that ends data.
         // This is necessary because this character might have been overwritten by a terminating 0
-        template<int Flags>
+        template<unsigned Flags>
         Ch parse_and_append_data(xml_node<Ch> *node, Ch *&text, Ch *contents_start)
         {
             // Backup to contents start if whitespace trimming is disabled
@@ -6993,7 +6993,7 @@ namespace rapidxml
         }
 
         // Parse CDATA
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_cdata(Ch *&text)
         {
             // If CDATA is disabled
@@ -7032,7 +7032,7 @@ namespace rapidxml
         }
         
         // Parse element node
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_element(Ch *&text)
         {
             // Create element node
@@ -7076,7 +7076,7 @@ namespace rapidxml
         }
 
         // Determine node type, and parse it
-        template<int Flags>
+        template<unsigned Flags>
         xml_node<Ch> *parse_node(Ch *&text)
         {
             // Parse proper node type
@@ -7162,7 +7162,7 @@ namespace rapidxml
         }
 
         // Parse contents of the node - children, data etc.
-        template<int Flags>
+        template<unsigned Flags>
         void parse_node_contents(Ch *&text, xml_node<Ch> *node)
         {
             // For all children and text
@@ -7232,7 +7232,7 @@ namespace rapidxml
         }
         
         // Parse XML attributes of the node
-        template<int Flags>
+        template<unsigned Flags>
         void parse_node_attributes(Ch *&text, xml_node<Ch> *node)
         {
             // For all attributes 
@@ -7273,7 +7273,7 @@ namespace rapidxml
 
                 // Extract attribute value and expand char refs in it
                 Ch *value = text, *end;
-                const int AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
+                const unsigned AttFlags = Flags & ~parse_normalize_whitespace;   // No whitespace normalization in attributes
                 if (quote == Ch('\''))
                     end = skip_and_expand_character_refs<attribute_value_pred<Ch('\'')>, attribute_value_pure_pred<Ch('\'')>, AttFlags>(text);
                 else

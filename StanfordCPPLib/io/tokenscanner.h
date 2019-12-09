@@ -61,13 +61,13 @@ public:
      * Initializes a scanner object.  The initial token stream comes from
      * the specified input stream.
      */
-    TokenScanner(std::istream &infile);
+    explicit TokenScanner(std::istream &infile);
 
     /**
      * Initializes a scanner object.  The initial token stream comes from
      * the specified string.
      */
-    TokenScanner(const std::string &str);
+    explicit TokenScanner(const std::string &str);
 
     /**
      * Deallocates the storage associated with this scanner.
@@ -100,7 +100,7 @@ public:
      * if any. If this scanner was created using an istream instead of a
      * string, returns an empty string.
      */
-    std::string getInput() const;
+    [[nodiscard]] std::string getInput() const;
 
     /**
      * Returns the current position of the scanner in the input stream.
@@ -108,14 +108,14 @@ public:
      * to the beginning of the saved token.  If <code>saveToken</code> is
      * called more than once, <code>getPosition</code> returns -1.
      */
-    int getPosition() const;
+    [[nodiscard]] int getPosition() const;
 
     /**
      * Returns the string value of a token.  This value is formed by removing
      * any surrounding quotation marks and replacing escape sequences by the
      * appropriate characters.
      */
-    std::string getStringValue(const std::string &token) const;
+    [[nodiscard]] static std::string getStringValue(const std::string &token) ;
 
     /**
      * Returns the type of this token.  This type will match one of the
@@ -123,7 +123,7 @@ public:
      * <code>SEPARATOR</code>, <code>WORD</code>, <code>NUMBER</code>,
      * <code>STRING</code>, or <code>OPERATOR</code>.
      */
-    TokenType getTokenType(const std::string &token) const;
+    [[nodiscard]] TokenType getTokenType(const std::string &token) const;
 
     /**
      * Returns <code>true</code> if there are additional tokens for this
@@ -162,7 +162,7 @@ public:
     /**
      * Returns <code>true</code> if the character is valid in a word.
      */
-    bool isWordCharacter(char ch) const;
+    [[nodiscard]] bool isWordCharacter(char ch) const;
 
     /**
      * Returns the next token from this scanner.  If <code>nextToken</code>
@@ -268,15 +268,15 @@ private:
     };
 
     std::string buffer;              /* The original argument string */
-    std::istream *isp;               /* The input stream for tokens  */
-    bool stringInputFlag;            /* Flag indicating string input */
-    bool ignoreWhitespaceFlag;       /* Scanner ignores whitespace   */
-    bool ignoreCommentsFlag;         /* Scanner ignores comments     */
-    bool scanNumbersFlag;            /* Scanner parses numbers       */
-    bool scanStringsFlag;            /* Scanner parses strings       */
+    std::istream *isp{};               /* The input stream for tokens  */
+    bool stringInputFlag{};            /* Flag indicating string input */
+    bool ignoreWhitespaceFlag{};       /* Scanner ignores whitespace   */
+    bool ignoreCommentsFlag{};         /* Scanner ignores comments     */
+    bool scanNumbersFlag{};            /* Scanner parses numbers       */
+    bool scanStringsFlag{};            /* Scanner parses strings       */
     std::string wordChars;           /* Additional word characters   */
-    StringCell *savedTokens;         /* Stack of saved tokens        */
-    StringCell *operators;           /* List of multichar operators  */
+    StringCell *savedTokens{};         /* Stack of saved tokens        */
+    StringCell *operators{};           /* List of multichar operators  */
 
     /* Private method prototypes */
     void initScanner();

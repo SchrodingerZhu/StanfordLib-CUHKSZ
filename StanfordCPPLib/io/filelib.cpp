@@ -241,7 +241,7 @@ std::string openFileDialog(std::ifstream &stream,
                            const std::string &title,
                            const std::string &path) {
     std::string filename = platform::file_openFileDialog(title, "load", path);
-    if (filename == "") return "";
+    if (filename.empty()) return "";
     stream.open(filename.c_str());
     return (stream.fail()) ? "" : filename;
 }
@@ -249,7 +249,7 @@ std::string openFileDialog(std::ifstream &stream,
 std::string openFileDialog(const std::string &title,
                            const std::string &path) {
     std::string filename = platform::file_openFileDialog(title, "load", path);
-    if (filename == "") return "";
+    if (filename.empty()) return "";
     return (fileExists(filename)) ? filename : "";
 }
 
@@ -266,7 +266,7 @@ std::string openFileDialog(std::ofstream &stream,
                            const std::string &title,
                            const std::string &path) {
     std::string filename = platform::file_openFileDialog(title, "save", path);
-    if (filename == "") return "";
+    if (filename.empty()) return "";
     stream.open(filename.c_str());
     return (stream.fail()) ? "" : filename;
 }
@@ -276,8 +276,9 @@ std::string openOnPath(std::ifstream &stream,
                        const std::string &filename) {
     Vector<std::string> paths;
     splitPath(path, paths);
-    for (std::string dir : paths) {
-        std::string pathname = dir + "/" + filename;
+    for (const std::string& dir : paths) {
+        std::string pathname = dir + "/";
+        pathname += filename;
         if (openFile(stream, pathname)) return pathname;
     }
     return "";
@@ -288,8 +289,9 @@ std::string openOnPath(std::ofstream &stream,
                        const std::string &filename) {
     Vector<std::string> paths;
     splitPath(path, paths);
-    for (std::string dir : paths) {
-        std::string pathname = dir + "/" + filename;
+    for (const std::string& dir : paths) {
+        std::string pathname = dir + "/";
+        pathname += filename;
         if (openFile(stream, pathname)) return pathname;
     }
     return "";
@@ -300,7 +302,7 @@ std::string promptUserForFile(std::ifstream &stream,
                               const std::string &reprompt) {
     std::string promptCopy = prompt;
     std::string repromptCopy = reprompt;
-    if (reprompt == "") {
+    if (reprompt.empty()) {
         repromptCopy = "Unable to open that file.  Try again.";
     }
     appendSpace(promptCopy);
@@ -314,7 +316,7 @@ std::string promptUserForFile(std::ifstream &stream,
             stream.clear();
         }
         std::cout << repromptCopy << std::endl;
-        if (promptCopy == "") promptCopy = "Input file: ";
+        if (promptCopy.empty()) promptCopy = "Input file: ";
     }
 }
 
@@ -323,7 +325,7 @@ std::string promptUserForFile(std::ofstream &stream,
                               const std::string &reprompt) {
     std::string promptCopy = prompt;
     std::string repromptCopy = reprompt;
-    if (reprompt == "") {
+    if (reprompt.empty()) {
         repromptCopy = "Unable to open that file.  Try again.";
     }
     appendSpace(promptCopy);
@@ -337,7 +339,7 @@ std::string promptUserForFile(std::ofstream &stream,
             stream.clear();
         }
         std::cout << repromptCopy << std::endl;
-        if (promptCopy == "") promptCopy = "Output file: ";
+        if (promptCopy.empty()) promptCopy = "Output file: ";
     }
 }
 
@@ -345,7 +347,7 @@ std::string promptUserForFile(const std::string &prompt,
                               const std::string &reprompt) {
     std::string promptCopy = prompt;
     std::string repromptCopy = reprompt;
-    if (reprompt == "") {
+    if (reprompt.empty()) {
         repromptCopy = "Unable to open that file.  Try again.";
     }
     appendSpace(promptCopy);
@@ -362,7 +364,7 @@ std::string promptUserForFile(const std::string &prompt,
             }
         }
         std::cout << repromptCopy << std::endl;
-        if (promptCopy == "") promptCopy = "Input file: ";
+        if (promptCopy.empty()) promptCopy = "Input file: ";
     }
 }
 

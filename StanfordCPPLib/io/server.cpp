@@ -196,7 +196,7 @@ namespace HttpServer {
         if (!isRunning()) {
             error("HttpServer::sendResponse: server is not running");
         }
-        std::string contentTypeActual = contentType;
+        const std::string& contentTypeActual = contentType;
         if (contentTypeActual.empty()) {
             // TODO
             // contentTypeActual = getContentType(getUrlExtension(event.getRequestURL()));
