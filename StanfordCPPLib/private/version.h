@@ -39,7 +39,7 @@
 
 
 namespace version {
-    void ensureJavaBackEndVersion(std::string minVersion = "") /* deprecated */;
+    void ensureJavaBackEndVersion(const std::string& minVersion = "") /* deprecated */;
 
     void ensureProjectVersion(std::string minVersion = "");
 

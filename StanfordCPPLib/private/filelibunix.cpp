@@ -14,21 +14,15 @@
 // (see filelibwindows.cpp for Windows versions)
 #ifndef _WIN32
 
-#include <sys/types.h>
+
 #include <sys/stat.h>
-#include <sys/resource.h>
 #include <dirent.h>
-#include <errno.h>
+#include <cerrno>
 #include <pwd.h>
-#include <stdint.h>
 #include <unistd.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <ios>
 #include <string>
 #include <system/error.h>
 #include <util/strlib.h>
@@ -55,7 +49,7 @@ namespace platform {
     }
 
     std::string filelib_expandPathname(const std::string &filename) {
-        if (filename == "") {
+        if (filename.empty()) {
             return "";
         }
         int len = filename.length();
@@ -91,7 +85,7 @@ namespace platform {
     }
 
     bool filelib_fileExists(const std::string &filename) {
-        struct stat fileInfo;
+        struct stat fileInfo{};
         return stat(filename.c_str(), &fileInfo) == 0;
     }
 
@@ -134,7 +128,7 @@ namespace platform {
     }
 
     bool filelib_isDirectory(const std::string &filename) {
-        struct stat fileInfo;
+        struct stat fileInfo{};
         if (stat(filename.c_str(), &fileInfo) != 0) {
             return false;
         }
@@ -142,7 +136,7 @@ namespace platform {
     }
 
     bool filelib_isFile(const std::string &filename) {
-        struct stat fileInfo;
+        struct stat fileInfo{};
         if (stat(filename.c_str(), &fileInfo) != 0) {
             return false;
         }
@@ -150,7 +144,7 @@ namespace platform {
     }
 
     bool filelib_isSymbolicLink(const std::string &filename) {
-        struct stat fileInfo;
+        struct stat fileInfo{};
         if (lstat(filename.c_str(), &fileInfo) != 0) {
             return false;
         }

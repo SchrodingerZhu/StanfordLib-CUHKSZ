@@ -66,7 +66,7 @@ namespace version {
         }
     }
 
-    void ensureJavaBackEndVersion(std::string /*minVersion*/) {
+    void ensureJavaBackEndVersion(const std::string& /*minVersion*/) {
         // empty
     }
 
