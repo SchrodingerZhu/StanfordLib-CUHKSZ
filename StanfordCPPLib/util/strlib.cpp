@@ -47,6 +47,7 @@
 
 #include <system/error.h>
 #include <collections/vector.h>
+#include <cstring>
 
 /* Function prototypes */
 
@@ -550,9 +551,9 @@ std::string urlDecode(const std::string &str) {
             // decode a URL-encoded ASCII character, e.g. %40 => &
             char ch1 = *(i + 1);
             char ch2 = *(i + 2);
-            int hex1 = (isdigit(ch1) ? (ch1 - '0') : (toupper(ch1) - 'A' + 10));
-            int hex2 = (isdigit(ch2) ? (ch2 - '0') : (toupper(ch2) - 'A' + 10));
-            int decodedChar = (hex1 << 4) + hex2;
+            unsigned hex1 = (isdigit(ch1) ? (ch1 - '0') : (toupper(ch1) + 10 - 'A'));
+            unsigned hex2 = (isdigit(ch2) ? (ch2 - '0') : (toupper(ch2) + 10 - 'A'));
+            unsigned decodedChar = (hex1 << 4u) + hex2;
             unescaped << (char) decodedChar;
             i += 2;
         } else {
@@ -575,8 +576,7 @@ std::string urlEncode(const std::string &str) {
     escaped.fill('0');
     escaped << std::hex << std::uppercase;
 
-    for (std::string::const_iterator i = str.begin(), n = str.end(); i != n; ++i) {
-        std::string::value_type c = (*i);
+    for (char c : str) {
         if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~' || c == '*') {
             escaped << c;
         } else if (c == ' ') {
@@ -591,6 +591,13 @@ std::string urlEncode(const std::string &str) {
 
 void urlEncodeInPlace(std::string &str) {
     str = urlEncode(str);   // no real efficiency gain here
+}
+
+// from absl
+inline bool startsWith(std::string_view text, std::string_view prefix) {
+    return prefix.empty() ||
+           (text.size() >= prefix.size() &&
+            memcmp(text.data(), prefix.data(), prefix.size()) == 0);
 }
 
 namespace std {

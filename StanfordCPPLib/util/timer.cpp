@@ -5,12 +5,10 @@
  */
 
 #include "timer.h"
-#include <sys/time.h>
-#include <system/error.h>
 
 Timer::Timer(bool autostart) {
-    _startMS = 0;
-    _stopMS = 0;
+    _start = std::chrono::system_clock::now();
+    _stop = std::chrono::system_clock::now();
     _isStarted = false;
     if (autostart) {
         start();
@@ -18,7 +16,7 @@ Timer::Timer(bool autostart) {
 }
 
 long Timer::elapsed() const {
-    return _stopMS - _startMS;
+    return std::chrono::duration_cast<std::chrono::milliseconds>(_stop - _start).count();
 }
 
 bool Timer::isStarted() const {
@@ -26,22 +24,21 @@ bool Timer::isStarted() const {
 }
 
 void Timer::start() {
-    _startMS = currentTimeMS();
+    _start = std::chrono::system_clock::now();
     _isStarted = true;
 }
 
 long Timer::stop() {
-    _stopMS = currentTimeMS();
+    _stop = std::chrono::system_clock::now();
     if (!_isStarted) {
         // error("Timer is not started");
-        _startMS = _stopMS;
+        _start = _stop;
     }
     _isStarted = false;
     return elapsed();
 }
 
 long Timer::currentTimeMS() {
-    timeval time;
-    gettimeofday(&time, nullptr);
-    return (time.tv_sec * 1000000 + time.tv_usec) / 1000;
+    return std::chrono::duration_cast<std::chrono::milliseconds>
+            (std::chrono::system_clock::now().time_since_epoch()).count();
 }

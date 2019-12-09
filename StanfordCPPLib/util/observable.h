@@ -99,7 +99,7 @@ public:
      * the extra information passed by the Observable when it called
      * notifyObservers, if any.
      */
-    virtual void update(Observable<T> *obs, const T &arg = T()) = 0;
+    virtual void update(Observable<T> *obs, const T &arg) = 0;
 };
 
 template<typename T>

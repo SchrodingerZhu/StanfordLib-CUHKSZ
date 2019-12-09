@@ -81,7 +81,7 @@ std::istream &operator>>(std::istream &is, Direction &dir) {
     TokenScanner scanner(is);
     scanner.ignoreWhitespace();
     std::string token = toUpperCase(scanner.nextToken());
-    if (token == "") {
+    if (token.empty()) {
         dir = Direction(-1);
     } else if (startsWith("NORTH", token)) {
         dir = NORTH;
@@ -111,7 +111,7 @@ std::istream &operator>>(std::istream &is, Direction &dir) {
  * this operator is used only in the for loop idiom for which it is defined.
  */
 
-Direction operator++(Direction &dir, int) {
+CDirection operator++(Direction &dir, int) {
     Direction old = dir;
     dir = Direction(dir + 1);
     return old;

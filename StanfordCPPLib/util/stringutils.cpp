@@ -48,8 +48,7 @@ namespace stringutils {
     Vector<std::string> explodeLines(const std::string &s) {
         Vector<std::string> result;
         std::string line;
-        for (size_t i = 0; i < s.length(); i++) {
-            char ch = s[i];
+        for (char ch : s) {
             if (ch == '\n') {
                 // end of line
                 result.push_back(trimR(line));
@@ -67,8 +66,7 @@ namespace stringutils {
     int height(const std::string &s) {
         std::string line;
         int height = 0;
-        for (size_t i = 0; i < s.length(); i++) {
-            char ch = s[i];
+        for (char ch : s) {
             if (ch == '\n') {
                 // end of line
                 height++;
@@ -99,7 +97,7 @@ namespace stringutils {
     std::string indent(const std::string &s, int spaces) {
         Vector<std::string> lines = explodeLines(s);
         Vector<std::string> newLines;
-        std::string indentStr = "";
+        std::string indentStr {};
         for (int i = 0; i < spaces; i++) {
             indentStr += " ";
         }
@@ -127,9 +125,9 @@ namespace stringutils {
 
     std::string stripWhitespace(const std::string &s) {
         std::ostringstream result;
-        for (size_t i = 0; i < s.length(); i++) {
-            if (!isspace(s[i])) {
-                result << tolower(s[i]);
+        for (char i : s) {
+            if (!isspace(i)) {
+                result << tolower(i);
             }
         }
         return result.str();
@@ -137,8 +135,8 @@ namespace stringutils {
 
     std::string toLowerCase(const std::string &s) {
         std::string result;
-        for (size_t i = 0; i < s.length(); i++) {
-            result += tolower(s[i]);
+        for (char i : s) {
+            result += tolower(i);
         }
         return result;
     }
@@ -167,7 +165,7 @@ namespace stringutils {
 
     std::string toPrintable(const std::string &s) {
         std::ostringstream out;
-        for (char ch : s) {
+        for (unsigned char ch : s) {
             if (ch == '\n') {
                 out << "\\n";
             } else if (ch == '\t') {
@@ -186,7 +184,7 @@ namespace stringutils {
                 out << ch;
             } else {
                 out << '\\';
-                out << (static_cast<int>(ch & 0xff));
+                out << (static_cast<int>(ch & 0xffu));
             }
         }
         return out.str();
@@ -221,11 +219,11 @@ namespace stringutils {
 
     std::string trimToWidth(const std::string &s, int width, const std::string &suffix) {
         Vector<std::string> lines = explodeLines(s);
-        for (int i = 0; i < lines.size(); i++) {
-            if ((int) lines[i].length() > width) {
-                lines[i] = lines[i].substr(0, width);
+        for (auto & line : lines) {
+            if ((int) line.length() > width) {
+                line = line.substr(0, width);
                 if (!suffix.empty()) {
-                    lines[i] += suffix;
+                    line += suffix;
                 }
             }
         }
@@ -245,8 +243,7 @@ namespace stringutils {
     int width(const std::string &s) {
         std::string line;
         size_t width = 0;
-        for (size_t i = 0; i < s.length(); i++) {
-            char ch = s[i];
+        for (char ch : s) {
             if (ch == '\n') {
                 // end of line
                 if (line.length() > width) {

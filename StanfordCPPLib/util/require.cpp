@@ -14,7 +14,7 @@
 namespace require {
 
     static void _errorMessage(const std::string &caller, const std::string &valueName, const std::string &details) {
-        std::string overallMessage = "";
+        std::string overallMessage = {};
         if (!caller.empty()) {
             overallMessage += caller;
         }

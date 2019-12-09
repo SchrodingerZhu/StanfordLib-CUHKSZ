@@ -51,12 +51,12 @@ public:
     /**
      * Creates a new ErrorException with the given error message.
      */
-    ErrorException(std::string msg);
-
+    explicit ErrorException(std::string msg, std::string _kind = "error");
+    ErrorException(const ErrorException& errorException) noexcept(false) = default;
     /**
      * Frees any memory allocated by the exception.
      */
-    virtual ~ErrorException() noexcept = default;
+    ~ErrorException() noexcept override = default;
 
     /**
      * Prints the exception to the standard error stream (cerr),
@@ -76,12 +76,12 @@ public:
      * of exceptions (like thrown ints or strings) and wrap them up as
      * ErrorExceptions. In such cases, the kind will be "int" or "string" etc.
      */
-    virtual std::string getKind() const;
+    [[nodiscard]] virtual std::string getKind() const;
 
     /**
      * Returns the exception's error message as passed to its constructor.
      */
-    virtual std::string getMessage() const;
+    [[nodiscard]] virtual std::string getMessage() const;
 
     /**
      * Returns a stack trace for this exception as a multi-line string.
@@ -90,7 +90,7 @@ public:
      * thrown, platform incompatibilities, and other issues; use hasStackTrace to
      * check if a given exception's stack trace is populated.
      */
-    virtual std::string getStackTrace() const;
+    [[nodiscard]] virtual std::string getStackTrace() const;
 
     /**
      * Returns whether this exception has a non-empty stack trace.
@@ -98,7 +98,7 @@ public:
      * thrown, platform incompatibilities, and other issues; use hasStackTrace to
      * check if a given exception's stack trace is populated.
      */
-    virtual bool hasStackTrace() const;
+    [[nodiscard]] virtual bool hasStackTrace() const;
 
     /**
      * Sets what kind of exception this is.
@@ -109,7 +109,7 @@ public:
     /**
      * Returns the exception's error message as a C string.
      */
-    virtual const char *what() const noexcept;
+    [[nodiscard]] const char *what() const noexcept override;
 
 protected:
     /**

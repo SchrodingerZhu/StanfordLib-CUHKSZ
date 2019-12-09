@@ -323,7 +323,7 @@ namespace stacktrace {
         return out << ent.toString();
     }
 
-    call_stack::call_stack(const size_t /*num_discard = 0*/) {
+    call_stack::call_stack(size_t /*num_discard = 0*/) {
         // retrieve call-stack as an array of void* pointers to each function on stack
         void *trace[STATIC_VARIABLE(STACK_FRAMES_MAX)];
         for (int i = 0; i < STATIC_VARIABLE(STACK_FRAMES_MAX); i++) {
@@ -442,9 +442,7 @@ namespace stacktrace {
         }
     }
 
-    call_stack::~call_stack() throw() {
-        // automatic cleanup
-    }
+    call_stack::~call_stack() noexcept = default;
 
 } // namespace stacktrace
 

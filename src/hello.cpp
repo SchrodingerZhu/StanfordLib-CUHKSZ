@@ -13,7 +13,8 @@
 #include <graphics/gwindow.h> // for GWindow
 #include <collections/vector.h>  // for Vector
 #include <macro.h>
-
+#include <util/random.h>
+#include <util/diff.h>
 using namespace std;
 
 int start() {
@@ -59,7 +60,10 @@ int start() {
 
     window->setVisible(true);
     window->requestFocus();
-
+    std::cout << "random color test: " << randomColorString() << std::endl;
+    string a = "1234\n 1233";
+    string b = "1234\n 1233";
+    std::cout << diff::diff(a, b) << std::endl;
     return 0;
 }
 

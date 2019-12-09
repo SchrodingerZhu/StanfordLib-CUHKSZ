@@ -25,7 +25,7 @@
 #include <collections/vector.h>
 
 namespace diff {
-    std::string diff(std::string s1, std::string s2, int flags) {
+    std::string diff(std::string s1, std::string s2, unsigned flags) {
         Vector<std::string> lines1 = stringutils::explodeLines(s1);
         Vector<std::string> lines2 = stringutils::explodeLines(s2);
         Vector<std::string> lines1Original = lines1;
@@ -44,7 +44,7 @@ namespace diff {
             lines2 = stringutils::explodeLines(s2);
         }
         if (flags & IGNORE_PUNCTUATION) {
-            std::string punct = "[.,?!'\"()\\/#$%@^&*_\\[\\]{}|<>:;-]+";
+            std::string punct = R"([.,?!'"()\/#$%@^&*_\[\]{}|<>:;-]+)";
             s1 = regexReplace(s1, punct, "");
             s2 = regexReplace(s2, punct, "");
             lines1 = stringutils::explodeLines(s1);
@@ -86,11 +86,11 @@ namespace diff {
             s2 = stringutils::implode(lines2);
         }
         if (flags & IGNORE_WHITESPACE) {
-            for (int i = 0; i < lines1.size(); i++) {
-                lines1[i] = stringutils::stripWhitespace(lines1[i]);
+            for (auto & i : lines1) {
+                i = stringutils::stripWhitespace(i);
             }
-            for (int i = 0; i < lines2.size(); i++) {
-                lines2[i] = stringutils::stripWhitespace(lines2[i]);
+            for (auto & i : lines2) {
+                i = stringutils::stripWhitespace(i);
             }
         }
 
@@ -120,7 +120,7 @@ namespace diff {
         // (start at beginning of each list)
         int index1 = 0;
         int index2 = 0;
-        Vector<int> actions;
+        Vector<unsigned> actions;
 
         // walk this loop until we reach the end of one of the lists of lines
         while (index1 < lines1.size() && index2 < lines2.size()) {
@@ -135,39 +135,39 @@ namespace diff {
             // current location
             int best1 = lines1.size();
             int best2 = lines2.size();
-            int s1 = index1;
-            int s2 = index2;
-            while ((s1 + s2 - index1 - index2) < (best1 + best2 - index1 - index2)) {
+            int _s1 = index1;
+            int _s2 = index2;
+            while ((_s1 + _s2 - index1 - index2) < (best1 + best2 - index1 - index2)) {
                 int d = -1;
-                if (lines2.size() > s2 && reverse1.containsKey(lines2[s2])) {
-                    for (int lineNumber : reverse1[lines2[s2]]) {
-                        if (lineNumber >= s1) {
+                if (lines2.size() > _s2 && reverse1.containsKey(lines2[_s2])) {
+                    for (int lineNumber : reverse1[lines2[_s2]]) {
+                        if (lineNumber >= _s1) {
                             d = lineNumber;
                             break;
                         }
                     }
                 }
-                if (d >= s1 && (d + s2 - index1 - index2) < (best1 + best2 - index1 - index2)) {
+                if (d >= _s1 && (d + _s2 - index1 - index2) < (best1 + best2 - index1 - index2)) {
                     best1 = d;
-                    best2 = s2;
+                    best2 = _s2;
                 }
 
                 d = -1;
-                if (lines1.size() > s1 && reverse2.containsKey(lines1[s1])) {
-                    for (int lineNumber : reverse2[lines1[s1]]) {
-                        if (lineNumber >= s2) {
+                if (lines1.size() > _s1 && reverse2.containsKey(lines1[_s1])) {
+                    for (int lineNumber : reverse2[lines1[_s1]]) {
+                        if (lineNumber >= _s2) {
                             d = lineNumber;
                             break;
                         }
                     }
                 }
-                if (d >= s2 && (d + s1 - index1 - index2) < (best1 + best2 - index1 - index2)) {
-                    best1 = s1;
+                if (d >= _s2 && (d + _s1 - index1 - index2) < (best1 + best2 - index1 - index2)) {
+                    best1 = _s1;
                     best2 = d;
                 }
 
-                s1++;
-                s2++;
+                _s1++;
+                _s2++;
             }
 
             while (index1 < best1) {
@@ -197,14 +197,14 @@ namespace diff {
         // and this marks our ending point
         actions += 8;
 
-        int op = 0;
+        unsigned op = 0;
         int x0 = 0;
         int x1 = 0;
         int y0 = 0;
         int y1 = 0;
         Vector<std::string> out;
 
-        for (int action : actions) {
+        for (unsigned action : actions) {
             if (action == 1) {
                 op |= action;
                 x1++;
@@ -229,9 +229,14 @@ namespace diff {
                     out += linesStr + xstr + " deleted near student line " + std::to_string(y1);
                 } else if (op == 3) {
                     if (xstr == ystr) {
-                        out += linesStr + xstr + " " + doStr + " not match";
+                        out += linesStr;
+                        out += xstr;
+                        out += " ";
+                        out += doStr + " not match";
                     } else {
-                        out += linesStr + xstr + " changed to student line " + ystr;
+                        out += linesStr;
+                        out += xstr;
+                        out += " changed to student line " + ystr;
                     }
                 }
 
@@ -242,7 +247,9 @@ namespace diff {
 
                 if (op == 2) {
                     if (!(flags & IGNORE_LEADING) || x1 > 0) {
-                        out += linesStr + std::to_string(x1) + " added at student line " + ystr;
+                        out += linesStr;
+                        out += std::to_string(x1);
+                        out += " added at student line " + ystr;
                     }
                 } else if (op == 3) {
                     // out += "---";
@@ -270,7 +277,7 @@ namespace diff {
         }
     }
 
-    bool diffPass(const std::string &s1, const std::string &s2, int flags) {
+    bool diffPass(const std::string &s1, const std::string &s2, unsigned flags) {
         std::string diffs = diff(s1, s2, flags);
         bool result = trim(diffs) == NO_DIFFS_MESSAGE;
         return result;

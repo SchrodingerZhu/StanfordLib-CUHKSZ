@@ -11,6 +11,7 @@
 #ifndef _timer_h
 #define _timer_h
 
+#include <chrono>
 /**
  * A Timer object is useful for measuring the elapsed
  * time of a program in milliseconds over a given interval.
@@ -30,19 +31,19 @@ public:
      * Constructs a new timer.
      * If an optional bool parameter of true is passed, also starts the timer.
      */
-    Timer(bool autostart = false);
+    explicit Timer(bool autostart = false);
 
     /**
      * Returns the number of milliseconds that have elapsed since this timer
      * was started.
      * Returns 0 if the timer was never started.
      */
-    long elapsed() const;
+    [[nodiscard]] long elapsed() const;
 
     /**
      * Returns true if the timer has been started.
      */
-    bool isStarted() const;
+    [[nodiscard]] bool isStarted() const;
 
     /**
      * Starts the timer.
@@ -65,8 +66,8 @@ public:
 
 private:
     // instance variables
-    long _startMS;
-    long _stopMS;
+    std::chrono::system_clock::time_point _start;
+    std::chrono::system_clock::time_point _stop;
     bool _isStarted;
 };
 

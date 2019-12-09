@@ -13,12 +13,13 @@
 #include <system/exceptions.h>
 #include <util/strlib.h>
 #include <sstream>
+#include <utility>
 
 /* Definitions for the ErrorException class */
 
-ErrorException::ErrorException(std::string msg)
-        : _kind("error") {
-    _msg = msg;
+ErrorException::ErrorException(std::string msg, std::string _kind)
+        : _kind(_kind) {
+    _msg = std::move(msg);
 
 #if defined(SPL_CONSOLE_PRINT_EXCEPTIONS)
     std::ostringstream out;
@@ -66,12 +67,13 @@ std::string ErrorException::getStackTrace() const {
 
 std::string ErrorException::insertStarsBeforeEachLine(const std::string &s) {
     std::string result;
-    for (std::string line : stringSplit(s, "\n")) {
+    for (const std::string& line : stringSplit(s, "\n")) {
         if (!result.empty()) {
             if (!startsWith(line, "***")) {
-                line = "*** " + line;
+                result += "\n*** ";
+            } else {
+                result += "\n";
             }
-            result += "\n";
         }
         result += line;
     }

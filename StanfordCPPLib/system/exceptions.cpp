@@ -375,7 +375,7 @@ namespace exceptions {
         }
 
         for (const std::string &name : FORBIDDEN_PREFIXES) {
-            if (function.find(name) == 0) {
+            if (startsWith(function, name)) {
                 return true;
             }
         }
@@ -398,14 +398,14 @@ namespace exceptions {
         int entriesToShowCount = 0;
         int funcNameLength = 0;
         int lineStrLength = 0;
-        for (int i = 0; i < entries.size(); ++i) {
-            entries[i].function = cleanupFunctionNameForStackTrace(entries[i].function);
+        for (auto & entrie : entries) {
+            entrie.function = cleanupFunctionNameForStackTrace(entrie.function);
             if (!STATIC_VARIABLE(STACK_TRACE_SHOULD_FILTER)
-                || (!shouldFilterOutFromStackTrace(entries[i].function)
-                    && !shouldFilterOutFromStackTrace(entries[i].file)
-                    && !shouldFilterOutFromStackTrace(entries[i].lineStr))) {
-                lineStrLength = std::max(lineStrLength, (int) entries[i].lineStr.length());
-                funcNameLength = std::max(funcNameLength, (int) entries[i].function.length());
+                || (!shouldFilterOutFromStackTrace(entrie.function)
+                    && !shouldFilterOutFromStackTrace(entrie.file)
+                    && !shouldFilterOutFromStackTrace(entrie.lineStr))) {
+                lineStrLength = std::max(lineStrLength, (int) entrie.lineStr.length());
+                funcNameLength = std::max(funcNameLength, (int) entrie.function.length());
                 entriesToShowCount++;
             }
         }
@@ -427,8 +427,7 @@ namespace exceptions {
             out << "*** Stack trace:" << std::endl;
         }
 
-        for (int i = 0; i < entries.size(); ++i) {
-            stacktrace::entry entry = entries[i];
+        for (auto entry : entries) {
             entry.file = getTail(entry.file);
 
             // skip certain entries for clarity
@@ -444,7 +443,7 @@ namespace exceptions {
                 entry.function += "()";
             }
 
-            std::string lineStr = "";
+            std::string lineStr = {};
             if (!entry.lineStr.empty()) {
                 lineStr = trimEnd(entry.lineStr);
                 if (lineStr == "?? ??:0") {
@@ -575,10 +574,8 @@ namespace exceptions {
 #endif
 #endif // SHOULD_USE_SIGNAL_STACK
 
-        if (!handled) {
-            for (int sig : STATIC_VARIABLE(SIGNALS_HANDLED)) {
-                signal(sig, stanfordCppLibSignalHandler);
-            }
+        for (int sig : STATIC_VARIABLE(SIGNALS_HANDLED)) {
+            signal(sig, stanfordCppLibSignalHandler);
         }
     }
 
@@ -651,12 +648,13 @@ namespace exceptions {
 // puts "*** " before each line for multi-line error messages
     static std::string insertStarsBeforeEachLine(const std::string &s) {
         std::string result;
-        for (std::string line : stringSplit(s, "\n")) {
+        for (const std::string& line : stringSplit(s, "\n")) {
             if (!result.empty()) {
                 if (!startsWith(line, "***")) {
-                    line = "*** " + line;
+                    result += "\n***";
+                } else {
+                    result += "\n";
                 }
-                result += "\n";
             }
             result += line;
         }
@@ -731,7 +729,7 @@ namespace exceptions {
         msg += "***\n";
 
         std::string kind = "error";
-        std::string message = "";
+        std::string message = {};
         try {
             throw;   // re-throws the exception that already occurred
         } catch (bool b) {
@@ -758,16 +756,14 @@ namespace exceptions {
         } catch (long l) {
             kind = "long";
             message = std::to_string(l);
-        } catch (std::string str) {
+        } catch (const std::string& str) {
             kind = "string";
             message = str;
         } catch (...) {
             kind = "unknown";
         }
 
-        ErrorException errorEx(message);
-        errorEx.setKind(kind);
-        throw errorEx;
+        throw ErrorException(message, kind);
     }
 
 } // namespace exceptions

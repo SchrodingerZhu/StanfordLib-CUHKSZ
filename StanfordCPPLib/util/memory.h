@@ -16,8 +16,7 @@
 
 #include <cstdint>
 
-namespace stanfordcpplib {
-    namespace memory {
+namespace stanfordcpplib::memory {
 
 /**
  * Fills in the given long int parameters with the distance from the given
@@ -26,7 +25,7 @@ namespace stanfordcpplib {
  * represents the area in which p was allocated.
  */
         void computeMemoryDistances(
-                void *const p,
+                void *p,
                 uintptr_t &stackDist,
                 uintptr_t &heapDist,
                 uintptr_t &staticDist);
@@ -37,7 +36,7 @@ namespace stanfordcpplib {
  * all general cases; we provide a best effort that should work for most
  * common allocation cases.)
  */
-        bool isOnHeap(void *const p);
+        bool isOnHeap(void *p);
 
 /**
  * Returns true if the given pointer points to memory on the stack.
@@ -45,7 +44,7 @@ namespace stanfordcpplib {
  * all general cases; we provide a best effort that should work for most
  * common allocation cases.)
  */
-        bool isOnStack(void *const p);
+        bool isOnStack(void *p);
 
 /**
  * Returns true if the given pointer points to memory in static storage.
@@ -53,9 +52,8 @@ namespace stanfordcpplib {
  * all general cases; we provide a best effort that should work for most
  * common allocation cases.)
  */
-        bool isOnStatic(void *const p);
+        bool isOnStatic(void *p);
 
-    } // namespace memory
-} // namespace stanfordcpplib
+    } // namespace stanfordcpplib
 
 #endif // _memory_h

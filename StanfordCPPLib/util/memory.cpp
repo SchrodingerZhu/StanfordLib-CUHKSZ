@@ -14,11 +14,10 @@
 #include "memory.h"
 #include <cstddef>
 
-namespace stanfordcpplib {
-    namespace memory {
+namespace stanfordcpplib::memory {
 
         void computeMemoryDistances(
-                void *const p,
+                void * p,
                 uintptr_t &stackDist,
                 uintptr_t &heapDist,
                 uintptr_t &staticDist) {
@@ -39,23 +38,22 @@ namespace stanfordcpplib {
             delete pi;
         }
 
-        bool isOnHeap(void *const p) {
+        bool isOnHeap(void * p) {
             uintptr_t stackDist, heapDist, staticDist;
             computeMemoryDistances(p, stackDist, heapDist, staticDist);
             return heapDist < stackDist && heapDist < staticDist;
         }
 
-        bool isOnStack(void *const p) {
+        bool isOnStack(void * p) {
             uintptr_t stackDist, heapDist, staticDist;
             computeMemoryDistances(p, stackDist, heapDist, staticDist);
             return stackDist < heapDist && stackDist < staticDist;
         }
 
-        bool isOnStatic(void *const p) {
+        bool isOnStatic(void * p) {
             uintptr_t stackDist, heapDist, staticDist;
             computeMemoryDistances(p, stackDist, heapDist, staticDist);
             return staticDist < stackDist && staticDist < heapDist;
         }
 
-    } // namespace memory
-} // namespace stanfordcpplib
+    } // namespace stanfordcpplib

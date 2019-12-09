@@ -27,13 +27,8 @@
 #include <iostream>
 #include <iomanip>
 #include <queue>
-#include <sstream>
 #include <system/error.h>
 #include "private/static.h"
-
-/* Private function prototype */
-
-static void initRandomSeed();
 
 /* internal buffer of fixed random numbers to return; used by autograders */
 STATIC_VARIABLE_DECLARE_COLLECTION_EMPTY(std::queue<bool>, fixedBools)
@@ -80,21 +75,19 @@ bool randomChance(double p) {
         STATIC_VARIABLE(fixedBools).pop();
         return top;
     }
-    initRandomSeed();
     return randomReal(0, 1) < p;
 }
 
-int randomColor() {
+unsigned randomColor() {
     if (!STATIC_VARIABLE(fixedInts).empty()) {
-        int top = STATIC_VARIABLE(fixedInts).front();
+        unsigned top = STATIC_VARIABLE(fixedInts).front();
         STATIC_VARIABLE(fixedInts).pop();
-        return top & 0x00ffffff;
+        return top & 0x00ffffffu;
     }
-    initRandomSeed();
-    return rand() & 0x00ffffff;
+    return static_cast<unsigned>(randomInteger(0, RAND_MAX)) & 0x00ffffffu;
 }
 
-int randomColor(int minRGB, int maxRGB) {
+unsigned randomColor(unsigned minRGB, unsigned maxRGB) {
     if (!STATIC_VARIABLE(fixedInts).empty()) {
         return randomColor();
     }
@@ -102,30 +95,30 @@ int randomColor(int minRGB, int maxRGB) {
         || minRGB > maxRGB) {
         error("randomColor: min/max values out of range");
     }
-    int r = randomInteger(minRGB, maxRGB);
-    int g = randomInteger(minRGB, maxRGB);
-    int b = randomInteger(minRGB, maxRGB);
-    return r << 16 | g << 8 | b;
+    unsigned r = randomInteger(static_cast<int>(minRGB), static_cast<int>(maxRGB));
+    unsigned g = randomInteger(static_cast<int>(minRGB), static_cast<int>(maxRGB));
+    unsigned b = randomInteger(static_cast<int>(minRGB), static_cast<int>(maxRGB));
+    return r << 16u | g << 8u | b;
 }
 
 // see convertRGBToColor in gcolor.h (repeated here to avoid Qt dependency)
 std::string randomColorString() {
-    int rgb = randomColor();
+    unsigned rgb = randomColor();
     std::ostringstream os;
     os << std::hex << std::uppercase << "#";
-    os << std::setw(2) << std::setfill('0') << (rgb >> 16 & 0xFF);
-    os << std::setw(2) << std::setfill('0') << (rgb >> 8 & 0xFF);
-    os << std::setw(2) << std::setfill('0') << (rgb & 0xFF);
+    os << std::setw(2) << std::setfill('0') << (rgb >> 16u & 0xFFu);
+    os << std::setw(2) << std::setfill('0') << (rgb >> 8u & 0xFFu);
+    os << std::setw(2) << std::setfill('0') << (rgb & 0xFFu);
     return os.str();
 }
 
-std::string randomColorString(int minRGB, int maxRGB) {
-    int rgb = randomColor(minRGB, maxRGB);
+std::string randomColorString(unsigned minRGB, unsigned maxRGB) {
+    unsigned rgb = randomColor(minRGB, maxRGB);
     std::ostringstream os;
     os << std::hex << std::uppercase << "#";
-    os << std::setw(2) << std::setfill('0') << (rgb >> 16 & 0xFF);
-    os << std::setw(2) << std::setfill('0') << (rgb >> 8 & 0xFF);
-    os << std::setw(2) << std::setfill('0') << (rgb & 0xFF);
+    os << std::setw(2) << std::setfill('0') << (rgb >> 16u & 0xFFu);
+    os << std::setw(2) << std::setfill('0') << (rgb >> 8u & 0xFFu);
+    os << std::setw(2) << std::setfill('0') << (rgb & 0xFFu);
     return os.str();
 }
 
@@ -162,8 +155,7 @@ int randomInteger(int low, int high) {
         }
         return top;
     }
-    initRandomSeed();
-    double d = rand() / (double(RAND_MAX) + 1);
+    double d = __rng();
     double s = d * (double(high) - low + 1);
     return int(floor(low + s));
 }
@@ -180,8 +172,7 @@ double randomReal(double low, double high) {
         STATIC_VARIABLE(fixedReals).pop();
         return top;
     }
-    initRandomSeed();
-    double d = rand() / (double(RAND_MAX) + 1);
+    double d = __rng();
     double s = d * (high - low);
     return low + s;
 }
@@ -193,22 +184,11 @@ double randomReal(double low, double high) {
  * The call to initRandomSeed is required to set the initialized flag.
  */
 void setRandomSeed(int seed) {
-    initRandomSeed();
-    srand(seed);
+    __rng.rngEng.seed(seed);
 }
 
-/*
- * Implementation notes: initRandomSeed
- * ------------------------------------
- * The initRandomSeed function declares a static variable that keeps track
- * of whether the seed has been initialized.  The first time initRandomSeed
- * is called, initialized is false, so the seed is set to the current time.
- */
-static void initRandomSeed() {
-    static bool _initialized = false;
-    if (!_initialized) {
-        srand(int(time(nullptr)));
-        rand();   // BUGFIX: throwaway call to get randomness going
-        _initialized = true;
-    }
+__RNG__::__RNG__() noexcept : rngDev(), rngEng(rngDev()), dist(0, 1) {}
+
+double __RNG__::operator()() {
+    return dist(rngEng);
 }

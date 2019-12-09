@@ -12,11 +12,12 @@
 
 #include "sound.h"
 #include <QUrl>
+#include <utility>
 #include <io/filelib.h>
 #include <graphics/gthread.h>
 #include <util/require.h>
 
-/*static*/ QMediaPlayer *Sound::_qmediaPlayer = nullptr;
+/*static*/ std::unique_ptr<QMediaPlayer> Sound::_qmediaPlayer = nullptr;
 
 /*static*/ long Sound::getDuration() {
     initialize();
@@ -32,7 +33,7 @@
     if (!_qmediaPlayer) {
         GThread::runOnQtGuiThread([]() {
             if (!_qmediaPlayer) {
-                _qmediaPlayer = new QMediaPlayer;
+                _qmediaPlayer = std::make_unique<QMediaPlayer>();
             }
         });
     }
@@ -68,13 +69,11 @@
 }
 
 Sound::Sound(std::string filename)
-        : _filename(filename) {
+        : _filename(std::move(filename)) {
     initialize();
 }
 
-Sound::~Sound() {
-    // TODO
-}
+Sound::~Sound() = default;
 
 void Sound::play() {
     playSound(_filename);

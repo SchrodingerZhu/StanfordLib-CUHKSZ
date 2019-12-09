@@ -55,10 +55,10 @@ namespace stacktrace {
         std::string lineStr;    // line number string (not always set)
         std::string function;   // name of function or method
         void *address;          // memory address of stack pointer (raw)
-        void *address2;         // memory address of stack pointer (from dladdr; data segment offset subtracted)
+        void *address2{};         // memory address of stack pointer (from dladdr; data segment offset subtracted)
 
         /** Serialize entry into a text string. */
-        std::string toString() const {
+        [[nodiscard]] std::string toString() const {
             std::ostringstream os;
             os << "file=\"" << file << "\"";
             if (line > 0) {
@@ -78,15 +78,15 @@ namespace stacktrace {
     public:
         /** Stack-trace consructor.
          \param num_discard - number of stack entries to discard at the top. */
-        call_stack(const size_t num_discard = 0);
+        explicit call_stack(size_t num_discard = 0);
 
-        virtual ~call_stack() throw();
+        virtual ~call_stack() noexcept;
 
         /** Serializes the entire call-stack into a text string. */
-        std::string to_string() const {
+        [[nodiscard]] std::string to_string() const {
             std::ostringstream os;
-            for (int i = 0; i < stack.size(); i++)
-                os << stack[i].toString() << std::endl;
+            for (const auto & i : stack)
+                os << i.toString() << std::endl;
             return os.str();
         }
 

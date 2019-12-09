@@ -22,6 +22,17 @@
 #define _random_h
 
 #include <string>
+#include <random>
+#include <memory>
+struct __RNG__ {
+    std::random_device rngDev;
+    std::mt19937_64 rngEng;
+    std::uniform_real_distribution<double> dist;
+    __RNG__() noexcept;
+    double operator()();
+};
+
+static __RNG__ __rng;
 
 /**
  * Returns <code>true</code> with 50% probability.
@@ -41,7 +52,7 @@ bool randomChance(double p);
  * Returns a random RGB color as an integer.
  * See also: gwindow.h convertRGBToColor()
  */
-int randomColor();
+unsigned int randomColor();
 
 /**
  * Returns a random RGB color as an integer, with the value of the RGB components
@@ -49,7 +60,7 @@ int randomColor();
  * @throw ErrorException if min or max is not in [0..255] or min > max
  * See also: gwindow.h convertRGBToColor()
  */
-int randomColor(int minRGB, int maxRGB);
+unsigned randomColor(unsigned minRGB, unsigned maxRGB);
 
 /**
  * Returns a random RGB color as a hex string like "#ff00ff" for magenta.
@@ -63,7 +74,7 @@ std::string randomColorString();
  * @throw ErrorException if min or max is not in [0..255] or min > max
  * See also: gwindow.h convertColorToRGB()
  */
-std::string randomColorString(int minRGB, int maxRGB);
+std::string randomColorString(unsigned minRGB, unsigned maxRGB);
 
 /**
  * Returns a random integer in the range <code>low</code> to

@@ -23,9 +23,9 @@
 #include <string>
 
 namespace diff {
-    const std::string NO_DIFFS_MESSAGE = "No differences found";
+    constexpr const char* NO_DIFFS_MESSAGE = "No differences found";
 
-    enum DiffFlags {
+    enum DiffFlags : unsigned {
         IGNORE_NONE = 0x0,
         IGNORE_LEADING = 0x1,
         IGNORE_TRAILING = 0x2,
@@ -44,9 +44,9 @@ namespace diff {
     const int DIFF_STRICT_FLAGS = IGNORE_TRAILING;
     const int DIFF_DEFAULT_FLAGS = IGNORE_CASE | IGNORE_TRAILING | IGNORE_WHITESPACE | IGNORE_PUNCTUATION;
 
-    std::string diff(std::string s1, std::string s2, int flags = DIFF_DEFAULT_FLAGS);
+    std::string diff(std::string s1, std::string s2, unsigned flags = DIFF_DEFAULT_FLAGS);
 
-    bool diffPass(const std::string &s1, const std::string &s2, int flags = DIFF_DEFAULT_FLAGS);
+    bool diffPass(const std::string &s1, const std::string &s2, unsigned flags = DIFF_DEFAULT_FLAGS);
 
     bool isDiffMatch(const std::string &diffs);
 } // namespace diff

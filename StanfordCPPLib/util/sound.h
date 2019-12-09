@@ -15,6 +15,7 @@
 
 #include <string>
 #include <QMediaPlayer>
+#include <memory>
 
 /**
  * This class encapsulates a sound file.  The sound file is specified in the
@@ -79,7 +80,7 @@ public:
      * Creates a <code>Sound</code> object by reading in the contents of the
      * specified file or URL.
      */
-    Sound(std::string filename);
+    explicit Sound(std::string filename);
 
     /**
      * Frees the memory associated with the sound.
@@ -93,7 +94,7 @@ public:
     void play();
 
 private:
-    static QMediaPlayer *_qmediaPlayer;
+    static std::unique_ptr<QMediaPlayer> _qmediaPlayer;
 
     static void initialize();
 

@@ -45,25 +45,25 @@ public:
      * Creates a <code>Point</code> object with the same x and y coordinates
      * as the given other point.
      */
-    Point(const GPoint &point);
+    explicit Point(const GPoint &point);
 
 #endif // SPL_HEADLESS_MODE
 
     /**
      * Returns the <i>x</i>-coordinate of the point.
      */
-    int getX() const;
+    [[nodiscard]] int getX() const;
 
     /**
      * Returns the <i>y</i>-coordinate of the point.
      */
-    int getY() const;
+    [[nodiscard]] int getY() const;
 
     /**
      * Returns a string representation of the <code>Point</code> in the form
      * <code>"(x, y)"</code>.
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /**
      * Returns <code>true</code> if <code>p1</code> and <code>p2</code>

@@ -83,6 +83,4 @@ bool OS::isWindows() {
 }
 #endif // QT_VERSION
 
-OS::OS() {
-    // empty
-}
+OS::OS() = default;
