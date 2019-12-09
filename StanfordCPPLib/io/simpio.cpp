@@ -219,7 +219,7 @@ bool getYesOrNo(const std::string &prompt,
             line = defaultValue;
         }
         if ((int) line.length() > 0) {
-            char first = tolower(line[0]);
+            unsigned char first = tolower(line[0]);
             if (first == 'y') {
                 value = true;
                 break;

@@ -15,11 +15,14 @@
 #include <macro.h>
 #include <util/random.h>
 #include <util/diff.h>
+#include <util/timer.h>
+
 using namespace std;
 
 int start() {
+    Timer timer(true);
     cout << "This sample project helps you check and make sure that" << endl;
-    cout << "you have successfully installed Qt Creator, C++ compiler/libs," << endl;
+    cout << "you have successfully installed Qt5, C++ compiler/libs," << endl;
     cout << "and that the Stanford C++ libraries work on your machine." << endl;
     cout << endl;
     cout << "If this project is working properly on your computer," << endl;
@@ -64,6 +67,8 @@ int start() {
     string a = "1234\n 1233";
     string b = "1234\n 1233";
     std::cout << diff::diff(a, b) << std::endl;
+    std::cout << "process ends in " << timer.stop() << " ms" << std::endl;
+
     return 0;
 }
 
