@@ -48,7 +48,7 @@ constexpr size_t array_length(T (&)[Size]) {
 }
 
 // macro to get the length of a stack-allocated array
-#define ARRAY_LENGTH(a) array_length
+#define ARRAY_LENGTH(a) array_length((a))
 
 // begin global namespace string read/writing functions from strlib.h
 

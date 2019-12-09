@@ -10,7 +10,7 @@
 #include "basicgraph.h"
 
 int hashCode(const BasicGraph &graph) {
-    int code = hashSeed();
+    unsigned code = hashSeed();
     for (Vertex *v : graph) {
         code = hashMultiplier() * code + hashCode(v->name);
     }
@@ -18,5 +18,5 @@ int hashCode(const BasicGraph &graph) {
         code = hashMultiplier() * code + hashCode(e->start->name);
         code = hashMultiplier() * code + hashCode(e->finish->name);
     }
-    return (code & hashMask());
+    return (int) (code & (unsigned)hashMask());
 }

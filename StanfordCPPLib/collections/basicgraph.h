@@ -186,7 +186,7 @@ public:
      * Returns a string representation of this vertex for debugging, such as
      * "Vertex{name=r13c42, cost=11, visited=true, previous=r12c41, neighbors={r12c41, r12c43}}".
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /**
      * Copy assignment operator.
