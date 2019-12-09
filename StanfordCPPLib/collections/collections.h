@@ -42,8 +42,13 @@
 #include <collections/hashcode.h>
 #include <util/random.h>
 
+template <typename T, size_t Size>
+constexpr size_t array_length(T (&)[Size]) {
+    return Size;
+}
+
 // macro to get the length of a stack-allocated array
-#define ARRAY_LENGTH(a) (sizeof(a) / sizeof((a)[0]))
+#define ARRAY_LENGTH(a) array_length
 
 // begin global namespace string read/writing functions from strlib.h
 
