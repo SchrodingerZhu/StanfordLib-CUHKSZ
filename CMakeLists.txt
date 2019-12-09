@@ -28,3 +28,8 @@ include_directories(
 target_link_libraries(stanford Qt5::Widgets Qt5::Network Qt5::Multimedia)
 add_executable(hello src/hello.h src/hello.cpp)
 target_link_libraries(hello stanford)
+
+
+# copy resources
+file(GLOB resources res/*)
+file(COPY ${resources} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
