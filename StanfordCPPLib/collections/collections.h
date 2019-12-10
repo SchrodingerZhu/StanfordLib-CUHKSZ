@@ -42,13 +42,22 @@
 #include <collections/hashcode.h>
 #include <util/random.h>
 
+#ifdef __cpp_consteval
 template <typename T, size_t Size>
-constexpr size_t array_length(T (&)[Size]) {
+consteval size_t __array_length(T (&)[Size]) {
     return Size;
 }
+#elif defined(__cpp_constexpr)
+template <typename T, size_t Size>
+constexpr size_t __array_length(T (&)[Size]) {
+    return Size;
+}
+#else
+#define __array_length(a) (sizeof(a)/sizeof(a[0]))
+#endif
 
 // macro to get the length of a stack-allocated array
-#define ARRAY_LENGTH(a) array_length((a))
+#define ARRAY_LENGTH(a) __array_length((a))
 
 // begin global namespace string read/writing functions from strlib.h
 
