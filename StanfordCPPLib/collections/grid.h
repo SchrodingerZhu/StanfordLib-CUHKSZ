@@ -190,7 +190,7 @@ public:
      * ---------------------------------
      * Returns the grid's height, that is, the number of rows in the grid.
      */
-    int height() const;
+    [[nodiscard]] int height() const;
 
     /*
      * Method: inBounds
@@ -199,9 +199,9 @@ public:
      * Returns <code>true</code> if the specified row and column position
      * is inside the bounds of the grid.
      */
-    bool inBounds(int row, int col) const;
+    [[nodiscard]] bool inBounds(int row, int col) const;
 
-    bool inBounds(const GridLocation &loc) const;
+    [[nodiscard]] bool inBounds(const GridLocation &loc) const;
 
     /*
      * Method: isEmpty
@@ -209,7 +209,7 @@ public:
      * ---------------------------------------
      * Returns <code>true</code> if the grid has 0 rows and/or 0 columns.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /*
      * Method: locations
@@ -222,7 +222,7 @@ public:
      * but if you pass the rowMajor parameter of false, the locations will be
      * returned in column-major order instead.
      */
-    GridLocationRange locations(bool rowMajor = true) const;
+    [[nodiscard]] GridLocationRange locations(bool rowMajor = true) const;
 
     /*
      * Method: mapAll
@@ -253,7 +253,7 @@ public:
      * Returns the number of columns in the grid.
      * This is equal to the grid's width.
      */
-    int numCols() const;
+    [[nodiscard]] int numCols() const;
 
     /*
      * Method: numRows
@@ -262,7 +262,7 @@ public:
      * Returns the number of rows in the grid.
      * This is equal to the grid's height.
      */
-    int numRows() const;
+    [[nodiscard]] int numRows() const;
 
     /*
      * Method: resize
@@ -274,7 +274,7 @@ public:
      * If 'retain' is not passed or is false, any previous grid contents
      * are discarded.
      */
-    void resize(int _rowCount, int _columnCount, bool retain = false);
+    void resize(int numRows, int numCols, bool retain = false);
 
     /*
      * Method: set
@@ -296,7 +296,7 @@ public:
      * Returns the total number of elements in the grid, which is equal to the
      * number of rows times the number of columns.
      */
-    int size() const;
+    [[nodiscard]] int size() const;
 
     /*
      * Method: toString
@@ -306,7 +306,7 @@ public:
      * The string returned is a 1-dimensional representation such as:
      * "{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}"
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /*
      * Method: toString2D
@@ -318,11 +318,11 @@ public:
      *   {4, 5, 6},\n
      *   {7, 8, 9}}"
      */
-    std::string toString2D(
-            std::string rowStart = "{",
-            std::string rowEnd = "}",
-            std::string colSeparator = ", ",
-            std::string rowSeparator = ",\n ") const;
+    [[nodiscard]] std::string toString2D(
+            const std::string& rowStart = "{",
+            const std::string& rowEnd = "}",
+            const std::string& colSeparator = ", ",
+            const std::string& rowSeparator = ",\n ") const;
 
     /*
      * Method: width
@@ -330,7 +330,7 @@ public:
      * --------------------------------
      * Returns the grid's width, that is, the number of columns in the grid.
      */
-    int width() const;
+    [[nodiscard]] int width() const;
 
 
     /*
@@ -345,7 +345,7 @@ public:
      */
     GridRow operator[](int row);
 
-    const GridRowConst operator[](int row) const;
+    GridRowConst operator[](int row) const;
 
     ValueType &operator[](const GridLocation &loc);
 
@@ -432,7 +432,7 @@ private:
      */
     void checkIndexes(int row, int col,
                       int rowMax, int colMax,
-                      std::string prefix) const;
+                      const std::string& prefix) const;
 
     int gridCompare(const Grid &grid2) const;
 
@@ -487,7 +487,7 @@ public:
             return _gp->_elements[(_row * _gp->_columnCount) + col];
         }
 
-        int size() const {
+        [[nodiscard]] int size() const {
             return _gp->width();
         }
 
@@ -511,12 +511,12 @@ public:
             /* Empty */
         }
 
-        const ValueType operator[](int col) const {
+        ValueType operator[](int col) const {
             _gp->checkIndexes(_row, col, _gp->_rowCount - 1, _gp->_columnCount - 1, "operator [][]");
             return _gp->_elements[(_row * _gp->_columnCount) + col];
         }
 
-        int size() const {
+        [[nodiscard]] int size() const {
             return _gp->width();
         }
 
@@ -768,8 +768,8 @@ std::string Grid<ValueType>::toString() const {
 
 template<typename ValueType>
 std::string Grid<ValueType>::toString2D(
-        std::string rowStart, std::string rowEnd,
-        std::string colSeparator, std::string rowSeparator) const {
+        const std::string& rowStart, const std::string& rowEnd,
+        const std::string& colSeparator, const std::string& rowSeparator) const {
     std::ostringstream os;
     os << rowStart;
     int nr = numRows();
@@ -808,7 +808,7 @@ ValueType &Grid<ValueType>::operator[](const GridLocation &loc) {
 }
 
 template<typename ValueType>
-const typename Grid<ValueType>::GridRowConst
+typename Grid<ValueType>::GridRowConst
 Grid<ValueType>::operator[](int row) const {
     return GridRowConst(const_cast<Grid *>(this), row);
 }
@@ -852,7 +852,7 @@ bool Grid<ValueType>::operator>=(const Grid &grid2) const {
 template<typename ValueType>
 void Grid<ValueType>::checkIndexes(int row, int col,
                                    int rowMax, int colMax,
-                                   std::string prefix) const {
+                                   const std::string& prefix) const {
     const int rowMin = 0;
     const int colMin = 0;
     if (row < rowMin || row > rowMax || col < colMin || col > colMax) {

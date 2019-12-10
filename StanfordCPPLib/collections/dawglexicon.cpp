@@ -171,9 +171,7 @@ void DawgLexicon::addWordsFromFile(const std::string &filename) {
 }
 
 void DawgLexicon::clear() {
-    if (_edges) {
-        delete[] _edges;
-    }
+    delete[] _edges;
     _edges = _start = nullptr;
     _edgeCount = _dawgWordsCount = 0;
     _otherWords.clear();
@@ -216,7 +214,7 @@ bool DawgLexicon::containsPrefix(const std::string &prefix) const {
     if (traceToLastEdge(copy)) {
         return true;
     }
-    for (std::string word : _otherWords) {
+    for (const std::string &word : _otherWords) {
         if (startsWith(word, copy)) {
             return true;
         }
@@ -273,13 +271,13 @@ bool DawgLexicon::isSupersetOf(std::initializer_list<std::string> list) const {
 }
 
 void DawgLexicon::mapAll(void (*fn)(std::string)) const {
-    for (std::string word : *this) {
+    for (const std::string &word : *this) {
         fn(word);
     }
 }
 
 void DawgLexicon::mapAll(void (*fn)(const std::string &)) const {
-    for (std::string word : *this) {
+    for (const std::string &word : *this) {
         fn(word);
     }
 }
@@ -365,7 +363,7 @@ int DawgLexicon::countDawgWords(Edge *ep) const {
     int count = 0;
     while (true) {
         if (ep->accept) count++;
-        if (ep->children != 0) {
+        if (ep->children != 0ul) {
             count += countDawgWords(&_edges[ep->children]);
         }
         if (ep->lastEdge) break;
@@ -433,7 +431,7 @@ void DawgLexicon::readBinaryFile(std::istream &input) {
         || startIndex < 0 || numBytes < 0) {
         error("DawgLexicon::addWordsFromFile: Improperly formed lexicon file");
     }
-    _edgeCount = numBytes / sizeof(Edge);
+    _edgeCount = static_cast<int>(numBytes / static_cast<long>(sizeof(Edge)));
     _edges = new Edge[_edgeCount];
     _start = &_edges[startIndex];
     input.read((char *) _edges, numBytes);
@@ -443,7 +441,7 @@ void DawgLexicon::readBinaryFile(std::istream &input) {
 
 #if defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN
     // uint32_t* cur = (uint32_t*) edges;
-    uint32_t *cur = reinterpret_cast<uint32_t *>(_edges);
+    auto *cur = reinterpret_cast<uint32_t *>(_edges);
     for (int i = 0; i < _edgeCount; i++, cur++) {
         *cur = my_ntohl(*cur);
     }
@@ -495,9 +493,9 @@ DawgLexicon::Edge *DawgLexicon::traceToLastEdge(const std::string &s) const {
 
 DawgLexicon &DawgLexicon::operator=(const DawgLexicon &src) {
     if (this != &src) {
-        if (_edges) {
-            delete[] _edges;
-        }
+
+        delete[] _edges;
+
         deepCopy(src);
     }
     return *this;
@@ -514,7 +512,7 @@ void DawgLexicon::iterator::advanceToNextWordInSet() {
 
 void DawgLexicon::iterator::advanceToNextEdge() {
     Edge *ep = edgePtr;
-    if (ep->children == 0) {
+    if (ep->children == 0ul) {
         while (ep && ep->lastEdge) {
             if (stack.isEmpty()) {
                 edgePtr = nullptr;
@@ -560,9 +558,9 @@ int hashCode(const DawgLexicon &lex) {
  * Swaps a 4-byte long from big to little endian byte order
  */
 static uint32_t my_ntohl(uint32_t arg) {
-    uint32_t result = ((arg & 0xff000000) >> 24) |
-                      ((arg & 0x00ff0000) >> 8) |
-                      ((arg & 0x0000ff00) << 8) |
-                      ((arg & 0x000000ff) << 24);
+    uint32_t result = ((arg & 0xff000000u) >> 24u) |
+                      ((arg & 0x00ff0000u) >> 8u) |
+                      ((arg & 0x0000ff00u) << 8u) |
+                      ((arg & 0x000000ffu) << 24u);
     return result;
 }

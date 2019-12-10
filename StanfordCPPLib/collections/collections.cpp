@@ -296,7 +296,7 @@ std::ostream &writeQuotedString(std::ostream &os, const std::string &str, bool f
                     os << ch;
                 } else {
                     std::ostringstream oss;
-                    oss << std::oct << std::setw(3) << std::setfill('0') << (int(ch) & 0xFF);
+                    oss << std::oct << std::setw(3) << std::setfill('0') << (unsigned(ch) & 0xFFu);
                     os << "\\" << oss.str();
                 }
         }

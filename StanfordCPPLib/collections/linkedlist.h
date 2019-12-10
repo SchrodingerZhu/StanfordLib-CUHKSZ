@@ -151,7 +151,7 @@ public:
      * values as the given other list.
      * Identical in behavior to the == operator.
      */
-    bool equals(const LinkedList<ValueType> &l2) const;
+    bool equals(const LinkedList<ValueType> &list2) const;
 
     /*
      * Method: front
@@ -203,7 +203,7 @@ public:
      * ------------------------------
      * Returns <code>true</code> if this LinkedList contains no elements.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /*
      * Method: lastIndexOf
@@ -334,7 +334,7 @@ public:
      * --------------------------------
      * Returns the number of elements in this LinkedList.
      */
-    int size() const;
+    [[nodiscard]] int size() const;
 
     /*
      * Method: sort
@@ -363,7 +363,7 @@ public:
      * ------------------------------------
      * Converts the LinkedList to a printable string representation.
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /*
      * Operator: []
@@ -410,7 +410,7 @@ public:
      *</pre>
      * You can also pass an initializer list such as {1, 2, 3}.
      */
-    LinkedList &operator+=(const LinkedList &l2);
+    LinkedList &operator+=(const LinkedList &list2);
 
     LinkedList &operator+=(std::initializer_list<ValueType> list);
 

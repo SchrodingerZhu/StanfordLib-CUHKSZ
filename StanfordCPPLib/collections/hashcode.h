@@ -61,9 +61,9 @@ int hashCode(void *key);
  * Constants that are used to help implement these functions
  * (see hashcode.h for example usage)
  */
-int hashSeed();         // Starting point for first cycle
-int hashMultiplier();   // Multiplier for each cycle
-int hashMask();         // All 1 bits except the sign
+unsigned int hashSeed();         // Starting point for first cycle
+unsigned int hashMultiplier();   // Multiplier for each cycle
+unsigned int hashMask();         // All 1 bits except the sign
 
 /*
  * Computes a composite hash code from a list of multiple values.

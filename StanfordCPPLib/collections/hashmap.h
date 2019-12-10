@@ -199,7 +199,7 @@ public:
      * -----------------------------
      * Returns <code>true</code> if this map contains no entries.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /*
      * Method: keys
@@ -281,7 +281,7 @@ public:
      * ---------------------------------
      * Returns the number of entries in this map.
      */
-    int size() const;
+    [[nodiscard]] int size() const;
 
     /*
      * Method: toString
@@ -289,7 +289,7 @@ public:
      * -----------------------------------
      * Converts the map to a printable string representation.
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /*
      * Method: values
@@ -530,7 +530,7 @@ void HashMap<KeyType, ValueType>::clear() {
 
 template<typename KeyType, typename ValueType>
 bool HashMap<KeyType, ValueType>::containsKey(const KeyType &key) const {
-    return !!_elements.count(key);
+    return _elements.count(key) != 0;
 }
 
 template<typename KeyType, typename ValueType>

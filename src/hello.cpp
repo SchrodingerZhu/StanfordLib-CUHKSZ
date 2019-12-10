@@ -1,5 +1,5 @@
 /*
- * CS 3002 Sample Project
+ * CSC 3002 Sample Project
  * last updated: 2019/12/08 by Yifan ZHU
  *
  * This project helps test that your cmake + QT5 system is installed correctly.
@@ -33,7 +33,7 @@ int start() {
     cout << "installation instructions linked from the class web site." << endl;
     cout << endl;
 
-    GWindow *window = new GWindow(400, 250);
+    auto *window = new GWindow(400, 250);
     window->setTitle("Sample Project");
     window->setLocation(50, 50);
     window->setExitOnClose(true);

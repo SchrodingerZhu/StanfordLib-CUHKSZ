@@ -42,8 +42,7 @@
 #include "hashmap.h"
 
 /* Traits type for the HashSet, which wraps an underlying HashMap. */
-namespace stanfordcpplib {
-    namespace collections {
+namespace stanfordcpplib::collections {
         template<typename T>
         struct HashSetTraits {
             using ValueType = T;
@@ -97,7 +96,6 @@ namespace stanfordcpplib {
             }
         };
     }
-}
 
 /*
  * A set of elements stored in no particular order. Elements can only be stored here

@@ -141,28 +141,28 @@ public:
      * lexicon.  In the <code>DawgLexicon</code> class, the case of letters is
      * ignored, so "Zoo" is the same as "ZOO" or "zoo".
      */
-    bool contains(const std::string &word) const;
+    [[nodiscard]] bool contains(const std::string &word) const;
 
     /**
      * Returns <code>true</code> if every value from the given other lexicon
      * is also found in this lexicon.
      * Equivalent in behavior to isSupersetOf.
      */
-    bool containsAll(const DawgLexicon &set2) const;
+    [[nodiscard]] bool containsAll(const DawgLexicon &set2) const;
 
     /**
      * Returns <code>true</code> if every value from the given list
      * is also found in this lexicon.
      * Equivalent in behavior to isSupersetOf.
      */
-    bool containsAll(std::initializer_list<std::string> list) const;
+    [[nodiscard]] bool containsAll(std::initializer_list<std::string> list) const;
 
     /**
      * Returns true if any words in the lexicon begin with <code>prefix</code>.
      * Like <code>containsWord</code>, this method ignores the case of letters
      * so that "MO" is a prefix of "monkey" or "Monday".
      */
-    bool containsPrefix(const std::string &prefix) const;
+    [[nodiscard]] bool containsPrefix(const std::string &prefix) const;
 
     /**
      * Compares two lexicons for equality.
@@ -170,13 +170,13 @@ public:
      * values as the given other lexicon.
      * Identical in behavior to the == operator.
      */
-    bool equals(const DawgLexicon &lex2) const;
+    [[nodiscard]] bool equals(const DawgLexicon &lex2) const;
 
     /**
      * Returns the first element in alphabetical order from this lexicon (without removing it).
      * This method signals an error if lexicon is empty.
      */
-    std::string front() const;
+    [[nodiscard]] std::string front() const;
 
     /**
      * Adds an element to this lexicon, if it was not already there.  This
@@ -187,33 +187,33 @@ public:
     /**
      * Returns <code>true</code> if the lexicon contains no words.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /**
      * Returns <code>true</code> if every word of this lexicon is contained in
      * the given other lexicon.
      */
-    bool isSubsetOf(const DawgLexicon &lex2) const;
+    [[nodiscard]] bool isSubsetOf(const DawgLexicon &lex2) const;
 
     /**
      * Returns <code>true</code> if every word of this lexicon is contained in
      * the given list.
      */
-    bool isSubsetOf(std::initializer_list<std::string> list) const;
+    [[nodiscard]] bool isSubsetOf(std::initializer_list<std::string> list) const;
 
     /**
      * Returns <code>true</code> if every word of this lexicon is contained in
      * the given other lexicon.
      * Equivalent in behavior to containsAll.
      */
-    bool isSupersetOf(const DawgLexicon &lex2) const;
+    [[nodiscard]] bool isSupersetOf(const DawgLexicon &lex2) const;
 
     /**
      * Returns <code>true</code> if every word of this lexicon is contained in
      * the given list.
      * Equivalent in behavior to containsAll.
      */
-    bool isSupersetOf(std::initializer_list<std::string> list) const;
+    [[nodiscard]] bool isSupersetOf(std::initializer_list<std::string> list) const;
 
     /**
      * Calls the specified function on each word in the lexicon.
@@ -238,7 +238,7 @@ public:
     /**
      * Returns the number of words contained in the lexicon.
      */
-    int size() const;
+    [[nodiscard]] int size() const;
 
     /**
      * Converts the lexicon to a printable string representation such as
@@ -246,7 +246,7 @@ public:
      * Note that this can be an expensive operation if the lexicon contains
      * a large number of words.
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /**
      * Returns true if the two lexicons have the same elements.
@@ -445,7 +445,7 @@ public:
             if (!edgePtr) {
                 advanceToNextWordInSet();
             } else {
-                if (currentSetWord == "" || currentDawgPrefix < currentSetWord) {
+                if (currentSetWord.empty() || currentDawgPrefix < currentSetWord) {
                     advanceToNextWordInDawg();
                 } else {
                     advanceToNextWordInSet();
@@ -455,7 +455,7 @@ public:
             return *this;
         }
 
-        iterator operator++(int) {
+        const iterator operator++(int) {
             iterator copy(*this);
             operator++();
             return copy;
@@ -473,7 +473,7 @@ public:
             if (!edgePtr) {
                 return currentSetWord;
             }
-            if (currentSetWord == "" || currentDawgPrefix < currentSetWord) {
+            if (currentSetWord.empty() || currentDawgPrefix < currentSetWord) {
                 return currentDawgPrefix + lp->ordToChar(edgePtr->letter);
             } else {
                 return currentSetWord;
@@ -484,7 +484,7 @@ public:
             if (!edgePtr) {
                 return &currentSetWord;
             }
-            if (currentSetWord == "" || currentDawgPrefix < currentSetWord) {
+            if (currentSetWord.empty() || currentDawgPrefix < currentSetWord) {
                 tmpWord = currentDawgPrefix + lp->ordToChar(edgePtr->letter);
                 return &tmpWord;
             } else {
@@ -496,21 +496,21 @@ public:
     /**
      * Returns an iterator positioned at the first word in the lexicon.
      */
-    iterator begin() const {
+    [[nodiscard]] iterator begin() const {
         return iterator(this, /* end */ false);
     }
 
     /**
      * Returns an iterator positioned at the last word in the lexicon.
      */
-    iterator end() const {
+    [[nodiscard]] iterator end() const {
         return iterator(this, /* end */ true);
     }
 
 private:
     Edge *findEdgeForChar(Edge *children, char ch) const;
 
-    Edge *traceToLastEdge(const std::string &s) const;
+    [[nodiscard]] Edge *traceToLastEdge(const std::string &s) const;
 
     void readBinaryFile(std::istream &input);
 
@@ -520,11 +520,11 @@ private:
 
     int countDawgWords(Edge *_start) const;
 
-    unsigned int charToOrd(char ch) const {
+    [[nodiscard]] static unsigned int charToOrd(char ch) {
         return ((unsigned int) (tolower(ch) - 'a' + 1));
     }
 
-    char ordToChar(unsigned int ord) const {
+    static char ordToChar(unsigned int ord) {
         return ((char) (ord - 1 + 'a'));
     }
 };

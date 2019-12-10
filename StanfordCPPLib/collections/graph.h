@@ -219,7 +219,7 @@ public:
      * If either node is not contained in this graph, returns false.
      * @bigoh O(log E)
      */
-    bool containsArc(const std::string &node1, const std::string &node2) const;
+    [[nodiscard]] bool containsArc(const std::string &node1, const std::string &node2) const;
 
     /**
      * Returns true if the given arc exists in this graph.
@@ -233,7 +233,7 @@ public:
      * Returns true if there exists a node in this graph with the given name.
      * @bigoh O(log V)
      */
-    bool containsNode(const std::string &name) const;
+    [[nodiscard]] bool containsNode(const std::string &name) const;
 
     /**
      * Returns true if the given node is part of this graph.
@@ -306,7 +306,7 @@ public:
      * in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    const Set<ArcType *> getInverseArcSet(NodeType *node) const;
+    Set<ArcType *> getInverseArcSet(NodeType *node) const;
 
     /**
      * Returns the set of outbound arcs to the given node from other nodes.
@@ -316,7 +316,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    const Set<ArcType *> getInverseArcSet(const std::string &name) const;
+    Set<ArcType *> getInverseArcSet(const std::string &name) const;
 
     /**
      * Returns the set of strings of names of nodes that are neighbors of the
@@ -339,7 +339,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(E)
      */
-    Set<std::string> getInverseNeighborNames(const std::string &node) const;
+    [[nodiscard]] Set<std::string> getInverseNeighborNames(const std::string &name) const;
 
     /**
      * Returns the set of nodes that are neighbors of the specified node.
@@ -381,7 +381,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(log V)
      */
-    Set<std::string> getNeighborNames(const std::string &node) const;
+    [[nodiscard]] Set<std::string> getNeighborNames(const std::string &name) const;
 
     /**
      * Returns the set of nodes that are neighbors of the specified node.
@@ -402,7 +402,7 @@ public:
      * If the given node is not found in this graph, returns an empty set.
      * @bigoh O(log V)
      */
-    Set<NodeType *> getNeighbors(const std::string &node) const;
+    Set<NodeType *> getNeighbors(const std::string &name) const;
 
     /**
      * Looks up a node in the name table attached to the graph and
@@ -418,7 +418,7 @@ public:
      * of pointers to nodes.
      * @bigoh O(V log V)
      */
-    Set<std::string> getNodeNames() const;
+    [[nodiscard]] Set<std::string> getNodeNames() const;
 
     /**
      * Returns the set of all nodes in the graph.
@@ -443,14 +443,14 @@ public:
      * If either node is not contained in this graph, returns false.
      * @bigoh O(log V)
      */
-    bool isConnected(const std::string &s1, const std::string &s2) const;
+    [[nodiscard]] bool isConnected(const std::string &s1, const std::string &s2) const;
 
     /**
      * Returns true if the graph contains an edge from v1 to v2.
      * If either of the vertexes supplied is not found in the graph, returns false.
      * @bigoh O(log V)
      */
-    bool isNeighbor(const std::string &node1, const std::string &node2) const;
+    [[nodiscard]] bool isNeighbor(const std::string &node1, const std::string &node2) const;
 
     /**
      * Returns true if the graph contains an edge from v1 to v2.
@@ -463,14 +463,14 @@ public:
      * Returns <code>true</code> if the graph contains no vertexes.
      * @bigoh O(1)
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /**
      * Returns the number of nodes in the graph.
      * Equivalent to size().
      * @bigoh O(1)
      */
-    int nodeCount() const;
+    [[nodiscard]] int nodeCount() const;
 
     /**
      * Removes an arc from v1 to v2 in the graph, specified by the names of its endpoints.
@@ -579,14 +579,14 @@ public:
      * Equivalent to nodeCount.
      * @bigoh O(1)
      */
-    int size() const;
+    [[nodiscard]] int size() const;
 
     /**
      * Converts the graph to a printable string representation.
      * @return a string such as <code>"{A, B, C, D, A - B, B - D, C - D}"</code>.
      * @bigoh O(V + E)
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /**
      * Writes the data for the arc to the output stream.
@@ -795,9 +795,7 @@ private:
  */
 
 template<typename NodeType, typename ArcType>
-Graph<NodeType, ArcType>::Graph() {
-    // empty
-}
+Graph<NodeType, ArcType>::Graph() = default;
 
 template<typename NodeType, typename ArcType>
 Graph<NodeType, ArcType>::Graph(const Graph &src) {
@@ -1072,7 +1070,7 @@ void Graph<NodeType, ArcType>::verifyNotNull(void *p, const std::string &member)
 }
 
 template<typename NodeType, typename ArcType>
-const Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(NodeType *node) const {
+Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(NodeType *node) const {
     Set<ArcType *> set;
     if (isExistingNode(node)) {
         for (ArcType *arc : getArcSet()) {
@@ -1085,7 +1083,7 @@ const Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(NodeType *node) 
 }
 
 template<typename NodeType, typename ArcType>
-const Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(const std::string &nodeName) const {
+Set<ArcType *> Graph<NodeType, ArcType>::getInverseArcSet(const std::string &nodeName) const {
     return getInverseArcSet(getNode(nodeName));
 }
 
@@ -1352,7 +1350,7 @@ bool Graph<NodeType, ArcType>::scanGraphEntry(TokenScanner &scanner) {
 #endif
         return false;
     }
-    ArcType *forward = new ArcType();
+    auto *forward = new ArcType();
     forward->start = n1;
     forward->finish = n2;
     addArc(forward);
@@ -1374,7 +1372,7 @@ NodeType *Graph<NodeType, ArcType>::scanNode(TokenScanner &scanner) {
         case TokenScanner::WORD:
             break;
         case TokenScanner::STRING:
-            token = scanner.getStringValue(token);
+            token = TokenScanner::getStringValue(token);
             break;
         default:
             scanner.saveToken(token);
@@ -1434,13 +1432,13 @@ Graph<NodeType, ArcType>::operator=(const Graph &src) {
 template<typename NodeType, typename ArcType>
 void Graph<NodeType, ArcType>::deepCopy(const Graph &src) {
     for (NodeType *oldNode : src._nodes) {
-        NodeType *newNode = new NodeType();
+        auto *newNode = new NodeType();
         *newNode = *oldNode;
         newNode->arcs.clear();
         addNode(newNode);
     }
     for (ArcType *oldArc : src._arcs) {
-        ArcType *newArc = new ArcType();
+        auto *newArc = new ArcType();
         *newArc = *oldArc;
         newArc->start = getExistingNode(oldArc->start->name, "deepCopy");
         newArc->finish = getExistingNode(oldArc->finish->name, "deepCopy");
@@ -1650,7 +1648,7 @@ std::istream &operator>>(std::istream &is, Graph<NodeType, ArcType> &g) {
  */
 template<typename NodeType, typename ArcType>
 int hashCode(const Graph<NodeType, ArcType> &graph) {
-    int code = hashSeed();
+    unsigned code = hashSeed();
     for (NodeType *node : graph) {
         code = hashMultiplier() * code + hashCode(node->name);
     }
@@ -1658,7 +1656,7 @@ int hashCode(const Graph<NodeType, ArcType> &graph) {
         code = hashMultiplier() * code + hashCode(arc->start->name);
         code = hashMultiplier() * code + hashCode(arc->finish->name);
     }
-    return (code & hashMask());
+    return int(code & hashMask());
 }
 
 #endif // _graph_h

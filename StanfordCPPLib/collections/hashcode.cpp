@@ -18,19 +18,19 @@
 #include <cstdint>       // For uintptr_t
 #include <cstring>       // For strlen
 
-static const int HASH_SEED = 5381;               // Starting point for first cycle
-static const int HASH_MULTIPLIER = 33;           // Multiplier for each cycle
-static const int HASH_MASK = unsigned(-1) >> 1;  // All 1 bits except the sign
+static const unsigned int HASH_SEED = 5381;               // Starting point for first cycle
+static const unsigned int HASH_MULTIPLIER = 33;           // Multiplier for each cycle
+static const unsigned int HASH_MASK = std::numeric_limits<unsigned>::max() >> 1u;  // All 1 bits except the sign
 
-int hashSeed() {
+unsigned hashSeed() {
     return HASH_SEED;
 }
 
-int hashMultiplier() {
+unsigned hashMultiplier() {
     return HASH_MULTIPLIER;
 }
 
-int hashMask() {
+unsigned hashMask() {
     return HASH_MASK;
 }
 
@@ -40,7 +40,7 @@ int hashMask() {
  * Hash code for integers masks off the sign bit, guaranteeing a nonnegative value.
  */
 int hashCode(int key) {
-    return key & HASH_MASK;
+    return int(unsigned(key) & HASH_MASK);
 }
 
 /* 

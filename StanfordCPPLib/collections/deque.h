@@ -149,7 +149,7 @@ public:
      * -------------------------------
      * Returns <code>true</code> if the deque contains no elements.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /*
      * Method: peek
@@ -186,7 +186,7 @@ public:
      * ----------------------------
      * Returns the number of values in the deque.
      */
-    int size() const;
+    [[nodiscard]] int size() const;
 
     /*
      * Returns an STL deque object with the same elements as this Deque.
@@ -199,7 +199,7 @@ public:
      * -------------------------------------
      * Converts the deque to a printable string representation.
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /*
      * Operators: ==, !=, <, >, <=, >=

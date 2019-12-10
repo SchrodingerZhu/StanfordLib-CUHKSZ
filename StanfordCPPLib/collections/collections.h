@@ -166,8 +166,7 @@ inline bool readGenericValue(std::istream &is, std::string &value) {
 }
 
 // end of global namespace string read/writing functions from strlib.h
-namespace stanfordcpplib {
-    namespace collections {
+namespace stanfordcpplib::collections {
 
 #ifdef SPL_THROW_ON_INVALID_ITERATOR
         template <typename CollectionType, typename IteratorType>
@@ -421,7 +420,7 @@ namespace stanfordcpplib {
  */
         template<typename IteratorType>
         int hashCodeIterable(IteratorType begin, IteratorType end, bool orderMatters = true) {
-            int code = hashSeed();
+        unsigned code = hashSeed();
             while (begin != end) {
                 if (orderMatters) {
                     code *= hashMultiplier();
@@ -447,7 +446,7 @@ namespace stanfordcpplib {
  */
         template<typename MapType>
         int hashCodeMap(const MapType &map, bool orderMatters = true) {
-            int code = hashSeed();
+            unsigned code = hashSeed();
             auto begin = map.begin();
             auto end = map.end();
             while (begin != end) {
@@ -503,7 +502,7 @@ namespace stanfordcpplib {
 
         template<typename CollectionType, typename ElementType>
         std::istream &readCollection(std::istream &input, CollectionType &collection, ElementType &element,
-                                     std::string /* descriptor */) {
+                                     const std::string& /* descriptor */) {
 #endif
             char ch = '\0';
             input >> ch;
@@ -554,7 +553,7 @@ namespace stanfordcpplib {
 
         template<typename MapType, typename KeyType, typename ValueType>
         std::istream &
-        readMap(std::istream &input, MapType &map, KeyType &key, ValueType &value, std::string /* descriptor */) {
+        readMap(std::istream &input, MapType &map, KeyType &key, ValueType &value, const std::string& /* descriptor */) {
 #endif
             char ch = '\0';
             input >> ch;
@@ -708,7 +707,7 @@ namespace stanfordcpplib {
             /* Move-constructing a VersionTracker implements the version number of the
              * object being moved.
              */
-            VersionTracker(VersionTracker &&rhs) {
+            VersionTracker(VersionTracker &&rhs) noexcept {
                 rhs._version++;
             }
 
@@ -723,7 +722,7 @@ namespace stanfordcpplib {
             }
 
             /* Returns the version number. */
-            unsigned int version() const {
+            [[nodiscard]] unsigned int version() const {
                 return _version;
             }
 
@@ -767,7 +766,7 @@ namespace stanfordcpplib {
 
             /* Conversion constructor, when permitted. */
             template<typename OtherItr>
-            CheckedIterator(const CheckedIterator<OtherItr> &rhs)
+            explicit CheckedIterator(const CheckedIterator<OtherItr> &rhs)
                     : _version(rhs._version),
                       _owner(rhs._owner),
                       _iter(rhs._iter),
@@ -777,7 +776,7 @@ namespace stanfordcpplib {
             }
 
             template<typename OtherItr>
-            operator CheckedIterator<OtherItr>() const {
+            explicit operator CheckedIterator<OtherItr>() const {
                 return CheckedIterator<OtherItr>{_version, _owner, _iter, _begin, _end};
             }
 
@@ -894,7 +893,7 @@ namespace stanfordcpplib {
                 return *this;
             }
 
-            CheckedIterator operator++(int) {
+            const CheckedIterator operator++(int) {
                 auto result = *this;
                 ++*this;
                 return result;
@@ -914,7 +913,7 @@ namespace stanfordcpplib {
                 return *this;
             }
 
-            CheckedIterator operator--(int) {
+            const CheckedIterator operator--(int) {
                 auto result = *this;
                 --*this;
                 return result;
@@ -938,7 +937,7 @@ namespace stanfordcpplib {
             }
 
             /* Direct version access. */
-            unsigned int version() const {
+            [[nodiscard]] unsigned int version() const {
                 if (!_owner) {
                     error("Cannot get version from an uninitialized iterator.");
                 }
@@ -991,13 +990,13 @@ namespace stanfordcpplib {
 
             /* Conversion constructor, when permitted. */
             template<typename OtherItr>
-            ProjectingIterator(const ProjectingIterator<OtherItr> &rhs)
+            explicit ProjectingIterator(const ProjectingIterator<OtherItr> &rhs)
                     : _iter(rhs._iter) {
                 // Empty
             }
 
             template<typename OtherItr>
-            operator ProjectingIterator<OtherItr>() const {
+            explicit operator ProjectingIterator<OtherItr>() const {
                 return ProjectingIterator<OtherItr>(_iter);
             }
 
@@ -1068,7 +1067,7 @@ namespace stanfordcpplib {
                 return *this;
             }
 
-            ProjectingIterator operator++(int) {
+            const ProjectingIterator operator++(int) {
                 auto result = *this;
                 ++*this;
                 return result;
@@ -1079,7 +1078,7 @@ namespace stanfordcpplib {
                 return *this;
             }
 
-            ProjectingIterator operator--(int) {
+            const ProjectingIterator operator--(int) {
                 auto result = *this;
                 --*this;
                 return result;
@@ -1313,7 +1312,7 @@ namespace stanfordcpplib {
              * -----------------------------
              * Returns <code>true</code> if this set contains no elements.
              */
-            bool isEmpty() const;
+            [[nodiscard]] bool isEmpty() const;
 
             /**
              * Method: isSubsetOf
@@ -1399,7 +1398,7 @@ namespace stanfordcpplib {
              * --------------------------
              * Returns the number of elements in this set.
              */
-            int size() const;
+            [[nodiscard]] int size() const;
 
             /**
              * Method: toString
@@ -1407,7 +1406,7 @@ namespace stanfordcpplib {
              * -----------------------------------
              * Converts the set to a printable string representation.
              */
-            std::string toString() const;
+            [[nodiscard]] std::string toString() const;
 
             /**
              * Method: unionWith
@@ -1617,8 +1616,8 @@ namespace stanfordcpplib {
                 return _map.end();
             }
 
-            friend int hashCode(const GenericSet &set) {
-                return hashCode(set._map);
+            friend int hashCode(const GenericSet &set) { // TODO: Recursion?
+                return hashCode<typename SetTraits::MapType>(set._map);
             }
         };
 
@@ -2032,7 +2031,6 @@ namespace stanfordcpplib {
             static constexpr bool value = false;
         };
 
-    } // namespace collections
-} // namespace stanfordcpplib
+    } // namespace stanfordcpplib
 
 #endif // _collections_h

@@ -149,7 +149,7 @@ private:
             return *this;
         }
 
-        GridLocationRangeIterator operator++(int) {
+        const GridLocationRangeIterator operator++(int) {
             GridLocationRangeIterator copy(*this);
             operator++();
             return copy;
@@ -172,7 +172,7 @@ private:
             return *this;
         }
 
-        GridLocationRangeIterator operator--(int) {
+        const GridLocationRangeIterator operator--(int) {
             GridLocationRangeIterator copy(*this);
             operator--();
             return copy;
@@ -233,7 +233,7 @@ public:
      * The isRowMajor flag indicates whether we will loop over the range in
      * row-major order (true, default) or column-major order (false).
      */
-    GridLocationRange(int startRow = 0, int startCol = 0, int endRow = 0, int endCol = 0, bool isRowMajor = true);
+    explicit GridLocationRange(int startRow = 0, int startCol = 0, int endRow = 0, int endCol = 0, bool isRowMajor = true);
 
     /*
      * Constructs a range over the given start/end locations, inclusive.
@@ -245,64 +245,64 @@ public:
     /*
      * Returns an iterator over the range.
      */
-    GridLocationRangeIterator begin() const;
+    [[nodiscard]] GridLocationRangeIterator begin() const;
 
     /*
      * Returns true if this range entirely contains the given other range.
      */
-    bool contains(const GridLocation &loc) const;
+    [[nodiscard]] bool contains(const GridLocation &loc) const;
 
     /*
      * Returns an iterator at the end of the range.
      */
-    GridLocationRangeIterator end() const;
+    [[nodiscard]] GridLocationRangeIterator end() const;
 
     /*
      * Returns the last column in this range, inclusive.
      */
-    int endCol() const;
+    [[nodiscard]] int endCol() const;
 
     /*
      * Returns the last row/column location in this range, inclusive.
      */
-    const GridLocation &endLocation() const;
+    [[nodiscard]] const GridLocation &endLocation() const;
 
     /*
      * Returns the last row in this range, inclusive.
      */
-    int endRow() const;
+    [[nodiscard]] int endRow() const;
 
     /*
      * Returns true if this range contains no rows or columns.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /*
      * Returns true if this range should be traversed in row-major order,
      * as specified at time of construction (default true).
      */
-    bool isRowMajor() const;
+    [[nodiscard]] bool isRowMajor() const;
 
     /*
      * Returns the first column in this range.
      */
-    int startCol() const;
+    [[nodiscard]] int startCol() const;
 
     /*
      * Returns the first row/column location in this range.
      */
-    const GridLocation &startLocation() const;
+    [[nodiscard]] const GridLocation &startLocation() const;
 
     /*
      * Returns the first row in this range.
      */
-    int startRow() const;
+    [[nodiscard]] int startRow() const;
 
     /*
      * Returns a string representation of this range,
      * such as "[r1c3 .. r4c7]".
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 };
 
 /*

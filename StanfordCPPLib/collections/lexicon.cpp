@@ -249,12 +249,12 @@ bool Lexicon::isSupersetOf(std::initializer_list<std::string> list) const {
 
 void Lexicon::mapAll(void (*fn)(std::string)) const {
     for (std::string word : _allWords) {
-        fn(word);
+        fn(std::move(word));
     }
 }
 
 void Lexicon::mapAll(void (*fn)(const std::string &)) const {
-    for (std::string word : _allWords) {
+    for (const std::string& word : _allWords) {
         fn(word);
     }
 }
@@ -553,7 +553,7 @@ void Lexicon::removeSubtreeHelper(TrieNode *&node, const std::string &originalWo
 }
 
 void Lexicon::deepCopy(const Lexicon &src) {
-    for (std::string word : src._allWords) {
+    for (const std::string& word : src._allWords) {
         add(word);
     }
 }
@@ -571,7 +571,7 @@ void Lexicon::deleteTree(TrieNode *node) {
  * Returns true if the given file (probably) represents a
  * binary DAWG lexicon data file.
  */
-bool Lexicon::isDAWGFile(std::istream &input) const {
+bool Lexicon::isDAWGFile(std::istream &input) {
     char firstFour[4], expected[] = "DAWG";
     if (input.fail()) {
         error(std::string("Lexicon::addWordsFromFile: Couldn't read input"));
@@ -601,7 +601,7 @@ bool Lexicon::isDAWGFile(const std::string &filename) const {
  */
 void Lexicon::readBinaryFile(std::istream &input) {
     DawgLexicon ldawg(input);
-    for (std::string word : ldawg) {
+    for (const std::string& word : ldawg) {
         add(word);
     }
 }
@@ -612,7 +612,7 @@ void Lexicon::readBinaryFile(std::istream &input) {
  */
 void Lexicon::readBinaryFile(const std::string &filename) {
     DawgLexicon ldawg(filename);
-    for (std::string word : ldawg) {
+    for (const std::string& word : ldawg) {
         add(word);
     }
 }

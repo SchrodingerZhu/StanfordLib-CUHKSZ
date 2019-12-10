@@ -514,9 +514,9 @@ private:
 
     void deepCopy(const Lexicon &src);
 
-    void deleteTree(TrieNode *node);
+    static void deleteTree(TrieNode *node);
 
-    bool isDAWGFile(std::istream &input) const;
+    static bool isDAWGFile(std::istream &input) ;
 
     bool isDAWGFile(const std::string &filename) const;
 

@@ -152,7 +152,7 @@ public:
     /**
      * Constructs a vertex with the given name.
      */
-    VertexGen(const std::string &name = "");
+    explicit VertexGen(const std::string &name = {});
 
     /**
      * Copy constructor.
@@ -167,7 +167,7 @@ public:
     /**
      * Returns the color of this vertex, if any.  Initially WHITE.
      */
-    /* Color */ int getColor() const;
+    /* Color */ [[nodiscard]] int getColor() const;
 
     /**
      * Wipes the supplementary data of this vertex back to its initial state.
@@ -196,7 +196,7 @@ public:
     /**
      * Move assignment operator.
      */
-    VertexGen &operator=(VertexGen &&other);
+    VertexGen &operator=(VertexGen &&other) noexcept;
 
 private:
     /* Color */ int _color;   // vertex's color as passed to setColor
@@ -291,7 +291,7 @@ public:
     /**
      * Move assignment operator.
      */
-    EdgeGen &operator=(EdgeGen &&other);
+    EdgeGen &operator=(EdgeGen &&other) noexcept;
 };
 
 /**
@@ -600,7 +600,7 @@ public:
      * Equivalent to getInverseArcSet.
      * @bigoh O(E)
      */
-    const Set<EdgeGen<V, E> *> getInverseEdgeSet(VertexGen<V, E> *v) const;
+    Set<EdgeGen<V, E> *> getInverseEdgeSet(VertexGen<V, E> *v) const;
 
     /**
      * Returns the set of all edges in the graph that end at the specified vertex.
@@ -610,7 +610,7 @@ public:
      * Equivalent to getInverseArcSet.
      * @bigoh O(E)
      */
-    const Set<EdgeGen<V, E> *> getInverseEdgeSet(const std::string &v) const;
+    Set<EdgeGen<V, E> *> getInverseEdgeSet(const std::string &v) const;
 
     /**
      * Looks up a vertex in the graph by name and returns a pointer to
@@ -853,7 +853,7 @@ VertexGen<V, E> &VertexGen<V, E>::operator=(const VertexGen &other) {
 }
 
 template<typename V, typename E>
-VertexGen<V, E> &VertexGen<V, E>::operator=(VertexGen &&other) {
+VertexGen<V, E> &VertexGen<V, E>::operator=(VertexGen &&other) noexcept {
     if (this != &other) {
         name = other.name;
         arcs = other.arcs;
@@ -957,7 +957,7 @@ EdgeGen<V, E> &EdgeGen<V, E>::operator=(const EdgeGen &other) {
 }
 
 template<typename V, typename E>
-EdgeGen<V, E> &EdgeGen<V, E>::operator=(EdgeGen &&other) {
+EdgeGen<V, E> &EdgeGen<V, E>::operator=(EdgeGen &&other) noexcept {
     start = other.start;
     finish = other.finish;
     cost = other.cost;
@@ -1149,12 +1149,12 @@ const Set<EdgeGen<V, E> *> &BasicGraphGen<V, E>::getEdgeSet(const std::string &v
 }
 
 template<typename V, typename E>
-const Set<EdgeGen<V, E> *> BasicGraphGen<V, E>::getInverseEdgeSet(VertexGen<V, E> *v) const {
+Set<EdgeGen<V, E> *> BasicGraphGen<V, E>::getInverseEdgeSet(VertexGen<V, E> *v) const {
     return this->getInverseArcSet(v);
 }
 
 template<typename V, typename E>
-const Set<EdgeGen<V, E> *> BasicGraphGen<V, E>::getInverseEdgeSet(const std::string &v) const {
+Set<EdgeGen<V, E> *> BasicGraphGen<V, E>::getInverseEdgeSet(const std::string &v) const {
     return this->getInverseArcSet(v);
 }
 
@@ -1263,7 +1263,7 @@ void BasicGraphGen<V, E>::writeArcData(std::ostream &out, EdgeGen<V, E> *edge) c
  */
 template<typename V, typename E>
 int hashCode(const BasicGraphGen<V, E> &graph) {
-    int code = hashSeed();
+    unsigned code = hashSeed();
     for (VertexGen<V, E> *v : graph) {
         code = hashMultiplier() * code + hashCode(v->name);
     }
@@ -1271,7 +1271,7 @@ int hashCode(const BasicGraphGen<V, E> &graph) {
         code = hashMultiplier() * code + hashCode(e->start->name);
         code = hashMultiplier() * code + hashCode(e->finish->name);
     }
-    return (code & hashMask());
+    return (int)(code & hashMask());
 }
 
 /**
