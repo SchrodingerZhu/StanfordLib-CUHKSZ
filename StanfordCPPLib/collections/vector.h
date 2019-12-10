@@ -64,7 +64,7 @@
 #include <system/error.h>
 #include <collections/hashcode.h>
 #include <util/random.h>
-#include <boost/container/pmr/vector.hpp>
+#include <QVector>
 /**
  * This class stores an ordered list of values similar to an array.
  * It supports traditional array selection using square brackets, but
@@ -480,7 +480,9 @@ private:
      * std::deque type in the event that the client wants to make a
      * Vector<bool>
      */
-    using ContainerType = boost::container::pmr::vector<ValueType>;
+    using ContainerType = typename std::conditional<std::is_same<ValueType, bool>::value,
+            QVector<bool>,
+            std::vector<ValueType>>::type;
 
     /* Instance variables */
     ContainerType _elements;
@@ -538,11 +540,23 @@ public:
 
 /* Implementation section */
 
+template <typename T, template <class> class V>
+void assign(V<T>& v, T t, size_t n) {
+    v.assign(n, t);
+}
+
+template <template <class> class V>
+void assign(V<bool>& v, bool t, size_t n) {
+    v.fill(t, n);
+}
+
 template<typename ValueType>
 Vector<ValueType>::Vector(int n, ValueType value) {
     if (n < 0) error("Cannot create a Vector with a negative number of elements.");
-    _elements.assign(n, value);
+    assign(_elements, value, n);
 }
+
+
 
 template<typename ValueType>
 Vector<ValueType>::Vector(std::initializer_list<ValueType> list)

@@ -69,7 +69,15 @@ int start() {
     std::cout << stringContains(a, "1") << std::endl;
     std::cout << diff::diff(a, b) << std::endl;
     std::cout << "process ends in " << timer.stop() << " ms" << std::endl;
-
+    Vector<bool> test(5, true);
+    test.ensureCapacity(9);
+    test.push_back(false);
+    test.push_back(false);
+    test.push_back(false);
+    test.push_back(false);
+    for(auto i : test) {
+        std::cout << boolToString(i) << std::endl;
+    }
     return 0;
 }
 

@@ -9,8 +9,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 20)
 # Find Qt5 Packages
 find_package(Qt5 COMPONENTS Widgets Network Core Multimedia PrintSupport REQUIRED)
-# Find Boost Packages
-find_package(Boost COMPONENTS container REQUIRED)
 # Essential Library Flags
 set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS} -lpthread -ldl -g")
 set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS} -lpthread -ldl -g")
@@ -36,11 +34,10 @@ include_directories(
         ${Qt5Network_INCLUDE_DIRS}
         ${Qt5Core_INCLUDE_DIRS}
         ${Qt5Multimedia_INCLUDE_DIRS}
-        ${Boost_INCLUDE_DIR}
 )
 
 # Linking Relations
-target_link_libraries(stanford Qt5::Widgets Qt5::Network Qt5::Multimedia ${Boost_LIBRARIES} absl::container absl::strings)
+target_link_libraries(stanford Qt5::Widgets Qt5::Network Qt5::Multimedia absl::container absl::strings)
 add_executable(hello src/hello.h src/hello.cpp)
 target_link_libraries(hello stanford)
 
