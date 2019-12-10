@@ -56,7 +56,7 @@
 #include <util/random.h>
 #include <util/strlib.h>
 #include <collections/vector.h>
-
+#include <boost/container/pmr/polymorphic_allocator.hpp>
 /*
  * Class: LinkedList<ValueType>
  * ----------------------------
@@ -471,7 +471,7 @@ private:
      */
 
     /* Instance variables */
-    std::list<ValueType> _elements;   // STL linked list as backing storage
+    std::list<ValueType, boost::container::pmr::polymorphic_allocator<ValueType>> _elements;   // STL linked list as backing storage
     stanfordcpplib::collections::VersionTracker _version;
 
     /* Private methods */

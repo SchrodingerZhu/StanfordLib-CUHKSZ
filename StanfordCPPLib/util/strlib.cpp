@@ -84,13 +84,7 @@ bool endsWith(const std::string &str, char suffix) {
 }
 
 bool endsWith(const std::string &str, const std::string &suffix) {
-    int nChars = suffix.length();
-    int start = str.length() - nChars;
-    if (start < 0) return false;
-    for (int i = 0; i < nChars; i++) {
-        if (str[start + i] != suffix[i]) return false;
-    }
-    return true;
+    return absl::EndsWith(str, suffix);
 }
 
 /*
@@ -101,12 +95,7 @@ bool endsWith(const std::string &str, const std::string &suffix) {
  * the results makes for a shorter but less efficient implementation.
  */
 bool equalsIgnoreCase(const std::string &s1, const std::string &s2) {
-    if (s1.length() != s2.length()) return false;
-    int nChars = s1.length();
-    for (int i = 0; i < nChars; i++) {
-        if (tolower(s1[i]) != tolower(s2[i])) return false;
-    }
-    return true;
+    return absl::EqualsIgnoreCase(s1, s2);
 }
 
 std::string htmlDecode(const std::string &s) {
@@ -213,12 +202,7 @@ bool startsWith(const std::string &str, char prefix) {
 }
 
 bool startsWith(const std::string &str, const std::string &prefix) {
-    if (str.length() < prefix.length()) return false;
-    int nChars = prefix.length();
-    for (int i = 0; i < nChars; i++) {
-        if (str[i] != prefix[i]) return false;
-    }
-    return true;
+    return absl::StartsWith(str, prefix);
 }
 
 bool stringIsBool(const std::string &str) {
@@ -259,11 +243,11 @@ bool stringIsReal(const std::string &str) {
 }
 
 bool stringContains(const std::string &s, char ch) {
-    return s.find(ch) != std::string::npos;
+    return std::memchr(s.begin().base(), ch, s.size());
 }
 
 bool stringContains(const std::string &s, const std::string &substring) {
-    return s.find(substring) != std::string::npos;
+    return absl::StrContains(s, substring);
 }
 
 int stringIndexOf(const std::string &s, char ch, int startIndex) {
@@ -286,21 +270,11 @@ int stringIndexOf(const std::string &s, const std::string &substring, int startI
 
 std::string stringJoin(const Vector<std::string> &v, char delimiter) {
     std::string delim = charToString(delimiter);
-    return stringJoin(v, delim);
+    return absl::StrJoin(v, delim);
 }
 
 std::string stringJoin(const Vector<std::string> &v, const std::string &delimiter) {
-    if (v.isEmpty()) {
-        return "";
-    } else {
-        std::ostringstream out;
-        out << v[0];
-        for (int i = 1; i < (int) v.size(); i++) {
-            out << delimiter;
-            out << v[i];
-        }
-        return out.str();
-    }
+    return absl::StrJoin(v, delimiter);
 }
 
 int stringLastIndexOf(const std::string &s, char ch, int startIndex) {
@@ -591,13 +565,6 @@ std::string urlEncode(const std::string &str) {
 
 void urlEncodeInPlace(std::string &str) {
     str = urlEncode(str);   // no real efficiency gain here
-}
-
-// from absl
-inline bool startsWith(std::string_view text, std::string_view prefix) {
-    return prefix.empty() ||
-           (text.size() >= prefix.size() &&
-            memcmp(text.data(), prefix.data(), prefix.size()) == 0);
 }
 
 namespace std {

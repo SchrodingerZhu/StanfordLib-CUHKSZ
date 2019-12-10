@@ -16,7 +16,7 @@
 #include <util/random.h>
 #include <util/diff.h>
 #include <util/timer.h>
-
+#include <util/strlib.h>
 using namespace std;
 
 int start() {
@@ -66,6 +66,7 @@ int start() {
     std::cout << "random color test: " << randomColorString() << std::endl;
     string a = "1234\n 1233";
     string b = "1234\n 1233";
+    std::cout << stringContains(a, "1") << std::endl;
     std::cout << diff::diff(a, b) << std::endl;
     std::cout << "process ends in " << timer.stop() << " ms" << std::endl;
 

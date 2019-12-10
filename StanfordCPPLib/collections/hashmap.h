@@ -56,7 +56,7 @@
 #include <system/error.h>
 #include <collections/hashcode.h>
 #include <collections/vector.h>
-
+#include <absl/container/flat_hash_map.h>
 /*
  * Class: HashMap<KeyType,ValueType>
  * ---------------------------------
@@ -461,7 +461,7 @@ private:
         }
     };
 
-    std::unordered_map<KeyType, ValueType, Hasher> _elements;
+    absl::flat_hash_map<KeyType, ValueType, Hasher> _elements;
     stanfordcpplib::collections::VersionTracker _version;
 
     /* Private methods */

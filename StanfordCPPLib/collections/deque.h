@@ -33,7 +33,7 @@
 #include <collections/collections.h>
 #include <system/error.h>
 #include <collections/hashcode.h>
-
+#include <boost/container/pmr/polymorphic_allocator.hpp>
 /*
  * Class: Deque<ValueType>
  * -----------------------
@@ -240,7 +240,7 @@ public:
 
 private:
     // Instance variables
-    std::deque<ValueType> _elements;
+    std::deque<ValueType, boost::container::pmr::polymorphic_allocator<ValueType>> _elements;
     stanfordcpplib::collections::VersionTracker _version;
 
 public:

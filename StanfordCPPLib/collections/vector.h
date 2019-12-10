@@ -64,7 +64,7 @@
 #include <system/error.h>
 #include <collections/hashcode.h>
 #include <util/random.h>
-
+#include <boost/container/pmr/vector.hpp>
 /**
  * This class stores an ordered list of values similar to an array.
  * It supports traditional array selection using square brackets, but
@@ -480,9 +480,7 @@ private:
      * std::deque type in the event that the client wants to make a
      * Vector<bool>
      */
-    using ContainerType = typename std::conditional<std::is_same<ValueType, bool>::value,
-            std::deque<bool>,
-            std::vector<ValueType>>::type;
+    using ContainerType = boost::container::pmr::vector<ValueType>;
 
     /* Instance variables */
     ContainerType _elements;
@@ -925,6 +923,11 @@ typename Vector<ValueType>::const_iterator Vector<ValueType>::end() const {
 template<typename ValueType>
 void Vector<ValueType>::updateVersion() {
     _version.update();
+}
+
+template<typename ValueType>
+void Vector<ValueType>::ensureCapacity(int cap) {
+    _elements.reserve(cap);
 }
 
 /*

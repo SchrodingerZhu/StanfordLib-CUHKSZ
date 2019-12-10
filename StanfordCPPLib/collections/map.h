@@ -56,7 +56,7 @@
 #include <collections/hashcode.h>
 #include <collections/stack.h>
 #include <collections/vector.h>
-
+#include <absl/container/btree_map.h>
 /*
  * Class: Map<KeyType,ValueType>
  * -----------------------------
@@ -436,7 +436,7 @@ public:
     /**********************************************************************/
 
 private:
-    using MapType = std::map<KeyType, ValueType, std::function<bool(const KeyType &, const KeyType &)>>;
+    using MapType = absl::btree_map<KeyType, ValueType, decltype(stanfordcpplib::collections::checkedLess<KeyType>())>;
     MapType _elements;
     stanfordcpplib::collections::VersionTracker _version;
 

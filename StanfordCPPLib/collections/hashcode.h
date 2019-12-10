@@ -73,7 +73,7 @@ unsigned int hashMask();         // All 1 bits except the sign
  */
 template<typename T1, typename T2, typename... Others>
 int hashCode(T1 &&first, T2 &&second, Others &&... remaining) {
-    int result = hashSeed();
+    unsigned result = hashSeed();
 
     /* Compute the hash code for the last n - 1 arguments. */
     result += hashCode(std::forward<T2>(second), std::forward<Others>(remaining)...);

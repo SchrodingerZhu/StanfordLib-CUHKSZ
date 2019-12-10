@@ -1978,7 +1978,7 @@ namespace stanfordcpplib::collections {
  * more readable.
  */
         template<typename T>
-        std::function<bool(const T &, const T &)> checkedLess() {
+        std::less<T> checkedLess() {
             static_assert(IsLessThanComparable<T>::value,
                           "Oops! You tried using a type as a key in our Map without making it comparable. Click this error for more details.");
             /*
