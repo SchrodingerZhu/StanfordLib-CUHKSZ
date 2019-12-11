@@ -549,12 +549,12 @@ public:
 /* Implementation section */
 
 template <typename T, class V>
-void assign(V v, T t, size_t n) {
+void assign(V& v, T t, size_t n) {
     v.assign(n, t);
 }
 
 template <class V>
-void assign(V v, bool t, size_t n) {
+void assign(V& v, bool t, size_t n) {
     v.fill(t, n);
 }
 
