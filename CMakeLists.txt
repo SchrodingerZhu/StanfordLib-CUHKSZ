@@ -1,5 +1,5 @@
 # Project Name
-project(standford)
+project(stanford)
 
 # Cmake Configuration
 cmake_minimum_required(VERSION 3.12)
