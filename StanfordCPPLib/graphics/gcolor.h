@@ -22,8 +22,7 @@
 #include <string>
 #include <QColor>
 
-#include <collections/map.h>
-
+#include <collections/hashmap.h>
 /**
  * This class provides static methods for dealing with colors.
  *
@@ -232,17 +231,17 @@ private:
      * Returns a reference to the table of common colors,
      * mapping from names to RGB integers.
      */
-    static const Map<std::string, int> &colorTable();
+    static const HashMap<std::string, int> &colorTable();
 
     /**
      * Returns a reference to the table of common colors,
      * mapping from names to color strings.
      */
-    static const Map<std::string, std::string> &colorNameTable();
+    static const HashMap<std::string, std::string> &colorNameTable();
 
     // internal color tables
-    static Map<std::string, int> _colorTable;
-    static Map<std::string, std::string> _colorNameTable;
+    static HashMap<std::string, int> _colorTable;
+    static HashMap<std::string, std::string> _colorNameTable;
 };
 
 #endif // _gcolor_h

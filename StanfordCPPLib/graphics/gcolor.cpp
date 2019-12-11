@@ -19,8 +19,8 @@
 #include <system/error.h>
 #include <util/strlib.h>
 
-Map<std::string, int> GColor::_colorTable;
-Map<std::string, std::string> GColor::_colorNameTable;
+HashMap<std::string, int> GColor::_colorTable;
+HashMap<std::string, std::string> GColor::_colorNameTable;
 
 GColor::GColor() {
     // empty
@@ -36,7 +36,7 @@ GColor::GColor() {
     return result;
 }
 
-/*static*/ const Map<std::string, int> &GColor::colorTable() {
+/*static*/ const HashMap<std::string, int> &GColor::colorTable() {
     if (_colorTable.isEmpty()) {
         _colorTable["black"] = 0x000000;
         _colorTable["blue"] = 0x0000FF;
@@ -57,7 +57,7 @@ GColor::GColor() {
     return _colorTable;
 }
 
-/*static*/ const Map<std::string, std::string> &GColor::colorNameTable() {
+/*static*/ const HashMap<std::string, std::string> &GColor::colorNameTable() {
     if (_colorNameTable.isEmpty()) {
         _colorNameTable["#000000"] = "black";
         _colorNameTable["#ff000000"] = "black";

@@ -37,7 +37,16 @@ include_directories(
 )
 
 # Linking Relations
-target_link_libraries(stanford Qt5::Widgets Qt5::Network Qt5::Multimedia absl::container absl::strings)
+target_link_libraries(stanford Qt5::Widgets
+        Qt5::Network
+        Qt5::Multimedia
+        absl::container
+        absl::strings
+        absl::utility
+        absl::str_format
+        absl::hashtablez_sampler
+        absl::raw_hash_set
+)
 add_executable(hello src/hello.h src/hello.cpp)
 target_link_libraries(hello stanford)
 
