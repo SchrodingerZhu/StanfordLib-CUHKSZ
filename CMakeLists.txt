@@ -41,6 +41,9 @@ target_link_libraries(stanford Qt5::Widgets Qt5::Network Qt5::Multimedia absl::c
 add_executable(hello src/hello.h src/hello.cpp)
 target_link_libraries(hello stanford)
 
-# copy resources
+# Copy resources
 file(GLOB resources res/*)
 file(COPY ${resources} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+# Unit tests
+include(tests/tests.cmake)

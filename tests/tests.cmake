@@ -1,0 +1,8 @@
+enable_testing()
+find_package(Qt5Test REQUIRED)
+function(unit_test name)
+    add_executable(test_${name} tests/test_${name}.cpp)
+    add_test(test_${name}_run test_${name})
+    target_link_libraries(test_${name} stanford Qt5::Test)
+endfunction()
+unit_test(strlib)

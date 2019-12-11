@@ -8,7 +8,6 @@
  */
 
 #include <iostream>
-#include <console/console.h>
 #include <graphics/ginteractors.h> // for GWindow
 #include <graphics/gwindow.h> // for GWindow
 #include <collections/vector.h>  // for Vector

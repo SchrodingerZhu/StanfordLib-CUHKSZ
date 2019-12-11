@@ -1,6 +1,6 @@
 #include "private/init.h"
 #include <graphics/qtgui.h>
-
+#include <console/console.h>
 #if __cplusplus >= 201703L
 #include <memory_resource>
 #endif
