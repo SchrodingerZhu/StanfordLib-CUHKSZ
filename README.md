@@ -7,3 +7,4 @@ A cmake deliver version of stanford library, specially patched for CSC3002 stude
 - The orginal stanford library mixes files in all modules and produces cyclic dependency relations, therefore, we have to produce to whole shared library, instead of multiple small libraries for each module.
 - The original version takes the advantage of `qmake` toolchain and make some renaming around `main()` function. Here, we want to seperate the library and user's code.
   Therefore, we do not use the library itself to do the renaming. Instead, users should write a entry function (say `start`) by themselves and include `macro.h` and call `__WRAP_MAIN__(start)` to invoke the library.
+- For `c++17` and above, we also provide `__WRAP_MAIN_UNSYNC_POOL__` and `__WRAP_MAIN_SYNC_POOL__` as entries, which will force the containers to use thread-(un)safe pool resource.
