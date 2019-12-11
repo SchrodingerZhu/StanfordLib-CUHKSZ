@@ -21,7 +21,6 @@
 #include "private/static.h"
 #include <QStandardPaths>
 #include "private/version.h"
-
 // JDZ:
 bool fileExists(const std::string &);
 
@@ -56,6 +55,7 @@ namespace stanfordcpplib {
 // called automatically by real main() function;
 // to be run in Qt GUI main thread
     void initializeLibrary(int argc, char **argv) {
+
         // ensure that library is initialized only once
         static bool _initialized = false;
         if (_initialized) {

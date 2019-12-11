@@ -33,7 +33,9 @@
 #include <collections/collections.h>
 #include <system/error.h>
 #include <collections/hashcode.h>
+#if __cplusplus >= 201703L
 #include <memory_resource>
+#endif
 /*
  * Class: Deque<ValueType>
  * -----------------------
@@ -240,7 +242,11 @@ public:
 
 private:
     // Instance variables
+#if __cplusplus >= 201703L
     std::deque<ValueType, std::pmr::polymorphic_allocator<ValueType>> _elements;
+#else
+    std::deque<ValueType> _elements;
+#endif
     stanfordcpplib::collections::VersionTracker _version;
 
 public:

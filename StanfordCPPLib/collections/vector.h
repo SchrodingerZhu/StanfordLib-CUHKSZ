@@ -65,6 +65,9 @@
 #include <collections/hashcode.h>
 #include <util/random.h>
 #include <QVector>
+#if __cplusplus >= 201703L
+#include <memory_resource>
+#endif
 /**
  * This class stores an ordered list of values similar to an array.
  * It supports traditional array selection using square brackets, but
@@ -480,10 +483,15 @@ private:
      * std::deque type in the event that the client wants to make a
      * Vector<bool>
      */
+#if __cplusplus >= 201703L
+    using ContainerType = typename std::conditional<std::is_same<ValueType, bool>::value,
+            QVector<bool>,
+            std::vector<ValueType, std::pmr::polymorphic_allocator<ValueType>>>::type;
+#else
     using ContainerType = typename std::conditional<std::is_same<ValueType, bool>::value,
             QVector<bool>,
             std::vector<ValueType>>::type;
-
+#endif
     /* Instance variables */
     ContainerType _elements;
     stanfordcpplib::collections::VersionTracker _version;
@@ -540,13 +548,13 @@ public:
 
 /* Implementation section */
 
-template <typename T, template <class> class V>
-void assign(V<T>& v, T t, size_t n) {
+template <typename T, class V>
+void assign(V v, T t, size_t n) {
     v.assign(n, t);
 }
 
-template <template <class> class V>
-void assign(V<bool>& v, bool t, size_t n) {
+template <class V>
+void assign(V v, bool t, size_t n) {
     v.fill(t, n);
 }
 
