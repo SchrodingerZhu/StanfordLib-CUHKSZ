@@ -5,7 +5,7 @@
 #include <util/strlib.h>
 #include <private/init.h>
 #include "test_header.h"
-
+#define USE_SYNC_POOL_RESOURCE
 class TestStrlib: public QObject
 {
 Q_OBJECT
@@ -84,3 +84,4 @@ void TestStrlib::stringOperations() {
 
 LIB_TEST_MAIN(TestStrlib)
 #include "test_strlib.moc"
+#undef USE_SYNC_POOL_RESOURCE
