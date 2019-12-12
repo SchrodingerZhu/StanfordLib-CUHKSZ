@@ -17,7 +17,7 @@ jobs:
         command: |
           mkdir dist
           cd dist
-          cmake ..
+          cmake .. -D CMAKE_C_COMPILER=/usr/bin/gcc-9 -D CMAKE_CXX_COMPILER=/usr/bin/g++-9
           make
           make test
 
