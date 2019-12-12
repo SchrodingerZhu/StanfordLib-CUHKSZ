@@ -1,5 +1,5 @@
 /*
-/*
+ *
  * File: strlib.h
  * --------------
  * This file exports several useful string functions that are not
@@ -47,6 +47,8 @@
 #include <collections/vector.h>
 #include <absl/strings/match.h>
 #include <absl/strings/str_join.h>
+#include <absl/strings/strip.h>
+#include <absl/strings/string_view.h>
 /**
  * Returns the string "true" if b is true, or "false" if b is false.
  */

@@ -463,48 +463,27 @@ void toUpperCaseInPlace(std::string &str) {
 }
 
 std::string trim(const std::string &str) {
-    std::string str2 = str;
-    trimInPlace(str2);
-    return str2;
+    return std::string {absl::StripAsciiWhitespace(str)};
 }
 
 void trimInPlace(std::string &str) {
-    trimEndInPlace(str);
-    trimStartInPlace(str);
+    absl::StripAsciiWhitespace(&str);
 }
 
 std::string trimEnd(const std::string &str) {
-    std::string str2 = str;
-    trimEndInPlace(str2);
-    return str2;
+    return std::string{absl::StripTrailingAsciiWhitespace(str)};
 }
 
 void trimEndInPlace(std::string &str) {
-    int end = (int) str.length();
-    int finish = end;
-    while (finish > 0 && isspace(str[finish - 1])) {
-        finish--;
-    }
-    if (finish < end) {
-        str.erase(finish, end - finish);
-    }
+    absl::StripTrailingAsciiWhitespace(&str);
 }
 
 std::string trimStart(const std::string &str) {
-    std::string str2 = str;
-    trimStartInPlace(str2);
-    return str2;
+    return std::string{absl::StripLeadingAsciiWhitespace(str)};
 }
 
 void trimStartInPlace(std::string &str) {
-    int start = 0;
-    int finish = (int) str.length() - 1;
-    while (start <= finish && isspace(str[start])) {
-        start++;
-    }
-    if (start > 0) {
-        str.erase(0, start);
-    }
+    absl::StripLeadingAsciiWhitespace(&str);
 }
 
 std::string urlDecode(const std::string &str) {
@@ -551,7 +530,7 @@ std::string urlEncode(const std::string &str) {
     escaped << std::hex << std::uppercase;
 
     for (char c : str) {
-        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~' || c == '*') {
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
             escaped << c;
         } else if (c == ' ') {
             escaped << '+';
