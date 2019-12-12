@@ -358,7 +358,7 @@ namespace stanfordcpplib::collections {
     struct __B {};
     struct __C {};
     template <class A, class B>
-    using CMP_PATCH = std::conditional_t<std::is_base_of_v<A, B>, __A, std::conditional_t<std::is_base_of_v<A, B>, __B, __C>>;
+    using CMP_PATCH = std::conditional_t<std::is_base_of_v<A, B>, __A, std::conditional_t<std::is_base_of_v<B, A>, __B, __C>>;
 
     template <class A, class B>
     bool __is_same(const A& a, const B& b, __A) {
