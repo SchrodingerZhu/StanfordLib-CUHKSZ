@@ -4,7 +4,7 @@
 
 #include <util/strlib.h>
 #include <private/init.h>
-#include "test_header.h"
+#include "../test_header.h"
 #define USE_SYNC_POOL_RESOURCE
 class TestStrlib: public QObject
 {

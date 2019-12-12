@@ -59,6 +59,7 @@
 #include <deque>
 #include <type_traits>
 #include <functional>
+#include <random>
 
 #include <collections/collections.h>
 #include <system/error.h>
@@ -67,6 +68,8 @@
 #include <QVector>
 #if __cplusplus >= 201703L
 #include <memory_resource>
+#include <cstring>
+
 #endif
 /**
  * This class stores an ordered list of values similar to an array.
@@ -109,7 +112,10 @@ public:
      * Adds a new value to the end of this vector.
      * @bigoh O(1)
      */
-    void add(const ValueType &value);
+    template <typename ...Args>
+    void emplace(Args&&... args);
+
+    void add(const ValueType& value);
 
     /**
      * Adds all elements of the given other vector to this vector.
@@ -390,13 +396,6 @@ public:
 
 
     /**
-     * Compares two vectors for equality.
-     * The ValueType must have an == operator.
-     * @bigoh O(N)
-     */
-    bool operator==(const Vector &v2) const;
-
-    /**
      * Compares two vectors for inequality.
      * The ValueType must have a != operator.
      * @bigoh O(N)
@@ -459,7 +458,8 @@ public:
      *
      * The iteration forms process the Vector in index order.
      */
-
+    template <class Container>
+    bool operator==(const Container& that) const;
     /* Private section */
 
     /**********************************************************************/
@@ -577,9 +577,22 @@ Vector<ValueType>::Vector(std::initializer_list<ValueType> list)
  * The basic Vector methods are straightforward and should require
  * no detailed documentation.
  */
+
+template <class V, typename ...Args>
+void run_emplace(V& v, Args&&... args) {
+    v.emplace_back(std::forward<Args>(args)...);
+}
+
+template <typename ...Args>
+void run_emplace(QVector<bool>& v, Args&&... args) {
+    v.append(std::forward<Args>(args)...);
+}
+
 template<typename ValueType>
-void Vector<ValueType>::add(const ValueType &value) {
-    insert(size(), value);
+template <typename ...Args>
+void Vector<ValueType>::emplace(Args&&... args) {
+    run_emplace(_elements, std::forward<Args>(args)...);
+    _version.update();
 }
 
 template<typename ValueType>
@@ -706,7 +719,7 @@ ValueType Vector<ValueType>::pop_front() {
 
 template<typename ValueType>
 void Vector<ValueType>::push_back(const ValueType &value) {
-    insert(size(), value);
+    add(value);
 }
 
 template<typename ValueType>
@@ -757,9 +770,9 @@ int Vector<ValueType>::size() const {
 
 template<typename ValueType>
 void Vector<ValueType>::shuffle() {
-    for (int i = 0; i < size() - 1; i++) {
-        std::swap(_elements[i], _elements[randomInteger(i, size() - 1)]);
-    }
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(begin(), end(), g);
 }
 
 template<typename ValueType>
@@ -833,10 +846,6 @@ Vector<ValueType> &Vector<ValueType>::operator+=(const ValueType &value) {
     return *this;
 }
 
-template<typename ValueType>
-bool Vector<ValueType>::operator==(const Vector &v2) const {
-    return equals(v2);
-}
 
 template<typename ValueType>
 bool Vector<ValueType>::operator!=(const Vector &v2) const {
@@ -952,6 +961,29 @@ void Vector<ValueType>::ensureCapacity(int cap) {
     _elements.reserve(cap);
 }
 
+template <class V, typename T>
+void push(V& v, const T& e) {
+    v.push_back(e);
+}
+
+template <typename T>
+void push(QVector<bool>& v, const T& e) {
+    v.append(e);
+}
+
+template<typename ValueType>
+void Vector<ValueType>::add(const ValueType& args) {
+    push(_elements, args);
+    _version.update();
+}
+
+template<typename ValueType>
+template<class Container>
+bool Vector<ValueType>::operator==(const Container &that) const {
+    return stanfordcpplib::collections::equals(*this, that);
+}
+
+
 /*
  * Template hash function for vectors.
  * Requires the element type in the Vector to have a hashCode function.
@@ -978,7 +1010,9 @@ const T &randomElement(const Vector<T> &vec) {
  */
 template<typename T>
 void shuffle(Vector<T> &v) {
-    v.shuffle();
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(v.begin(), v.end(), g);
 }
 
 #endif // _vector_h

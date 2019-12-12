@@ -3,8 +3,9 @@
 //
 
 #ifndef STANFORD_TEST_HEADER_H
-
+#define STANFORD_TEST_HEADER_H
 #include <memory_resource>
+#include <util/random.h>
 #ifdef USE_SYNC_POOL_RESOURCE
 #define INIT_MEM_RESOURCE \
     std::pmr::synchronized_pool_resource __GLOBAL__; \
@@ -31,6 +32,14 @@ int main(int argc, char *argv[]) \
     stanfordcpplib::shutdownLibrary();\
     return code; \
 }
-#define STANFORD_TEST_HEADER_H
+
+inline auto random_string() {
+    std::string test{};
+    auto len = randomInteger(0, 1000);
+    while(len--) {
+        test.push_back(static_cast<char>(randomInteger(32, 126)));
+    }
+    return test;
+}
 
 #endif //STANFORD_TEST_HEADER_H
