@@ -2,14 +2,13 @@ version: 2
 jobs:
   buildtest:
     docker:
-    - image: ubuntu:disco
+    - image: archlinux/base
     steps:
     - checkout
     - run:
         no_output_timeout: 3m
         command: |
-          apt-get -q -y update
-          apt-get -q -y install cmake qtbase5-dev xvfb git qtmultimedia5-dev g++-9
+          pacman -S cmake qt5-base gcc git qt5-multimedia xorg-server-xvfb
           git submodule init
           git submodule update
     - run:
@@ -17,9 +16,9 @@ jobs:
         command: |
           mkdir dist
           cd dist
-          cmake .. -D CMAKE_C_COMPILER=/usr/bin/gcc-9 -D CMAKE_CXX_COMPILER=/usr/bin/g++-9
+          cmake ..
           make
-          make test
+          xvfb-run make test
 
 workflows:
   version: 2
