@@ -9,7 +9,7 @@ jobs:
         no_output_timeout: 3m
         command: |
           pacman --noconfirm -Syyu
-          pacman --noconfirm -S cmake qt5-base gcc git qt5-multimedia xorg-server-xvfb
+          pacman --noconfirm -S cmake qt5-base gcc git qt5-multimedia xorg-server-xvfb make
           git submodule init
           git submodule update
     - run:
