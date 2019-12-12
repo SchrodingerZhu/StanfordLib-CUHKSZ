@@ -6,6 +6,7 @@ jobs:
     steps:
     - checkout
     - run:
+        no_output_timeout: 3m
         command: |
           apt-get -q -y update
           apt-get -q -y install cmake qtbase5-dev xvfb git qtmultimedia5-dev g++-9
