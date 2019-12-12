@@ -42,6 +42,7 @@
 #include <util/gmath.h>
 #include <collections/hashcode.h>
 #include <util/random.h>
+
 #ifdef __cpp_consteval
 template <typename T, size_t Size>
 consteval size_t __array_length(T (&)[Size]) {
@@ -334,7 +335,7 @@ namespace stanfordcpplib::collections {
     template<typename CollectionTypeA, typename CollectionTypeB>
     bool real_compare(const CollectionTypeA &coll1, const CollectionTypeB &coll2, std::true_type) {
         return std::memcmp(std::begin(coll1), std::begin(coll2),
-                coll1.size() * sizeof(*std::begin(coll1))) == 0;
+                           coll1.size() * sizeof(*std::begin(coll1))) == 0;
     }
 
     template<typename CollectionTypeA, typename CollectionTypeB>
@@ -354,29 +355,32 @@ namespace stanfordcpplib::collections {
 
     }
 
-    struct __A {};
-    struct __B {};
-    struct __C {};
-    template <class A, class B>
+    struct __A {
+    };
+    struct __B {
+    };
+    struct __C {
+    };
+    template<class A, class B>
     using CMP_PATCH = std::conditional_t<std::is_base_of_v<A, B>, __A, std::conditional_t<std::is_base_of_v<B, A>, __B, __C>>;
 
-    template <class A, class B>
-    bool __is_same(const A& a, const B& b, __A) {
+    template<class A, class B>
+    bool __is_same(const A &a, const B &b, __A) {
         return static_cast<const std::remove_cvref_t<A> *>(&b) == &a;
     }
 
-    template <class A, class B>
-    bool __is_same(const A& a, const B& b, __B) {
+    template<class A, class B>
+    bool __is_same(const A &a, const B &b, __B) {
         return static_cast<const std::remove_cvref_t<B> *>(&a) == &b;
     }
 
-    template <class A, class B>
-    bool __is_same(const A& a, const B& b, __C) {
+    template<class A, class B>
+    bool __is_same(const A &a, const B &b, __C) {
         return false;
     }
 
-    template <class A, class B>
-    bool is_same_thing(const A& a, const B& b) {
+    template<class A, class B>
+    bool is_same_thing(const A &a, const B &b) {
         using TA = std::remove_cvref_t<A>;
         using TB = std::remove_cvref_t<B>;
         return __is_same(a, b, CMP_PATCH<TA, TB>());
@@ -399,15 +403,13 @@ namespace stanfordcpplib::collections {
         using iterator_A = std::remove_cvref_t<decltype(std::begin(coll1))>;
         using iterator_B = std::remove_cvref_t<decltype(std::begin(coll2))>;
         return real_compare(coll1, coll2,
-                std::integral_constant<bool,
-                        (std::is_arithmetic_v<value_type_A> || std::is_pointer_v<value_type_A>)
-                        && std::is_same_v<value_type_A, value_type_B>
-                        && std::is_same_v<iterator_A , iterator_B>
-                        && std::is_same_v<iterator_A, value_type_A*>>());
+                            std::integral_constant<bool,
+                                    (std::is_arithmetic_v<value_type_A> || std::is_pointer_v<value_type_A>)
+                                    && std::is_same_v<value_type_A, value_type_B>
+                                    && std::is_same_v<iterator_A, iterator_B>
+                                    && std::is_same_v<iterator_A, value_type_A *>>());
 
     }
-
-
 
 
 /*
