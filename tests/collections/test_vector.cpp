@@ -62,10 +62,16 @@ void TestVector::integerBasic() {
 }
 
 void TestVector::trivialRandom() {
-
+    {
+        std::vector<double> tester {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        Vector<double> testee {1, 2, 3, 4, 5, 6, 7, 8, 9, 10.4};
+        QVERIFY(!(testee == tester));
+    }
     std::vector<double> tester {};
     Vector<double> testee {};
-    QVERIFY(stanfordcpplib::collections::equals(testee, testee));
+
+    QCOMPARE(testee, testee);
+    QCOMPARE(testee, tester);
     for (int i = 0; i < TEST_SIZE; ++i) {
         auto a = randomReal(std::numeric_limits<double>::min(), std::numeric_limits<double>::max());
         tester.push_back(a);
