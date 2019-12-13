@@ -7,20 +7,24 @@
 #include <memory_resource>
 #include <util/random.h>
 #if __cplusplus >= 201703L
-#ifdef USE_SYNC_POOL_RESOURCE
-#define INIT_MEM_RESOURCE \
-    std::pmr::synchronized_pool_resource __GLOBAL__; \
-    std::pmr::set_default_resource(&__GLOBAL__);
-#elif defined(USE_UNSYNC_POOL_RESOURCE)
-#define INIT_MEM_RESOURCE \
-    std::pmr::unsynchronized_pool_resource __GLOBAL__; \
-    std::pmr::set_default_resource(&__GLOBAL__);
+    #ifdef USE_SYNC_POOL_RESOURCE
+        #define INIT_MEM_RESOURCE \
+        std::pmr::synchronized_pool_resource __GLOBAL__; \
+        std::pmr::set_default_resource(&__GLOBAL__);
+    #elif defined(USE_UNSYNC_POOL_RESOURCE)
+        #define INIT_MEM_RESOURCE \
+        std::pmr::unsynchronized_pool_resource __GLOBAL__; \
+        std::pmr::set_default_resource(&__GLOBAL__);
+    #else
+        #define INIT_MEM_RESOURCE
+    #endif
 #else
-#define INIT_MEM_RESOURCE
-#endif
-#else
-#include <iostream>
-#define INIT_MEM_RESOURCE std::cerr << "no pmr support but pmr set" << std::endl;
+    #include <iostream>
+    #if defined(USE_SYNC_POOL_RESOURCE) || defined(USE_UNSYNC_POOL_RESOURCE)
+        #define INIT_MEM_RESOURCE std::cerr << "no pmr support but pmr set" << std::endl;
+    #else
+        #define INIT_MEM_RESOURCE
+    #endif
 #endif
 
 #include <QtTest/QtTest>
