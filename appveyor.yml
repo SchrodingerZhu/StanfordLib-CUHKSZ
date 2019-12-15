@@ -94,7 +94,6 @@ for:
       - ps: cd build
       - cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
       - cmake --build . --target -j%NUMBER_OF_PROCESSORS%
-      - ctest
       - set PATH=C:\Program Files\Git\usr\bin;%PATH%
       - cd ..
       - bash misc/generate-win.sh
