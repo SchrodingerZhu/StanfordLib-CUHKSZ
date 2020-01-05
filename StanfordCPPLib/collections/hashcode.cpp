@@ -17,6 +17,7 @@
 #include <cstddef>       // For size_t
 #include <cstdint>       // For uintptr_t
 #include <cstring>       // For strlen
+#include <limits>
 
 static const unsigned int HASH_SEED = 5381;               // Starting point for first cycle
 static const unsigned int HASH_MULTIPLIER = 33;           // Multiplier for each cycle

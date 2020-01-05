@@ -362,16 +362,16 @@ namespace stanfordcpplib::collections {
     struct __C {
     };
     template<class A, class B>
-    using CMP_PATCH = std::conditional_t<std::is_base_of_v<A, B>, __A, std::conditional_t<std::is_base_of_v<B, A>, __B, __C>>;
+    using CMP_PATCH = std::conditional_t<std::is_base_of<A, B>::value, __A, std::conditional_t<std::is_base_of<B, A>::value, __B, __C>>;
 
     template<class A, class B>
     bool __is_same(const A &a, const B &b, __A) {
-        return static_cast<const std::remove_cvref_t<A> *>(&b) == &a;
+        return static_cast<const typename std::remove_reference<typename std::remove_cv<A>::type>::type *>(&b) == &a;
     }
 
     template<class A, class B>
     bool __is_same(const A &a, const B &b, __B) {
-        return static_cast<const std::remove_cvref_t<B> *>(&a) == &b;
+        return static_cast<const typename std::remove_reference<typename std::remove_cv<B>::type>::type *>(&a) == &b;
     }
 
     template<class A, class B>
@@ -381,8 +381,8 @@ namespace stanfordcpplib::collections {
 
     template<class A, class B>
     bool is_same_thing(const A &a, const B &b) {
-        using TA = std::remove_cvref_t<A>;
-        using TB = std::remove_cvref_t<B>;
+        using TA = typename std::remove_reference<typename std::remove_cv<A>::type>::type;
+        using TB = typename std::remove_reference<typename std::remove_cv<B>::type>::type;
         return __is_same(a, b, CMP_PATCH<TA, TB>());
     }
 
@@ -398,16 +398,20 @@ namespace stanfordcpplib::collections {
             return false;
         }
 
-        using value_type_A = std::remove_cvref_t<decltype(*std::begin(coll1))>;
-        using value_type_B = std::remove_cvref_t<decltype(*std::begin(coll2))>;
-        using iterator_A = std::remove_cvref_t<decltype(std::begin(coll1))>;
-        using iterator_B = std::remove_cvref_t<decltype(std::begin(coll2))>;
+        using value_type_A = typename std::remove_reference<typename std::remove_cv<decltype(*std::begin(
+                coll1))>::type>::type;
+        using value_type_B = typename std::remove_reference<typename std::remove_cv<decltype(*std::begin(
+                coll2))>::type>::type;
+        using iterator_A = typename std::remove_reference<typename std::remove_cv<decltype(std::begin(
+                coll1))>::type>::type;
+        using iterator_B = typename std::remove_reference<typename std::remove_cv<decltype(std::begin(
+                coll2))>::type>::type;
         return real_compare(coll1, coll2,
                             std::integral_constant<bool,
-                                    (std::is_arithmetic_v<value_type_A> || std::is_pointer_v<value_type_A>)
-                                    && std::is_same_v<value_type_A, value_type_B>
-                                    && std::is_same_v<iterator_A, iterator_B>
-                                    && std::is_same_v<iterator_A, value_type_A *>>());
+                                    (std::is_arithmetic<value_type_A>::value || std::is_pointer<value_type_A>::value)
+                                    && std::is_same<value_type_A, value_type_B>::value
+                                    && std::is_same<iterator_A, iterator_B>::value
+                                    && std::is_same<iterator_A, value_type_A *>::value>());
 
     }
 
