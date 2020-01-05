@@ -28,7 +28,12 @@ for:
   environment:
     LDFLAGS: "-L/usr/local/opt/qt/lib"
     CPPFLAGS: "-I/usr/local/opt/qt/include"
-    Qt5_DIR: "/usr/local/opt/qt"
+    Qt5Widgets_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Widgets"
+    Qt5Test_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Test"
+    Qt5Core_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Core"
+    Qt5_DIR: "/usr/local/opt/qt/lib/cmake"
+    Qt5Concurrent_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Concurrent"
+    Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
 
 -
   matrix:
