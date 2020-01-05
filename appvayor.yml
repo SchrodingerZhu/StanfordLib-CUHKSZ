@@ -1,0 +1,36 @@
+image:
+  - Visual Studio 2019
+  - Ubuntu
+  - macos
+
+for:
+-
+  matrix:
+    only:
+      - image: Ubuntu
+
+  install:
+  - git submodule update --init --recursive
+  - apt install -y make g++ qtbase5-dev xvfb qtmultimedia5-dev qtdeclarative5-dev
+-
+  matrix:
+    only:
+      - image: macos
+
+  install:
+  - git submodule update --init --recursive
+  - brew install qt
+-
+  matrix:
+    only:
+      - image: Visual Studio 2019
+  
+  install:
+  - git submodule update --init --recursive
+      
+before_build:
+- bash generate.sh
+
+artifacts:
+  - path: "$APPVEYOR_BUILD_WORKER_IMAGE-dist.zip"
+    name: "target_$APPVEYOR_BUILD_WORKER_IMAGE"
