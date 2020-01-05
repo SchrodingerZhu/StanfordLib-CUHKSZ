@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -e
-git submodule update --init --recursive
 mkdir build
 cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -G "$GENERATOR" && cmake --build . --target stanford "-j$(nproc)" && cd ..
 mkdir -p dist/libs
