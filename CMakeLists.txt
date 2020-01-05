@@ -59,4 +59,6 @@ file(GLOB resources res/*)
 file(COPY ${resources} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # Unit tests
-include(tests/tests.cmake)
+if (NOT CMAKE_BUILD_TYPE EQUAL "Release")
+    include(tests/tests.cmake)
+endif()
