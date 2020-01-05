@@ -56,9 +56,6 @@
 #include <util/random.h>
 #include <util/strlib.h>
 #include <collections/vector.h>
-#if __cplusplus >= 201703L
-#include <memory_resource>
-#endif
 /*
  * Class: LinkedList<ValueType>
  * ----------------------------
@@ -474,7 +471,7 @@ private:
 
     /* Instance variables */
 #if __cplusplus >= 201703L
-    std::list<ValueType, std::pmr::polymorphic_allocator<ValueType>> _elements;   // STL linked list as backing storage
+    std::list<ValueType> _elements;   // STL linked list as backing storage
 #else
     std::list<ValueType> _elements;
 #endif

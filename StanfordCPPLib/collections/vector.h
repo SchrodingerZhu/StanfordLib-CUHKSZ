@@ -66,11 +66,8 @@
 #include <collections/hashcode.h>
 #include <util/random.h>
 #include <QVector>
-#if __cplusplus >= 201703L
-#include <memory_resource>
 #include <cstring>
 
-#endif
 /**
  * This class stores an ordered list of values similar to an array.
  * It supports traditional array selection using square brackets, but
@@ -486,7 +483,7 @@ private:
 #if __cplusplus >= 201703L
     using ContainerType = typename std::conditional<std::is_same<ValueType, bool>::value,
             QVector<bool>,
-            std::vector<ValueType, std::pmr::polymorphic_allocator<ValueType>>>::type;
+            std::vector<ValueType>>::type;
 #else
     using ContainerType = typename std::conditional<std::is_same<ValueType, bool>::value,
             QVector<bool>,

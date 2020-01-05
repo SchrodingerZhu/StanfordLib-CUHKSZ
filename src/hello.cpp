@@ -80,4 +80,4 @@ int start() {
     return 0;
 }
 
-__WRAP_MAIN_SYNC_POOL__(start)
+__WRAP_MAIN__(start)
