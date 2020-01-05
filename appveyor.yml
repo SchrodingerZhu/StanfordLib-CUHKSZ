@@ -1,0 +1,95 @@
+version: 1.0.{build}
+
+image:
+  - Visual Studio 2019
+  - Ubuntu
+  - macos
+
+for:
+  - matrix:
+      only:
+        - image: Ubuntu
+
+    environment:
+      GENERATOR: "Unix Makefiles"
+      EXTENTION: "so"
+      LINUX_ONLY: 'cp "build/mimalloc/libmimalloc.$EXTENTION.1.2" dist/libs'
+
+    install:
+      - git submodule update --init --recursive
+      - sudo add-apt-repository ppa:beineri/opt-qt-5.13.2-bionic
+      - sudo apt-get update
+      - sudo apt install -y make g++ xvfb qt513base qt513multimedia qt513declarative mesa-common-dev libglu1-mesa-dev
+
+    build_script:
+      - bash generate.sh
+
+  - matrix:
+      only:
+        - image: macos
+
+    install:
+      - git submodule update --init --recursive
+      - brew install qt
+
+    environment:
+      LDFLAGS: "-L/usr/local/opt/qt/lib"
+      CPPFLAGS: "-I/usr/local/opt/qt/include"
+      Qt5Widgets_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Widgets"
+      Qt5Test_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Test"
+      Qt5Core_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Core"
+      Qt5_DIR: "/usr/local/opt/qt/lib/cmake"
+      Qt5Concurrent_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Concurrent"
+      Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
+      GENERATOR: "Unix Makefiles"
+      EXTENTION: "dylib"
+      LINUX_ONLY: "echo hi"
+
+    build_script:
+      - bash generate.sh
+
+  - matrix:
+      only:
+        - image: Visual Studio 2019
+
+    install:
+      - git submodule update --init --recursive
+      - choco install zip
+      - set PATH=C:\msys64\mingw%BITS%\bin;%PATH:C:\Program Files\Git\usr\bin;=%
+      - C:\msys64\usr\bin\pacman -S --needed --noconfirm mingw-w64-%ARCH%-gcc mingw-w64-%ARCH%-cmake mingw-w64-%ARCH%-python2 mingw-w64-%ARCH%-qt5-static mingw-w64-%ARCH%-jasper
+      - set PATH=%Qt5_DIR%;%Qt5_DIR%/bin;%PATH%
+
+    environment:
+      Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
+      GENERATOR: "MinGW Makefiles"
+      EXTENTION: "dll"
+      LINUX_ONLY: "echo hi"
+      ARCH: "x86_64"
+
+    build_script:
+      - ps: mkdir build
+      - ps: cd build
+      - ps: cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
+      - ps: cmake --build . --target stanford "-j2"
+      - ps: cd ..
+      - ps: mkdir -p dist/libs
+      - ps: cp -r res dist
+      - ps: cp -r src dist
+      - ps: cp template dist/CMakeLists.txt
+      - ps: cp "build/libstanford.dll" dist/libs
+      - ps: cp "build/mimalloc/libmimalloc.dll" dist/libs
+      - ps: mkdir -p dist/includes/mimalloc
+      - ps: mkdir -p dist/includes/stanford
+      - ps: mkdir -p dist/includes/abseil
+      - ps: cp -r abseil-cpp/absl dist/includes/abseil
+      - ps: cp mimalloc/include/* dist/includes/mimalloc
+      - ps: cd StanfordCPPLib
+      - ps: cp --parents */*.h ../dist/includes/stanford
+      - ps: cp macro.h ../dist/includes/stanford
+      - ps: cp images.qrc ../dist/includes/stanford
+      - ps: cd ..
+      - ps: zip -9 -r "dist.zip" dist
+
+artifacts:
+  - path: "dist.zip"
+    name: "dist.zip"

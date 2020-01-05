@@ -26,7 +26,9 @@
 #define _exceptions_h
 
 #include <iostream>
-
+#if __cplusplus >= 201703L
+#define _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES
+#endif
 namespace exceptions {
 /**
  * Strips some extraneous text from a function's name/header to make it look

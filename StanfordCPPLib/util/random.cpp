@@ -29,6 +29,7 @@
 #include <queue>
 #include <system/error.h>
 #include "private/static.h"
+#include <sstream>
 
 /* internal buffer of fixed random numbers to return; used by autograders */
 STATIC_VARIABLE_DECLARE_COLLECTION_EMPTY(std::queue<bool>, fixedBools)

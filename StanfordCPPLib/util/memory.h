@@ -16,7 +16,7 @@
 
 #include <cstdint>
 
-namespace stanfordcpplib::memory {
+namespace stanfordcpplib { namespace memory {
 
 /**
  * Fills in the given long int parameters with the distance from the given
@@ -54,6 +54,6 @@ namespace stanfordcpplib::memory {
  */
         bool isOnStatic(void *p);
 
-    } // namespace stanfordcpplib
+    } } // namespace stanfordcpplib
 
 #endif // _memory_h
