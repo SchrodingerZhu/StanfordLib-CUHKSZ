@@ -64,7 +64,7 @@ for:
       LINUX_ONLY: "echo hi"
 
     build_script:
-      - type generate.ps1 | powershell
+      - type .\generate.ps1 | powershell
 
 artifacts:
   - path: "dist.zip"
