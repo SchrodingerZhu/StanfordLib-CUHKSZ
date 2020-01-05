@@ -14,7 +14,7 @@
 #include "memory.h"
 #include <cstddef>
 
-namespace stanfordcpplib::memory {
+namespace stanfordcpplib { namespace memory {
 
         void computeMemoryDistances(
                 void * p,
@@ -56,4 +56,4 @@ namespace stanfordcpplib::memory {
             return staticDist < stackDist && staticDist < heapDist;
         }
 
-    } // namespace stanfordcpplib
+    } } // namespace stanfordcpplib
