@@ -13,7 +13,9 @@ for:
 
   install:
   - git submodule update --init --recursive
-  - sudo apt install -y make g++ qtbase5-dev xvfb qtmultimedia5-dev qtdeclarative5-dev
+  - sudo add-apt-repository ppa:beineri/opt-qt-5.13.2-bionic
+  - sudo apt-get update
+  - sudo apt install -y make g++ xvfb qt513base qt513multimedia  qt513declarative 
 -
   matrix:
     only:
@@ -26,6 +28,7 @@ for:
   environment:
     LDFLAGS: "-L/usr/local/opt/qt/lib"
     CPPFLAGS: "-I/usr/local/opt/qt/include"
+    Qt5_DIR: "/usr/local/opt/qt"
 
 -
   matrix:
@@ -36,7 +39,10 @@ for:
   - git submodule update --init --recursive
   
   environment:
-    Qt5_INSTALL_DIR: 'C:\Qt\5.13.2\msvc2017_64'
+    Qt5_DIR: 'C:\Qt\5.13.2\msvc2017_64'
+  
+  before_build:
+  - set PATH=C:\Qt\5.13.2\msvc2017_64\bin;%PATH%
       
 build_script:
 - bash generate.sh
