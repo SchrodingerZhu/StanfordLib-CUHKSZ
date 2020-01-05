@@ -28,7 +28,7 @@ for:
   install:
   - git submodule update --init --recursive
       
-before_build:
+build_script:
 - bash generate.sh
 
 artifacts:
