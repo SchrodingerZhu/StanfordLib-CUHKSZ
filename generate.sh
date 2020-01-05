@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 mkdir build
-cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -G "$GENERATOR" && cmake --build . --target stanford "-j$(nproc)" && cd ..
+cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -G "$GENERATOR" $EXTRA && cmake --build . --target stanford "-j$(nproc)" && cd ..
 mkdir -p dist/libs
 cp -r res dist
 cp -r src dist
