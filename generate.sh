@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 git submodule update --init --recursive
 mkdir build
-cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . "-j$(nproc)" && cd ..
+cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . --target stanford "-j$(nproc)" && cd ..
 mkdir -p dist/libs
 cp -r res dist
 cp -r src dist
