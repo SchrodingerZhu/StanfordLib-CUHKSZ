@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 set -e
 mkdir build
-cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -G "$GENERATOR" $EXTRA && cmake --build . --target stanford "-j$(nproc)" && cd ..
+cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -G "$GENERATOR" && cmake --build . --target stanford "-j$(nproc)" && cd ..
 mkdir -p dist/libs
 cp -r res dist
 cp -r src dist
 cp template dist/CMakeLists.txt
-cp build/libstanford.so dist/libs
-cp build/mimalloc/libmimalloc.so dist/libs
-cp build/mimalloc/libmimalloc.so.1.2 dist/libs
+cp "build/libstanford.$EXTENTION" dist/libs
+cp "build/mimalloc/libmimalloc.$EXTENTION" dist/libs
+cp "build/mimalloc/libmimalloc.$EXTENTION.1.2" dist/libs
 
 # Generate Header files
 mkdir -p dist/includes/mimalloc

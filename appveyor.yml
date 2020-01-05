@@ -13,6 +13,7 @@ for:
 
   environment:
     GENERATOR : "Unix Makefiles"
+    EXTENTION: "so"
 
   install:
   - git submodule update --init --recursive
@@ -38,6 +39,7 @@ for:
     Qt5Concurrent_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Concurrent"
     Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
     GENERATOR : "Unix Makefiles"
+    EXTENTION: "dylib"
 
 -
   matrix:
@@ -47,15 +49,13 @@ for:
   install:
   - git submodule update --init --recursive
   - choco install zip
+  - set PATH=C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;%PATH%
   
   environment:
     Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
-    GENERATOR : "MinGW Makefiles"
-    EXTRA: -DCMAKE_SH=NOTFOUND
+    GENERATOR : "MSYS Makefiles"
+    EXTENTION: "dll"
 
-  before_build:
-  - set PATH=C:\Qt\5.13.2\mingw73_64\bin;C:\MinGW\bin;C:\Qt\Tools\mingw73_64;%PATH%
-      
 build_script:
 - bash generate.sh
 
