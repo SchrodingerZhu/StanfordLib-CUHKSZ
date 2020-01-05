@@ -54,8 +54,9 @@ for:
 
     install:
       - git submodule update --init --recursive
-      - git submodule set-branch --branch lts_2019_08_08 abseil-cpp
-      - git submodule update --remote abseil-cpp
+      - git submodule deinit -f abseil-cpp
+      - git rm -rf abseil-cpp
+      - git submodule add -b lts_2019_08_08 -f https://github.com/abseil/abseil-cpp
       - choco install zip
       - set PATH=C:\Qt\Tools\mingw730_64\bin;%PATH:C:\Program Files\Git\usr\bin;=%
       - set PATH=%Qt5_DIR%;%Qt5_DIR%\bin;%PATH%
