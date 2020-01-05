@@ -56,7 +56,7 @@ for:
       - git submodule update --init --recursive
       - choco install zip
       - set PATH=C:\msys64\mingw%BITS%\bin;%PATH:C:\Program Files\Git\usr\bin;=%
-      - C:\msys64\usr\bin\pacman -S --needed --noconfirm mingw-w64-%ARCH%-gcc mingw-w64-%ARCH%-cmake mingw-w64-%ARCH%-python2 mingw-w64-%ARCH%-qt5-static mingw-w64-%ARCH%-jasper
+      - C:\msys64\usr\bin\pacman -S --needed --noconfirm mingw-w64-%ARCH%-gcc mingw-w64-%ARCH%-cmake
       - set PATH=%Qt5_DIR%;%Qt5_DIR%/bin;%PATH%
 
     environment:
