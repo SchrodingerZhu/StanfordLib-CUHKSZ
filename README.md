@@ -13,3 +13,4 @@ A cmake deliver version of stanford library, specially patched for CSC3002 stude
   Vast functions in `strlib.h` has been refactored into wrappers around`absl` to reduce the difficulty of maintenance.
   Char checking operation now uses `std::memchr` directly instead of self implementing.
   In most cases, you do not need to care about the changes: they do not require any manual interference on API.
+- We also bind the library with [`mimalloc`](https://github.com/microsoft/mimalloc), it is more efficient and it can output some debug messages for you, please check [environment-options](https://github.com/microsoft/mimalloc#environment-options).

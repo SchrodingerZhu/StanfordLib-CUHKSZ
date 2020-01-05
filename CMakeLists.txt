@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 20)
 # Find Qt5 Packages
 find_package(Qt5 COMPONENTS Widgets Network Core Multimedia PrintSupport REQUIRED)
 # Essential Library Flags
-set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS} -lpthread -ldl -g")
-set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS} -lpthread -ldl -g")
+set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS} -lpthread -ldl -g -O3")
+set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS} -lpthread -ldl -g -O3")
 # Define Library Files
 file(GLOB util_files StanfordCPPLib/util/*.h StanfordCPPLib/util/*.cpp)
 file(GLOB system_files StanfordCPPLib/system/*.h StanfordCPPLib/system/*.cpp)
@@ -22,6 +22,7 @@ file(GLOB collections_files StanfordCPPLib/collections/*.h StanfordCPPLib/collec
 file(GLOB private_files StanfordCPPLib/private/*.h StanfordCPPLib/private/*.cpp)
 # Setup Abseil
 add_subdirectory(abseil-cpp)
+add_subdirectory(mimalloc)
 # Define Stanford Library
 add_library(stanford SHARED
         StanfordCPPLib/images.qrc
@@ -37,7 +38,7 @@ include_directories(
 )
 
 # Linking Relations
-target_link_libraries(stanford Qt5::Widgets
+target_link_libraries(stanford PUBLIC Qt5::Widgets
         Qt5::Network
         Qt5::Multimedia
         absl::container
@@ -46,7 +47,10 @@ target_link_libraries(stanford Qt5::Widgets
         absl::str_format
         absl::hashtablez_sampler
         absl::raw_hash_set
-)
+        mimalloc-static
+        )
+
+
 add_executable(hello src/hello.h src/hello.cpp)
 target_link_libraries(hello stanford)
 
