@@ -64,6 +64,7 @@ for:
       GENERATOR: "MinGW Makefiles"
       EXTENTION: "dll"
       LINUX_ONLY: "echo hi"
+      ARCH: "x86_64"
 
     build_script:
       - ps: mkdir build
