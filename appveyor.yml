@@ -13,7 +13,7 @@ for:
 
   install:
   - git submodule update --init --recursive
-  - apt install -y make g++ qtbase5-dev xvfb qtmultimedia5-dev qtdeclarative5-dev
+  - sudo apt install -y make g++ qtbase5-dev xvfb qtmultimedia5-dev qtdeclarative5-dev
 -
   matrix:
     only:
@@ -22,6 +22,11 @@ for:
   install:
   - git submodule update --init --recursive
   - brew install qt
+  
+  environment:
+  - LDFLAGS: "-L/usr/local/opt/qt/lib"
+  - CPPFLAGS: "-I/usr/local/opt/qt/include"
+
 -
   matrix:
     only:
@@ -29,6 +34,9 @@ for:
   
   install:
   - git submodule update --init --recursive
+  
+  environment:
+  - Qt5_INSTALL_DIR: 'C:\Qt\5.13.2\msvc2017_64'
       
 build_script:
 - bash generate.sh
