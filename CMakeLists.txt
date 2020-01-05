@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 14)
 # Find Qt5 Packages
 find_package(Qt5 COMPONENTS Widgets Network Core Multimedia PrintSupport REQUIRED)
 # Essential Library Flags
-set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS} -lpthread -ldl -g -O3")
-set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS} -lpthread -ldl -g -O3")
+set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS} -lpthread -ldl -O3")
+set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS} -lpthread -ldl -O3")
 # Define Library Files
 file(GLOB util_files StanfordCPPLib/util/*.h StanfordCPPLib/util/*.cpp)
 file(GLOB system_files StanfordCPPLib/system/*.h StanfordCPPLib/system/*.cpp)
