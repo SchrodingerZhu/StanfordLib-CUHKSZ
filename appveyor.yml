@@ -1,7 +1,7 @@
 version: 1.0.{build}
 
 image:
-  - Visual Studio 2019
+  - Visual Studio 2015
   - Ubuntu
   - macos
 
@@ -14,6 +14,7 @@ for:
   environment:
     GENERATOR : "Unix Makefiles"
     EXTENTION: "so"
+    LINUX_ONLY: 'cp "build/mimalloc/libmimalloc.$EXTENTION.1.2" dist/libs'
 
   install:
   - git submodule update --init --recursive
@@ -40,21 +41,23 @@ for:
     Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
     GENERATOR : "Unix Makefiles"
     EXTENTION: "dylib"
+    LINUX_ONLY: "echo hi"
 
 -
   matrix:
     only:
-      - image: Visual Studio 2019
+      - image: Visual Studio 2015
   
   install:
   - git submodule update --init --recursive
   - choco install zip
-  - set PATH=C:\msys64\%MSYSTEM%\bin;C:\msys64\usr\bin;%PATH%
+  - set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\bin;%PATH:C:\Program Files\Git\usr\bin;=%
   
   environment:
     Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
-    GENERATOR : "MSYS Makefiles"
+    GENERATOR : "MinGW Makefiles"
     EXTENTION: "dll"
+    LINUX_ONLY: "echo hi"
 
 build_script:
 - bash generate.sh
