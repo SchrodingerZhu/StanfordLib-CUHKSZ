@@ -24,8 +24,8 @@ for:
   - brew install qt
   
   environment:
-  - LDFLAGS: "-L/usr/local/opt/qt/lib"
-  - CPPFLAGS: "-I/usr/local/opt/qt/include"
+    LDFLAGS: "-L/usr/local/opt/qt/lib"
+    CPPFLAGS: "-I/usr/local/opt/qt/include"
 
 -
   matrix:
@@ -36,7 +36,7 @@ for:
   - git submodule update --init --recursive
   
   environment:
-  - Qt5_INSTALL_DIR: 'C:\Qt\5.13.2\msvc2017_64'
+    Qt5_INSTALL_DIR: 'C:\Qt\5.13.2\msvc2017_64'
       
 build_script:
 - bash generate.sh
