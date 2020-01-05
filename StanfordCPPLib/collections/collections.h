@@ -169,7 +169,7 @@ inline bool readGenericValue(std::istream &is, std::string &value) {
 }
 
 // end of global namespace string read/writing functions from strlib.h
-namespace stanfordcpplib::collections {
+namespace stanfordcpplib { namespace collections {
 
 #ifdef SPL_THROW_ON_INVALID_ITERATOR
     template <typename CollectionType, typename IteratorType>
@@ -365,17 +365,17 @@ namespace stanfordcpplib::collections {
     using CMP_PATCH = std::conditional_t<std::is_base_of<A, B>::value, __A, std::conditional_t<std::is_base_of<B, A>::value, __B, __C>>;
 
     template<class A, class B>
-    bool __is_same(const A &a, const B &b, __A) {
+    bool is_real_same(const A &a, const B &b, __A) {
         return static_cast<const typename std::remove_reference<typename std::remove_cv<A>::type>::type *>(&b) == &a;
     }
 
     template<class A, class B>
-    bool __is_same(const A &a, const B &b, __B) {
+    bool is_real_same(const A &a, const B &b, __B) {
         return static_cast<const typename std::remove_reference<typename std::remove_cv<B>::type>::type *>(&a) == &b;
     }
 
     template<class A, class B>
-    bool __is_same(const A &a, const B &b, __C) {
+    bool is_real_same(const A &a, const B &b, __C) {
         return false;
     }
 
@@ -383,7 +383,7 @@ namespace stanfordcpplib::collections {
     bool is_same_thing(const A &a, const B &b) {
         using TA = typename std::remove_reference<typename std::remove_cv<A>::type>::type;
         using TB = typename std::remove_reference<typename std::remove_cv<B>::type>::type;
-        return __is_same(a, b, CMP_PATCH<TA, TB>());
+        return is_real_same(a, b, CMP_PATCH<TA, TB>());
     }
 
 
@@ -2092,6 +2092,6 @@ namespace stanfordcpplib::collections {
         static constexpr bool value = false;
     };
 
-} // namespace stanfordcpplib
+} } // namespace stanfordcpplib
 
 #endif // _collections_h
