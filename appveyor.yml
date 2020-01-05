@@ -51,7 +51,7 @@ for:
   environment:
     Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
     GENERATOR : "MinGW Makefiles"
-    EXTRA: -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+    EXTRA: -DCMAKE_SH=NOTFOUND
 
   before_build:
   - set PATH=C:\Qt\5.13.2\mingw73_64\bin;C:\MinGW\bin;C:\Qt\Tools\mingw73_64;%PATH%
