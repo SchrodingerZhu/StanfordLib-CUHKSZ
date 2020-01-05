@@ -60,7 +60,7 @@ for:
     LINUX_ONLY: "echo hi"
 
 build_script:
-- "C:\\Program Files\\Git\\usr\\bin\\bash.exe" generate.sh
+- 'C:\Program Files\Git\usr\bin\bash.exe' generate.sh
 
 artifacts:
   - path: "dist.zip"
