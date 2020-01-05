@@ -61,7 +61,7 @@ for:
 
     environment:
       Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
-      TOOLS: 'C:\Qt\Tools\mingw73_64\bin'
+      TOOLS: 'C:\Qt\Tools\mingw730_64\bin'
       GENERATOR: "MinGW Makefiles"
       EXTENTION: "dll"
       LINUX_ONLY: "echo hi"
