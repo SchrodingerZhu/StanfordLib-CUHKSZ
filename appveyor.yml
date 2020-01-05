@@ -55,10 +55,12 @@ for:
     install:
       - git submodule update --init --recursive
       - choco install zip
-      - set PATH=C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\mingw32\bin;%PATH:C:\Program Files\Git\usr\bin;=%
-      - set PATH=%Qt5_DIR%;%Qt5_DIR%\bin;%PATH%
+      - set PATH=%TOOLS%;%Qt5_DIR%;%Qt5_DIR%\bin;%PATH%
+      - set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
+
     environment:
       Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
+      TOOLS: 'C:\Qt\Tools\mingw73_64\bin'
       GENERATOR: "MinGW Makefiles"
       EXTENTION: "dll"
       LINUX_ONLY: "echo hi"
