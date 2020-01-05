@@ -54,7 +54,7 @@ for:
   
   before_build:
   - set PATH=C:\Qt\5.13.2\mingw73_64\bin;C:\MinGW\bin;C:\Qt\Tools\mingw73_64;%PATH%
-  - set PATH=%PATH:C:\Program Files\Git\usr\bin=%
+  - del "C:\Program Files\Git\usr\bin\sh.exe"
       
 build_script:
 - bash generate.sh
