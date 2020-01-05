@@ -1,4 +1,4 @@
-#!/usr/bin.env sh
+#!/usr/bin/env sh
 git submodule update --init --recursive
 mkdir build
 cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . "-j$(nproc)" && cd ..
@@ -18,4 +18,4 @@ cp -r abseil-cpp/absl dist/includes/abseil
 cp mimalloc/include/* dist/includes/mimalloc
 cd StanfordCPPLib && cp --parents */*.h ../dist/includes/stanford && cp macro.h ../dist/includes/stanford &&\
  cp images.qrc ../dist/includes/stanford && cd ..
-zip -9 -r "$(uname)-dist.zip" dist
+zip -9 -r "$APPVEYOR_BUILD_WORKER_IMAGE-dist.zip" dist
