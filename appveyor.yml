@@ -22,28 +22,7 @@ for:
       - sudo apt install -y make g++ xvfb qt513base qt513multimedia qt513declarative mesa-common-dev libglu1-mesa-dev
 
     build_script:
-      - ps: mkdir build
-      - ps: cd build
-      - ps: cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
-      - ps: cmake --build . --target stanford "-j2"
-      - ps: cd ..
-      - ps: mkdir -p dist/libs
-      - ps: cp -r res dist
-      - ps: cp -r src dist
-      - ps: cp template dist/CMakeLists.txt
-      - ps: cp "build/libstanford.dll" dist/libs
-      - ps: cp "build/mimalloc/libmimalloc.dll" dist/libs
-      - ps: mkdir -p dist/includes/mimalloc
-      - ps: mkdir -p dist/includes/stanford
-      - ps: mkdir -p dist/includes/abseil
-      - ps: cp -r abseil-cpp/absl dist/includes/abseil
-      - ps: cp mimalloc/include/* dist/includes/mimalloc
-      - ps: cd StanfordCPPLib
-      - ps: cp --parents */*.h ../dist/includes/stanford
-      - ps: cp macro.h ../dist/includes/stanford
-      - ps: cp images.qrc ../dist/includes/stanford
-      - ps: cd ..
-      - ps: zip -9 -r "dist.zip" dist
+      - bash generate.sh
 
   - matrix:
       only:
@@ -88,7 +67,28 @@ for:
       LINUX_ONLY: "echo hi"
 
     build_script:
-      - type .\generate.ps1 | powershell
+      - ps: mkdir build
+      - ps: cd build
+      - ps: cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
+      - ps: cmake --build . --target stanford "-j2"
+      - ps: cd ..
+      - ps: mkdir -p dist/libs
+      - ps: cp -r res dist
+      - ps: cp -r src dist
+      - ps: cp template dist/CMakeLists.txt
+      - ps: cp "build/libstanford.dll" dist/libs
+      - ps: cp "build/mimalloc/libmimalloc.dll" dist/libs
+      - ps: mkdir -p dist/includes/mimalloc
+      - ps: mkdir -p dist/includes/stanford
+      - ps: mkdir -p dist/includes/abseil
+      - ps: cp -r abseil-cpp/absl dist/includes/abseil
+      - ps: cp mimalloc/include/* dist/includes/mimalloc
+      - ps: cd StanfordCPPLib
+      - ps: cp --parents */*.h ../dist/includes/stanford
+      - ps: cp macro.h ../dist/includes/stanford
+      - ps: cp images.qrc ../dist/includes/stanford
+      - ps: cd ..
+      - ps: zip -9 -r "dist.zip" dist
 
 artifacts:
   - path: "dist.zip"
