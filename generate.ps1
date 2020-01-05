@@ -1,6 +1,6 @@
 mkdir build
 cd build
-cmake CC="C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\bin\gcc.exe" CXX="C:\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\bin\g++.exe" .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
+cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
 cmake --build . --target stanford "-j2"
 cd ..
 mkdir -p dist/libs
