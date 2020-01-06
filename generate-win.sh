@@ -1,4 +1,3 @@
-cd ..
 mkdir -p dist/libs
 cp -r res dist
 cp -r src dist
