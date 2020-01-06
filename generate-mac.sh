@@ -15,6 +15,6 @@ mkdir -p dist/includes/stanford
 mkdir -p dist/includes/abseil
 cp -r abseil-cpp/absl dist/includes/abseil
 cp mimalloc/include/* dist/includes/mimalloc
-cd StanfordCPPLib && cp --parents */*.h ../dist/includes/stanford && cp macro.h ../dist/includes/stanford &&\
+cd StanfordCPPLib && ditto */*.h ../dist/includes/stanford && cp macro.h ../dist/includes/stanford &&\
  cp images.qrc ../dist/includes/stanford && cd ..
 zip -9 -r "dist.zip" dist
