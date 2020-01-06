@@ -71,6 +71,7 @@ for:
       - cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
       - cmake --build . --target stanford "-j4"
       - set PATH=C:\Program Files\Git\usr\bin;%PATH%
+      - cd ..
       - bash generate-win.sh
 
 artifacts:
