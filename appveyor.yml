@@ -13,7 +13,6 @@ for:
     environment:
       GENERATOR: "Unix Makefiles"
       EXTENTION: "so"
-      LINUX_ONLY: 'cp build/mimalloc/libmimalloc.so.1.2 dist/libs'
 
     install:
       - git submodule update --init --recursive
@@ -22,7 +21,7 @@ for:
       - sudo apt install -y make g++ xvfb qt513base qt513multimedia qt513declarative mesa-common-dev libglu1-mesa-dev
 
     build_script:
-      - bash generate.sh
+      - bash generate-linux.sh
 
   - matrix:
       only:
@@ -43,10 +42,9 @@ for:
       Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
       GENERATOR: "Unix Makefiles"
       EXTENTION: "dylib"
-      LINUX_ONLY: "echo hi"
 
     build_script:
-      - bash generate.sh
+      - bash generate-mac.sh
 
   - matrix:
       only:
