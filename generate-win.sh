@@ -13,4 +13,4 @@ cp --parents */*.h ../dist/includes/stanford
 cp macro.h ../dist/includes/stanford
 cp images.qrc ../dist/includes/stanford
 cd ..
-zip -9 -r "dist.zip" dist
+zip -9 -r "x86_64-windows-mingw_w64.zip" dist

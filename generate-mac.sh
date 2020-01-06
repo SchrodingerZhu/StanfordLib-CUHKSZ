@@ -15,4 +15,4 @@ cp -r abseil-cpp/absl dist/includes/abseil
 cp mimalloc/include/* dist/includes/mimalloc
 cd StanfordCPPLib && rsync -R */*.h ../dist/includes/stanford && cp macro.h ../dist/includes/stanford &&\
  cp images.qrc ../dist/includes/stanford && cd ..
-zip -9 -r "dist.zip" dist
+zip -9 -r "x86_64-darwin-clang.zip" dist

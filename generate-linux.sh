@@ -16,4 +16,4 @@ cp -r abseil-cpp/absl dist/includes/abseil
 cp mimalloc/include/* dist/includes/mimalloc
 cd StanfordCPPLib && cp --parents */*.h ../dist/includes/stanford && cp macro.h ../dist/includes/stanford &&\
  cp images.qrc ../dist/includes/stanford && cd ..
-zip -9 -r "dist.zip" dist
+zip -9 -r "x86_64-linux-gcc.zip" dist

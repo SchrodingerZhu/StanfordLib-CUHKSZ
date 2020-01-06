@@ -24,7 +24,7 @@ for:
       - bash generate-linux.sh
 
     artifacts:
-      - path: "dist.zip"
+      - path: "x86_64-linux-gcc.zip"
         name: "x86_64-linux-gcc.zip"
 
   - matrix:
@@ -51,7 +51,7 @@ for:
       - bash generate-mac.sh
 
     artifacts:
-      - path: "dist.zip"
+      - path: "x86_64-darwin-clang.zip"
         name: "x86_64-darwin-clang.zip"
 
   - matrix:
@@ -81,7 +81,7 @@ for:
       - bash generate-win.sh
 
     artifacts:
-      - path: "dist.zip"
+      - path: "x86_64-windows-mingw_w64.zip"
         name: "x86_64-windows-mingw_w64.zip"
 
 deploy:
