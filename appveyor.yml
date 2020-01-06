@@ -90,9 +90,9 @@ deploy:
   provider: GitHub
   auth_token:
     secure: XN/mGc6ukR428vElOAYmlfXRjgQaaswHV0Q2kMgCF3RqgU0z+jDkqk03QCVDKtiQ # your encrypted token from GitHub
-  artifact: x86_64-windows-mingw_w64.zip,x86_64-darwin-clang.zip,x86_64-darwin-clang.zip           # upload all NuGet packages to release assets
+  artifact: x86_64-windows-mingw_w64.zip,x86_64-darwin-clang.zip,x86_64-linux-gcc.zip
   draft: false
   prerelease: false
   on:
     branch: master                 # release from master branch only
-    APPVEYOR_REPO_TAG: true        # deploy on tag push only
+    APPVEYOR_REPO_TAG: false        # deploy on tag push only
