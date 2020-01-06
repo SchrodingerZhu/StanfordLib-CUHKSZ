@@ -85,7 +85,7 @@ for:
         name: "x86_64-windows-mingw_w64.zip"
 
 deploy:
-  release: $(appveyor_build_version)
+  release: 2020.1
   description: 'Release'
   provider: GitHub
   auth_token:
@@ -95,4 +95,4 @@ deploy:
   prerelease: false
   on:
     branch: master                 # release from master branch only
-    APPVEYOR_REPO_TAG: false        # deploy on tag push only
+    APPVEYOR_REPO_TAG: true        # deploy on tag push only
