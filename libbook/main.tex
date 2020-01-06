@@ -1,0 +1,216 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage{float}
+\graphicspath{{.}}
+
+\begin{document}
+
+\author{ZHU Yifan, Sun Wenlong\\@Computer Comity}
+\title{Handbook of StanfordLib-CUHKSZ}
+\date{2020.1}
+
+\maketitle
+\tableofcontents
+\chapter{Introduction}
+
+\mintinline{text}{StanfordLib-CUHKSZ} is a library based on the famous Stanford library with special patches for CUHK(SZ) Students. The design and development of this library is to provide some basic tools for CSE students learning C++ and developing basic programs.
+
+The project is developed on GitHub and maintained actively by the Computer Comity of CUHK(SZ). Different from the original version, the library has migrated the distribution toolchain onto \mintinline{text}{cmake} as it is accepted by more IDEs and provides more opportunities for students to understand the compiling and linking mechanisms of C/C++ language. Noticing that compiling the original version from sources may takes a lot of time, we decide to provide the pre-compiled versions together with the sources. 
+
+To apply more modern practices, reduce the difficulties of maintenance and improve the critical performance, we have also ported several famous libraries including \mintinline{text}{abseil-cpp} and \mintinline{text}{mimalloc} as the back-ends. This modification further provides some new features like memory statistics and tracing.
+
+This Handbook will help the users setup the environment to import the library into their own projects. We hope that every student can get a lot of fun from programming!
+
+\textbf{Notice: } We currently not provide pre-compiled libraries with Windows MSVC tool-chains. This won't affect the experience of CUHK(SZ) students as the recommended installation should use the GNU/Apple-LLVM tool-chains in CSC3002. The source code is supposed to pass the compilation with MSVC but not tested. If you want to use the library with MSVC, please follow the instructions to compile the library from sources.
+
+\chapter{Setup}
+\section{Requirements and Setups}
+\subsection{Versions}
+\begin{enumerate}
+	\item Qt $\ge 5.13$
+	\item CMake $\ge 3.14$
+\end{enumerate}
+\subsection{Standard Qt Setup}
+For most systems including MacOS/Linux/Windows, the Qt bundled installer downloaded from \href{http://qt.io}{the official website} or other mirrors should be just appropriate to setup the Qt environment for the users. For CUHK(SZ) students, this \href{https://mirrors.tuna.tsinghua.edu.cn/qt/official_releases/qt/5.14/5.14.0/ }{TUNA mirror} is a fast choice. 
+\subsection{Standard CMake Setup}
+CMake can be easily setup by the \href{https://cmake.org/download/}{official installers}. For Windows users, it is recommended to add CMake executable into the \mintinline{text}{%PATH%} 
+	variable (this setting can be done via GUI, please search for a proper tutorial if you have problem on it).
+\subsection{MSYS2 Setup}
+For MSYS2 users on Windows, the \mintinline{text}{mingw-w64} toolchain is another available option. The Qt and CMake can be installed by the following commands:
+\begin{minted}[breaklines]{bash}
+pacman -S --needed --noconfirm mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake  mingw-w64-x86_64-qt5
+\end{minted}
+\subsection{Linux Setup}
+For Linux users, the package manager in the corresponding distribution should be able to setup the environment directly. If you are using a self-configured installation, please make sure the environment variables (i.e. \mintinline{bash}{$Qt5_DIR}) is set correctly.
+
+\subsection{Homebrew Setup}
+It is tested that homebrew is able to setup CMake and Qt5 correctly.  
+\begin{minted}{bash}
+brew install qt cmake
+\end{minted}
+If Qt is not working, the following environment variables can be considered:
+\begin{minted}{yaml}
+LDFLAGS: "-L/usr/local/opt/qt/lib"
+CPPFLAGS: "-I/usr/local/opt/qt/include"
+Qt5Widgets_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Widgets"
+Qt5Test_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Test"
+Qt5Core_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Core"
+Qt5_DIR: "/usr/local/opt/qt/lib/cmake"
+Qt5Concurrent_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Concurrent"
+Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
+\end{minted}
+
+\subsection{CLion Setup}
+If you are using CLion, the bundled CMake is just okay to use. You should pay special attentions to Qt libraries and make sure that they are able to be found by CMake. Basically, adding ld options and PATH variables will solve most of the problems.
+% bibliography, glossary and index would go here.
+\section{Download the Pre-compiled Packages}
+If you want to use the pre-compiled packages, please follow the instructions bellow.
+
+It is most recommended to download the \href{https://github.com/SchrodingerZhu/StanfordLib-CUHKSZ/releases/download/2020.1/x86_64-full.zip}{full version} directly as it is supposed to pass the compilation on all popular platforms and your environment may vary from teachers' environment when grading.
+
+However, if you just want the libraries for specific platforms, you can download them from the following links:
+\begin{enumerate}
+	\item \href{https://github.com/SchrodingerZhu/StanfordLib-CUHKSZ/releases/download/2020.1/x86_64-darwin-clang.zip} {\mintinline{text}{x86_64-darwin-clang}} (for MacOS)
+	\item 
+	\href{https://github.com/SchrodingerZhu/StanfordLib-CUHKSZ/releases/download/2020.1/x86_64-linux-gcc.zip} {\mintinline{text}{x86_64-linux-gcc}} (for Linux)
+	\item
+	\href{https://github.com/SchrodingerZhu/StanfordLib-CUHKSZ/releases/download/2020.1/x86_64-windows-mingw_w64.zip} {\mintinline{text}{x86_64-windows-mingw_w64}} (for Windows)
+\end{enumerate}
+
+\section{Download the Sources}
+If you want to use the sources, please follow the instructions bellow. You will need \mintinline{text}{git}. Please install it properly first.
+
+Go to a right place and run:
+\begin{minted}{bash}
+git clone https://github.com/SchrodingerZhu/StanfordLib-CUHKSZ
+git submodule update --init --recursive
+\end{minted}
+\chapter{Using Libraries or Sources}
+The following instructions works both for pre-compiled libraries and sources.
+
+\section{With Qt Creator}
+Open Qt Creator and then click the Open Button.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics{qt_creator1}
+\end{figure}
+
+Go to the correct directory and then open the \mintinline{c++}{CMakeLists.txt}
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{qt_creator2}
+\end{figure}
+
+Choose a correct tool-chain.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{qt_creator3}
+\end{figure}
+
+Click the Run Button and you should be able to get a smiling face :).
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=0.4]{qt_creator4}
+\end{figure}
+
+\section{With CLion}
+Open CLion and then click the Open Button.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{clion1}
+\end{figure}
+
+Choose the directory that contains the \mintinline{c++}{CMakeLists.txt}
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=0.56]{clion2}
+\end{figure}
+
+Click the Run Button and you should be able to get a smiling face :).
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[scale=0.4]{clion3}
+\end{figure}
+
+\section{Self Compiling}
+Go to the directory and use CMake:
+\begin{minted}{bash}
+mkdir build
+cmake .. -DCMAKE_BUILD_TYPE=Release -G <your generator>
+cmake --build . --parallel <number of jobs>
+\end{minted}
+Where \mintinline{text}{<your generator>} and  \mintinline{text}{<number of jobs>} must be set properly.
+
+Typical generator is "MinGW Makefiles" on Windows and "UNIX Makefiles" on other platforms and other generators like "Ninja" should also work if you have the corresponding tools. On Windows, you may have to remove git-bash out of PATH temporarily if you run into an error with "sh".
+
+\chapter{Structures of Pre-compiled Version}
+A typical pre-compiled version contains the following things:
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{stru1}
+\end{figure}
+\begin{enumerate}
+	\item includes: the header files and essential definitions of the library.
+	\item libs: pre-compiled libraries.
+	\item res: the resources to be copies to the compiling output directory, you can add things here if you want to read files in relative paths.
+	\item src: you should put your sources here.
+\end{enumerate}
+
+\chapter{About CMakeLists.txt}
+CMake will read the commands from \mintinline{text}{CMakeLists.txt} and then compile the targets.
+
+T.L.D.R., you will need to edit the executable target if you want to add/change files of your own projects.
+
+For example, here we are adding \mintinline{text}{test.h} and \mintinline{text}{test.cpp} to the project, we placed them into the src directory and then editing the target definition to be
+\begin{minted}[breaklines]{cmake}
+add_executable(hello src/hello.h src/hello.cpp src/test.cpp src/test.h)
+\end{minted}
+CMake will resolve the new linking relations now.
+
+Normally, IDEs will provide GUI tools for us to modify the definition automatically. For example, in CLion, right click on src directory and then click new and C++ Class/Header File/Source File,  and check the "Add to targets". Then, the files will be created and the definition will be modified.
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{clion_auto}
+\end{figure}
+ 
+The operations are quite similar for Qt Creator:
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{qt_a1}
+\end{figure}
+
+\begin{figure}[H] 
+	\centering
+	\includegraphics[width=\linewidth]{qt_a2}
+\end{figure}
+ 
+ \chapter{Tips}
+ There are differences in the usage of the library from the original version. Here are the tips:
+ 
+ \begin{enumerate}
+ 	
+
+ \item  We hope you can use a more elegant naming and organizing method. Hence instead of the original style like \mintinline{c++}{#include "gfont.h"}, we adapt a modularized way : \mintinline{c++}{#include <graphics/gfont.h>}
+ \item  The original Stanford library mixes files in all modules and produces cyclic dependency relations, therefore, we have to produce to whole shared library, instead of multiple small libraries for each module.
+ \item  The original version takes the advantage of \mintinline{c++}{qmake} toolchain and make some renaming around main() function. Here, we want to separate the library and user's code.
+ Therefore, we do not use the library itself to do the renaming. Instead, users should write a entry function (say \mintinline{c++}{start}) by themselves and include macro.h and call \mintinline{c++}{__WRAP_MAIN__(start)} to invoke the library.
+ \item  The back-end of \mintinline{c++}{Map} and \mintinline{c++}{HashMap} has been migrated to \mintinline{c++}{absl::btree_map} and \mintinline{c++}{absl::flat_hash_map} to improve the performance.
+ \item Vast functions in\mintinline{c++}{strlib.h} has been refactored into wrappers around`absl` to reduce the difficulty of maintenance.
+ \item Char checking operation now uses \mintinline{c++}{std::memchr} directly instead of self implementing.
+ \item In most cases, you do not need to care about the changes: they do not require any manual interference on APIs.
+ \item  We also bind the library with \href{https://github.com/microsoft/mimalloc}{mimalloc}, it is more efficient and it can output some debug messages for you, please check \href{https://github.com/microsoft/mimalloc#environment-options}{environment-options}.
+  \end{enumerate}
+ 
+\end{document}
