@@ -33,5 +33,5 @@ target_link_libraries(hello stanford Qt5::Widgets Qt5::Network Qt5::Multimedia T
 file(GLOB resources res/*)
 file(COPY ${resources} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 if (WIN32)
-file(COPY libs/libstanford.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    file(COPY libs/libstanford.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 endif()
