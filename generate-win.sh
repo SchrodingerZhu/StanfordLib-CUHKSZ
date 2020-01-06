@@ -1,7 +1,3 @@
-mkdir build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
-cmake --build . --target stanford "-j2"
 cd ..
 mkdir -p dist/libs
 cp -r res dist
@@ -9,7 +5,6 @@ cp -r src dist
 cp template dist/CMakeLists.txt
 cp "build/libstanford.dll" dist/libs
 cp "build/mimalloc/libmimalloc.dll" dist/libs
-
 mkdir -p dist/includes/mimalloc
 mkdir -p dist/includes/stanford
 mkdir -p dist/includes/abseil
