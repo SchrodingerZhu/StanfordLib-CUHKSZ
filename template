@@ -7,11 +7,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 20)
-# Find Qt5 Packages
+# Find Packages
 find_package(Qt5 COMPONENTS Widgets Network Core Multimedia PrintSupport REQUIRED)
-# Essential Library Flags
-set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS} -lpthread -ldl -g -O3")
-set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS} -lpthread -ldl -g -O3")
+find_package(Threads REQUIRED)
 
 # Include Dirs
 include_directories(
@@ -28,7 +26,8 @@ include_directories(
 link_directories(${CMAKE_SOURCE_DIR}/libs)
 add_executable(hello src/hello.h src/hello.cpp)
 
-target_link_libraries(hello PUBLIC stanford mimalloc Qt5::Widgets Qt5::Network Qt5::Multimedia)
+target_link_libraries(hello PUBLIC stanford mimalloc Qt5::Widgets Qt5::Network Qt5::Multimedia Threads::Threads
+                                                                                                      ${CMAKE_DL_LIBS})
 
 # Copy resources
 file(GLOB resources res/*)
