@@ -7,8 +7,6 @@ cp -r res dist
 cp -r src dist
 cp template dist/CMakeLists.txt
 cp "build/libstanford.so" dist/libs
-cp "build/mimalloc/libmimalloc.so" dist/libs
-cp "build/mimalloc/libmimalloc.so.1.2" dist/libs
 
 # Generate Header files
 mkdir -p dist/includes/mimalloc

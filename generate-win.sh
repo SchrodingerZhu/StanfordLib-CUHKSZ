@@ -3,7 +3,6 @@ cp -r res dist
 cp -r src dist
 cp template dist/CMakeLists.txt
 cp "build/libstanford.dll" dist/libs
-cp "build/mimalloc/libmimalloc.dll" dist/libs
 mkdir -p dist/includes/mimalloc
 mkdir -p dist/includes/stanford
 mkdir -p dist/includes/abseil

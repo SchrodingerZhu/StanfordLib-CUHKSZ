@@ -47,7 +47,7 @@
  * - added top-level signal handler (for null-pointer derefs etc.)
  * @since 2014/11/05
  */
-
+#define _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES
 #include <system/exceptions.h>
 #include <csignal>
 #include <cstdlib>
@@ -768,3 +768,4 @@ namespace exceptions {
 
 } // namespace exceptions
 
+#undef _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES

@@ -19,8 +19,10 @@ file(GLOB console_files StanfordCPPLib/console/*.h StanfordCPPLib/console/*.cpp)
 file(GLOB io_files StanfordCPPLib/io/*.h StanfordCPPLib/io/*.cpp)
 file(GLOB collections_files StanfordCPPLib/collections/*.h StanfordCPPLib/collections/*.cpp)
 file(GLOB private_files StanfordCPPLib/private/*.h StanfordCPPLib/private/*.cpp)
+
 # Setup Abseil
 add_subdirectory(abseil-cpp)
+# Setup Mimalloc
 add_subdirectory(mimalloc)
 # Define Stanford Library
 add_library(stanford SHARED
@@ -46,7 +48,8 @@ target_link_libraries(stanford PUBLIC Qt5::Widgets
         absl::str_format
         absl::hashtablez_sampler
         absl::raw_hash_set
-        mimalloc
+        absl::flat_hash_map
+        mimalloc-static
         Threads::Threads
         ${CMAKE_DL_LIBS}
         )

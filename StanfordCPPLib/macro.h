@@ -2,11 +2,6 @@
 #include <graphics/qtgui.h>
 #include <console/console.h>
 
-#ifndef __OVERRIDE_MIMALLOC__
-#define __OVERRIDE_MIMALLOC__
-#include <mimalloc-new-delete.h>
-#endif
-
 #define run(argc, argv, studentMain) \
     stanfordcpplib::initializeLibrary(argc, argv); \
     QtGui::instance()->startBackgroundEventLoop(studentMain); \

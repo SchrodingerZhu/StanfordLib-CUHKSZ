@@ -26,7 +26,7 @@ include_directories(
 link_directories(${CMAKE_SOURCE_DIR}/libs)
 add_executable(hello src/hello.h src/hello.cpp)
 
-target_link_libraries(hello PUBLIC stanford mimalloc Qt5::Widgets Qt5::Network Qt5::Multimedia Threads::Threads
+target_link_libraries(hello stanford Qt5::Widgets Qt5::Network Qt5::Multimedia Threads::Threads
                                                                                                       ${CMAKE_DL_LIBS})
 
 # Copy resources

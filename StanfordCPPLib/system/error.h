@@ -19,7 +19,7 @@
 
 #ifndef _error_h
 #define _error_h
-
+#define _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES
 #include <csignal>
 #include <exception>
 #include <iostream>
@@ -140,4 +140,5 @@ std::ostream &operator<<(std::ostream &out, const ErrorException &ex);
  */
 [[noreturn]] void error(const std::string &msg);
 
+#undef _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES
 #endif // _error_h

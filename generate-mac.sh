@@ -7,8 +7,6 @@ cp -r res dist
 cp -r src dist
 cp template dist/CMakeLists.txt
 cp "build/libstanford.dylib" dist/libs
-cp "build/mimalloc/libmimalloc.dylib" dist/libs
-
 # Generate Header files
 mkdir -p dist/includes/mimalloc
 mkdir -p dist/includes/stanford
