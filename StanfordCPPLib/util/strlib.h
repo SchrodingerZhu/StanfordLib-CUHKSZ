@@ -46,7 +46,9 @@
 
 #include <collections/vector.h>
 #include <absl/strings/match.h>
+#ifndef _WIN32
 #include <absl/strings/str_join.h>
+#endif
 #include <absl/strings/strip.h>
 #include <absl/strings/string_view.h>
 /**

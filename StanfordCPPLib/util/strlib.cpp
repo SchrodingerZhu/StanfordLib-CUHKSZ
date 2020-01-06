@@ -268,6 +268,7 @@ int stringIndexOf(const std::string &s, const std::string &substring, int startI
     }
 }
 
+#ifndef _WIN32
 std::string stringJoin(const Vector<std::string> &v, char delimiter) {
     std::string delim = charToString(delimiter);
     return absl::StrJoin(v, delim);
@@ -276,7 +277,26 @@ std::string stringJoin(const Vector<std::string> &v, char delimiter) {
 std::string stringJoin(const Vector<std::string> &v, const std::string &delimiter) {
     return absl::StrJoin(v, delimiter);
 }
+#else
+std::string stringJoin(const Vector<std::string>& v, char delimiter) {
+    std::string delim = charToString(delimiter);
+    return stringJoin(v, delim);
+}
 
+std::string stringJoin(const Vector<std::string>& v, const std::string& delimiter) {
+    if (v.isEmpty()) {
+        return {};
+    } else {
+        std::ostringstream out;
+        out << v[0];
+        for (int i = 1; i < (int) v.size(); i++) {
+            out << delimiter;
+            out << v[i];
+        }
+        return out.str();
+    }
+}
+#endif
 int stringLastIndexOf(const std::string &s, char ch, int startIndex) {
     size_t index = s.rfind(ch, (size_t) startIndex);
     if (index == std::string::npos) {
