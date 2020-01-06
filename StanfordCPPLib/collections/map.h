@@ -57,9 +57,11 @@
 #include <collections/stack.h>
 #include <collections/vector.h>
 
-#ifndef _WIN32
-#include <absl/container/btree_map.h>
+#ifdef StrCat
+#undef StrCat
 #endif
+#include <absl/container/btree_map.h>
+
 /*
  * Class: Map<KeyType,ValueType>
  * -----------------------------
@@ -439,11 +441,7 @@ public:
     /**********************************************************************/
 
 private:
-#ifndef _WIN32
     using MapType = absl::btree_map<KeyType, ValueType, decltype(stanfordcpplib::collections::checkedLess<KeyType>())>;
-#else
-    using MapType = std::map<KeyType, ValueType, decltype(stanfordcpplib::collections::checkedLess<KeyType>())>;
-#endif
     MapType _elements;
     stanfordcpplib::collections::VersionTracker _version;
 
