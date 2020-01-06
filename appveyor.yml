@@ -13,7 +13,7 @@ for:
     environment:
       GENERATOR: "Unix Makefiles"
       EXTENTION: "so"
-      LINUX_ONLY: 'cp "build/mimalloc/libmimalloc.$EXTENTION.1.2" dist/libs'
+      LINUX_ONLY: 'cp build/mimalloc/libmimalloc.so.1.2 dist/libs'
 
     install:
       - git submodule update --init --recursive
@@ -68,8 +68,8 @@ for:
     build_script:
       - ps: mkdir build
       - ps: cd build
-      - ps: cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
-      - ps: cmake --build . --target stanford "-j2"
+      - cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
+      - cmake --build . --target stanford "-j4"
       - ps: cd ..
       - ps: mkdir -p dist/libs
       - ps: cp -r res dist
