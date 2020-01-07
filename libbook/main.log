@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Arch Linux) (preloaded format=xelatex 2019.11.15)  7 JAN 2020 02:19
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Arch Linux) (preloaded format=xelatex 2019.11.15)  7 JAN 2020 13:29
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -438,6 +438,22 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 runsystem(mkdir -p _minted-main)...executed.
 
 
+(/usr/share/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(/usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
 (/usr/share/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2019/09/28 v7.00a Hypertext links for LaTeX
 
@@ -492,6 +508,7 @@ File: pd1enc.def 2019/09/28 v7.00a Hyperref: PDFDocEncoding definition (HO)
 (/usr/share/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
+Package hyperref Info: Option `colorlinks' set `true' on input line 4414.
 Package hyperref Info: Hyper figures OFF on input line 4540.
 Package hyperref Info: Link nesting OFF on input line 4545.
 Package hyperref Info: Hyper index ON on input line 4548.
@@ -514,7 +531,7 @@ Package hyperref Info: Hyper figures OFF on input line 6423.
 Package hyperref Info: Link nesting OFF on input line 6428.
 Package hyperref Info: Hyper index ON on input line 6431.
 Package hyperref Info: backreferencing OFF on input line 6438.
-Package hyperref Info: Link coloring OFF on input line 6443.
+Package hyperref Info: Link coloring ON on input line 6441.
 Package hyperref Info: Link coloring with OCG OFF on input line 6448.
 Package hyperref Info: PDF/A mode OFF on input line 6453.
 LaTeX Info: Redefining \ref on input line 6493.
@@ -548,22 +565,6 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip48
 )
-(/usr/share/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-
-(/usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package xcolor Info: Driver file: xetex.def on input line 225.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-)
 runsystem(which pygmentize && touch main.aex)...executed.
 
 runsystem(rm main.aex)...executed.
@@ -571,34 +572,34 @@ runsystem(rm main.aex)...executed.
  (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 9
-.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
+2.
 
 (/usr/share/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
 \AtBeginShipoutBox=\box37
-Package hyperref Info: Link coloring OFF on input line 9.
+Package hyperref Info: Link coloring ON on input line 12.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -608,23 +609,26 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count132
 )
-LaTeX Info: Redefining \ref on input line 9.
-LaTeX Info: Redefining \pageref on input line 9.
-LaTeX Info: Redefining \nameref on input line 9.
+LaTeX Info: Redefining \ref on input line 12.
+LaTeX Info: Redefining \pageref on input line 12.
+LaTeX Info: Redefining \nameref on input line 12.
  (./main.out)
 (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 16.
+(Font)              <14.4> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 16.
- (/usr/share/texmf-dist/tex/generic/oberdiek/se-ascii-print.def
+(Font)              <7> on input line 19.
+(/usr/share/texmf-dist/tex/generic/oberdiek/se-ascii-print.def
 File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 
-)
-[1
+) [1
 
 ] (./main.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -643,20 +647,44 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 Chapter 1.
 \openout4 = `main.pyg'.
 
-(./_minted-main/default-pyg-prefix.pygstyle) (./_minted-main/default.pygstyle)
+runsystem(pygmentize -S default -f latex -P commandprefix=PYG > _minted-main/de
+fault-pyg-prefix.pygstyle)...executed.
+
+(./_minted-main/default-pyg-prefix.pygstyle)
+runsystem(pygmentize -S default -f latex -P commandprefix=PYGdefault > _minted-
+main/default.pygstyle)...executed.
+
+ (./_minted-main/default.pygstyle)
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/6A24A9FBBA1E2B7BFCF895E1A1D868F1AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
+
 (./_minted-main/6A24A9FBBA1E2B7BFCF895E1A1D868F1AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/269193FEF932C96731BA7F653DB99472AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/269193FEF932C96731BA7F653DB99472AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/E4C4B1482A035D76AA4D0AF4599716C9AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/E4C4B1482A035D76AA4D0AF4599716C9AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/E88B532A72A52511E3510ADD76D313F3AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/E88B532A72A52511E3510ADD76D313F3AA15CF4BA75075E8168D3671BF7EB06
@@ -666,15 +694,27 @@ Chapter 1.
 Chapter 2.
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/D6DAD243DC8D57888CA4E1C5EAF06EFFAA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/D6DAD243DC8D57888CA4E1C5EAF06EFFAA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/48749B13E18FCF432CB878A9A34EDC75AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/48749B13E18FCF432CB878A9A34EDC75AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout3 = `main.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/B6D8A7B363A557A476565CEF6E9E3E2B5093E84BEA004B2911D4DA186861F6DB.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/B6D8A7B363A557A476565CEF6E9E3E2B5093E84BEA004B2911D4DA186861F6D
@@ -684,10 +724,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 )
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/6A20B95DB2E3695D881BD83B01DAECE15093E84BEA004B2911D4DA186861F6DB.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/6A20B95DB2E3695D881BD83B01DAECE15093E84BEA004B2911D4DA186861F6D
 B.pygtex)
-Overfull \hbox (26.4222pt too wide) in paragraph at lines 47--48
+Overfull \hbox (26.4222pt too wide) in paragraph at lines 50--51
 \TU/lmr/m/n/12 configured installation, please make sure the environment variab
 les (i.e. [])
  []
@@ -697,10 +741,18 @@ les (i.e. [])
 ]
 \openout3 = `main.pyg'.
 
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/7BF1ED42EC0765DF2DDE2011877981165093E84BEA004B2911D4DA186861F6DB.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/7BF1ED42EC0765DF2DDE2011877981165093E84BEA004B2911D4DA186861F6D
 B.pygtex)
 \openout3 = `main.pyg'.
+
+runsystem(pygmentize -l yaml -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/232ECD8F7AC36A57DD3671D8899CB9E608263F126930C86C1BCDD774D10BFD25.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/232ECD8F7AC36A57DD3671D8899CB9E608263F126930C86C1BCDD774D10BFD2
@@ -710,25 +762,45 @@ LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
 ) [4]
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/E596C5A347AC1AA3BEBD5F6A2782ABF6AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/E596C5A347AC1AA3BEBD5F6A2782ABF6AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/95E41B11FAA469F16928E34012BE73DAAA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/95E41B11FAA469F16928E34012BE73DAAA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/181E715D5AF4232F5CDB3DFFA680B751AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/181E715D5AF4232F5CDB3DFFA680B751AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/E8DD36A5E4086E63E105442262DEEA91AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/E8DD36A5E4086E63E105442262DEEA91AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout3 = `main.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/444D25130313C46913E139CFC90A72235093E84BEA004B2911D4DA186861F6DB.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/444D25130313C46913E139CFC90A72235093E84BEA004B2911D4DA186861F6D
@@ -737,6 +809,10 @@ Chapter 3.
 File: qt_creator1.png Graphic file (type bmp)
 <qt_creator1.png>
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/18583ACEF0AAEFC5AE3FAF9B17959D9802018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
 
 
 (./_minted-main/18583ACEF0AAEFC5AE3FAF9B17959D9802018AB381AD265562A95348870C690
@@ -764,22 +840,34 @@ File: clion2.png Graphic file (type bmp)
 File: clion3.png Graphic file (type bmp)
 <clion3.png>
 
-Overfull \hbox (63.48953pt too wide) in paragraph at lines 149--150
+Overfull \hbox (63.48953pt too wide) in paragraph at lines 152--153
  [][] 
  []
 
 [9]
 \openout3 = `main.pyg'.
 
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/9676B79EF7CB3766D2AD48C7A86A25095093E84BEA004B2911D4DA186861F6DB.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/9676B79EF7CB3766D2AD48C7A86A25095093E84BEA004B2911D4DA186861F6D
 B.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/1F5F5CA2D94F88D8202CCFB41E401A40AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/1F5F5CA2D94F88D8202CCFB41E401A40AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/B4BE60DFEA598391AECF19352359E972AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/B4BE60DFEA598391AECF19352359E972AA15CF4BA75075E8168D3671BF7EB06
@@ -793,20 +881,36 @@ File: stru1.png Graphic file (type bmp)
 Chapter 5.
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/18583ACEF0AAEFC5AE3FAF9B17959D98AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/18583ACEF0AAEFC5AE3FAF9B17959D98AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/1FD81C28ECCA9973ACCF23DBC65598F9AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
 
 
 (./_minted-main/1FD81C28ECCA9973ACCF23DBC65598F9AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l text -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-main/B263E04E17F8F93ED9C23D68AB8491D3AA15CF4BA75075E8168D3671BF7EB064.pygt
+ex main.pyg)...executed.
+
 
 (./_minted-main/B263E04E17F8F93ED9C23D68AB8491D3AA15CF4BA75075E8168D3671BF7EB06
 4.pygtex)
 \openout3 = `main.pyg'.
+
+runsystem(pygmentize -l cmake -f latex -P commandprefix=PYG -F tokenmerge -o _m
+inted-main/98B72583E2FC46E464B2C9A8D738F28DBF9A6A11A877BB7463EA621E5D33FCBB.pyg
+tex main.pyg)...executed.
 
 
 (./_minted-main/98B72583E2FC46E464B2C9A8D738F28DBF9A6A11A877BB7463EA621E5D33FCB
@@ -825,88 +929,139 @@ File: qt_a2.png Graphic file (type bmp)
 Chapter 6.
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/CAA17BB2520BE02BE7C4442E2118781F02018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/CAA17BB2520BE02BE7C4442E2118781F02018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/EA43C8F5BC63189CE37E9723FD508CC402018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
 
 
 (./_minted-main/EA43C8F5BC63189CE37E9723FD508CC402018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/BC180FCB2BA0ADADBFB1EBB83CA1211D02018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/BC180FCB2BA0ADADBFB1EBB83CA1211D02018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/889E0D7343405C079195E7B8903C8C9E02018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
 
 
 (./_minted-main/889E0D7343405C079195E7B8903C8C9E02018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/8064DF785878D583F27EF1354BF816E402018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/8064DF785878D583F27EF1354BF816E402018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/AC0E4F99992FDC2FD829C1E39D4A0F8502018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
 
 
 (./_minted-main/AC0E4F99992FDC2FD829C1E39D4A0F8502018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/DDD7C1AE07003E250B5A7388CE52757E02018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/DDD7C1AE07003E250B5A7388CE52757E02018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
+
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/33EB1CD488D1CE59A0B8BEB0F1C0AD0102018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
 
 
 (./_minted-main/33EB1CD488D1CE59A0B8BEB0F1C0AD0102018AB381AD265562A95348870C690
 B.pygtex)
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/4D0DFF914C5D6869025B8471CD722CE502018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/4D0DFF914C5D6869025B8471CD722CE502018AB381AD265562A95348870C690
 B.pygtex)
-Overfull \hbox (11.93204pt too wide) in paragraph at lines 219--220
+Overfull \hbox (11.93204pt too wide) in paragraph at lines 222--223
 []\TU/lmr/m/n/12 The back-end of [] and [] has been migrated to []
  []
 
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/3C7D8B2B476E99C904CBEAF53B78E53202018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/3C7D8B2B476E99C904CBEAF53B78E53202018AB381AD265562A95348870C690
 B.pygtex)
-Overfull \hbox (11.26405pt too wide) in paragraph at lines 221--222
+Overfull \hbox (11.26405pt too wide) in paragraph at lines 224--225
 []\TU/lmr/m/n/12 Vast functions in[] has been refactored into wrappers around‘a
 bsl‘
  []
 
 \openout4 = `main.pyg'.
 
+runsystem(pygmentize -l c++ -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-main/82E508DC88D240E7D7DCC1F884DDDDC102018AB381AD265562A95348870C690B.pygte
+x main.pyg)...executed.
+
 
 (./_minted-main/82E508DC88D240E7D7DCC1F884DDDDC102018AB381AD265562A95348870C690
 B.pygtex) [17
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 230.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 233.
  [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 230.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 233.
  (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 230.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 230.
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 75711FE9D469328A41965D7C9D03BF98.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 233.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 233.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: A8E67847CD32E213058A0D490C7B4375
+(rerunfilecheck)             After:  75711FE9D469328A41965D7C9D03BF98.
 runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 12418 strings out of 492483
- 203974 string characters out of 6134978
- 316989 words of memory out of 5000000
- 16647 multiletter control sequences out of 15000+600000
+ 12420 strings out of 492483
+ 204025 string characters out of 6134978
+ 316274 words of memory out of 5000000
+ 16649 multiletter control sequences out of 15000+600000
  7761 words of font info for 41 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 43i,9n,45p,840b,495s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,9n,45p,838b,495s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on main.pdf (19 pages).

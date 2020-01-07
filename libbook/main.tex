@@ -2,13 +2,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{minted}
-\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[colorlinks = true,  linkcolor = blue,
+urlcolor  = blue,
+citecolor = blue, anchorcolor = blue]{hyperref}
 \usepackage{float}
 \graphicspath{{.}}
 
 \begin{document}
 
-\author{ZHU Yifan, Sun Wenlong\\@Computer Comity}
+\author{ZHU Yifan @Computer Comity}
 \title{Handbook of StanfordLib-CUHKSZ}
 \date{2020.1}
 
@@ -53,13 +56,20 @@ brew install qt cmake
 \end{minted}
 If Qt is not working, the following environment variables can be considered:
 \begin{minted}{yaml}
-LDFLAGS: "-L/usr/local/opt/qt/lib"
-CPPFLAGS: "-I/usr/local/opt/qt/include"
-Qt5Widgets_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Widgets"
-Qt5Test_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Test"
-Qt5Core_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Core"
-Qt5_DIR: "/usr/local/opt/qt/lib/cmake"
-Qt5Concurrent_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Concurrent"
+LDFLAGS: "-L/usr/local/opt/qt/lib"
+
+CPPFLAGS: "-I/usr/local/opt/qt/include"
+
+Qt5Widgets_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Widgets"
+
+Qt5Test_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Test"
+
+Qt5Core_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Core"
+
+Qt5_DIR: "/usr/local/opt/qt/lib/cmake"
+
+Qt5Concurrent_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Concurrent"
+
 Qt5Gui_DIR: "/usr/local/opt/qt/lib/cmake/Qt5Gui"
 \end{minted}
 
@@ -203,13 +213,20 @@ The operations are quite similar for Qt Creator:
  	
 
  \item  We hope you can use a more elegant naming and organizing method. Hence instead of the original style like \mintinline{c++}{#include "gfont.h"}, we adapt a modularized way : \mintinline{c++}{#include <graphics/gfont.h>}
- \item  The original Stanford library mixes files in all modules and produces cyclic dependency relations, therefore, we have to produce to whole shared library, instead of multiple small libraries for each module.
- \item  The original version takes the advantage of \mintinline{c++}{qmake} toolchain and make some renaming around main() function. Here, we want to separate the library and user's code.
- Therefore, we do not use the library itself to do the renaming. Instead, users should write a entry function (say \mintinline{c++}{start}) by themselves and include macro.h and call \mintinline{c++}{__WRAP_MAIN__(start)} to invoke the library.
- \item  The back-end of \mintinline{c++}{Map} and \mintinline{c++}{HashMap} has been migrated to \mintinline{c++}{absl::btree_map} and \mintinline{c++}{absl::flat_hash_map} to improve the performance.
- \item Vast functions in\mintinline{c++}{strlib.h} has been refactored into wrappers around`absl` to reduce the difficulty of maintenance.
- \item Char checking operation now uses \mintinline{c++}{std::memchr} directly instead of self implementing.
- \item In most cases, you do not need to care about the changes: they do not require any manual interference on APIs.
+ \item  The original Stanford library mixes files in all modules and produces cyclic dependency relations, therefore, we have to produce to whole shared library, instead of multiple small libraries for each module.
+
+ \item  The original version takes the advantage of \mintinline{c++}{qmake} toolchain and make some renaming around main() function. Here, we want to separate the library and user's code.
+
+ Therefore, we do not use the library itself to do the renaming. Instead, users should write a entry function (say \mintinline{c++}{start}) by themselves and include macro.h and call \mintinline{c++}{__WRAP_MAIN__(start)} to invoke the library.
+
+ \item  The back-end of \mintinline{c++}{Map} and \mintinline{c++}{HashMap} has been migrated to \mintinline{c++}{absl::btree_map} and \mintinline{c++}{absl::flat_hash_map} to improve the performance.
+
+ \item Vast functions in\mintinline{c++}{strlib.h} has been refactored into wrappers around`absl` to reduce the difficulty of maintenance.
+
+ \item Char checking operation now uses \mintinline{c++}{std::memchr} directly instead of self implementing.
+
+ \item In most cases, you do not need to care about the changes: they do not require any manual interference on APIs.
+
  \item  We also bind the library with \href{https://github.com/microsoft/mimalloc}{mimalloc}, it is more efficient and it can output some debug messages for you, please check \href{https://github.com/microsoft/mimalloc#environment-options}{environment-options}.
   \end{enumerate}
  
