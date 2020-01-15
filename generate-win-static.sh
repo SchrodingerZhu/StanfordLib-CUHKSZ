@@ -2,7 +2,7 @@ set -e
 mkdir -p dist/libs/windows
 cd build/abseil-cpp && cp absl/*/*.a .
 for i in *.a; do ar -x $i; done;
-ar cr libabsl.a ./*.o
+ar cr libabsl.a ./*.obj
 ranlib libabsl.a
 cp libabsl.a ../../dist/libs/windows
 cd ../..
