@@ -28,6 +28,9 @@ add_subdirectory(mimalloc)
 add_library(stanford SHARED
         StanfordCPPLib/images.qrc
         ${system_files} ${graphic_files} ${collections_files} ${util_files} ${console_files} ${io_files} ${private_files})
+add_library(stanford-static STATIC
+        StanfordCPPLib/images.qrc
+        ${system_files} ${graphic_files} ${collections_files} ${util_files} ${console_files} ${io_files} ${private_files})
 
 # Include Dirs
 include_directories(
@@ -40,6 +43,20 @@ include_directories(
 
 # Linking Relations
 target_link_libraries(stanford PUBLIC Qt5::Widgets
+        Qt5::Network
+        Qt5::Multimedia
+        absl::container
+        absl::strings
+        absl::utility
+        absl::str_format
+        absl::hashtablez_sampler
+        absl::raw_hash_set
+        absl::flat_hash_map
+        mimalloc-static
+        Threads::Threads
+        ${CMAKE_DL_LIBS}
+        )
+target_link_libraries(stanford-static PUBLIC Qt5::Widgets
         Qt5::Network
         Qt5::Multimedia
         absl::container
