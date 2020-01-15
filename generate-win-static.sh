@@ -1,3 +1,4 @@
+set -e
 mkdir -p dist/libs/windows
 cd build/abseil-cpp && cp absl/*/*.a .
 for i in *.a; do ar -x $i; done;
@@ -8,7 +9,7 @@ cd ../..
 cp -r res dist
 cp -r src dist
 cp template-static dist/CMakeLists.txt
-cp "build/libstanford.a" dist/libs/windows
+cp "build/libstanford-static.a" dist/libs/windows
 mkdir -p dist/includes/mimalloc
 mkdir -p dist/includes/stanford
 mkdir -p dist/includes/abseil

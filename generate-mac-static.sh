@@ -12,7 +12,7 @@ cd ../..
 cp -r res dist
 cp -r src dist
 cp template-static dist/CMakeLists.txt
-cp "build/libstanford.a" dist/libs/darwin
+cp "build/libstanford-static.a" dist/libs/darwin
 # Generate Header files
 mkdir -p dist/includes/mimalloc
 mkdir -p dist/includes/stanford
