@@ -104,7 +104,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: XN/mGc6ukR428vElOAYmlfXRjgQaaswHV0Q2kMgCF3RqgU0z+jDkqk03QCVDKtiQ # your encrypted token from GitHub
-  artifact: x86_64-windows-mingw_w64.zip,x86_64-darwin-clang.zip,x86_64-linux-gcc.zip
+  artifact: x86_64-windows-mingw_w64.zip,x86_64-darwin-clang.zip,x86_64-linux-gcc.zip,x86_64-windows-mingw_w64-static.zip,x86_64-darwin-clang-static.zip,x86_64-linux-gcc-static.zip
   draft: false
   prerelease: false
   on:
