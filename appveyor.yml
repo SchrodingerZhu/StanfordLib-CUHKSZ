@@ -22,10 +22,15 @@ for:
 
     build_script:
       - bash generate-linux.sh
+      - rm -rf dist
+      - rm -rf build
+      - bash generate-linux-static.sh
 
     artifacts:
       - path: "x86_64-linux-gcc.zip"
         name: "x86_64-linux-gcc.zip"
+      - path: "x86_64-linux-gcc-static.zip"
+        name: "x86_64-linux-gcc-static.zip"
 
   - matrix:
       only:
@@ -49,8 +54,13 @@ for:
 
     build_script:
       - bash generate-mac.sh
+      - rm -rf dist
+      - rm -rf build
+      - bash generate-mac-static.sh
 
     artifacts:
+      - path: "x86_64-darwin-clang-static.zip"
+        name: "x86_64-darwin-clang-static.zip"
       - path: "x86_64-darwin-clang.zip"
         name: "x86_64-darwin-clang.zip"
 
@@ -75,17 +85,22 @@ for:
       - ps: mkdir build
       - ps: cd build
       - cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
-      - cmake --build . --target stanford "-j4"
+      - cmake --build . --target -j4
       - set PATH=C:\Program Files\Git\usr\bin;%PATH%
       - cd ..
       - bash generate-win.sh
+      - DEL /F/Q/S dist
+      - DEL /F/Q/S build
+      - bash generate-win-static.sh
 
     artifacts:
       - path: "x86_64-windows-mingw_w64.zip"
         name: "x86_64-windows-mingw_w64.zip"
+      - path: "x86_64-windows-mingw_w64-static.zip"
+        name: "x86_64-windows-mingw_w64-static.zip"
 
 deploy:
-  release: 2020.1
+  release: 2020.1.1
   description: 'Release'
   provider: GitHub
   auth_token:
