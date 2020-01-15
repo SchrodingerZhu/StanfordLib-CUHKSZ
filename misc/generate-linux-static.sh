@@ -11,7 +11,9 @@ cp libabsl.a ../../dist/libs/linux
 cd ../..
 cp -r res dist
 cp -r src dist
-cp template-static dist/CMakeLists.txt
+cp misc/template-static.cmake dist/CMakeLists.txt
+cp misc/template-static.qmake dist/my_project.pro
+cp misc/lib-static.conf dist/libs
 cp "build/libstanford-static.a" dist/libs/linux
 
 # Generate Header files

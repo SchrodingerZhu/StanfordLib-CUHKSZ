@@ -1,0 +1,12 @@
+TEMPLATE = app
+include(libs/lib.conf)
+SOURCES += \
+    src/hello.cpp
+
+HEADERS += \
+    src/hello.h
+
+LIBS += -L$$PWD/libs/ -lstanford
+INCLUDEPATH += $$PWD/libs
+DEPENDPATH += $$PWD/libs
+

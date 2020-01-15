@@ -1,0 +1,13 @@
+TEMPLATE = app
+include(libs/lib-static.conf)
+SOURCES += \
+    src/hello.cpp
+
+HEADERS += \
+    src/hello.h
+
+linux:LIBS += -L$$PWD/libs/linux -lstanford-static -labsl -ldl
+macx:LIBS += -L$$PWD/libs/darwin -lstanford-static -labsl -ldl
+win32:LIBS += -L$$PWD/libs/windows -lstanford-static -labsl
+INCLUDEPATH += $$PWD/libs
+DEPENDPATH += $$PWD/libs

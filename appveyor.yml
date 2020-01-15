@@ -21,10 +21,10 @@ for:
       - sudo apt install -y make g++ xvfb qt513base qt513multimedia qt513declarative mesa-common-dev libglu1-mesa-dev
 
     build_script:
-      - bash generate-linux.sh
+      - bash misc/generate-linux.sh
       - rm -rf dist
       - rm -rf build
-      - bash generate-linux-static.sh
+      - bash misc/generate-linux-static.sh
 
     artifacts:
       - path: "x86_64-linux-gcc.zip"
@@ -53,10 +53,10 @@ for:
       EXTENTION: "dylib"
 
     build_script:
-      - bash generate-mac.sh
+      - bash misc/generate-mac.sh
       - rm -rf dist
       - rm -rf build
-      - bash generate-mac-static.sh
+      - bash misc/generate-mac-static.sh
 
     artifacts:
       - path: "x86_64-darwin-clang-static.zip"
@@ -88,9 +88,9 @@ for:
       - cmake --build . --target -j4
       - set PATH=C:\Program Files\Git\usr\bin;%PATH%
       - cd ..
-      - bash generate-win.sh
+      - bash misc/generate-win.sh
       - DEL /F/Q/S dist
-      - bash generate-win-static.sh
+      - bash misc/generate-win-static.sh
 
     artifacts:
       - path: "x86_64-windows-mingw_w64.zip"
