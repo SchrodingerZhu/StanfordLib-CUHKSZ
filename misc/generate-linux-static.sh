@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 set -e
-mkdir build
-cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . --target stanford-static "-j$(nproc)" && cd ..
 mkdir -p dist/libs/linux
 cd build/abseil-cpp && cp absl/*/*.a .
 for i in *.a; do ar -x $i; done;

@@ -1,8 +1,8 @@
 version: 1.0.{build}
 
 image:
-  - Visual Studio 2019
   - Ubuntu
+  - Visual Studio 2019
   - macos
 
 for:
@@ -16,14 +16,18 @@ for:
 
     install:
       - git submodule update --init --recursive
-      - sudo add-apt-repository ppa:beineri/opt-qt-5.13.2-bionic
+      - sudo add-apt-repository ppa:beineri/opt-qt-5.14.0-bionic
       - sudo apt-get update
-      - sudo apt install -y make g++ xvfb qt513base qt513multimedia qt513declarative mesa-common-dev libglu1-mesa-dev
+      - sudo apt install -y make g++ xvfb qt514-meta-full mesa-common-dev libglu1-mesa-dev
 
     build_script:
+      - mkdir build
+      - cd build
+      - cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . "-j$(nproc)"
+      - ctest
+      - cd ..
       - bash misc/generate-linux.sh
       - rm -rf dist
-      - rm -rf build
       - bash misc/generate-linux-static.sh
 
     artifacts:
@@ -53,9 +57,13 @@ for:
       EXTENTION: "dylib"
 
     build_script:
+      - mkdir build
+      - cd build
+      - cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . "-j$(nproc)"
+      - ctest
+      - cd ..
       - bash misc/generate-mac.sh
       - rm -rf dist
-      - rm -rf build
       - bash misc/generate-mac-static.sh
 
     artifacts:
@@ -85,7 +93,8 @@ for:
       - ps: mkdir build
       - ps: cd build
       - cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
-      - cmake --build . --target -j4
+      - cmake --build . --target -j%NUMBER_OF_PROCESSORS%
+      - ctest
       - set PATH=C:\Program Files\Git\usr\bin;%PATH%
       - cd ..
       - bash misc/generate-win.sh
@@ -109,4 +118,4 @@ deploy:
   prerelease: false
   on:
     branch: master                 # release from master branch only
-    APPVEYOR_REPO_TAG: false        # deploy on tag push only
+    APPVEYOR_REPO_TAG: true        # deploy on tag push only

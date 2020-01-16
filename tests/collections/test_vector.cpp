@@ -2,7 +2,6 @@
 #include <util/strlib.h>
 #include <private/init.h>
 #include "../test_header.h"
-#define USE_SYNC_POOL_RESOURCE
 #define TEST_SIZE 100'000
 class TestVector: public QObject
 {

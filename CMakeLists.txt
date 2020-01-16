@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 # Find Qt5 Packages
 find_package(Qt5 COMPONENTS Widgets Network Core Multimedia PrintSupport REQUIRED)
 find_package(Threads REQUIRED)
@@ -19,7 +19,7 @@ file(GLOB console_files StanfordCPPLib/console/*.h StanfordCPPLib/console/*.cpp)
 file(GLOB io_files StanfordCPPLib/io/*.h StanfordCPPLib/io/*.cpp)
 file(GLOB collections_files StanfordCPPLib/collections/*.h StanfordCPPLib/collections/*.cpp)
 file(GLOB private_files StanfordCPPLib/private/*.h StanfordCPPLib/private/*.cpp)
-
+file(GLOB sync_files StanfordCPPLib/sync/*.h StanfordCPPLib/sync/*.cpp)
 # Setup Abseil
 add_subdirectory(abseil-cpp)
 # Setup Mimalloc
@@ -27,10 +27,10 @@ add_subdirectory(mimalloc)
 # Define Stanford Library
 add_library(stanford SHARED
         StanfordCPPLib/images.qrc
-        ${system_files} ${graphic_files} ${collections_files} ${util_files} ${console_files} ${io_files} ${private_files})
+        ${system_files} ${graphic_files} ${collections_files} ${util_files} ${console_files} ${io_files} ${private_files} ${sync_files})
 add_library(stanford-static STATIC
         StanfordCPPLib/images.qrc
-        ${system_files} ${graphic_files} ${collections_files} ${util_files} ${console_files} ${io_files} ${private_files})
+        ${system_files} ${graphic_files} ${collections_files} ${util_files} ${console_files} ${io_files} ${private_files} ${sync_files})
 
 # Include Dirs
 include_directories(
@@ -78,7 +78,5 @@ target_link_libraries(hello stanford)
 file(GLOB resources res/*)
 file(COPY ${resources} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-# Unit tests
-#if (NOT CMAKE_BUILD_TYPE EQUAL "Release")
-#    include(tests/tests.cmake)
-#endif() # will fix this later
+#Unit tests
+include(tests/tests.cmake)

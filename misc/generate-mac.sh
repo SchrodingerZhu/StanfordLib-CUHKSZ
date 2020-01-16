@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 set -e
-mkdir build
-cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . --target stanford "-j$(nproc)" && cd ..
 mkdir -p dist/libs
 cp -r res dist
 cp -r src dist
