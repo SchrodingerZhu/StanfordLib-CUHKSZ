@@ -83,7 +83,7 @@ for:
       - set PATH=%Qt5_DIR%;%Qt5_DIR%\bin;%PATH%
 
     environment:
-      Qt5_DIR: 'C:\Qt\5.13.2\mingw73_64'
+      Qt5_DIR: 'C:\Qt\5.14.0\mingw73_64'
       GENERATOR: "MinGW Makefiles"
       EXTENTION: "dll"
       LINUX_ONLY: "echo hi"
