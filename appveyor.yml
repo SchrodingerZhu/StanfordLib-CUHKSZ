@@ -18,7 +18,7 @@ for:
       - git submodule update --init --recursive
       - sudo add-apt-repository ppa:beineri/opt-qt-5.14.0-bionic
       - sudo apt-get update
-      - sudo apt install -y make g++ xvfb qt514-meta-full mesa-common-dev libglu1-mesa-dev
+      - sudo apt install -y make g++ xvfb qt514base qt514multimedia qt514declarative mesa-common-dev libglu1-mesa-dev
 
     build_script:
       - mkdir build
