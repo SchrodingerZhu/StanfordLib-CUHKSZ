@@ -56,7 +56,7 @@ void TestMutex::test_move() {
     std::vector<std::string> a{"a", "b", "c"}, b{"a", "b", "c"};
     AMutex<std::vector<std::string>> t(std::move(a));
     auto x = std::move(t);
-    std::atomic_bool flag = true;
+    std::atomic_bool flag(true);
 #pragma omp parallel for default(none) shared(x, b, flag)
     for (int i = 0; i < 1000; ++i) {
         auto y = x.lock();
@@ -69,7 +69,7 @@ void TestMutex::test_rwlock() {
     for (int i = 0; i < 5; ++i) {
         RwLock<long> t(0);
 #pragma omp parallel for default(none) shared(t)
-        for (long int i = 0; i < 1000; ++i) {
+        for (long int j = 0; j < 1000; ++j) {
             auto h = t.lockForRead();
             h.drop();
             auto g = t.lockForWrite();

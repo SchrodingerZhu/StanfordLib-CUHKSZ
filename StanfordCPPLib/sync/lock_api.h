@@ -9,7 +9,6 @@
 #include <exception>
 #include <stdexcept>
 #include <memory>
-#include <absl/synchronization/test_locks.h>
 
 namespace lock_api {
     template<typename T, typename RawLock>

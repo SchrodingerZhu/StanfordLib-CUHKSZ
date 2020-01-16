@@ -8,7 +8,7 @@
 #include <mutex>
 #include <QMutex>
 #include <sync/lock_api.h>
-#include <absl/synchronization/test_locks.h>
+#include <absl/synchronization/mutex.h>
 
 class AbslLockWrapper {
     std::unique_ptr<absl::Mutex> mutex;
