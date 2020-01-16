@@ -23,7 +23,7 @@ for:
     build_script:
       - mkdir build
       - cd build
-      - cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . "-j$(nproc)"
+      - cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/qt514/lib/cmake && cmake --build . "-j$(nproc)"
       - ctest
       - cd ..
       - bash misc/generate-linux.sh
