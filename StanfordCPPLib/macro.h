@@ -1,7 +1,7 @@
+#include <mimalloc-override.h>
 #include "private/init.h"
 #include <graphics/qtgui.h>
 #include <console/console.h>
-
 #define run(argc, argv, studentMain) \
     stanfordcpplib::initializeLibrary(argc, argv); \
     QtGui::instance()->startBackgroundEventLoop(studentMain); \

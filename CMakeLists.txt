@@ -1,13 +1,17 @@
 # Project Name
 project(stanford)
-
-# Cmake Configuration
 cmake_minimum_required(VERSION 3.12)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_BUILD_TYPE Release)
+set(MI_USE_CXX ON CACHE BOOL "use c++ compiler for mimalloc")
+add_subdirectory(mimalloc)
+add_subdirectory(abseil-cpp)
+# Cmake Configuration
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_STANDARD 14)
 # Find Qt5 Packages
 find_package(Qt5 COMPONENTS Widgets Network Core Multimedia PrintSupport REQUIRED)
 find_package(Threads REQUIRED)
@@ -20,8 +24,7 @@ file(GLOB io_files StanfordCPPLib/io/*.h StanfordCPPLib/io/*.cpp)
 file(GLOB collections_files StanfordCPPLib/collections/*.h StanfordCPPLib/collections/*.cpp)
 file(GLOB private_files StanfordCPPLib/private/*.h StanfordCPPLib/private/*.cpp)
 file(GLOB sync_files StanfordCPPLib/sync/*.h StanfordCPPLib/sync/*.cpp)
-# Setup Abseil
-add_subdirectory(abseil-cpp)
+
 # Define Stanford Library
 add_library(stanford SHARED
         StanfordCPPLib/images.qrc
@@ -50,6 +53,7 @@ target_link_libraries(stanford PUBLIC Qt5::Widgets
         absl::hashtablez_sampler
         absl::raw_hash_set
         absl::flat_hash_map
+        mimalloc-static
         Threads::Threads
         ${CMAKE_DL_LIBS}
         )
@@ -63,6 +67,7 @@ target_link_libraries(stanford-static PUBLIC Qt5::Widgets
         absl::hashtablez_sampler
         absl::raw_hash_set
         absl::flat_hash_map
+        mimalloc-static
         Threads::Threads
         ${CMAKE_DL_LIBS}
         )
