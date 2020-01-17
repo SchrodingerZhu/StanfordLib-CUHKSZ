@@ -282,7 +282,7 @@ namespace stacktrace {
         std::string toolName = "addr2line";
 #endif
         toolpath = stanfordcpplib::pathForExecutable(toolName);
-        command << toolpath << "-f -i -C -s -p -e \"" << exceptions::getProgramNameForStackTrace() << "\"" << addrsStr;
+        command << toolpath << " -f -i -C -s -p -e \"" << exceptions::getProgramNameForStackTrace() << "\"" << addrsStr;
 #endif
 
         if (toolpath.empty()) {
