@@ -60,7 +60,7 @@ for:
       - mkdir build
       - cd build
       - cmake .. -DCMAKE_BUILD_TYPE=Release && cmake --build . "-j$(nproc)"
-      - bash ../misc/test.sh
+      - bash ../misc/test-nox.sh
       - cd ..
       - bash misc/generate-mac.sh
       - rm -rf dist
@@ -95,7 +95,7 @@ for:
       - cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
       - cmake --build . --target -j%NUMBER_OF_PROCESSORS%
       - set PATH=C:\Program Files\Git\usr\bin;%PATH%
-      - bash ../misc/test.sh
+      - bash ../misc/test-nox.sh
       - cd ..
       - bash misc/generate-win.sh
       - DEL /F/Q/S dist
