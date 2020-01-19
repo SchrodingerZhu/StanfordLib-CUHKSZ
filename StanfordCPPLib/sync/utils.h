@@ -41,7 +41,7 @@ template<class T>
 class alignas(128) CachePadded : public T {
 public:
     template<typename... Args>
-    CachePadded(Args &&... args);
+    CachePadded(Args &&... args); // NOLINT(google-explicit-constructor)
 };
 
 template<class T>
