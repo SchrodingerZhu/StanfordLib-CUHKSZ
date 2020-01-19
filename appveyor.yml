@@ -1,9 +1,10 @@
 version: 1.0.{build}
 
 image:
+  - macos
   - Ubuntu
   - Visual Studio 2019
-  - macos
+
 
 for:
   - matrix:
