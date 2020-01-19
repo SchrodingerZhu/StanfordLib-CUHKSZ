@@ -1,5 +1,6 @@
 # StanfordLib-CUHKSZ
 [![CircleCI](https://circleci.com/gh/SchrodingerZhu/StanfordLib-CUHKSZ.svg?style=svg)](https://circleci.com/gh/SchrodingerZhu/StanfordLib-CUHKSZ)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/schrodingerzhu/stanfordlib-cuhksz?branch=master&svg=true)](https://ci.appveyor.com/project/SchrodingerZhu/stanfordlib-cuhksz/)
 
 A cmake deliver version of stanford library, specially patched for CSC3002 students in CUHK(SZ)
 

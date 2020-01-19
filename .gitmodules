@@ -4,4 +4,5 @@
 	branch = master
 [submodule "mimalloc"]
 	path = mimalloc
-	url = https://github.com/Microsoft/mimalloc
+    branch = master
+	url = https://github.com/microsoft/mimalloc

@@ -16,6 +16,7 @@
 #include <util/diff.h>
 #include <util/timer.h>
 #include <util/strlib.h>
+#include <sync/utils.h>
 using namespace std;
 
 int start() {
@@ -77,6 +78,7 @@ int start() {
     for(auto i : test) {
         std::cout << boolToString(i) << std::endl;
     }
+    std::cout << next_power_of_two(2) << std::endl;
     return 0;
 }
 
