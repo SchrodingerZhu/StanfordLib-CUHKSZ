@@ -108,7 +108,7 @@ for:
         name: "x86_64-windows-mingw_w64-static.zip"
 
 deploy:
-  release: 2020.1.1
+  release: 2020.2
   description: 'Release'
   provider: GitHub
   auth_token:

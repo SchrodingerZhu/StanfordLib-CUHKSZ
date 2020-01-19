@@ -5,6 +5,7 @@
 A cmake deliver version of stanford library, specially patched for CSC3002 students in CUHK(SZ)
 
 # Notice
+- a new sync library is available now. it provides a mutex/rwlock with rust favor and a array queue and a segment queue.
 - All the sources are modified from [stanford-cpp-library](https://github.com/zelenski/stanford-cpp-library). The original author reserves the copyright.
 - We hope you can use a more elegant naming and organizing method. Hence instead of the orignal style like `"gfont.h"`, we adapt a modularized way :`<graphics/gfont.h>`
 - The orginal stanford library mixes files in all modules and produces cyclic dependency relations, therefore, we have to produce to whole shared library, instead of multiple small libraries for each module.
