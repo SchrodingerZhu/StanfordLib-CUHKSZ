@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_BUILD_TYPE Release)
+set(MI_USE_CXX ON CACHE BOOL "use c++ compiler for mimalloc")
 add_subdirectory(mimalloc)
 add_subdirectory(abseil-cpp)
 # Cmake Configuration
