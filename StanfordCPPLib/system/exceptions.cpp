@@ -47,7 +47,6 @@
  * - added top-level signal handler (for null-pointer derefs etc.)
  * @since 2014/11/05
  */
-#define _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES
 #include <system/exceptions.h>
 #include <csignal>
 #include <cstdlib>
@@ -63,10 +62,23 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <eh.h>
 #  undef MOUSE_EVENT
 #  undef KEY_EVENT
 #  undef MOUSE_MOVED
 #  undef HELP_KEY
+#else
+
+typedef void (*unexpected_handler)();
+
+static inline unexpected_handler set_unexpected(unexpected_handler uh) {
+#if __cplusplus < 201701L
+    return std::set_unexpected(uh);
+#else
+    return nullptr;
+#endif
+}
+
 #endif
 
 // uncomment the definition below to use an alternative 'signal stack'
@@ -233,10 +245,10 @@ namespace exceptions {
         if ((!STATIC_VARIABLE(topLevelExceptionHandlerEnabled) || force) && enabled) {
             if (!old_terminate) {
                 old_terminate = std::set_terminate(stanfordCppLibTerminateHandler);
-                old_unexpected = std::set_unexpected(stanfordCppLibUnexpectedHandler);
+                old_unexpected = ::set_unexpected(stanfordCppLibUnexpectedHandler);
             } else {
                 std::set_terminate(stanfordCppLibTerminateHandler);
-                std::set_unexpected(stanfordCppLibUnexpectedHandler);
+                ::set_unexpected(stanfordCppLibUnexpectedHandler);
             }
 #ifdef _WIN32
             // disabling this code for now because it messes with the
@@ -255,7 +267,7 @@ namespace exceptions {
             signalHandlerEnable();
         } else if ((STATIC_VARIABLE(topLevelExceptionHandlerEnabled) || force) && !enabled) {
             std::set_terminate(old_terminate);
-            std::set_unexpected(old_unexpected);
+            ::set_unexpected(old_unexpected);
         }
         STATIC_VARIABLE(topLevelExceptionHandlerEnabled) = enabled;
     }
@@ -767,5 +779,3 @@ namespace exceptions {
     }
 
 } // namespace exceptions
-
-#undef _LIBCPP_ENABLE_CXX17_REMOVED_FEATURES
