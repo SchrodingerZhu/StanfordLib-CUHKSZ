@@ -111,7 +111,7 @@ std::istream &operator>>(std::istream &is, Direction &dir) {
  * this operator is used only in the for loop idiom for which it is defined.
  */
 
-CDirection operator++(Direction &dir, int) {
+Direction operator++(Direction &dir, int) {
     Direction old = dir;
     dir = Direction(dir + 1);
     return old;

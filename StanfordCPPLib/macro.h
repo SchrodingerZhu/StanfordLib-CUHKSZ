@@ -1,9 +1,3 @@
-#ifndef __APPLE__
-
-#include <mimalloc-override.h>
-
-#endif
-
 #include "private/init.h"
 #include <graphics/qtgui.h>
 #include <console/console.h>

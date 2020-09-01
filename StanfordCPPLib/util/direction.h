@@ -64,7 +64,7 @@ std::istream &operator>>(std::istream &os, Direction &dir);
  *    for (Direction dir = NORTH; dir &lt;= WEST; dir++) ...
  *</pre>
  */
-using CDirection = const Direction;
-CDirection operator++(Direction &dir, int);
+
+Direction operator++(Direction &dir, int);
 
 #endif // _direction_h

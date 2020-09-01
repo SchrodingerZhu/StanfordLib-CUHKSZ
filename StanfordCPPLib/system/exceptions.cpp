@@ -69,16 +69,6 @@
 #  undef HELP_KEY
 #else
 
-typedef void (*unexpected_handler)();
-
-static inline unexpected_handler set_unexpected(unexpected_handler uh) {
-#if __cplusplus < 201701L
-    return std::set_unexpected(uh);
-#else
-    return nullptr;
-#endif
-}
-
 #endif
 
 // uncomment the definition below to use an alternative 'signal stack'
@@ -118,8 +108,6 @@ namespace exceptions {
     static void stanfordCppLibSignalHandler(int sig);
 
     [[noreturn]] static void stanfordCppLibTerminateHandler();
-
-    static void stanfordCppLibUnexpectedHandler();
 
     std::string cleanupFunctionNameForStackTrace(std::string function) {
         // remove references to std:: namespace
@@ -240,15 +228,12 @@ namespace exceptions {
 
     void setTopLevelExceptionHandlerEnabled(bool enabled, bool force) {
         static void (*old_terminate)() = nullptr;
-        static void (*old_unexpected)() = nullptr;
 
         if ((!STATIC_VARIABLE(topLevelExceptionHandlerEnabled) || force) && enabled) {
             if (!old_terminate) {
                 old_terminate = std::set_terminate(stanfordCppLibTerminateHandler);
-                old_unexpected = ::set_unexpected(stanfordCppLibUnexpectedHandler);
             } else {
                 std::set_terminate(stanfordCppLibTerminateHandler);
-                ::set_unexpected(stanfordCppLibUnexpectedHandler);
             }
 #ifdef _WIN32
             // disabling this code for now because it messes with the
@@ -267,7 +252,6 @@ namespace exceptions {
             signalHandlerEnable();
         } else if ((STATIC_VARIABLE(topLevelExceptionHandlerEnabled) || force) && !enabled) {
             std::set_terminate(old_terminate);
-            ::set_unexpected(old_unexpected);
         }
         STATIC_VARIABLE(topLevelExceptionHandlerEnabled) = enabled;
     }
@@ -552,7 +536,7 @@ namespace exceptions {
 #endif
 
     static void signalHandlerEnable() {
-        bool handled = false;
+        //bool handled = false;
 #ifdef SHOULD_USE_SIGNAL_STACK
 #if !defined(_WIN32)
         // alternate stack on Linux for stack overflows
@@ -722,60 +706,4 @@ namespace exceptions {
 
         abort();   // terminate the program with a SIGABRT signal
     }
-
-/*
- * A general handler for any exception thrown that is missing from the throw()
- * clause of a function header.
- * Prints details about the exception and then tries to print a stack trace.
- */
-    static void stanfordCppLibUnexpectedHandler() {
-        std::string DEFAULT_EXCEPTION_KIND = "An exception";
-        std::string DEFAULT_EXCEPTION_DETAILS = "(unknown exception details)";
-
-        std::string msg;
-        msg += "\n";
-        msg += "***\n";
-        msg += "*** STANFORD C++ LIBRARY \n";
-        msg += "*** " + DEFAULT_EXCEPTION_KIND + " occurred during program execution: \n";
-        msg += "*** " + DEFAULT_EXCEPTION_DETAILS + "\n";
-        msg += "***\n";
-
-        std::string kind = "error";
-        std::string message = {};
-        try {
-            throw;   // re-throws the exception that already occurred
-        } catch (bool b) {
-            kind = "bool";
-            message = boolToString(b);
-        } catch (char c) {
-            kind = "char";
-            message = charToString(c);
-        } catch (char const *str) {
-            kind = "string";
-            message = str;
-        } catch (double d) {
-            kind = "double";
-            message = realToString(d);
-        } catch (const ErrorException &ex) {
-            kind = "error";
-            message = ex.what();
-        } catch (const std::exception &ex) {
-            kind = "exception";
-            message = ex.what();
-        } catch (int n) {
-            kind = "int";
-            message = std::to_string(n);
-        } catch (long l) {
-            kind = "long";
-            message = std::to_string(l);
-        } catch (const std::string& str) {
-            kind = "string";
-            message = str;
-        } catch (...) {
-            kind = "unknown";
-        }
-
-        throw ErrorException(message, kind);
-    }
-
 } // namespace exceptions

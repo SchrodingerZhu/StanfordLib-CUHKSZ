@@ -60,7 +60,11 @@
 #ifdef StrCat
 #undef StrCat
 #endif
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
 #include <absl/container/btree_map.h>
+#pragma GCC diagnostic pop
 
 /*
  * Class: Map<KeyType,ValueType>

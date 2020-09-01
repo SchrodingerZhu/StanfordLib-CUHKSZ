@@ -12,11 +12,10 @@ cp misc/template-static.cmake dist/CMakeLists.txt
 cp misc/template-static.qmake dist/my_project.pro
 cp misc/lib-static.conf dist/libs
 cp "build/libstanford-static.a" dist/libs/windows
-mkdir -p dist/includes/mimalloc
+
 mkdir -p dist/includes/stanford
 mkdir -p dist/includes/abseil
 cp -r abseil-cpp/absl dist/includes/abseil
-cp mimalloc/include/* dist/includes/mimalloc
 cd StanfordCPPLib
 cp --parents */*.h ../dist/includes/stanford
 cp macro.h ../dist/includes/stanford

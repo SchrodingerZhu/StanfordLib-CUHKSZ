@@ -5,11 +5,10 @@ cp misc/template.cmake dist/CMakeLists.txt
 cp misc/template.qmake dist/my_project.pro
 cp misc/lib.conf dist/libs
 cp "build/libstanford.dll" dist/libs
-mkdir -p dist/includes/mimalloc
+
 mkdir -p dist/includes/stanford
 mkdir -p dist/includes/abseil
 cp -r abseil-cpp/absl dist/includes/abseil
-cp mimalloc/include/* dist/includes/mimalloc
 cd StanfordCPPLib
 cp --parents */*.h ../dist/includes/stanford
 cp macro.h ../dist/includes/stanford

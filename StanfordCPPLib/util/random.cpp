@@ -92,7 +92,7 @@ unsigned randomColor(unsigned minRGB, unsigned maxRGB) {
     if (!STATIC_VARIABLE(fixedInts).empty()) {
         return randomColor();
     }
-    if (minRGB < 0 || minRGB > 255 || maxRGB < 0 || maxRGB > 255
+    if (minRGB > 255 || maxRGB > 255
         || minRGB > maxRGB) {
         error("randomColor: min/max values out of range");
     }
