@@ -38,7 +38,7 @@ GContainer::GContainer(Layout layout, QWidget *parent)
         : _iqcontainer(nullptr),
           _layout(layout) {
     GThread::runOnQtGuiThread([this, layout, parent]() {
-        _iqcontainer = new _Internal_QContainer(this, layout, getInternalParent(parent));
+        _iqcontainer = std::make_unique<_Internal_QContainer>(this, layout, getInternalParent(parent));
     });
     setVisible(false);   // all widgets are not shown until added to a window
 }
@@ -47,13 +47,12 @@ GContainer::GContainer(Layout /*layout*/, int rows, int cols, QWidget *parent)
         : _iqcontainer(nullptr),
           _layout(LAYOUT_GRID) {
     GThread::runOnQtGuiThread([this, rows, cols, parent]() {
-        _iqcontainer = new _Internal_QContainer(this, rows, cols, getInternalParent(parent));
+        _iqcontainer = std::make_unique<_Internal_QContainer>(this, rows, cols, getInternalParent(parent));
     });
     setVisible(false);   // all widgets are not shown until added to a window
 }
 
 GContainer::~GContainer() {
-    // TODO: delete _iqcontainer;
     _iqcontainer->detach();
     _iqcontainer = nullptr;
 }
@@ -69,7 +68,7 @@ void GContainer::add(GInteractor *interactor) {
     _interactors.add(interactor);
 
     GThread::runOnQtGuiThread([this, widget]() {
-        widget->setParent(_iqcontainer);
+        widget->setParent(_iqcontainer.get());
         _iqcontainer->add(widget);
     });
 }
@@ -216,7 +215,7 @@ int GContainer::getInteractorCountByRegion(const std::string &region) const {
 
 
 _Internal_QWidget *GContainer::getInternalWidget() const {
-    return _iqcontainer;
+    return _iqcontainer.get();
 }
 
 GContainer::Layout GContainer::getLayout() const {
@@ -292,7 +291,7 @@ std::string GContainer::getType() const {
 }
 
 QWidget *GContainer::getWidget() const {
-    return static_cast<QWidget *>(_iqcontainer);
+    return static_cast<QWidget *>(_iqcontainer.get());
 }
 
 void GContainer::insert(int index, GInteractor *interactor) {

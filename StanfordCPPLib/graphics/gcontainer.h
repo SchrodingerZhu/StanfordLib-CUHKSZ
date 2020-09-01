@@ -627,7 +627,7 @@ public:
 private:
     Q_DISABLE_COPY(GContainer)
 
-    _Internal_QContainer *_iqcontainer;
+    std::unique_ptr<_Internal_QContainer> _iqcontainer;
     Vector<GInteractor *> _interactors;
     Map<Region, Vector<GInteractor *>> _interactorsByRegion;
     Layout _layout;

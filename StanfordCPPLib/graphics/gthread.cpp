@@ -73,12 +73,18 @@ GThread::GThread() {
     }
 }
 
+
+
 /*static*/ GThread *GThread::getCurrentThread() {
+    static std::unique_ptr<GThreadQt> static_thread;
     QThread *currentQtThread = QThread::currentThread();
     if (_allGThreadsQt.containsKey(currentQtThread)) {
         return _allGThreadsQt[currentQtThread];
     } else {
-        return new GThreadQt(currentQtThread);
+        if (!static_thread) {
+            static_thread = std::make_unique<GThreadQt>(currentQtThread);
+        }
+        return static_thread.get();
     }
 }
 
@@ -214,7 +220,7 @@ GThreadQt::GThreadQt(QThread *qthread)
 }
 
 GThreadQt::~GThreadQt() {
-    // TODO: delete _qThread;
+    // TODO: delete qthread
     _allGThreadsQt.remove(_qThread);
     _qThread = nullptr;
 }

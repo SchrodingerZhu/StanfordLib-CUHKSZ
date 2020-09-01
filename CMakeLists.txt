@@ -68,10 +68,13 @@ target_link_libraries(stanford-static PUBLIC Qt5::Widgets
         ${CMAKE_DL_LIBS}
         )
 
-set_target_properties(stanford PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
-
 add_executable(hello src/hello.h src/hello.cpp)
 target_link_libraries(hello stanford)
+
+set_target_properties(stanford PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+set_target_properties(stanford-static PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+target_link_libraries(hello stanford)
+
 
 
 # Copy resources
